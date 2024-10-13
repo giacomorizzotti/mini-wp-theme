@@ -49,7 +49,8 @@ function mini_setup() {
     // This theme uses wp_nav_menu() in one location.
     register_nav_menus(
         array(
-            'main-menu' => esc_html__( 'Header', 'mini' ),
+            'main-menu' => esc_html__( 'Sidebar', 'mini' ),
+            'user-menu' => esc_html__( 'User', 'mini' ),
             'footer-menu' => esc_html__( 'Footer', 'mini' ),
         )
     );
@@ -553,105 +554,14 @@ function mini_settings_init() {
 
     // Register a new field in the "mini_section" section, inside the "mini" page.
     add_settings_field(
-        'mini_main_color', // As of WP 4.6 this value is used only internally.
+        'mini_colors', // As of WP 4.6 this value is used only internally.
         // Use $args' label_for to populate the id inside the callback.
-        __( 'Main color', 'mini' ),
-        'mini_main_color_callback',
+        __( 'Colors', 'mini' ),
+        'mini_colors_callback',
         'mini-colors',
         'mini_colors_section',
         array(
-            'label_for'         => 'mini_main_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_second_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Second color', 'mini' ),
-        'mini_second_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_second_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_third_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Third color', 'mini' ),
-        'mini_third_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_third_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_fourth_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Fourth color', 'mini' ),
-        'mini_fourth_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_fourth_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_link_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Link color', 'mini' ),
-        'mini_link_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_link_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_sheet_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Sheet color', 'mini' ),
-        'mini_sheet_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_sheet_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_semaphore_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Semaphore color', 'mini' ),
-        'mini_semaphore_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_semaphore_color',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    add_settings_field(
-        'mini_blacks_color', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Blacks', 'mini' ),
-        'mini_blacks_color_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_blacks_color',
+            'label_for'         => 'mini_colors',
             'class'             => 'mini_row',
             'mini_custom_data' => 'custom',
         )
@@ -707,6 +617,58 @@ function mini_settings_init() {
         )
     );
 
+    // Register a new setting for "mini" page.
+    register_setting( 'mini_ext_lib', 'mini_ext_lib_options');
+
+    // Register a new section in the "mini" page.
+    add_settings_section(
+        'mini_ext_lib_section',
+        __( 'Mini external libraries settings', 'mini' ),
+        'mini_ext_lib_section_callback',
+        'mini-ext-lib'
+    );
+
+    add_settings_field(
+        'mini_ext_lib', // As of WP 4.6 this value is used only internally.
+        // Use $args' label_for to populate the id inside the callback.
+        __( 'External libraries', 'mini' ),
+        'mini_ext_lib_field_callback',
+        'mini-ext-lib',
+        'mini_ext_lib_section',
+        array(
+            'label_for'         => 'mini_ext_lib',
+            'class'             => 'mini_row',
+            'mini_custom_data' => 'custom',
+        )
+    );
+
+    // Register a new setting for "mini" page.
+    register_setting( 'mini_analytics', 'mini_analytics_options');
+
+    // Register a new section in the "mini" page.
+    add_settings_section(
+        'mini_analytics_section',
+        __( 'Mini analytics settings', 'mini' ),
+        'mini_analytics_section_callback',
+        'mini-analytics'
+    );
+
+    add_settings_field(
+        'mini_analytics', // As of WP 4.6 this value is used only internally.
+        // Use $args' label_for to populate the id inside the callback.
+        __( 'Analytics', 'mini' ),
+        'mini_analytics_field_callback',
+        'mini-analytics',
+        'mini_analytics_section',
+        array(
+            'label_for'         => 'mini_analytics',
+            'class'             => 'mini_row',
+            'mini_custom_data' => 'custom',
+        )
+    );
+
+
+
 }
 
 
@@ -737,17 +699,27 @@ function mini_cdn_section_callback( $args ) {
 }
 function mini_colors_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the Colors section', 'mini' ); ?></p>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the colors section', 'mini' ); ?></p>
     <?php
 }
 function mini_size_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the Size section', 'mini' ); ?></p>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the sizes section', 'mini' ); ?></p>
     <?php
 }
 function mini_font_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the Font section', 'mini' ); ?></p>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the font section', 'mini' ); ?></p>
+    <?php
+}
+function mini_ext_lib_section_callback( $args ) {
+    ?>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the external libraries section', 'mini' ); ?></p>
+    <?php
+}
+function mini_analytics_section_callback( $args ) {
+    ?>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the analytics section', 'mini' ); ?></p>
     <?php
 }
 
@@ -826,351 +798,415 @@ function mini_cdn_field_callback( $args ) {
     <?php
 }
 
-function mini_main_color_callback( $args ) {
+function mini_colors_callback( $args ) {
     // Get the value of the setting we've registered with register_setting()
     $options = get_option( 'mini_colors_options' );
-    $default_value = 'rgb(60 90 255 / 100%)';
-    $default_value_dark = 'rgb(50 75 180 / 100%)';
-    $default_value_transp = 'rgb( 60 90 255 / 20% )';
+    
+    /* Main color */
+    $main_color_default_value = 'rgb(60 90 255 / 100%)';
+    $main_color_dark_default_value = 'rgb(50 75 180 / 100%)';
+    $main_color_transp_default_value = 'rgb( 60 90 255 / 20% )';
     if ( 
         is_array($options) && array_key_exists('mini_main_color', $options ) && $options['mini_main_color'] != null
     ) {
-        $value = $options['mini_main_color'];
-        $placeholder = null;
+        $main_color_value = $options['mini_main_color'];
+        $main_color_placeholder = null;
+        $main_color_color = $options['mini_main_color'];
     } else {
-        $value = null;
-        $placeholder = $default_value;
+        $main_color_value = null;
+        $main_color_placeholder = $main_color_default_value;
+        $main_color_color = $main_color_default_value;
     }
     if ( 
         is_array($options) && array_key_exists('mini_main_color_dark', $options ) && $options['mini_main_color_dark'] != null 
     ) {
-        $value_dark = $options['mini_main_color_dark'];
-        $placeholder_dark = null;
+        $main_color_dark_value = $options['mini_main_color_dark'];
+        $main_color_dark_placeholder = null;
+        $main_color_dark_color = $options['mini_main_color_dark'];
     } else {
-        $value_dark = null;
-        $placeholder_dark = $default_value_dark;
+        $main_color_dark_value = null;
+        $main_color_dark_placeholder = $main_color_dark_default_value;
+        $main_color_dark_color = $main_color_dark_default_value;
     }
     if ( 
         is_array($options) && array_key_exists('mini_main_color_transp', $options ) && $options['mini_main_color_transp'] != null 
     ) {
-        $value_transp = $options['mini_main_color_transp'];
-        $placeholder_transp = null;
+        $main_color_transp_value = $options['mini_main_color_transp'];
+        $main_color_transp_placeholder = null;
+        $main_color_transp_color = $options['mini_main_color_transp'];
     } else {
-        $value_transp = null;
-        $placeholder_transp = $default_value_transp;
+        $main_color_transp_value = null;
+        $main_color_transp_placeholder = $main_color_transp_default_value;
+        $main_color_transp_color = $main_color_transp_default_value;
     }
-    ?>
-    <input
-            type="text"
-            id="mini_main_color"
-            name="mini_colors_options[mini_main_color]"
-            value="<?= $value ?>"
-            placeholder="<?= $placeholder ?>" 
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$placeholder?>;">
-    <input 
-            type="text"
-            id="mini_main_color_dark"
-            name="mini_colors_options[mini_main_color_dark]"
-            value="<?= $value_dark ?>"
-            placeholder="<?= $placeholder_dark ?>" 
-            style="border: 2px solid <?=$placeholder_dark?>; border-right: 30px solid <?=$placeholder_dark?>;">
-    <input
-            type="text"
-            id="mini_main_color_transp"
-            name="mini_colors_options[mini_main_color_transp]"
-            value="<?= $value_transp ?>"
-            placeholder="<?= $placeholder_transp ?>" 
-            style="border: 2px solid <?=$placeholder_transp?>; border-right: 30px solid <?=$placeholder_transp?>;">
-    <p class="description">
-        <?php esc_html_e( 'Main color, dark version and transparent version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <?php
-}
-function mini_second_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
-    $default_value = 'rgb(50 75 180 / 100%)';
-    $default_value_dark = 'rgb(37 56 133 / 100%)';
+    /* Second color */
+    $second_color_default_value = 'rgb(50 75 180 / 100%)';
+    $second_color_dark_default_value = 'rgb(37 56 133 / 100%)';
     if ( 
         is_array($options) && array_key_exists('mini_second_color', $options ) && $options['mini_second_color'] != null
     ) {
-        $value = $options['mini_second_color'];
-        $placeholder = null;
-        $value = $border_color['mini_second_color'];
+        $second_color_value = $options['mini_second_color'];
+        $second_color_placeholder = null;
+        $second_color_color = $border_color['mini_second_color'];
     } else {
-        $value = null;
-        $placeholder = $default_value;
-        $value = $default_value;
+        $second_color_value = null;
+        $second_color_placeholder = $second_color_default_value;
+        $second_color_color = $second_color_default_value;
     }
     if ( 
         is_array($options) && array_key_exists('mini_second_color_dark', $options ) && $options['mini_second_color_dark'] != null
     ) {
-        $value_dark = $options['mini_second_color_dark'];
-        $placeholder_dark = null;
+        $second_color_dark_value = $options['mini_second_color_dark'];
+        $second_color_dark_placeholder = null;
+        $second_color_dark_color = $options['mini_second_color_dark'];
     } else {
-        $value_dark = null;
-        $placeholder_dark = $default_value_dark;
+        $second_color_dark_value = null;
+        $second_color_dark_placeholder = $second_color_dark_default_value;
+        $second_color_dark_color = $second_color_dark_default_value;
     }
+    /* Third color */
+    $third_color_default_value = 'rgb(60 30 99 / 100%)';
+    $third_color_dark_default_value = 'rgb(34 15 61 / 100%)';
+    if ( is_array($options) && array_key_exists('mini_third_color', $options ) && $options['mini_third_color'] != null ) {
+        $third_color_value = $options['mini_third_color'];
+        $third_color_placeholder = null;
+        $third_color_color = $options['mini_third_color'];
+    } else {
+        $third_color_value = null;
+        $third_color_placeholder = $third_color_default_value;
+        $third_color_color = $third_color_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_third_color_dark', $options ) && $options['mini_third_color_dark'] != null ) {
+        $third_color_dark_value = $options['mini_third_color_dark'];
+        $third_color_dark_placeholder = null;
+        $third_color_dark_color = $options['mini_third_color_dark'];
+    } else {
+        $third_color_dark_value = null;
+        $third_color_dark_placeholder = $third_color_dark_default_value;
+        $third_color_dark_color = $third_color_dark_default_value;
+    }
+    /* Fourth color */
+    $fourth_color_default_value = 'rgb(220 230 0 / 100%)';
+    $fourth_color_dark_default_value = 'rgb(180 190 0 / 100%)';
+    if ( is_array($options) && array_key_exists('mini_fourth_color', $options ) && $options['mini_fourth_color'] != null ) {
+        $fourth_color_value = $options['mini_fourth_color'];
+        $fourth_color_placeholder = null;
+        $fourth_color_color = $options['mini_fourth_color'];
+    } else {
+        $fourth_color_value = null;
+        $fourth_color_placeholder = $fourth_color_default_value;
+        $fourth_color_color = $fourth_color_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_fourth_color_dark', $options ) && $options['mini_fourth_color_dark'] != null ) {
+        $fourth_color_dark_value = $options['mini_fourth_color_dark'];
+        $fourth_color_dark_placeholder = null;
+        $fourth_color_dark_color = $options['mini_fourth_color_dark'];
+    } else {
+        $fourth_color_dark_value = null;
+        $fourth_color_dark_placeholder = $fourth_color_dark_default_value;
+        $fourth_color_dark_color = $fourth_color_dark_default_value;
+    }
+    /* Link color */
+    $link_color_default_value = 'rgb(60 185 225 / 100%)';
+    $link_hover_color_default_value = 'rgb(40 130 160 / 100%)';
+    if ( is_array($options) && array_key_exists('mini_link_color', $options ) && $options['mini_link_color'] != null ) {
+        $link_color_value = $options['mini_link_color'];
+        $link_color_placeholder = null;
+        $link_color_color = $options['mini_link_color'];
+    } else {
+        $link_color_value = null;
+        $link_color_placeholder = $link_color_default_value;
+        $link_color_color = $link_color_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_link_hover_color', $options ) && $options['mini_link_hover_color'] != null ) {
+        $link_hover_color_value = $options['mini_link_hover_color'];
+        $link_hover_color_placeholder = null;
+        $link_hover_color_color = $options['mini_link_hover_color'];
+    } else {
+        $link_hover_color_value = null;
+        $link_hover_color_placeholder = $link_hover_color_default_value;
+        $link_hover_color_color = $link_hover_color_default_value;
+    }
+    /* Sheet & menu color */
+    $sheet_default_value = 'rgb( 20 10 40 / 100% )';
+    $menu_toggle_default_value = 'rgb( 20 10 40 / 100% )';
+    if ( is_array($options) && array_key_exists('mini_sheet_color', $options ) && $options['mini_sheet_color'] != null ) {
+        $sheet_color_value = $options['mini_sheet_color'];
+        $sheet_color_placeholder = null;
+        $sheet_color_color = $options['mini_sheet_color'];
+    } else {
+        $sheet_color_value = null;
+        $sheet_color_placeholder = $sheet_default_value;
+        $sheet_color_color = $sheet_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_menu_toggle_color', $options ) && $options['mini_menu_toggle_color'] != null ) {
+        $menu_toggle_color_value = $options['mini_menu_toggle_color'];
+        $menu_toggle_color_placeholder = null;
+        $menu_toggle_color_color = $options['mini_menu_toggle_color'];
+    } else {
+        $menu_toggle_color_value = null;
+        $menu_toggle_color_placeholder = $menu_toggle_default_value;
+        $menu_toggle_color_color = $menu_toggle_default_value;
+    }
+
     ?>
+    <h4 class="m-0">
+        Main color
+    </h4>
     <input
-            type="text"
-            id="mini_second_color"
-            name="mini_colors_options[mini_second_color]"
-            value="<?= $value ?>"
-            placeholder="<?= $placeholder ?>" 
-            style="border: 2px solid <?=$default_value?>; border-right: 30px solid <?=$default_value?>;">
+        type="text"
+        id="mini_main_color"
+        name="mini_colors_options[mini_main_color]"
+        value="<?= $main_color_value ?>"
+        placeholder="<?= $main_color_placeholder ?>" 
+        style="border: 2px solid <?=$main_color_color?>; border-right: 30px solid <?=$main_color_color?>;"
+        >
     <input
-            type="text"
-            id="mini_second_color_dark"
-            name="mini_colors_options[mini_second_color_dark]"
-            value="<?= $value_dark ?>"
-            placeholder="<?= $placeholder_dark ?>" 
-            style="border: 2px solid <?=$placeholder_dark?>; border-right: 30px solid <?=$placeholder_dark?>;">
+        type="text"
+        id="mini_main_color_dark"
+        name="mini_colors_options[mini_main_color_dark]"
+        value="<?= $main_color_dark_value ?>"
+        placeholder="<?= $main_color_dark_placeholder ?>" 
+        style="border: 2px solid <?=$main_color_dark_color?>; border-right: 30px solid <?=$main_color_dark_color?>;"
+        >
+    <input
+        type="text"
+        id="mini_main_color_transp"
+        name="mini_colors_options[mini_main_color_transp]"
+        value="<?= $main_color_transp_value ?>"
+        placeholder="<?= $main_color_transp_placeholder ?>" 
+        style="border: 2px solid <?=$main_color_transp_color?>; border-right: 30px solid <?=$main_color_transp_color?>;"
+        >
+    <p class="description">
+        <?php esc_html_e( 'Main color, dark version and transparent version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
+    </p>
+    <br/>
+    <hr>
+    <h4 class="m-0">
+        Second color
+    </h4>
+    <input
+        type="text"
+        id="mini_second_color"
+        name="mini_colors_options[mini_second_color]"
+        value="<?= $second_color_dark_value ?>"
+        placeholder="<?= $second_color_dark_placeholder ?>" 
+        style="border: 2px solid <?=$second_color_dark_color?>; border-right: 30px solid <?=$second_color_dark_color?>;"
+        >
+    <input
+        type="text"
+        id="mini_second_color_dark"
+        name="mini_colors_options[mini_second_color_dark]"
+        value="<?= $second_color_dark_value ?>"
+        placeholder="<?= $second_color_dark_placeholder ?>" 
+        style="border: 2px solid <?=$second_color_dark_color?>; border-right: 30px solid <?=$second_color_dark_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Second color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-    <?php
-}
-function mini_third_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
-    $default_value = 'rgb(60 30 99 / 100%)';
-    $default_value_dark = 'rgb(34 15 61 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_third_color', $options ) && $options['mini_third_color'] != null ) {
-        $value = $options['mini_third_color'];
-        $placeholder = null;
-    } else {
-        $value = null;
-        $placeholder = $default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_third_color_dark', $options ) && $options['mini_third_color_dark'] != null ) {
-        $value_dark = $options['mini_third_color_dark'];
-        $placeholder_dark = null;
-    } else {
-        $value_dark = null;
-        $placeholder_dark = $default_value_dark;
-    }
-    ?>
+    <br/>
+    <hr>
+    <h4 class="m-0">
+        Third color
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value ?>"
-            placeholder="<?= $placeholder ?>" 
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$placeholder?>;">
+        type="text"
+        id="mini_third_color"
+        name="mini_colors_options[mini_third_color]"
+        value="<?= $third_color_value ?>"
+        placeholder="<?= $third_color_placeholder ?>" 
+        style="border: 2px solid <?=$third_color_color?>; border-right: 30px solid <?=$third_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value_dark ?>"
-            placeholder="<?= $placeholder_dark ?>" 
-            style="border: 2px solid <?=$placeholder_dark?>; border-right: 30px solid <?=$placeholder_dark?>;">
+        type="text"
+        id="mini_third_color_dark"
+        name="mini_colors_options[mini_third_color_dark]"
+        value="<?= $third_color_dark_value ?>"
+        placeholder="<?= $third_color_dark_placeholder ?>" 
+        style="border: 2px solid <?=$third_color_dark_color?>; border-right: 30px solid <?=$third_color_dark_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Third color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-    <?php
-}
-function mini_fourth_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
-    $default_value = 'rgb(220 230 0 / 100%)';
-    $default_value_dark = 'rgb(180 190 0 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_fourth_color', $options ) && $options['mini_fourth_color'] != null ) {
-        $value = $options['mini_fourth_color'];
-        $placeholder = null;
-    } else {
-        $value = null;
-        $placeholder = $default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_fourth_color_dark', $options ) && $options['mini_fourth_color_dark'] != null ) {
-        $value_dark = $options['mini_fourth_color_dark'];
-        $placeholder_dark = null;
-    } else {
-        $value_dark = null;
-        $placeholder_dark = $default_value_dark;
-    }
-    ?>
+    <br/>
+    <hr>
+    <h4 class="m-0">
+        Fourth color
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value ?>"
-            placeholder="<?= $placeholder ?>" 
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$placeholder?>;">
+        type="text"
+        id="mini_fourth_color"
+        name="mini_colors_options[mini_fourth_color]"
+        value="<?= $fourth_color_value ?>"
+        placeholder="<?= $fourth_color_placeholder ?>" 
+        style="border: 2px solid <?=$fourth_color_color?>; border-right: 30px solid <?=$fourth_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value_dark ?>"
-            placeholder="<?= $placeholder_dark ?>" 
-            style="border: 2px solid <?=$placeholder_dark?>; border-right: 30px solid <?=$placeholder_dark?>;">
+        type="text"
+        id="mini_fourth_color_dark"
+        name="mini_colors_options[mini_fourth_color_dark]"
+        value="<?= $fourth_color_dark_value ?>"
+        placeholder="<?= $fourth_color_dark_placeholder ?>" 
+        style="border: 2px solid <?=$fourth_color_dark_color?>; border-right: 30px solid <?=$fourth_color_dark_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Fourth color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-    <?php
-}
-function mini_link_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
-    $default_value = 'rgb(60 185 225 / 100%)';
-    $default_value_hover = 'rgb(40 130 160 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_link_color', $options ) && $options['mini_link_color'] != null ) {
-        $value = $options['mini_link_color'];
-        $placeholder = null;
-    } else {
-        $value = null;
-        $placeholder = $default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_link_hover_color', $options ) && $options['mini_link_hover_color'] != null ) {
-        $value_hover = $options['mini_link_hover_color'];
-        $placeholder_hover = null;
-    } else {
-        $value_hover = null;
-        $placeholder_hover = $default_value_hover;
-    }
-    ?>
+    <br/>
+    <hr>
+    <h4 class="m-0">
+        Link color
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value ?>"
-            placeholder="<?= $placeholder ?>"
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$placeholder?>;">
+        type="text"
+        id="mini_link_color"
+        name="mini_colors_options[mini_link_color]"
+        value="<?= $link_color_value ?>"
+        placeholder="<?= $link_color_placeholder ?>"
+        style="border: 2px solid <?=$link_color_color?>; border-right: 30px solid <?=$link_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $value_hover ?>"
-            placeholder="<?= $placeholder_hover ?>"
-            style="border: 2px solid <?=$placeholder_dark?>; border-right: 30px solid <?=$placeholder_dark?>;">
+        type="text"
+        id="mini_link_hover_color"
+        name="mini_colors_options[mini_link_hover_color]"
+        value="<?= $link_hover_color_value ?>"
+        placeholder="<?= $link_hover_color_placeholder ?>"
+        style="border: 2px solid <?=$link_hover_color_color?>; border-right: 30px solid <?=$link_hover_color_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Link and buttons color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-    <?php
-}
-function mini_sheet_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
-    $default_sheet_value = 'rgb( 20 10 40 / 100% )';
-    $default_menu_toggle_value = 'rgb( 20 10 40 / 100% )';
-    if ( is_array($options) && array_key_exists('mini_sheet_color', $options ) && $options['mini_sheet_color'] != null ) {
-        $sheet_value = $options['mini_sheet_color'];
-        $sheet_placeholder = null;
-    } else {
-        $sheet_value = null;
-        $sheet_placeholder = $default_sheet_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_menu_toggle_color', $options ) && $options['mini_menu_toggle_color'] != null ) {
-        $menu_toggle_value = $options['mini_menu_toggle_color'];
-        $menu_toggle_placeholder = null;
-    } else {
-        $menu_toggle_value = null;
-        $menu_toggle_placeholder = $default_menu_toggle_value;
-    }
-    ?>
+    <br/>
+    <hr>
+    <h4 class="m-0">
+        Sheet & menu colors
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $sheet_value ?>"
-            placeholder="<?= $sheet_placeholder ?>"
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$sheet_placeholder?>;">
+        type="text"
+        id="mini_sheet_color"
+        name="mini_colors_options[mini_sheet_color]"
+        value="<?= $sheet_color_value ?>"
+        placeholder="<?= $sheet_color_placeholder ?>"
+        style="border: 2px solid <?=$sheet_color_color?>; border-right: 30px solid <?=$sheet_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $menu_toggle_value ?>"
-            placeholder="<?= $menu_toggle_placeholder ?>"
-            style="border: 2px solid <?=$placeholder?>; border-right: 30px solid <?=$menu_toggle_placeholder?>;">
+        type="text"
+        id="mini_menu_toggle_color"
+        name="mini_colors_options[mini_menu_toggle_color]"
+        value="<?= $menu_toggle_color_value ?>"
+        placeholder="<?= $menu_toggle_color_placeholder ?>"
+        style="border: 2px solid <?=$menu_toggle_color_color?>; border-right: 30px solid <?=$menu_toggle_color_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Page second level background and menu icon color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
+    <br/>
+    <hr>
     <?php
-}
-function mini_semaphore_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
     $info_default_value = 'rgb(113 202 189)';
     $success_default_value = 'rgb(160 220 110)';
     $warning_default_value = 'rgb(248 187 83)';
     $danger_default_value = 'rgb(255 111 97)';
     $bad_default_value = 'rgb(235 55 80)';
     if ( is_array($options) && array_key_exists('mini_semaphore_color_info', $options ) && $options['mini_semaphore_color_info'] != null ) {
-        $info_value = $options['mini_semaphore_color_info'];
-        $info_placeholder = null;
+        $info_semaphore_color_value = $options['mini_semaphore_color_info'];
+        $info_semaphore_color_placeholder = null;
+        $info_semaphore_color_color = $options['mini_semaphore_color_info'];
     } else {
-        $info_value = null;
-        $info_placeholder = $info_default_value;
+        $info_semaphore_color_value = null;
+        $info_semaphore_color_placeholder = $info_default_value;
+        $info_semaphore_color_color = $info_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_semaphore_color_success', $options ) && $options['mini_semaphore_color_success'] != null ) {
-        $success_value = $options['mini_semaphore_color_success'];
-        $success_placeholder = null;
+        $success_semaphore_color_value = $options['mini_semaphore_color_success'];
+        $success_semaphore_color_placeholder = null;
+        $success_semaphore_color_color = $options['mini_semaphore_color_success'];
     } else {
-        $success_value = null;
-        $success_placeholder = $success_default_value;
+        $success_semaphore_color_value = null;
+        $success_semaphore_color_placeholder = $success_default_value;
+        $success_semaphore_color_color = $success_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_semaphore_color_warning', $options ) && $options['mini_semaphore_color_warning'] != null ) {
-        $warning_value = $options['mini_semaphore_color_warning'];
-        $warning_placeholder = null;
+        $warning_semaphore_color_value = $options['mini_semaphore_color_warning'];
+        $warning_semaphore_color_placeholder = null;
+        $warning_semaphore_color_color = $options['mini_semaphore_color_warning'];
     } else {
-        $warning_value = null;
-        $warning_placeholder = $warning_default_value;
+        $warning_semaphore_color_value = null;
+        $warning_semaphore_color_placeholder = $warning_default_value;
+        $warning_semaphore_color_color = $warning_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_semaphore_color_danger', $options ) && $options['mini_semaphore_color_danger'] != null ) {
-        $danger_value = $options['mini_semaphore_color_danger'];
-        $danger_placeholder = null;
+        $danger_semaphore_color_value = $options['mini_semaphore_color_danger'];
+        $danger_semaphore_color_placeholder = null;
+        $danger_semaphore_color_color = $options['mini_semaphore_color_danger'];
     } else {
-        $danger_value = null;
-        $danger_placeholder = $danger_default_value;
+        $danger_semaphore_color_value = null;
+        $danger_semaphore_color_placeholder = $danger_default_value;
+        $danger_semaphore_color_color = $danger_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_semaphore_color_bad', $options ) && $options['mini_semaphore_color_bad'] != null ) {
-        $bad_value = $options['mini_semaphore_color_bad'];
-        $bad_placeholder = null;
+        $bad_semaphore_color_value = $options['mini_semaphore_color_bad'];
+        $bad_semaphore_color_placeholder = null;
+        $bad_semaphore_color_color = $options['mini_semaphore_color_bad'];
     } else {
-        $bad_value = null;
-        $bad_placeholder = $bad_default_value;
+        $bad_semaphore_color_value = null;
+        $bad_semaphore_color_placeholder = $bad_default_value;
+        $bad_semaphore_color_color = $bad_default_value;
     }
     ?>
+    <h4 class="m-0">
+        Semaphore colors
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $info_value ?>"
-            placeholder="<?= $info_placeholder ?>"
-            style="border: 2px solid <?=$info_placeholder?>; border-right: 30px solid <?=$info_placeholder?>;">
+        type="text"
+        id="mini_semaphore_color_info"
+        name="mini_colors_options[mini_semaphore_color_info]"
+        value="<?= $info_semaphore_color_value ?>"
+        placeholder="<?= $info_semaphore_color_placeholder ?>"
+        style="border: 2px solid <?=$info_semaphore_color_color?>; border-right: 30px solid <?=$info_semaphore_color_color?>;"
+        >
     <br/>
     <br/>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $success_value ?>"
-            placeholder="<?= $success_placeholder ?>"
-            style="border: 2px solid <?=$success_placeholder?>; border-right: 30px solid <?=$success_placeholder?>;">
+        type="text"
+        id="mini_semaphore_color_success"
+        name="mini_colors_options[mini_semaphore_color_success]"
+        value="<?= $success_semaphore_color_value ?>"
+        placeholder="<?= $success_semaphore_color_placeholder ?>"
+        style="border: 2px solid <?=$success_semaphore_color_color?>; border-right: 30px solid <?=$success_semaphore_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $warning_value ?>"
-            placeholder="<?= $warning_placeholder ?>"
-            style="border: 2px solid <?=$warning_placeholder?>; border-right: 30px solid <?=$warning_placeholder?>;">
+        type="text"
+        id="mini_semaphore_color_warning"
+        name="mini_colors_options[<mini_semaphore_color_warning]"
+        value="<?= $warning_semaphore_color_value ?>"
+        placeholder="<?= $warning_semaphore_color_placeholder ?>"
+        style="border: 2px solid <?=$warning_semaphore_color_color?>; border-right: 30px solid <?=$warning_semaphore_color_color?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $danger_value ?>"
-            placeholder="<?= $danger_placeholder ?>"
-            style="border: 2px solid <?=$danger_placeholder?>; border-right: 30px solid <?=$danger_placeholder?>;">
+        type="text"
+        id="mini_semaphore_color_danger"
+        name="mini_colors_options[mini_semaphore_color_danger]"
+        value="<?= $danger_semaphore_color_value ?>"
+        placeholder="<?= $danger_semaphore_color_placeholder ?>"
+        style="border: 2px solid <?=$danger_semaphore_color_color?>; border-right: 30px solid <?=$danger_semaphore_color_color?>;"
+        >
     <br/>
     <br/>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $bad_value ?>"
-            placeholder="<?= $bad_placeholder ?>"
-            style="border: 2px solid <?=$bad_placeholder?>; border-right: 30px solid <?=$bad_placeholder?>;">
+        type="text"
+        id="mini_semaphore_color_bad"
+        name="mini_colors_options[mini_semaphore_color_bad]"
+        value="<?= $bad_semaphore_color_value ?>"
+        placeholder="<?= $bad_semaphore_color_placeholder ?>"
+        style="border: 2px solid <?=$bad_semaphore_color_color?>; border-right: 30px solid <?=$bad_semaphore_color_color?>;"
+        >
     <p class="description">
         <?php esc_html_e( 'Color used for semaphore logic', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
+    <br/>
+    <hr>
     <?php
-}
-function mini_blacks_color_callback( $args ) {
-    $options = get_option( 'mini_colors_options' );
     $black_default_value = 'rgb( 10 10 20 / 100% )';
     $false_black_default_value = 'rgb( 20 10 40 / 100% )';
     $dark_grey_default_value = 'rgb( 55 55 80 / 100% )';
@@ -1181,124 +1217,156 @@ function mini_blacks_color_callback( $args ) {
     $white_default_value = 'rgb( 255 255 255 / 100% )';
     $transp_default_value = 'rgb( 0 0 0 / 0% )';
     if ( is_array($options) && array_key_exists('mini_blacks_color_black', $options ) && $options['mini_blacks_color_black'] != null ) {
-        $black_value = $options['mini_blacks_color_black']; $black_placeholder = null;
+        $black_value = $options['mini_blacks_color_black']; 
+        $black_placeholder = null; 
+        $black_color = $options['mini_blacks_color_black'];
     } else {
-        $black_value = null; $black_placeholder = $black_default_value;
+        $black_value = null; 
+        $black_placeholder = $black_default_value;
+        $black_color = $black_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_false_black', $options ) && $options['mini_blacks_color_false_black'] != null ) {
-        $false_black_value = $options['mini_blacks_color_false_black']; $false_black_placeholder = null;
+        $false_black_value = $options['mini_blacks_color_false_black']; 
+        $false_black_placeholder = null;
+        $false_black_color = $options['mini_blacks_color_false_black']; 
     } else {
-        $false_black_value = null; $false_black_placeholder = $false_black_default_value;
+        $false_black_value = null; 
+        $false_black_placeholder = $false_black_default_value;
+        $false_black_color = $false_black_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_dark_grey', $options ) && $options['mini_blacks_color_dark_grey'] != null ) {
-        $dark_grey_default_value_value = $options['mini_blacks_color_dark_grey']; $dark_grey_default_value_placeholder = null;
+        $dark_grey_value = $options['mini_blacks_color_dark_grey']; 
+        $dark_grey_placeholder = null;
+        $dark_grey_color = $options['mini_blacks_color_dark_grey']; 
     } else {
-        $dark_grey_value = null; $dark_grey_placeholder = $dark_grey_default_value;
+        $dark_grey_value = null; 
+        $dark_grey_placeholder = $dark_grey_default_value;
+        $dark_grey_color = $dark_grey_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_grey', $options ) && $options['mini_blacks_color_grey'] != null ) {
-        $grey_value = $options['mini_blacks_color_grey']; $grey_placeholder = null;
+        $grey_value = $options['mini_blacks_color_grey']; 
+        $grey_placeholder = null;
+        $grey_color = $options['mini_blacks_color_grey']; 
     } else {
-        $grey_value = null; $grey_placeholder = $grey_default_value;
+        $grey_value = null; 
+        $grey_placeholder = $grey_default_value;
+        $grey_color = $grey_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_light_grey', $options ) && $options['mini_blacks_color_light_grey'] != null ) {
-        $light_grey_value = $options['mini_blacks_color_light_grey']; $light_grey_placeholder = null;
+        $light_grey_value = $options['mini_blacks_color_light_grey']; 
+        $light_grey_placeholder = null;
+        $light_grey_color = $options['mini_blacks_color_light_grey']; 
     } else {
-        $light_grey_value = null; $light_grey_placeholder = $light_grey_default_value;
+        $light_grey_value = null; 
+        $light_grey_placeholder = $light_grey_default_value;
+        $light_grey_color = $light_grey_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_false_white', $options ) && $options['mini_blacks_color_false_white'] != null ) {
-        $false_white_value = $options['mini_blacks_color_false_white']; $false_white_placeholder = null;
+        $false_white_value = $options['mini_blacks_color_false_white']; 
+        $false_white_placeholder = null;
+        $false_white_color = $options['mini_blacks_color_false_white']; 
     } else {
-        $false_white_value = null; $false_white_placeholder = $false_white_default_value;
+        $false_white_value = null; 
+        $false_white_placeholder = $false_white_default_value;
+        $false_white_color = $false_white_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_false_white_transp', $options ) && $options['mini_blacks_color_false_white_transp'] != null ) {
-        $false_white_transp_value = $options['mini_blacks_color_false_white_transp']; $false_white_transp_placeholder = null;
+        $false_white_transp_value = $options['mini_blacks_color_false_white_transp']; 
+        $false_white_transp_placeholder = null;
+        $false_white_transp_color = $options['mini_blacks_color_false_white_transp']; 
     } else {
-        $false_white_transp_value = null; $false_white_transp_placeholder = $false_white_transp_default_value;
+        $false_white_transp_value = null; 
+        $false_white_transp_placeholder = $false_white_transp_default_value;
+        $false_white_transp_color = $false_white_transp_default_value;
     }
     if ( is_array($options) && array_key_exists('mini_blacks_color_white', $options ) && $options['mini_blacks_color_white'] != null ) {
-        $white_value = $options['mini_blacks_color_white']; $white_placeholder = null;
+        $white_value = $options['mini_blacks_color_white']; 
+        $white_placeholder = null;
+        $white_vcolor = $options['mini_blacks_color_white']; 
     } else {
-        $white_value = null; $white_placeholder = $white_default_value;
+        $white_value = null; 
+        $white_placeholder = $white_default_value;
+        $white_color = $white_default_value;
     }
-    /*
-    if ( is_array($options) && array_key_exists('mini_blacks_color_transp', $options ) && $options['mini_blacks_color_transp'] != null ) {
-        $transp_value = $options['mini_blacks_color_transp']; $transp_placeholder = null;
-    } else {
-        $transp_value = null; $transp_placeholder = $transp_default_value;
-    }*/
     ?>
+    <h4 class="m-0">
+        Blacks
+    </h4>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $black_value ?>"
-            placeholder="<?= $black_placeholder ?>"
-            style="border: 2px solid <?=$black_placeholder?>; border-right: 30px solid <?=$black_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_black"
+        name="mini_colors_options[mini_blacks_color_black]"
+        value="<?= $black_value ?>"
+        placeholder="<?= $black_placeholder ?>"
+        style="border: 2px solid <?=$black_placeholder?>; border-right: 30px solid <?=$black_placeholder?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $false_black_value ?>"
-            placeholder="<?= $false_black_placeholder ?>"
-            style="border: 2px solid <?=$false_black_placeholder?>; border-right: 30px solid <?=$false_black_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_false_black"
+        name="mini_colors_options[mini_blacks_color_false_black]"
+        value="<?= $false_black_value ?>"
+        placeholder="<?= $false_black_placeholder ?>"
+        style="border: 2px solid <?=$false_black_placeholder?>; border-right: 30px solid <?=$false_black_placeholder?>;"
+        >
     <br/>
     <br/>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $dark_grey_value ?>"
-            placeholder="<?= $dark_grey_placeholder ?>"
-            style="border: 2px solid <?=$dark_grey_placeholder?>; border-right: 30px solid <?=$dark_grey_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_dark_grey"
+        name="mini_colors_options[mini_blacks_color_dark_grey]"
+        value="<?= $dark_grey_value ?>"
+        placeholder="<?= $dark_grey_placeholder ?>"
+        style="border: 2px solid <?=$dark_grey_placeholder?>; border-right: 30px solid <?=$dark_grey_placeholder?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $grey_value ?>"
-            placeholder="<?= $grey_placeholder ?>"
-            style="border: 2px solid <?=$grey_placeholder?>; border-right: 30px solid <?=$grey_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_grey"
+        name="mini_colors_options[mini_blacks_color_grey]"
+        value="<?= $grey_value ?>"
+        placeholder="<?= $grey_placeholder ?>"
+        style="border: 2px solid <?=$grey_placeholder?>; border-right: 30px solid <?=$grey_placeholder?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $light_grey_value ?>"
-            placeholder="<?= $light_grey_placeholder ?>"
-            style="border: 2px solid <?=$light_grey_placeholder?>; border-right: 30px solid <?=$light_grey_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_light_grey"
+        name="mini_colors_options[mini_blacks_color_light_grey]"
+        value="<?= $light_grey_value ?>"
+        placeholder="<?= $light_grey_placeholder ?>"
+        style="border: 2px solid <?=$light_grey_placeholder?>; border-right: 30px solid <?=$light_grey_placeholder?>;"
+        >
     <br/><br/>
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $false_white_value ?>"
-            placeholder="<?= $false_white_placeholder ?>"
-            style="border: 2px solid <?=$false_white_placeholder?>; border-right: 30px solid <?=$false_white_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_false_white"
+        name="mini_colors_options[mini_blacks_color_false_white]"
+        value="<?= $false_white_value ?>"
+        placeholder="<?= $false_white_placeholder ?>"
+        style="border: 2px solid <?=$false_white_placeholder?>; border-right: 30px solid <?=$false_white_placeholder?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $false_white_transp_value ?>"
-            placeholder="<?= $false_white_transp_placeholder ?>"
-            style="border: 2px solid <?=$false_white_transp_placeholder?>; border-right: 30px solid <?=$false_white_transp_placeholder?>;">
+        type="text"
+        id="mini_blacks_color_false_white_transp"
+        name="mini_colors_options[mini_blacks_color_false_white_transp]"
+        value="<?= $false_white_transp_value ?>"
+        placeholder="<?= $false_white_transp_placeholder ?>"
+        style="border: 2px solid <?=$false_white_transp_placeholder?>; border-right: 30px solid <?=$false_white_transp_placeholder?>;"
+        >
     <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $white_value ?>"
-            placeholder="<?= $white_placeholder ?>"
-            style="border: 2px solid <?=$white_placeholder?>; border-right: 30px solid <?=$white_placeholder?>;">
-    <?php /*
-    <input
-            type="text"
-            id="<?php echo esc_attr( $args['label_for'] ); ?>"
-            name="mini_colors_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-            value="<?= $transp_value ?>"
-            placeholder="<?= $transp_placeholder ?>">
-    */ ?>
+        type="text"
+        id="mini_blacks_color_white"
+        name="mini_colors_options[mini_blacks_color_white]"
+        value="<?= $white_value ?>"
+        placeholder="<?= $white_placeholder ?>"
+        style="border: 2px solid <?=$white_placeholder?>; border-right: 30px solid <?=$white_placeholder?>;"
+        >
+
     <p class="description">
         <?php esc_html_e( 'Greyscale', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
+
     <?php
 }
+
 
 function mini_logo_size_field_callback( $args ) {
     $options = get_option( 'mini_size_options' );
@@ -1344,8 +1412,6 @@ function mini_logo_size_field_callback( $args ) {
     </p>
     <?php
 }
-
-
 
 
 function mini_fonts_field_callback( $args ) {
@@ -1635,6 +1701,104 @@ function mini_fonts_field_callback( $args ) {
 }
 
 
+function mini_ext_lib_field_callback( $args ) {
+    $options = get_option( 'mini_ext_lib_options' );
+    $default_ext_lib_aos_status = '';
+    if (is_array($options) && array_key_exists('mini_aos', $options)) {
+        if ($options['mini_aos'] == true) {
+            $default_ext_lib_aos_status = 'checked';
+        }
+    }
+    ?>
+    <h4 class="">AOS</h4>
+    <input
+        type="checkbox"
+        id="mini_aos"
+        name="mini_ext_lib_options[mini_aos]"
+        <?=$default_ext_lib_aos_status?>
+    >
+    <br/>
+    <br/>
+    <hr>
+    <?php
+    $default_ext_lib_iconoir_status = '';
+    if (is_array($options) && array_key_exists('mini_iconoir', $options)) {
+        if ($options['mini_iconoir'] == true) {
+            $default_ext_lib_iconoir_status = 'checked';
+        }
+    }
+    ?>
+    <h4 class="">Iconoir</h4>
+    <input
+        type="checkbox"
+        id="mini_iconoir"
+        name="mini_ext_lib_options[mini_iconoir]"
+        <?=$default_ext_lib_iconoir_status?>
+    >
+    <br/>
+    <br/>
+    <hr>
+    <?php
+    $default_ext_lib_fontawesome_status = '';
+    if (is_array($options) && array_key_exists('mini_fontawesome', $options)) {
+        if ($options['mini_fontawesome'] == true) {
+            $default_ext_lib_fontawesome_status = 'checked';
+        }
+    }
+    ?>
+    <h4 class="">Fontawesome</h4>
+    <input
+        type="checkbox"
+        id="mini_fontawesome"
+        name="mini_ext_lib_options[mini_fontawesome]"
+        <?=$default_ext_lib_fontawesome_status?>
+    >
+    <br/>
+    <br/>
+    <hr>
+    <?php
+}
+
+
+function mini_analytics_field_callback( $args ) {
+    $options = get_option( 'mini_analytics_options' );
+    $default_google_analytics_status = '';
+    if (is_array($options) && array_key_exists('mini_google_analytics', $options)) {
+        if ($options['mini_google_analytics'] == true) {
+            $google_analytics_status = 'checked';
+        }
+    }
+    $default_google_analytics_code_default_value = 'Insert here Google Analytics G- code';
+    if ( is_array($options) && array_key_exists('mini_google_analytics_code', $options ) && $options['mini_google_analytics_code'] != null ) {
+        $google_analytics_code_value = $options['mini_google_analytics_code'];
+        $google_analytics_code_placeholder = null;
+    } else {
+        $google_analytics_code_value = null;
+        $google_analytics_code_placeholder = $default_google_analytics_code_default_value;
+    }
+    ?>
+    <h4 class="">Google Analytics</h4>
+    <input
+        type="checkbox"
+        id="mini_google_analytics"
+        name="mini_analytics_options[mini_google_analytics]"
+        <?=$google_analytics_status?>
+    >
+    <br/>
+    <br/>
+    <input
+        type="text"
+        id="mini_google_analytics_code"
+        name="mini_analytics_options[mini_google_analytics_code]"
+        value="<?= $google_analytics_code_value ?>"
+        placeholder="<?= $google_analytics_code_placeholder ?>"
+        style="width: 33.333333%;"
+    >
+    <br/>
+    <br/>
+    <hr>
+    <?php
+}
 
 
 /**
@@ -1681,7 +1845,24 @@ function mini_options_page() {
         'mini-size',
         'mini_size_options_page_html'
     );
+    add_submenu_page(
+        'mini',
+        'External libraries options',
+        'External libraries',
+        'manage_options',
+        'mini-ext-lib',
+        'mini_ext_lib_options_page_html'
+    );
+    add_submenu_page(
+        'mini',
+        'Analytics options',
+        'Analytics',
+        'manage_options',
+        'mini-analytics',
+        'mini_analytics_options_page_html'
+    );
 }
+
 
 /**
  * Register our mini_options_page to the admin_menu action hook.
@@ -1729,37 +1910,22 @@ function mini_options_page_html() {
     <?php
 }
 
-/**
- * Top level menu callback function
- */
+// CDN options page
 function mini_cdn_options_page_html() {
-    // check user capabilities
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-
-    // add error/update messages
-
-    // check if the user have submitted the settings
-    // WordPress will add the "settings-updated" $_GET parameter to the url
     if ( isset( $_GET['settings-updated'] ) ) {
-        // add settings saved message with the class of "updated"
         add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
     }
-
-    // show error/update messages
     settings_errors( 'mini_messages' );
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // output security fields for the registered setting "mini"
             settings_fields( 'mini_cdn' );
-            // output setting sections and their fields
-            // (sections are registered for "mini", each field is registered to a specific section)
             do_settings_sections( 'mini-cdn' );
-            // output save settings button
             submit_button( 'Save Settings' );
             ?>
         </form>
@@ -1767,37 +1933,22 @@ function mini_cdn_options_page_html() {
     <?php
 }
 
-/**
- * Top level menu callback function
- */
+// Colors options page
 function mini_color_options_page_html() {
-    // check user capabilities
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-
-    // add error/update messages
-
-    // check if the user have submitted the settings
-    // WordPress will add the "settings-updated" $_GET parameter to the url
     if ( isset( $_GET['settings-updated'] ) ) {
-        // add settings saved message with the class of "updated"
         add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
     }
-
-    // show error/update messages
     settings_errors( 'mini_messages' );
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // output security fields for the registered setting "mini"
             settings_fields( 'mini_colors' );
-            // output setting sections and their fields
-            // (sections are registered for "mini", each field is registered to a specific section)
             do_settings_sections( 'mini-colors' );
-            // output save settings button
             submit_button( 'Save Settings' );
             ?>
         </form>
@@ -1805,37 +1956,22 @@ function mini_color_options_page_html() {
     <?php
 }
 
-/**
- * Top level menu callback function
- */
+// Sizes options page
 function mini_size_options_page_html() {
-    // check user capabilities
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-
-    // add error/update messages
-
-    // check if the user have submitted the settings
-    // WordPress will add the "settings-updated" $_GET parameter to the url
     if ( isset( $_GET['settings-updated'] ) ) {
-        // add settings saved message with the class of "updated"
         add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
     }
-
-    // show error/update messages
     settings_errors( 'mini_messages' );
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // output security fields for the registered setting "mini"
             settings_fields( 'mini_size' );
-            // output setting sections and their fields
-            // (sections are registered for "mini", each field is registered to a specific section)
             do_settings_sections( 'mini-size' );
-            // output save settings button
             submit_button( 'Save Settings' );
             ?>
         </form>
@@ -1843,34 +1979,22 @@ function mini_size_options_page_html() {
     <?php
 }
 
+// Fonts options page
 function mini_font_options_page_html() {
-    // check user capabilities
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-
-    // add error/update messages
-
-    // check if the user have submitted the settings
-    // WordPress will add the "settings-updated" $_GET parameter to the url
     if ( isset( $_GET['settings-updated'] ) ) {
-        // add settings saved message with the class of "updated"
         add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
     }
-
-    // show error/update messages
     settings_errors( 'mini_messages' );
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <form action="options.php" method="post">
             <?php
-            // output security fields for the registered setting "mini"
             settings_fields( 'mini_font' );
-            // output setting sections and their fields
-            // (sections are registered for "mini", each field is registered to a specific section)
             do_settings_sections( 'mini-font' );
-            // output save settings button
             submit_button( 'Save Settings' );
             ?>
         </form>
@@ -1878,27 +2002,143 @@ function mini_font_options_page_html() {
     <?php
 }
 
+// External libraries options page
+function mini_ext_lib_options_page_html() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    if ( isset( $_GET['settings-updated'] ) ) {
+
+        add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
+    }
+    settings_errors( 'mini_messages' );
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <form action="options.php" method="post">
+            <?php
+            settings_fields( 'mini_ext_lib' );
+            do_settings_sections( 'mini-ext-lib' );
+            submit_button( 'Save Settings' );
+            ?>
+        </form>
+    </div>
+    <?php
+}
+
+// Analytics options page
+function mini_analytics_options_page_html() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    if ( isset( $_GET['settings-updated'] ) ) {
+        add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
+    }
+    settings_errors( 'mini_messages' );
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <form action="options.php" method="post">
+            <?php
+            settings_fields( 'mini_analytics' );
+            do_settings_sections( 'mini-analytics' );
+            submit_button( 'Save Settings' );
+            ?>
+        </form>
+    </div>
+    <?php
+}
+
+
+
+// Adding .css from CDN or from ext source or from local theme folder
+add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
     $options = get_option( 'mini_cdn_options' );
-    if (is_array($options) && array_key_exists('mini_cdn', $options) && $options['mini_cdn'] != null) {
-        //$miniCSS = 'https://mini.uwa.agency/css/mini.min.css';
-        $miniCSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@v1.3/css/mini.min.css';
+    if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
+        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
     } else {
-        $miniCSS = get_stylesheet_directory_uri().'/mini/mini.min.css';
+        if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
+            $mini_CSS = $options['css_cdn_url'];
+        } else {
+            $mini_CSS = get_stylesheet_directory_uri().'/mini/mini.min.css';
+        }
     }
-    wp_enqueue_style( 'wp_header', $miniCSS, array(), _S_VERSION);
+    wp_enqueue_style( 'wp_header', $mini_CSS, array(), _S_VERSION);
 }
 
-add_action( 'wp_enqueue_scripts', 'mini_css' );
+// Adding .js from CDN or from ext source or from local theme folder
+add_action( 'wp_enqueue_scripts', 'mini_js' );
 
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
-    if (is_array($options) && array_key_exists('mini_cdn', $options) && $options['mini_cdn'] != null) {
-        $miniJS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@v1.3/js/mini.js';
+    if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
+        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
     } else {
-        $miniJS = get_stylesheet_directory_uri().'/mini/mini.js';
+        if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
+            $mini_JS = $options['js_cdn_url'];
+        } else {
+            $mini_JS = get_stylesheet_directory_uri().'/mini/mini.js';
+        }
     }
-    wp_enqueue_script( 'wp_footer', $miniJS, array(), _S_VERSION, true);
+    wp_enqueue_script( 'wp_footer', $mini_JS, array(), _S_VERSION, true);
 }
 
-add_action( 'wp_enqueue_scripts', 'mini_js' );
+// Adding Google Web Fonts
+add_action( 'wp_head', 'themeprefix_load_fonts' ); 
+function themeprefix_load_fonts() { 
+    ?> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <?php
+}
+add_action( 'wp_enqueue_scripts', 'mini_main_gwf_font' );
+function mini_main_gwf_font(){
+    $options = get_option( 'mini_font_options' );
+    if (is_array($options) && array_key_exists('mini_main_font_embed_link', $options) && $options['mini_main_font_embed_link'] != null) {
+        $main_font_gwf_embed_link = $options['mini_main_font_embed_link'] ;
+    } else {
+        $main_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
+    }
+    wp_enqueue_style( 'wp_header', $main_font_gwf_embed_link, array(), _S_VERSION);
+}
+add_action( 'wp_enqueue_scripts', 'mini_secondary_gwf_font' );
+function mini_secondary_gwf_font(){
+    $options = get_option( 'mini_font_options' );
+    if (is_array($options) && array_key_exists('mini_secondary_font_embed_link', $options) && $options['mini_secondary_font_embed_link'] != null) {
+        $secondary_font_gwf_embed_link = $options['mini_secondary_font_embed_link'] ;
+    } else {
+        $secondary_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
+    }
+    wp_enqueue_style( 'wp_header', $secondary_font_gwf_embed_link, array(), _S_VERSION);
+}
+add_action( 'wp_enqueue_scripts', 'mini_serif_gwf_font' );
+function mini_serif_gwf_font(){
+    $options = get_option( 'mini_font_options' );
+    if (is_array($options) && array_key_exists('mini_serif_font_embed_link', $options) && $options['mini_serif_font_embed_link'] != null) {
+        $serif_font_gwf_embed_link = $options['mini_serif_font_embed_link'] ;
+    } else {
+        $serif_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap';
+    }
+    wp_enqueue_style( 'wp_header', $serif_font_gwf_embed_link, array(), _S_VERSION);
+}
+add_action( 'wp_enqueue_scripts', 'mini_mono_gwf_font' );
+function mini_mono_gwf_font(){
+    $options = get_option( 'mini_font_options' );
+    if (is_array($options) && array_key_exists('mini_mono_font_embed_link', $options) && $options['mini_mono_font_embed_link'] != null) {
+        $mono_font_gwf_embed_link = $options['mini_mono_font_embed_link'] ;
+    } else {
+        $mono_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap';
+    }
+    wp_enqueue_style( 'wp_header', $mono_font_gwf_embed_link, array(), _S_VERSION);
+}
+add_action( 'wp_enqueue_scripts', 'mini_handwriting_gwf_font' );
+function mini_handwriting_gwf_font(){
+    $options = get_option( 'mini_font_options' );
+    if (is_array($options) && array_key_exists('mini_handwriting_font_embed_link', $options) && $options['mini_handwriting_font_embed_link'] != null) {
+        $handwriting_font_gwf_embed_link = $options['mini_handwriting_font_embed_link'] ;
+    } else {
+        $handwriting_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap';
+    }
+    wp_enqueue_style( 'wp_header', $handwriting_font_gwf_embed_link, array(), _S_VERSION);
+}
