@@ -9,7 +9,7 @@
 
 if ( ! defined( '_S_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( '_S_VERSION', '2.0.0' );
+    define( '_S_VERSION', '1.0.0' );
 }
 
 /**
@@ -49,7 +49,7 @@ function mini_setup() {
     // This theme uses wp_nav_menu() in one location.
     register_nav_menus(
         array(
-            'main-menu' => esc_html__( 'Sidebar', 'mini' ),
+            'main-menu' => esc_html__( 'Main menu', 'mini' ),
             'user-menu' => esc_html__( 'User', 'mini' ),
             'footer-menu' => esc_html__( 'Footer', 'mini' ),
         )
@@ -489,6 +489,9 @@ function page_container_save_postdata( $post_id ) {
     // Update data in the database.
     update_post_meta( $post_id, 'page_container', $pageContainerStyle );
 }
+
+
+
 
 
 
@@ -2057,6 +2060,7 @@ function mini_css(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
         $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
+        $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
             $mini_CSS = $options['css_cdn_url'];
@@ -2074,6 +2078,7 @@ function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
         $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
+        $mini_JS = 'https://mini.uwa.agency/js/mini.js';
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
             $mini_JS = $options['js_cdn_url'];

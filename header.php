@@ -235,15 +235,19 @@
             <div class="boxes align-items-center justify-content-between">
                 <div class="box brand px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home">
+						<?php if (has_custom_logo()): ?>
                         <?php the_custom_logo(); ?>
+                        <?php else: ?>
+							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
+						<?php endif; ?>
                     </a>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
-					<?php
+					<?php /*
 					$mini_description = get_bloginfo( 'description', 'display' );
 					if ( $mini_description || is_customize_preview() ) :
 					?>
 						<p class="site-description"><?php echo $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-					<?php endif; ?>
+					<?php endif; */?>
                 </div>
                 <div class="box menus px-2">
                     <div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
@@ -260,13 +264,16 @@
 
 	<div class="sheet"><?php /* starting .sheet div */ ?>
 
-		<sidebar id="side-menu" class="">
+		<aside id="side-menu" class="">
 			<nav class="menu main-menu">
 				<?php
 				wp_nav_menu(
 					array(
+						'menu'           => 'main-menu',
 						'theme_location' => 'main-menu',
+						'container'		 => 'ul',
 						'menu_id'        => 'main-menu',
+						'menu_class'     => 'menu main-menu',
 					)
 				);
 				?>
@@ -275,10 +282,13 @@
 				<?php
 				wp_nav_menu(
 					array(
+						'menu'           => 'user-menu',
 						'theme_location' => 'user-menu',
+						'container'		 => 'ul',
 						'menu_id'        => 'user-menu',
+						'menu_class'     => 'menu user-menu',
 					)
 				);
 				?>
 			</nav>
-		</sidebar>
+		</aside>

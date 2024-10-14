@@ -30,8 +30,11 @@
 				<?php
 				wp_nav_menu(
 					array(
+						'menu'           => 'footer-menu',
 						'theme_location' => 'footer-menu',
+						'container'		 => 'ul',
 						'menu_id'        => 'footer-menu',
+						'menu_class'     => 'menu footer-menu',
 					)
 				);
 				?>
