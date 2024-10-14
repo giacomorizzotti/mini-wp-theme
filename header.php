@@ -220,6 +220,42 @@
 		}
 		?>}
 	</style>
+
+
+<?php
+	if ( 
+		is_array(get_option( 'mini_ext_lib_options' )) && 
+		array_key_exists('mini_iconoir', get_option( 'mini_ext_lib_options' ) ) && 
+		get_option( 'mini_ext_lib_options' )['mini_iconoir'] != null 
+	) {
+	?>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<?php
+	}
+?>
+<?php
+	if ( 
+		is_array(get_option( 'mini_ext_lib_options' )) && 
+		array_key_exists('mini_fontawesome', get_option( 'mini_ext_lib_options' ) ) && 
+		get_option( 'mini_ext_lib_options' )['mini_fontawesome'] != null 
+	) {
+?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
+<?php
+	}
+?>
+<?php
+	if ( 
+		is_array(get_option( 'mini_ext_lib_options' )) && 
+		array_key_exists('mini_aos', get_option( 'mini_ext_lib_options' ) ) && 
+		get_option( 'mini_ext_lib_options' )['mini_aos'] != null 
+	) {
+?>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<?php
+	}
+?>
+
 </head>
 
 <body <?php body_class('mini'); ?>>

@@ -9,7 +9,7 @@
 
 if ( ! defined( '_S_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( '_S_VERSION', '1.0.0' );
+    define( '_S_VERSION', '1.1.5' );
 }
 
 /**
@@ -215,98 +215,6 @@ add_action( 'admin_head', 'fix_svg' );
 
 
 /**
- * ADD header styling meta box to page edit
- */
-
-// Add blocks to the main column on the page pages
-add_action( 'add_meta_boxes', 'add_header_styling_box' );
-
-// Saving data when the post is saved
-add_action( 'save_post', 'header_styling_save_postdata' );
-
-function add_header_styling_box() {
-    add_meta_box(
-        'header-style',
-        'Header style',
-        'header_styling_box_html',
-        'page',
-        'side'
-    );
-}
-
-// HTML code of the block
-function header_styling_box_html( $post, $meta ){
-
-    // field value
-    $headerTopStyle = get_post_meta( $post->ID, 'header_top', true);
-    $headerScrollStyle = get_post_meta( $post->ID, 'header_scroll', true);
-
-    $headerTopStyleDefaultState = null;
-    if ( $headerTopStyle == '') { $headerTopStyleDefaultState = ' selected'; }
-    $headerTopStyleInvState = null;
-    if ( $headerTopStyle == 'top-neg') { $headerTopStyleInvState = ' selected'; }
-    $headerTopStyleWhState = null;
-    if ( $headerTopStyle == 'top-wh') { $headerTopStyleWhState = ' selected'; }
-    $headerTopStyleBkState = null;
-    if ( $headerTopStyle == 'top-bk') { $headerTopStyleBkState = ' selected'; }
-
-    // Form fields for entering data
-    echo '<label for="header_top_style" style="display: block; margin-bottom: 5px;">' . __("Header top style", 'header_styleng_box_textdomain' ) . '</label> ';
-    echo '<select name="header_top_style">
-		<option value=""'.$headerTopStyleDefaultState.'>Normal</option>
-		<option value="top-neg"'.$headerTopStyleInvState.'>Invert</option>
-		<option value="top-wh"'.$headerTopStyleWhState.'>White Background</option>
-		<option value="top-bk"'.$headerTopStyleBkState.'>Black Background</option>
-	</select>';
-
-    echo '<div style="display: block; height: 15px;"></div>';
-
-    $headerScrollStyleDefaultState = null;
-    if ( $headerScrollStyle == '') { $headerScrollStyleDefaultState = ' selected'; }
-    $headerScrollStyleInvState = null;
-    if ( $headerScrollStyle == 'scroll-neg') { $headerScrollStyleInvState = ' selected'; }
-    $headerScrollStyleWhState = null;
-    if ( $headerScrollStyle == 'scroll-wh') { $headerScrollStyleWhState = ' selected'; }
-    $headerScrollStyleBkState = null;
-    if ( $headerScrollStyle == 'scroll-bk') { $headerScrollStyleBkState = ' selected'; }
-
-    echo '<label for="header_scroll_style" style="display: block; margin-bottom: 5px;">' . __("Header scrolled style", 'header_styleng_box_textdomain' ) . '</label> ';
-    echo '<select name="header_scroll_style">
-		<option value=""'.$headerScrollStyleDefaultState.'>Normal</option>
-		<option value="scroll-neg"'.$headerScrollStyleInvState.'>Invert</option>
-		<option value="scroll-wh"'.$headerScrollStyleWhState.'>White Background</option>
-		<option value="scroll-bk"'.$headerScrollStyleBkState.'>Black Background</option>
-	</select>';
-
-}
-
-function header_styling_save_postdata( $post_id ) {
-
-    // make sure the field is set.
-    if ( ! isset( $_POST['header_top_style'] ) || ! isset( $_POST['header_scroll_style'] ) ) { return; }
-
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
-
-    // Everything is OK. Now, we need to find and save the data
-    if ( isset( $_POST['header_top_style'] ) ) {
-        // Define the value of the input field.
-        $headerTopStyle = $_POST['header_top_style'];
-        // Update data in the database.
-        update_post_meta( $post_id, 'header_top', $headerTopStyle );
-    }
-    if ( isset( $_POST['header_scroll_style'] ) ) {
-        // Define the value of the input field.
-        $headerScrollStyle = $_POST['header_scroll_style'];
-        // Update data in the database.
-        update_post_meta( $post_id, 'header_scroll', $headerScrollStyle );
-    }
-}
-
-/**
  * ADD title presence meta box to page edit
  */
 
@@ -338,7 +246,7 @@ function title_presence_box_html( $post, $meta ){
     }
 
     // Form fields for entering data
-    echo '<label for="title_presence" style="display: block; margin-bottom: 5px;">' . __("Show article title", 'title_presence_box_textdomain' ) . '</label> ';
+    echo '<label for="title_presence" style="display: block; margin-bottom: 5px;">' . __("Show title", 'title_presence_box_textdomain' ) . '</label> ';
     echo '<input type="checkbox" id="title_presence" name="title_presence"'.$titlePresenceState.'>';
 
 }
@@ -500,13 +408,50 @@ function page_container_save_postdata( $post_id ) {
 
 
 
-
-
-
-
-
-
-
+// START - MINI LOGIN
+// mini login style
+function mini_login_style() { ?>
+    <style type="text/css">
+        body.login-action-login {
+            background: -webkit-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
+            background: -moz-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
+            background: -o-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
+            background: linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
+        }
+        body.login-action-login #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg);
+            width:100px;
+            height: 58px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-bottom: 3rem;
+            filter: brightness(0) invert(1);
+        }
+        body.login-action-login #loginform {
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            border:0;
+            box-shadow: 0 0 10px 0 rgb( 0 0 0 / 45%);
+        }
+        body.login-action-login #nav a.wp-login-lost-password, body.login-action-login #backtoblog a, .privacy-policy-page-link a.privacy-policy-link {
+            color: white;
+        }
+        body.login-action-login #nav a.wp-login-lost-password:hover, body.login-action-login #backtoblog a:hover, .privacy-policy-page-link a.privacy-policy-link:hover {
+            color: #CCCCCC;
+        }
+        body.login-action-login .language-switcher #language-switcher label span.dashicons {
+            color: white;
+        }
+    </style>
+<?php }
+add_action( 'login_enqueue_scripts', 'mini_login_style' );
+// mini login link
+function mini_login_url( $url ) {
+	return get_bloginfo( 'url' );
+}
+add_filter( 'login_headerurl', 'mini_login_url', 10, 1 );
+// END - MINI LOGIN
 
 
 /**
@@ -2090,6 +2035,7 @@ function mini_js(){
 }
 
 // Adding Google Web Fonts
+/*
 add_action( 'wp_head', 'themeprefix_load_fonts' ); 
 function themeprefix_load_fonts() { 
     ?> 
@@ -2097,6 +2043,7 @@ function themeprefix_load_fonts() {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <?php
 }
+*/
 add_action( 'wp_enqueue_scripts', 'mini_main_gwf_font' );
 function mini_main_gwf_font(){
     $options = get_option( 'mini_font_options' );
@@ -2105,7 +2052,7 @@ function mini_main_gwf_font(){
     } else {
         $main_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
     }
-    wp_enqueue_style( 'wp_header', $main_font_gwf_embed_link, array(), _S_VERSION);
+    wp_enqueue_style( 'google_fonts', $main_font_gwf_embed_link, array(), _S_VERSION);
 }
 add_action( 'wp_enqueue_scripts', 'mini_secondary_gwf_font' );
 function mini_secondary_gwf_font(){
@@ -2115,7 +2062,7 @@ function mini_secondary_gwf_font(){
     } else {
         $secondary_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
     }
-    wp_enqueue_style( 'wp_header', $secondary_font_gwf_embed_link, array(), _S_VERSION);
+    wp_enqueue_style( 'google_fonts', $secondary_font_gwf_embed_link, array(), _S_VERSION);
 }
 add_action( 'wp_enqueue_scripts', 'mini_serif_gwf_font' );
 function mini_serif_gwf_font(){
@@ -2125,7 +2072,9 @@ function mini_serif_gwf_font(){
     } else {
         $serif_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap';
     }
-    wp_enqueue_style( 'wp_header', $serif_font_gwf_embed_link, array(), _S_VERSION);
+    if (is_array($options) && array_key_exists('mini_serif_font_status', $options) && $options['mini_serif_font_status'] != null) {
+        wp_enqueue_style( 'google_fonts', $serif_font_gwf_embed_link, array(), _S_VERSION);
+    }
 }
 add_action( 'wp_enqueue_scripts', 'mini_mono_gwf_font' );
 function mini_mono_gwf_font(){
@@ -2135,7 +2084,9 @@ function mini_mono_gwf_font(){
     } else {
         $mono_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap';
     }
-    wp_enqueue_style( 'wp_header', $mono_font_gwf_embed_link, array(), _S_VERSION);
+    if (is_array($options) && array_key_exists('mini_mono_font_status', $options) && $options['mini_mono_font_status'] != null) {
+        wp_enqueue_style( 'google_fonts', $mono_font_gwf_embed_link, array(), _S_VERSION);
+    }
 }
 add_action( 'wp_enqueue_scripts', 'mini_handwriting_gwf_font' );
 function mini_handwriting_gwf_font(){
@@ -2145,5 +2096,7 @@ function mini_handwriting_gwf_font(){
     } else {
         $handwriting_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap';
     }
-    wp_enqueue_style( 'wp_header', $handwriting_font_gwf_embed_link, array(), _S_VERSION);
+    if (is_array($options) && array_key_exists('mini_handwriting_font_status', $options) && $options['mini_handwriting_font_status'] != null) {
+        wp_enqueue_style( 'google_fonts', $handwriting_font_gwf_embed_link, array(), _S_VERSION);
+    }
 }

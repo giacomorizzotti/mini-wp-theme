@@ -1,8 +1,13 @@
 <?php
 /**
- * The template for displaying all single posts
+ * The template for displaying all pages
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site may use a
+ * different template.
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package mini
  */
@@ -12,15 +17,17 @@ $container_width = get_post_meta($post->ID, 'page_container', true);
 
 $content_size = 'box-100';
 if ( is_active_sidebar( 'sidebar-1' ) ) {
-	$content_size = 'box-75';
+	if ($sidebar_presence != false) {
+		$content_size = 'box-75';
+	}
 }
 
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<main id="primary" class="site-main blog">
 		<div class="container fw">
-			<div class="container <?=$container_width?>">
+			<div class="container <?= $container_width ?>">
 				<div class="boxes space-top-bot">
 					<div class="box my-0 p-0 <?= $content_size ?>">
 						<div class="boxes">
@@ -29,14 +36,7 @@ get_header();
 							while ( have_posts() ) :
 								the_post();
 
-								get_template_part( 'template-parts/content', get_post_type() );
-
-								the_post_navigation(
-									array(
-										'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'mini' ) . '</span> <span class="nav-title">%title</span>',
-										'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'mini' ) . '</span> <span class="nav-title">%title</span>',
-									)
-								);
+								get_template_part( 'template-parts/content', 'page' );
 
 								// If comments are open or we have at least one comment, load up the comment template.
 								if ( comments_open() || get_comments_number() ) :
@@ -45,14 +45,22 @@ get_header();
 
 							endwhile; // End of the loop.
 							?>
-							
+
 						</div>
 					</div>
+					
+					<?php
+					if ($sidebar_presence == true):
+					?>
 
 					<?php
 					get_sidebar();
 					?>
-
+					
+					<?php
+					endif;
+					?>
+					
 				</div>
 			</div>
 		</div>

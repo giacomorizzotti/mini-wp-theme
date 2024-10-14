@@ -12,14 +12,24 @@
  * @package mini
  */
 
+$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
+$container_width = get_post_meta($post->ID, 'page_container', true);
+
+$content_size = 'box-100';
+if ( is_active_sidebar( 'sidebar-1' ) ) {
+	if ($sidebar_presence != false) {
+		$content_size = 'box-75';
+	}
+}
+
 get_header();
 ?>
 
 	<main id="primary" class="site-main">
 		<div class="container fw">
-			<div class="container">
+			<div class="container <?= $container_width ?>">
 				<div class="boxes space-top-bot">
-					<div class="box my-0 p-0 <?php if ( is_active_sidebar( 'sidebar-1' ) ): ?>box-75<?php else: ?>box-100<?php endif; ?>">
+					<div class="box my-0 p-0 <?= $content_size ?>">
 						<div class="boxes">
 
 							<?php
@@ -40,7 +50,15 @@ get_header();
 					</div>
 					
 					<?php
+					if ($sidebar_presence == true):
+					?>
+
+					<?php
 					get_sidebar();
+					?>
+					
+					<?php
+					endif;
 					?>
 					
 				</div>

@@ -9,7 +9,7 @@
 
 ?>
 
-<div class="box box-100 p-2">
+<div class="box box-100 my-0 p-0">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<header class="entry-header">
 			<?php

@@ -9,11 +9,16 @@
 
 ?>
 
-<div class="box box-100 p-2">
+<div class="box box-100 my-0 p-0">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+		<?php
+		$title_presence = get_post_meta($post->ID, 'title_presence', true);
+		if ($title_presence == true):
+		?>
 		<header class="entry-header">
 			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 		</header><!-- .entry-header -->
+		<?php endif; ?>
 
 		<?php mini_post_thumbnail(); ?>
 
