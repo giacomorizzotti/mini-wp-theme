@@ -408,6 +408,19 @@ function page_container_save_postdata( $post_id ) {
 
 
 
+
+
+
+
+
+// mini logo image class
+add_filter( 'get_custom_logo', 'change_logo_class' );
+function change_logo_class( $html ) {
+    $html = str_replace( 'custom-logo', 'your-custom-class', $html );
+    $html = str_replace( 'custom-logo-link', 'your-custom-class', $html );
+    return $html;
+}
+
 // START - MINI LOGIN
 // mini login style
 function mini_login_style() { ?>
@@ -615,9 +628,34 @@ function mini_settings_init() {
         )
     );
 
+    // Register a new setting for "mini" page.
+    register_setting( 'mini_company', 'mini_company_options');
 
+    // Register a new section in the "mini" page.
+    add_settings_section(
+        'mini_company_section',
+        __( 'Mini company settings', 'mini' ),
+        'mini_company_section_callback',
+        'mini-company'
+    );
+
+    add_settings_field(
+        'mini_company', // As of WP 4.6 this value is used only internally.
+        // Use $args' label_for to populate the id inside the callback.
+        __( 'Company / Ownership', 'mini' ),
+        'mini_company_field_callback',
+        'mini-company',
+        'mini_company_section',
+        array(
+            'label_for'         => 'mini_company',
+            'class'             => 'mini_row',
+            'mini_custom_data' => 'custom',
+        )
+    );
 
 }
+
+
 
 
 
@@ -668,6 +706,11 @@ function mini_ext_lib_section_callback( $args ) {
 function mini_analytics_section_callback( $args ) {
     ?>
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the analytics section', 'mini' ); ?></p>
+    <?php
+}
+function mini_company_section_callback( $args ) {
+    ?>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the company/ownership section', 'mini' ); ?></p>
     <?php
 }
 
@@ -1707,7 +1750,6 @@ function mini_ext_lib_field_callback( $args ) {
     <?php
 }
 
-
 function mini_analytics_field_callback( $args ) {
     $options = get_option( 'mini_analytics_options' );
     $default_google_analytics_status = '';
@@ -1748,6 +1790,67 @@ function mini_analytics_field_callback( $args ) {
     <?php
 }
 
+function mini_company_field_callback( $args ) {
+    $options = get_option( 'mini_company_options' );
+    $company_name_default_value = 'Company';
+    $company_address_1_default_value = 'Address line 1';
+    $company_address_2_default_value = 'Address line 2';
+    if ( is_array($options) && array_key_exists('mini_company_name', $options ) && $options['mini_company_name'] != null ) {
+        $company_name_value = $options['mini_company_name'];
+        $company_name_placeholder = null;
+    } else {
+        $company_name_value = null;
+        $company_name_placeholder = $company_name_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_company_address_1', $options ) && $options['mini_company_address_1'] != null ) {
+        $company_address_1_value = $options['mini_company_address_1'];
+        $company_address_1_placeholder = null;
+    } else {
+        $company_address_1_value = null;
+        $company_address_1_placeholder = $company_address_1_default_value;
+    }
+    if ( is_array($options) && array_key_exists('mini_company_address_2', $options ) && $options['mini_company_address_2'] != null ) {
+        $company_address_2_value = $options['mini_company_address_2'];
+        $company_address_2_placeholder = null;
+    } else {
+        $company_address_2_value = null;
+        $company_address_2_placeholder = $company_address_2_default_value;
+    }
+    ?>
+    <h4 class=""><?= esc_html__( 'Company name', 'mini' ) ?></h4>
+    <input
+        type="text"
+        id="mini_company_name"
+        name="mini_company_options[mini_company_name]"
+        value="<?= $company_name_value ?>"
+        placeholder="<?= $company_name_placeholder ?>"
+        style="width: 33.333333%;"
+    >
+    <h4 class=""><?= esc_html__( 'Address', 'mini' ) ?></h4>
+    <input
+        type="text"
+        id="mini_company_address_1"
+        name="mini_company_options[mini_company_address_1]"
+        value="<?= $company_address_1_value ?>"
+        placeholder="<?= $company_address_1_placeholder ?>"
+        style="width: 100%;"
+    >
+    <br/>
+    <br/>
+    <input
+        type="text"
+        id="mini_company_address_2"
+        name="mini_company_options[mini_company_address_2]"
+        value="<?= $company_address_2_value ?>"
+        placeholder="<?= $company_address_2_placeholder ?>"
+        style="width: 100%;"
+    >
+    <br/>
+    <br/>
+    <hr>
+    <?php
+}
+
 
 /**
  * Add the top level menu page.
@@ -1759,7 +1862,7 @@ function mini_options_page() {
         'manage_options',
         'mini',
         'mini_options_page_html',
-        'dashicons-carrot'
+        'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_space_around.svg'
     );
     add_submenu_page(
         'mini',
@@ -1808,6 +1911,14 @@ function mini_options_page() {
         'manage_options',
         'mini-analytics',
         'mini_analytics_options_page_html'
+    );
+    add_submenu_page(
+        'mini',
+        'Company options',
+        'Company',
+        'manage_options',
+        'mini-company',
+        'mini_company_options_page_html'
     );
 }
 
@@ -1990,6 +2101,29 @@ function mini_analytics_options_page_html() {
             <?php
             settings_fields( 'mini_analytics' );
             do_settings_sections( 'mini-analytics' );
+            submit_button( 'Save Settings' );
+            ?>
+        </form>
+    </div>
+    <?php
+}
+
+// Company options page
+function mini_company_options_page_html() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    if ( isset( $_GET['settings-updated'] ) ) {
+        add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
+    }
+    settings_errors( 'mini_messages' );
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <form action="options.php" method="post">
+            <?php
+            settings_fields( 'mini_company' );
+            do_settings_sections( 'mini-company' );
             submit_button( 'Save Settings' );
             ?>
         </form>

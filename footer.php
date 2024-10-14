@@ -22,8 +22,12 @@
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">
-						<?php the_custom_logo(); ?>
-					</a>
+						<?php if (has_custom_logo()): ?>
+                        <?php the_custom_logo(); ?>
+                        <?php else: ?>
+							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem" alt="emblem"/>
+						<?php endif; ?>
+                    </a>
                 </div>
                 <div class="box box-33 footer-menu px-2">
                     <nav class="menu footer-menu">

@@ -27,7 +27,7 @@ get_header();
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
-					<div class="box my-0 p-0 <?= $content_size ?>">
+					<div class="box my-0 \p-0 <?= $content_size ?>">
 						<div class="boxes">
 
 							<?php

@@ -20,6 +20,7 @@ if ( post_password_required() ) {
 }
 ?>
 
+<div class="space space-2"></div>
 <div class="box box-100 p-2 bord-1 bord-fw">
 	<div id="comments" class="comments-area">
 

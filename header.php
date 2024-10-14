@@ -229,7 +229,7 @@
 		get_option( 'mini_ext_lib_options' )['mini_iconoir'] != null 
 	) {
 	?>
-<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" rel="stylesheet">
 <?php
 	}
 ?>
@@ -270,7 +270,7 @@
         <div class="container">
             <div class="boxes align-items-center justify-content-between">
                 <div class="box brand px-2">
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
 						<?php if (has_custom_logo()): ?>
                         <?php the_custom_logo(); ?>
                         <?php else: ?>
