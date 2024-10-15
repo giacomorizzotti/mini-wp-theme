@@ -899,4 +899,18 @@ textarea {
   margin-bottom: 1.5em;
 }
 
+#edit-link {
+  display: block;
+  background: var(--warning);
+  padding: var(--padding);
+}
+#edit-link ::before {
+  content: "";
+}
+#edit-link a {
+  display: inline-block;
+  line-height: 1;
+  color: var(--white);
+}
+
 /*# sourceMappingURL=style.css.map */

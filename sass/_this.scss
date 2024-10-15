@@ -1,0 +1,13 @@
+#edit-link {
+    display: block;
+    background: var(--warning);
+    padding: var(--padding);
+    ::before {
+        content: "";
+    }
+    a {
+        display: inline-block;
+        line-height: 1;
+        color: var(--white);
+    }
+}
