@@ -55,7 +55,11 @@
             </div>
         </div>
     </footer>
-	
+<?php
+if ( 
+    get_variable('mini_options','credits') != false
+) {
+?>
     <div id="credits" class="fw-bg">
         <p class="S m-0 center grey-text p-1 pt-05">
             <i class="fa fa-heart mini-text heart" aria-hidden="true"></i>&nbsp;
@@ -70,6 +74,9 @@
             </a>
         </p>
     </div>
+<?php
+	}
+?>
 
 </div><!-- #page -->
 

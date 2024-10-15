@@ -478,6 +478,31 @@ add_filter( 'login_headerurl', 'mini_login_url', 10, 1 );
 function mini_settings_init() {
 
     // Register a new setting for "mini" page.
+    register_setting( 'mini', 'mini_options');
+
+    // Register a new section in the "mini" page.
+    add_settings_section(
+        'mini_section',
+        __( 'Mini general settings', 'mini' ),
+        'mini_section_callback',
+        'mini'
+    );
+
+    add_settings_field(
+        'mini_field', // As of WP 4.6 this value is used only internally.
+        // Use $args' label_for to populate the id inside the callback.
+        __( 'General options', 'mini' ),
+        'mini_field_callback',
+        'mini',
+        'mini_section',
+        array(
+            'label_for'         => 'mini',
+            'class'             => 'mini_row',
+            'mini_custom_data' => 'custom',
+        )
+    );
+
+    // Register a new setting for "mini" page.
     register_setting( 'mini_cdn', 'mini_cdn_options');
 
     // Register a new section in the "mini" page.
@@ -678,6 +703,11 @@ add_action( 'admin_init', 'mini_settings_init' );
  *
  * @param array $args  The settings array, defining title, id, callback.
  */
+function mini_section_callback( $args ) {
+    ?>
+    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the General options section', 'mini' ); ?></p>
+    <?php
+}
 function mini_cdn_section_callback( $args ) {
     ?>
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the CDN section', 'mini' ); ?></p>
@@ -808,6 +838,16 @@ function checkbox_option(
  *
  * @param array $args
  */
+
+function mini_field_callback( $args ) {
+    ?>
+    <?= checkbox_option('mini_options','credits'); ?>
+    <p class="description">
+        <?php esc_html_e( 'Footer credits strip', 'mini' ); ?>
+    </p>
+    <?php
+}
+
 function mini_cdn_field_callback( $args ) {
     ?>
     <?= checkbox_option('mini_cdn_options','cdn'); ?>
@@ -1292,6 +1332,8 @@ add_shortcode('get_company_service_phone', 'get_company_service_phone');
  * END OF SHORTCODES
  */
 
+
+
 /**
  * Register our mini_options_page to the admin_menu action hook.
  */
@@ -1321,7 +1363,7 @@ function mini_options_page_html() {
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
         <p class=""><span class="bold">mini</span> is a frontend framework.</p>
-        <!--
+        <br/>
         <form action="options.php" method="post">
             <?php
             // output security fields for the registered setting "mini"
@@ -1333,7 +1375,6 @@ function mini_options_page_html() {
             submit_button( 'Save Settings' );
             ?>
         </form>
-        -->
     </div>
     <?php
 }

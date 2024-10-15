@@ -113,10 +113,10 @@
 	gtag("js", new Date());
 	gtag("config", "<?=get_variable('mini_analytics_options','mini_google_analytics_code')?>");
 </script>
-
 <?php
 	}
 ?>
+
 </head>
 
 <body <?php body_class('mini'); ?>>
