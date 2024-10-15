@@ -17,8 +17,16 @@
         <div class="container space-top-bot">
             <div class="boxes">
                 <div class="box box-33 footer-info px-2">
-                    <p class=""><?php echo date("Y"); ?>&nbsp;©&nbsp;<span class="bold">uwa.agency</span></p>
-                    <p class="s">A <a href="https://mini.uwa.agency/" target="_blank" class="mini-text"><i>mini</i></a> based website by <a href="https://www.uwa.agency/" target="_blank" class="mini-text"><strong>UWA</strong></a></p>
+                    <p class="m-0 L"><?php echo date("Y"); ?>&nbsp;©&nbsp;<span class="bold"><?= do_shortcode('[get_company_name]'); ?></span></p>
+                    <div class="space-1"></div>
+                    <p class="m-0"><?= do_shortcode('[get_company_address_line_1]'); ?></p>
+                    <p class="m-0"><?= do_shortcode('[get_company_address_line_2]'); ?></p>
+                    <div class="space-1"></div>
+                    <p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p>
+                    <p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p>
+
+                    <p class="grey-text S">A <a href="https://mini.uwa.agency/" target="_blank" class="mini-text"><i>mini</i></a> based website by <a href="https://www.uwa.agency/" target="_blank" class="mini-text"><strong>UWA</strong></a></p>
+
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">

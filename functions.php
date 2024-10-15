@@ -715,6 +715,89 @@ function mini_company_section_callback( $args ) {
 }
 
 
+
+/**
+ * Generif functions
+ */
+function text_field_option(
+    string $option_group, 
+    string $option, 
+    string $default_value = '', 
+    string $style='width: 100%;',
+) {
+    $options = get_option( $option_group );
+    if ( 
+        is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
+    ) {
+        $value = $options[$option];
+        $placeholder = null;
+    } else {
+        $value = $options[$option];
+        $placeholder = $default_value;
+    }
+    return '
+    <input
+        type="text"
+        id="'.$option.'"
+        name="'.$option_group.'['.$option.']"
+        value="'.$value.'"
+        placeholder="'.htmlspecialchars($placeholder).'"
+        style="'.$style.'";
+    >
+    ';
+}
+function text_field_color_option(
+    string $option_group, 
+    string $option, 
+    string $default_value = '', 
+    string $style='',
+) {
+    $options = get_option( $option_group );
+    if ( 
+        is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
+    ) {
+        $value = $options[$option];
+        $placeholder = null;
+    } else {
+        $value = $options[$option];
+        $placeholder = $default_value;
+    }
+    $color = $placeholder;
+    if ( $value != '' ) {
+        $color = $value;
+    }
+    return '
+    <input
+        type="text"
+        id="'.$option.'"
+        name="'.$option_group.'['.$option.']"
+        value="'.$value.'"
+        placeholder="'.$placeholder.'"
+        style="border: 2px solid '.$color.'; border-right: 30px solid '.$color.';'.$style.'";
+    >
+    ';
+}
+function checkbox_option(
+    string $option_group, 
+    string $option, 
+    string $status = '',
+) {
+    $options = get_option( $option_group );
+    if (is_array($options) && array_key_exists($option, $options)) {
+        if ($options[$option] == true) {
+            $status = 'checked';
+        }
+    }
+    return '
+    <input
+        type="checkbox"
+        id="cdn"
+        name="'.$option_group.'['.$option.']"
+        '.$status.'
+    >
+    ';
+}
+
 /**
  * CDN field callback function.
  *
@@ -726,60 +809,12 @@ function mini_company_section_callback( $args ) {
  * @param array $args
  */
 function mini_cdn_field_callback( $args ) {
-    $options = get_option( 'mini_cdn_options' );
-    $status = '';
-    $cdn_css_default_value = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
-    $cdn_js_default_value = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
-    if (is_array($options) && array_key_exists('cdn', $options)) {
-        if ($options['cdn'] == true) {
-            $status = 'checked';
-        }
-    }
-    if ( 
-        is_array($options) && array_key_exists('css_cdn_url', $options ) && $options['css_cdn_url'] != null 
-    ) {
-        $cdn_css_value = $options['css_cdn_url'];
-        $cdn_css_placeholder = null;
-    } else {
-        $cdn_css_value = $options['css_cdn_url'];
-        $cdn_css_placeholder = $cdn_css_default_value;
-    }
-    if ( 
-        is_array($options) && array_key_exists('js_cdn_url', $options ) && $options['js_cdn_url'] != null 
-    ) {
-        $cdn_js_value = $options['js_cdn_url'];
-        $cdn_js_placeholder = null;
-    } else {
-        $cdn_js_value = $options['js_cdn_url'];
-        $cdn_js_placeholder = $cdn_js_default_value;
-    }
     ?>
-    <input
-        type="checkbox"
-        id="cdn"
-        name="mini_cdn_options[cdn]"
-        <?=$status?>
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="css_cdn_url"
-        name="mini_cdn_options[css_cdn_url]"
-        value="<?= $cdn_css_value ?>"
-        placeholder="<?= $cdn_css_placeholder ?>"
-        style="width: 100%";
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="css_cdn_url"
-        name="mini_cdn_options[js_cdn_url]"
-        value="<?= $cdn_js_value ?>"
-        placeholder="<?= $cdn_js_placeholder ?>"
-        style="width: 100%";
-    >
+    <?= checkbox_option('mini_cdn_options','cdn'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
@@ -790,184 +825,13 @@ function mini_cdn_field_callback( $args ) {
 }
 
 function mini_colors_callback( $args ) {
-    // Get the value of the setting we've registered with register_setting()
-    $options = get_option( 'mini_colors_options' );
-    
-    /* Main color */
-    $main_color_default_value = 'rgb(60 90 255 / 100%)';
-    $main_color_dark_default_value = 'rgb(50 75 180 / 100%)';
-    $main_color_transp_default_value = 'rgb( 60 90 255 / 20% )';
-    if ( 
-        is_array($options) && array_key_exists('mini_main_color', $options ) && $options['mini_main_color'] != null
-    ) {
-        $main_color_value = $options['mini_main_color'];
-        $main_color_placeholder = null;
-        $main_color_color = $options['mini_main_color'];
-    } else {
-        $main_color_value = null;
-        $main_color_placeholder = $main_color_default_value;
-        $main_color_color = $main_color_default_value;
-    }
-    if ( 
-        is_array($options) && array_key_exists('mini_main_color_dark', $options ) && $options['mini_main_color_dark'] != null 
-    ) {
-        $main_color_dark_value = $options['mini_main_color_dark'];
-        $main_color_dark_placeholder = null;
-        $main_color_dark_color = $options['mini_main_color_dark'];
-    } else {
-        $main_color_dark_value = null;
-        $main_color_dark_placeholder = $main_color_dark_default_value;
-        $main_color_dark_color = $main_color_dark_default_value;
-    }
-    if ( 
-        is_array($options) && array_key_exists('mini_main_color_transp', $options ) && $options['mini_main_color_transp'] != null 
-    ) {
-        $main_color_transp_value = $options['mini_main_color_transp'];
-        $main_color_transp_placeholder = null;
-        $main_color_transp_color = $options['mini_main_color_transp'];
-    } else {
-        $main_color_transp_value = null;
-        $main_color_transp_placeholder = $main_color_transp_default_value;
-        $main_color_transp_color = $main_color_transp_default_value;
-    }
-    /* Second color */
-    $second_color_default_value = 'rgb(50 75 180 / 100%)';
-    $second_color_dark_default_value = 'rgb(37 56 133 / 100%)';
-    if ( 
-        is_array($options) && array_key_exists('mini_second_color', $options ) && $options['mini_second_color'] != null
-    ) {
-        $second_color_value = $options['mini_second_color'];
-        $second_color_placeholder = null;
-        $second_color_color = $border_color['mini_second_color'];
-    } else {
-        $second_color_value = null;
-        $second_color_placeholder = $second_color_default_value;
-        $second_color_color = $second_color_default_value;
-    }
-    if ( 
-        is_array($options) && array_key_exists('mini_second_color_dark', $options ) && $options['mini_second_color_dark'] != null
-    ) {
-        $second_color_dark_value = $options['mini_second_color_dark'];
-        $second_color_dark_placeholder = null;
-        $second_color_dark_color = $options['mini_second_color_dark'];
-    } else {
-        $second_color_dark_value = null;
-        $second_color_dark_placeholder = $second_color_dark_default_value;
-        $second_color_dark_color = $second_color_dark_default_value;
-    }
-    /* Third color */
-    $third_color_default_value = 'rgb(60 30 99 / 100%)';
-    $third_color_dark_default_value = 'rgb(34 15 61 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_third_color', $options ) && $options['mini_third_color'] != null ) {
-        $third_color_value = $options['mini_third_color'];
-        $third_color_placeholder = null;
-        $third_color_color = $options['mini_third_color'];
-    } else {
-        $third_color_value = null;
-        $third_color_placeholder = $third_color_default_value;
-        $third_color_color = $third_color_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_third_color_dark', $options ) && $options['mini_third_color_dark'] != null ) {
-        $third_color_dark_value = $options['mini_third_color_dark'];
-        $third_color_dark_placeholder = null;
-        $third_color_dark_color = $options['mini_third_color_dark'];
-    } else {
-        $third_color_dark_value = null;
-        $third_color_dark_placeholder = $third_color_dark_default_value;
-        $third_color_dark_color = $third_color_dark_default_value;
-    }
-    /* Fourth color */
-    $fourth_color_default_value = 'rgb(220 230 0 / 100%)';
-    $fourth_color_dark_default_value = 'rgb(180 190 0 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_fourth_color', $options ) && $options['mini_fourth_color'] != null ) {
-        $fourth_color_value = $options['mini_fourth_color'];
-        $fourth_color_placeholder = null;
-        $fourth_color_color = $options['mini_fourth_color'];
-    } else {
-        $fourth_color_value = null;
-        $fourth_color_placeholder = $fourth_color_default_value;
-        $fourth_color_color = $fourth_color_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_fourth_color_dark', $options ) && $options['mini_fourth_color_dark'] != null ) {
-        $fourth_color_dark_value = $options['mini_fourth_color_dark'];
-        $fourth_color_dark_placeholder = null;
-        $fourth_color_dark_color = $options['mini_fourth_color_dark'];
-    } else {
-        $fourth_color_dark_value = null;
-        $fourth_color_dark_placeholder = $fourth_color_dark_default_value;
-        $fourth_color_dark_color = $fourth_color_dark_default_value;
-    }
-    /* Link color */
-    $link_color_default_value = 'rgb(60 185 225 / 100%)';
-    $link_hover_color_default_value = 'rgb(40 130 160 / 100%)';
-    if ( is_array($options) && array_key_exists('mini_link_color', $options ) && $options['mini_link_color'] != null ) {
-        $link_color_value = $options['mini_link_color'];
-        $link_color_placeholder = null;
-        $link_color_color = $options['mini_link_color'];
-    } else {
-        $link_color_value = null;
-        $link_color_placeholder = $link_color_default_value;
-        $link_color_color = $link_color_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_link_hover_color', $options ) && $options['mini_link_hover_color'] != null ) {
-        $link_hover_color_value = $options['mini_link_hover_color'];
-        $link_hover_color_placeholder = null;
-        $link_hover_color_color = $options['mini_link_hover_color'];
-    } else {
-        $link_hover_color_value = null;
-        $link_hover_color_placeholder = $link_hover_color_default_value;
-        $link_hover_color_color = $link_hover_color_default_value;
-    }
-    /* Sheet & menu color */
-    $sheet_default_value = 'rgb( 20 10 40 / 100% )';
-    $menu_toggle_default_value = 'rgb( 20 10 40 / 100% )';
-    if ( is_array($options) && array_key_exists('mini_sheet_color', $options ) && $options['mini_sheet_color'] != null ) {
-        $sheet_color_value = $options['mini_sheet_color'];
-        $sheet_color_placeholder = null;
-        $sheet_color_color = $options['mini_sheet_color'];
-    } else {
-        $sheet_color_value = null;
-        $sheet_color_placeholder = $sheet_default_value;
-        $sheet_color_color = $sheet_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_menu_toggle_color', $options ) && $options['mini_menu_toggle_color'] != null ) {
-        $menu_toggle_color_value = $options['mini_menu_toggle_color'];
-        $menu_toggle_color_placeholder = null;
-        $menu_toggle_color_color = $options['mini_menu_toggle_color'];
-    } else {
-        $menu_toggle_color_value = null;
-        $menu_toggle_color_placeholder = $menu_toggle_default_value;
-        $menu_toggle_color_color = $menu_toggle_default_value;
-    }
-
     ?>
     <h4 class="m-0">
         Main color
     </h4>
-    <input
-        type="text"
-        id="mini_main_color"
-        name="mini_colors_options[mini_main_color]"
-        value="<?= $main_color_value ?>"
-        placeholder="<?= $main_color_placeholder ?>" 
-        style="border: 2px solid <?=$main_color_color?>; border-right: 30px solid <?=$main_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_main_color_dark"
-        name="mini_colors_options[mini_main_color_dark]"
-        value="<?= $main_color_dark_value ?>"
-        placeholder="<?= $main_color_dark_placeholder ?>" 
-        style="border: 2px solid <?=$main_color_dark_color?>; border-right: 30px solid <?=$main_color_dark_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_main_color_transp"
-        name="mini_colors_options[mini_main_color_transp]"
-        value="<?= $main_color_transp_value ?>"
-        placeholder="<?= $main_color_transp_placeholder ?>" 
-        style="border: 2px solid <?=$main_color_transp_color?>; border-right: 30px solid <?=$main_color_transp_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_main_color','rgb( 60 90 255 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_main_color_dark','rgb( 50 75 180 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_main_color_transp','rgb( 60 90 255 / 20% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Main color, dark version and transparent version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -976,22 +840,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Second color
     </h4>
-    <input
-        type="text"
-        id="mini_second_color"
-        name="mini_colors_options[mini_second_color]"
-        value="<?= $second_color_dark_value ?>"
-        placeholder="<?= $second_color_dark_placeholder ?>" 
-        style="border: 2px solid <?=$second_color_dark_color?>; border-right: 30px solid <?=$second_color_dark_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_second_color_dark"
-        name="mini_colors_options[mini_second_color_dark]"
-        value="<?= $second_color_dark_value ?>"
-        placeholder="<?= $second_color_dark_placeholder ?>" 
-        style="border: 2px solid <?=$second_color_dark_color?>; border-right: 30px solid <?=$second_color_dark_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_second_color','rgb( 50 75 180 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_second_color_dark','rgb( 37 56 133 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Second color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1000,22 +850,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Third color
     </h4>
-    <input
-        type="text"
-        id="mini_third_color"
-        name="mini_colors_options[mini_third_color]"
-        value="<?= $third_color_value ?>"
-        placeholder="<?= $third_color_placeholder ?>" 
-        style="border: 2px solid <?=$third_color_color?>; border-right: 30px solid <?=$third_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_third_color_dark"
-        name="mini_colors_options[mini_third_color_dark]"
-        value="<?= $third_color_dark_value ?>"
-        placeholder="<?= $third_color_dark_placeholder ?>" 
-        style="border: 2px solid <?=$third_color_dark_color?>; border-right: 30px solid <?=$third_color_dark_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_third_color','rgb( 60 30 99 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_third_color_dark','rgb( 34 15 61 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Third color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1024,22 +860,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Fourth color
     </h4>
-    <input
-        type="text"
-        id="mini_fourth_color"
-        name="mini_colors_options[mini_fourth_color]"
-        value="<?= $fourth_color_value ?>"
-        placeholder="<?= $fourth_color_placeholder ?>" 
-        style="border: 2px solid <?=$fourth_color_color?>; border-right: 30px solid <?=$fourth_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_fourth_color_dark"
-        name="mini_colors_options[mini_fourth_color_dark]"
-        value="<?= $fourth_color_dark_value ?>"
-        placeholder="<?= $fourth_color_dark_placeholder ?>" 
-        style="border: 2px solid <?=$fourth_color_dark_color?>; border-right: 30px solid <?=$fourth_color_dark_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_fourth_color','rgb( 220 230 0 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_fourth_color_dark','rgb( 180 190 0 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Fourth color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1048,22 +870,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Link color
     </h4>
-    <input
-        type="text"
-        id="mini_link_color"
-        name="mini_colors_options[mini_link_color]"
-        value="<?= $link_color_value ?>"
-        placeholder="<?= $link_color_placeholder ?>"
-        style="border: 2px solid <?=$link_color_color?>; border-right: 30px solid <?=$link_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_link_hover_color"
-        name="mini_colors_options[mini_link_hover_color]"
-        value="<?= $link_hover_color_value ?>"
-        placeholder="<?= $link_hover_color_placeholder ?>"
-        style="border: 2px solid <?=$link_hover_color_color?>; border-right: 30px solid <?=$link_hover_color_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_link_color','rgb( 60 185 225 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_link_hover_color','rgb( 40 130 160 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Link and buttons color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1072,285 +880,43 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Sheet & menu colors
     </h4>
-    <input
-        type="text"
-        id="mini_sheet_color"
-        name="mini_colors_options[mini_sheet_color]"
-        value="<?= $sheet_color_value ?>"
-        placeholder="<?= $sheet_color_placeholder ?>"
-        style="border: 2px solid <?=$sheet_color_color?>; border-right: 30px solid <?=$sheet_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_menu_toggle_color"
-        name="mini_colors_options[mini_menu_toggle_color]"
-        value="<?= $menu_toggle_color_value ?>"
-        placeholder="<?= $menu_toggle_color_placeholder ?>"
-        style="border: 2px solid <?=$menu_toggle_color_color?>; border-right: 30px solid <?=$menu_toggle_color_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_sheet_color','rgb( 20 10 40 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_menu_toggle_color','rgb( 20 10 40 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Page second level background and menu icon color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <br/>
     <hr>
-    <?php
-    $info_default_value = 'rgb(113 202 189)';
-    $success_default_value = 'rgb(160 220 110)';
-    $warning_default_value = 'rgb(248 187 83)';
-    $danger_default_value = 'rgb(255 111 97)';
-    $bad_default_value = 'rgb(235 55 80)';
-    if ( is_array($options) && array_key_exists('mini_semaphore_color_info', $options ) && $options['mini_semaphore_color_info'] != null ) {
-        $info_semaphore_color_value = $options['mini_semaphore_color_info'];
-        $info_semaphore_color_placeholder = null;
-        $info_semaphore_color_color = $options['mini_semaphore_color_info'];
-    } else {
-        $info_semaphore_color_value = null;
-        $info_semaphore_color_placeholder = $info_default_value;
-        $info_semaphore_color_color = $info_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_semaphore_color_success', $options ) && $options['mini_semaphore_color_success'] != null ) {
-        $success_semaphore_color_value = $options['mini_semaphore_color_success'];
-        $success_semaphore_color_placeholder = null;
-        $success_semaphore_color_color = $options['mini_semaphore_color_success'];
-    } else {
-        $success_semaphore_color_value = null;
-        $success_semaphore_color_placeholder = $success_default_value;
-        $success_semaphore_color_color = $success_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_semaphore_color_warning', $options ) && $options['mini_semaphore_color_warning'] != null ) {
-        $warning_semaphore_color_value = $options['mini_semaphore_color_warning'];
-        $warning_semaphore_color_placeholder = null;
-        $warning_semaphore_color_color = $options['mini_semaphore_color_warning'];
-    } else {
-        $warning_semaphore_color_value = null;
-        $warning_semaphore_color_placeholder = $warning_default_value;
-        $warning_semaphore_color_color = $warning_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_semaphore_color_danger', $options ) && $options['mini_semaphore_color_danger'] != null ) {
-        $danger_semaphore_color_value = $options['mini_semaphore_color_danger'];
-        $danger_semaphore_color_placeholder = null;
-        $danger_semaphore_color_color = $options['mini_semaphore_color_danger'];
-    } else {
-        $danger_semaphore_color_value = null;
-        $danger_semaphore_color_placeholder = $danger_default_value;
-        $danger_semaphore_color_color = $danger_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_semaphore_color_bad', $options ) && $options['mini_semaphore_color_bad'] != null ) {
-        $bad_semaphore_color_value = $options['mini_semaphore_color_bad'];
-        $bad_semaphore_color_placeholder = null;
-        $bad_semaphore_color_color = $options['mini_semaphore_color_bad'];
-    } else {
-        $bad_semaphore_color_value = null;
-        $bad_semaphore_color_placeholder = $bad_default_value;
-        $bad_semaphore_color_color = $bad_default_value;
-    }
-    ?>
     <h4 class="m-0">
         Semaphore colors
     </h4>
-    <input
-        type="text"
-        id="mini_semaphore_color_info"
-        name="mini_colors_options[mini_semaphore_color_info]"
-        value="<?= $info_semaphore_color_value ?>"
-        placeholder="<?= $info_semaphore_color_placeholder ?>"
-        style="border: 2px solid <?=$info_semaphore_color_color?>; border-right: 30px solid <?=$info_semaphore_color_color?>;"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_semaphore_color_success"
-        name="mini_colors_options[mini_semaphore_color_success]"
-        value="<?= $success_semaphore_color_value ?>"
-        placeholder="<?= $success_semaphore_color_placeholder ?>"
-        style="border: 2px solid <?=$success_semaphore_color_color?>; border-right: 30px solid <?=$success_semaphore_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_semaphore_color_warning"
-        name="mini_colors_options[<mini_semaphore_color_warning]"
-        value="<?= $warning_semaphore_color_value ?>"
-        placeholder="<?= $warning_semaphore_color_placeholder ?>"
-        style="border: 2px solid <?=$warning_semaphore_color_color?>; border-right: 30px solid <?=$warning_semaphore_color_color?>;"
-        >
-    <input
-        type="text"
-        id="mini_semaphore_color_danger"
-        name="mini_colors_options[mini_semaphore_color_danger]"
-        value="<?= $danger_semaphore_color_value ?>"
-        placeholder="<?= $danger_semaphore_color_placeholder ?>"
-        style="border: 2px solid <?=$danger_semaphore_color_color?>; border-right: 30px solid <?=$danger_semaphore_color_color?>;"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_semaphore_color_bad"
-        name="mini_colors_options[mini_semaphore_color_bad]"
-        value="<?= $bad_semaphore_color_value ?>"
-        placeholder="<?= $bad_semaphore_color_placeholder ?>"
-        style="border: 2px solid <?=$bad_semaphore_color_color?>; border-right: 30px solid <?=$bad_semaphore_color_color?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_info','rgb( 113 202 189 )'); ?>
+    <br/><br/>
+    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_success','rgb( 160 220 110 )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_warning','rgb( 248 187 83 )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_danger','rgb( 255 111 97 )'); ?>
+    <br/><br/>
+    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_bad','rgb( 235 55 80 )'); ?>
     <p class="description">
         <?php esc_html_e( 'Color used for semaphore logic', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <br/>
     <hr>
-    <?php
-    $black_default_value = 'rgb( 10 10 20 / 100% )';
-    $false_black_default_value = 'rgb( 20 10 40 / 100% )';
-    $dark_grey_default_value = 'rgb( 55 55 80 / 100% )';
-    $grey_default_value = 'rgb( 120 120 150 / 100% )';
-    $light_grey_default_value = 'rgb( 215 210 230 / 100% )';
-    $false_white_default_value = 'rgb( 250 248 255 / 100% )';
-    $false_white_transp_default_value = 'rgb( 0 0 0 / 3% )';
-    $white_default_value = 'rgb( 255 255 255 / 100% )';
-    $transp_default_value = 'rgb( 0 0 0 / 0% )';
-    if ( is_array($options) && array_key_exists('mini_blacks_color_black', $options ) && $options['mini_blacks_color_black'] != null ) {
-        $black_value = $options['mini_blacks_color_black']; 
-        $black_placeholder = null; 
-        $black_color = $options['mini_blacks_color_black'];
-    } else {
-        $black_value = null; 
-        $black_placeholder = $black_default_value;
-        $black_color = $black_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_false_black', $options ) && $options['mini_blacks_color_false_black'] != null ) {
-        $false_black_value = $options['mini_blacks_color_false_black']; 
-        $false_black_placeholder = null;
-        $false_black_color = $options['mini_blacks_color_false_black']; 
-    } else {
-        $false_black_value = null; 
-        $false_black_placeholder = $false_black_default_value;
-        $false_black_color = $false_black_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_dark_grey', $options ) && $options['mini_blacks_color_dark_grey'] != null ) {
-        $dark_grey_value = $options['mini_blacks_color_dark_grey']; 
-        $dark_grey_placeholder = null;
-        $dark_grey_color = $options['mini_blacks_color_dark_grey']; 
-    } else {
-        $dark_grey_value = null; 
-        $dark_grey_placeholder = $dark_grey_default_value;
-        $dark_grey_color = $dark_grey_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_grey', $options ) && $options['mini_blacks_color_grey'] != null ) {
-        $grey_value = $options['mini_blacks_color_grey']; 
-        $grey_placeholder = null;
-        $grey_color = $options['mini_blacks_color_grey']; 
-    } else {
-        $grey_value = null; 
-        $grey_placeholder = $grey_default_value;
-        $grey_color = $grey_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_light_grey', $options ) && $options['mini_blacks_color_light_grey'] != null ) {
-        $light_grey_value = $options['mini_blacks_color_light_grey']; 
-        $light_grey_placeholder = null;
-        $light_grey_color = $options['mini_blacks_color_light_grey']; 
-    } else {
-        $light_grey_value = null; 
-        $light_grey_placeholder = $light_grey_default_value;
-        $light_grey_color = $light_grey_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_false_white', $options ) && $options['mini_blacks_color_false_white'] != null ) {
-        $false_white_value = $options['mini_blacks_color_false_white']; 
-        $false_white_placeholder = null;
-        $false_white_color = $options['mini_blacks_color_false_white']; 
-    } else {
-        $false_white_value = null; 
-        $false_white_placeholder = $false_white_default_value;
-        $false_white_color = $false_white_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_false_white_transp', $options ) && $options['mini_blacks_color_false_white_transp'] != null ) {
-        $false_white_transp_value = $options['mini_blacks_color_false_white_transp']; 
-        $false_white_transp_placeholder = null;
-        $false_white_transp_color = $options['mini_blacks_color_false_white_transp']; 
-    } else {
-        $false_white_transp_value = null; 
-        $false_white_transp_placeholder = $false_white_transp_default_value;
-        $false_white_transp_color = $false_white_transp_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_blacks_color_white', $options ) && $options['mini_blacks_color_white'] != null ) {
-        $white_value = $options['mini_blacks_color_white']; 
-        $white_placeholder = null;
-        $white_vcolor = $options['mini_blacks_color_white']; 
-    } else {
-        $white_value = null; 
-        $white_placeholder = $white_default_value;
-        $white_color = $white_default_value;
-    }
-    ?>
     <h4 class="m-0">
         Blacks
     </h4>
-    <input
-        type="text"
-        id="mini_blacks_color_black"
-        name="mini_colors_options[mini_blacks_color_black]"
-        value="<?= $black_value ?>"
-        placeholder="<?= $black_placeholder ?>"
-        style="border: 2px solid <?=$black_placeholder?>; border-right: 30px solid <?=$black_placeholder?>;"
-        >
-    <input
-        type="text"
-        id="mini_blacks_color_false_black"
-        name="mini_colors_options[mini_blacks_color_false_black]"
-        value="<?= $false_black_value ?>"
-        placeholder="<?= $false_black_placeholder ?>"
-        style="border: 2px solid <?=$false_black_placeholder?>; border-right: 30px solid <?=$false_black_placeholder?>;"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_blacks_color_dark_grey"
-        name="mini_colors_options[mini_blacks_color_dark_grey]"
-        value="<?= $dark_grey_value ?>"
-        placeholder="<?= $dark_grey_placeholder ?>"
-        style="border: 2px solid <?=$dark_grey_placeholder?>; border-right: 30px solid <?=$dark_grey_placeholder?>;"
-        >
-    <input
-        type="text"
-        id="mini_blacks_color_grey"
-        name="mini_colors_options[mini_blacks_color_grey]"
-        value="<?= $grey_value ?>"
-        placeholder="<?= $grey_placeholder ?>"
-        style="border: 2px solid <?=$grey_placeholder?>; border-right: 30px solid <?=$grey_placeholder?>;"
-        >
-    <input
-        type="text"
-        id="mini_blacks_color_light_grey"
-        name="mini_colors_options[mini_blacks_color_light_grey]"
-        value="<?= $light_grey_value ?>"
-        placeholder="<?= $light_grey_placeholder ?>"
-        style="border: 2px solid <?=$light_grey_placeholder?>; border-right: 30px solid <?=$light_grey_placeholder?>;"
-        >
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_black','rgb( 10 10 20 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_black','rgb( 20 10 40 / 100% )'); ?>
     <br/><br/>
-    <input
-        type="text"
-        id="mini_blacks_color_false_white"
-        name="mini_colors_options[mini_blacks_color_false_white]"
-        value="<?= $false_white_value ?>"
-        placeholder="<?= $false_white_placeholder ?>"
-        style="border: 2px solid <?=$false_white_placeholder?>; border-right: 30px solid <?=$false_white_placeholder?>;"
-        >
-    <input
-        type="text"
-        id="mini_blacks_color_false_white_transp"
-        name="mini_colors_options[mini_blacks_color_false_white_transp]"
-        value="<?= $false_white_transp_value ?>"
-        placeholder="<?= $false_white_transp_placeholder ?>"
-        style="border: 2px solid <?=$false_white_transp_placeholder?>; border-right: 30px solid <?=$false_white_transp_placeholder?>;"
-        >
-    <input
-        type="text"
-        id="mini_blacks_color_white"
-        name="mini_colors_options[mini_blacks_color_white]"
-        value="<?= $white_value ?>"
-        placeholder="<?= $white_placeholder ?>"
-        style="border: 2px solid <?=$white_placeholder?>; border-right: 30px solid <?=$white_placeholder?>;"
-        >
-
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_dark_grey','rgb( 55 55 80 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_grey','rgb( 120 120 150 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_light_grey','rgb( 215 210 230 / 100% )'); ?>
+    <br/><br/>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_white','rgb( 250 248 255 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_white_transp','rgb( 0 0 0 / 3% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_white','rgb( 255 255 255 / 100% )'); ?>
+    <br/><br/>
+    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_transp','rgb( 0 0 0 / 0% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Greyscale', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1360,44 +926,16 @@ function mini_colors_callback( $args ) {
 
 
 function mini_logo_size_field_callback( $args ) {
-    $options = get_option( 'mini_size_options' );
-    $default_value = '2rem';
-    if ( is_array($options) && array_key_exists('mini_logo_height', $options ) && $options['mini_logo_height'] != null ) {
-        $value = $options['mini_logo_height'];
-        $placeholder = null;
-    } else {
-        $value = null;
-        $placeholder = $default_value;
-    }
-    $default_scroll_value = '1.25rem';
-    if ( is_array($options) && array_key_exists('mini_scroll_logo_height', $options ) && $options['mini_scroll_logo_height'] != null ) {
-        $scroll_value = $options['mini_scroll_logo_height'];
-        $scroll_placeholder = null;
-    } else {
-        $scroll_value = null;
-        $scroll_placeholder = $default_scroll_value;
-    }
     ?>
     <h4 class="">Logo height</h4>
-    <input
-        type="text"
-        id="mini_logo_height"
-        name="mini_size_options[mini_logo_height]"
-        value="<?= $value ?>"
-        placeholder="<?= $placeholder ?>"
-    >
+    <?= text_field_option('mini_size_options','mini_logo_height','2rem', 'width: auto;'); ?>
     <p class="description">
         <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <br/>
+    <hr>
     <h4 class="">Height when page is scrolled</h4>
-    <input
-        type="text"
-        id="mini_scroll_logo_height"
-        name="mini_size_options[mini_scroll_logo_height]"
-        value="<?= $scroll_value ?>"
-        placeholder="<?= $scroll_placeholder ?>"
-    >
+    <?= text_field_option('mini_size_options','mini_scroll_logo_height','1.25rem', 'width: auto;'); ?>
     <p class="description">
         <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1406,219 +944,33 @@ function mini_logo_size_field_callback( $args ) {
 
 
 function mini_fonts_field_callback( $args ) {
-    $options = get_option( 'mini_font_options' );
-    $default_main_font = '\'Roboto\', sans-serif';
-    $default_main_font_embed_link = '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">';
-    $default_main_font_state_status = '';
-    if (is_array($options) && array_key_exists('mini_main_font_status', $options)) {
-        if ($options['mini_main_font_status'] == true) {
-            $default_main_font_state_status = 'checked';
-        }
-    }
-    if ( is_array($options) && array_key_exists('mini_main_font', $options ) && $options['mini_main_font'] != null ) {
-        $main_font_value = $options['mini_main_font'];
-        $main_font_placeholder = null;
-    } else {
-        $main_font_value = null;
-        $main_font_placeholder = $default_main_font;
-    }
-    if ( is_array($options) && array_key_exists('mini_main_font_embed_link', $options ) && $options['mini_main_font_embed_link'] != null ) {
-        $main_font_embed_link_value = $options['mini_main_font_embed_link'];
-        $main_font_embed_link_placeholder = null;
-    } else {
-        $main_font_embed_link_value = null;
-        $main_font_embed_link_placeholder = $default_main_font_embed_link;
-    }
-
-    $default_secondary_font = '\'Oswald\', sans-serif';
-    $default_secondary_font_embed_link = '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">';
-    $default_secondary_font_state_status = '';
-    if (is_array($options) && array_key_exists('mini_secondary_font_status', $options)) {
-        if ($options['mini_secondary_font_status'] == true) {
-            $default_secondary_font_state_status = 'checked';
-        }
-    }
-    if ( is_array($options) && array_key_exists('mini_secondary_font', $options ) && $options['mini_secondary_font'] != null ) {
-        $secondary_font_value = $options['mini_secondary_font'];
-        $secondary_font_placeholder = null;
-    } else {
-        $secondary_font_value = null;
-        $secondary_font_placeholder = $default_secondary_font;
-    }
-    if ( is_array($options) && array_key_exists('mini_secondary_font_embed_link', $options ) && $options['mini_secondary_font_embed_link'] != null ) {
-        $secondary_font_embed_link_value = $options['mini_secondary_font_embed_link'];
-        $secondary_font_embed_link_placeholder = null;
-    } else {
-        $secondary_font_embed_link_value = null;
-        $secondary_font_embed_link_placeholder = $default_secondary_font_embed_link;
-    }
-
-    $default_serif_font = '\'Playfair Display\', serif';
-    $default_serif_font_embed_link = '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">';
-    $default_serif_font_state_status = '';
-    if (is_array($options) && array_key_exists('mini_serif_font_status', $options)) {
-        if ($options['mini_serif_font_status'] == true) {
-            $default_serif_font_state_status = 'checked';
-        }
-    }
-    if ( is_array($options) && array_key_exists('mini_serif_font', $options ) && $options['mini_serif_font'] != null ) {
-        $serif_font_value = $options['mini_serif_font'];
-        $serif_font_placeholder = null;
-    } else {
-        $serif_font_value = null;
-        $serif_font_placeholder = $default_serif_font;
-    }
-    if ( is_array($options) && array_key_exists('mini_serif_font_embed_link', $options ) && $options['mini_serif_font_embed_link'] != null ) {
-        $serif_font_embed_link_value = $options['mini_serif_font_embed_link'];
-        $serif_font_embed_link_placeholder = null;
-    } else {
-        $serif_font_embed_link_value = null;
-        $serif_font_embed_link_placeholder = $default_serif_font_embed_link;
-    }
-
-    $default_mono_font = '\'Roboto Mono\', monospace';
-    $default_mono_font_embed_link = '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">';
-    $default_mono_font_state_status = '';
-    if (is_array($options) && array_key_exists('mini_mono_font_status', $options)) {
-        if ($options['mini_handwriting_font_status'] == true) {
-            $default_mono_font_state_status = 'checked';
-        }
-    }
-    if ( is_array($options) && array_key_exists('mini_mono_font', $options ) && $options['mini_mono_font'] != null ) {
-        $mono_font_value = $options['mini_mono_font'];
-        $mono_font_placeholder = null;
-    } else {
-        $mono_font_value = null;
-        $mono_font_placeholder = $default_mono_font;
-    }
-    if ( is_array($options) && array_key_exists('mini_mono_font_embed_link', $options ) && $options['mini_mono_font_embed_link'] != null ) {
-        $mono_font_embed_link_value = $options['mini_mono_font_embed_link'];
-        $mono_font_embed_link_placeholder = null;
-    } else {
-        $mono_font_embed_link_value = null;
-        $mono_font_embed_link_placeholder = $default_mono_font_embed_link;
-    }
-
-    $default_handwriting_font = '\'Edu VIC WA NT Beginner\', serif';
-    $default_handwriting_font_embed_link = '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">';
-    $default_handwriting_font_state_status = '';
-    if (is_array($options) && array_key_exists('mini_handwriting_font_status', $options)) {
-        if ($options['mini_handwriting_font_status'] == true) {
-            $default_handwriting_font_state_status = 'checked';
-        }
-    }
-    if ( is_array($options) && array_key_exists('mini_handwriting_font', $options ) && $options['mini_handwriting_font'] != null ) {
-        $handwriting_font_value = $options['mini_handwriting_font'];
-        $handwriting_font_placeholder = null;
-    } else {
-        $handwriting_font_value = null;
-        $handwriting_font_placeholder = $default_handwriting_font;
-    }
-    if ( is_array($options) && array_key_exists('mini_handwriting_font_embed_link', $options ) && $options['mini_handwriting_font_embed_link'] != null ) {
-        $handwriting_font_embed_link_value = $options['mini_handwriting_font_embed_link'];
-        $handwriting_font_embed_link_placeholder = null;
-    } else {
-        $handwriting_font_embed_link_value = null;
-        $handwriting_font_embed_link_placeholder = $default_handwriting_font_embed_link;
-    }
-
     ?>
     <h4 class="">
         <?php esc_html_e( 'Main font', 'mini' ); ?>
     </h4>
-    <?php /*
-    <input
-        type="checkbox"
-        id="mini_main_font_status"
-        name="mini_font_options[mini_main_font_status]"
-        <?=$default_main_font_state_status?>
-    >
-    <br/>
-    <br/>
-    */ ?>
-    <input
-        type="text"
-        id="mini_main_font"
-        name="mini_font_options[mini_main_font]"
-        value="<?= $main_font_value ?>"
-        placeholder="<?= $main_font_placeholder ?>"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_main_font_embed_link"
-        name="mini_font_options[mini_main_font_embed_link]"
-        value="<?= htmlspecialchars($main_font_embed_link_value); ?>"
-        placeholder="<?= htmlspecialchars($main_font_embed_link_placeholder); ?>"
-        style="width: 100%;"
-        >
+    <?= text_field_option('mini_font_options','mini_main_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_main_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Used for paragraphs and most of the website\'s content. Sans Serif.', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-
     <h4 class="">
         <?php esc_html_e( 'Secondary font', 'mini' ); ?>
     </h4>
-    <?php /*
-    <input
-        type="checkbox"
-        id="mini_secondary_font_status"
-        name="mini_font_options[mini_secondary_font_status]"
-        <?=$default_secondary_font_state_status?>
-    >
-    <br/>
-    <br/>
-    */ ?>
-    <input
-        type="text"
-        id="mini_secondary_font"
-        name="mini_font_options[mini_secondary_font]"
-        value="<?= $secondary_font_value ?>"
-        placeholder="<?= $secondary_font_placeholder ?>"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_secondary_font_embed_link"
-        name="mini_font_options[mini_secondary_font_embed_link]"
-        value="<?= htmlspecialchars($secondary_font_embed_link_value); ?>"
-        placeholder="<?= htmlspecialchars($secondary_font_embed_link_placeholder); ?>"
-        style="width: 100%;"
-        >
+    <?= text_field_option('mini_font_options','mini_secondary_font','\'Oswald\', sans-serif', 'width=auto;'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-
     <h4 class="">
         <?php esc_html_e( 'Serif font', 'mini' ); ?>
     </h4>
-    <input
-        type="checkbox"
-        id="mini_serif_font_status"
-        name="mini_font_options[mini_serif_font_status]"
-        <?=$default_serif_font_state_status?>
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_serif_font"
-        name="mini_font_options[mini_serif_font]"
-        value="<?= $serif_font_value ?>"
-        placeholder="<?= $serif_font_placeholder ?>"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_serif_font_embed_link"
-        name="mini_font_options[mini_serif_font_embed_link]"
-        value="<?= htmlspecialchars($serif_font_embed_link_value); ?>"
-        placeholder="<?= htmlspecialchars($serif_font_embed_link_placeholder); ?>"
-        style="width: 100%;"
-        >
+    <?= checkbox_option('mini_font_options','mini_serif_fontz_status'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_serif_font','\'Playfair Display\', serif', 'width=auto;'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Serif font, used in CSS class ".serif"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1626,126 +978,42 @@ function mini_fonts_field_callback( $args ) {
     <h4 class="">
         <?php esc_html_e( 'Mono font', 'mini' ); ?>
     </h4>
-    <input
-        type="checkbox"
-        id="mini_mono_font_status"
-        name="mini_font_options[mini_mono_font_status]"
-        <?=$default_mono_font_state_status?>
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_mono_font"
-        name="mini_font_options[mini_mono_font]"
-        value="<?= $mono_font_value ?>"
-        placeholder="<?= $mono_font_placeholder ?>"
-        >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_mono_font_embed_link"
-        name="mini_font_options[mini_mono_font_embed_link]"
-        value="<?= htmlspecialchars($mono_font_embed_link_value); ?>"
-        placeholder="<?= htmlspecialchars($mono_font_embed_link_placeholder); ?>"
-        style="width: 100%;"
-        >
+    <?= checkbox_option('mini_font_options','mini_mono_font_status'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_mono_font','\'Roboto Mono\', monospace', 'width=auto;'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Monospace font, used in CSS class ".mono"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-
     <h4 class="">
         <?php esc_html_e( 'Handwriting font', 'mini' ); ?>
     </h4>
-    <input
-        type="checkbox"
-        id="mini_handwriting_font_status"
-        name="mini_font_options[mini_handwriting_font_status]"
-        <?=$default_handwriting_font_state_status?>
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_handwriting_font"
-        name="mini_font_options[mini_handwriting_font]"
-        value="<?= $handwriting_font_value ?>"
-        placeholder="<?= $handwriting_font_placeholder ?>"
-        style="width: 33.333333%;"
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_handwriting_font_embed_link"
-        name="mini_font_options[mini_handwriting_font_embed_link]"
-        value="<?= htmlspecialchars($handwriting_font_embed_link_value); ?>"
-        placeholder="<?= htmlspecialchars($handwriting_font_embed_link_placeholder); ?>"
-        style="width: 100%;"
-    >
+    <?= checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_handwriting_font','\'Edu VIC WA NT Beginner\', serif'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-
     <?php
 }
 
 
 function mini_ext_lib_field_callback( $args ) {
-    $options = get_option( 'mini_ext_lib_options' );
-    $default_ext_lib_aos_status = '';
-    if (is_array($options) && array_key_exists('mini_aos', $options)) {
-        if ($options['mini_aos'] == true) {
-            $default_ext_lib_aos_status = 'checked';
-        }
-    }
     ?>
     <h4 class="">AOS</h4>
-    <input
-        type="checkbox"
-        id="mini_aos"
-        name="mini_ext_lib_options[mini_aos]"
-        <?=$default_ext_lib_aos_status?>
-    >
-    <br/>
-    <br/>
+    <?= checkbox_option('mini_ext_lib_options','mini_aos'); ?>
+    <br/><br/>
     <hr>
-    <?php
-    $default_ext_lib_iconoir_status = '';
-    if (is_array($options) && array_key_exists('mini_iconoir', $options)) {
-        if ($options['mini_iconoir'] == true) {
-            $default_ext_lib_iconoir_status = 'checked';
-        }
-    }
-    ?>
     <h4 class="">Iconoir</h4>
-    <input
-        type="checkbox"
-        id="mini_iconoir"
-        name="mini_ext_lib_options[mini_iconoir]"
-        <?=$default_ext_lib_iconoir_status?>
-    >
-    <br/>
-    <br/>
+    <?= checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
+    <br/><br/>
     <hr>
-    <?php
-    $default_ext_lib_fontawesome_status = '';
-    if (is_array($options) && array_key_exists('mini_fontawesome', $options)) {
-        if ($options['mini_fontawesome'] == true) {
-            $default_ext_lib_fontawesome_status = 'checked';
-        }
-    }
-    ?>
     <h4 class="">Fontawesome</h4>
-    <input
-        type="checkbox"
-        id="mini_fontawesome"
-        name="mini_ext_lib_options[mini_fontawesome]"
-        <?=$default_ext_lib_fontawesome_status?>
-    >
-    <br/>
-    <br/>
+    <?= checkbox_option('mini_ext_lib_options','mini_fontawesome'); ?>
+    <br/><br/>
     <hr>
     <?php
 }
@@ -1768,86 +1036,87 @@ function mini_analytics_field_callback( $args ) {
     }
     ?>
     <h4 class="">Google Analytics</h4>
-    <input
-        type="checkbox"
-        id="mini_google_analytics"
-        name="mini_analytics_options[mini_google_analytics]"
-        <?=$google_analytics_status?>
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_google_analytics_code"
-        name="mini_analytics_options[mini_google_analytics_code]"
-        value="<?= $google_analytics_code_value ?>"
-        placeholder="<?= $google_analytics_code_placeholder ?>"
-        style="width: 33.333333%;"
-    >
-    <br/>
-    <br/>
+    <?= checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
+    <br/><br/>
+    <?= text_field_option('mini_analytics_options','mini_google_analytics_code',''); ?>
+    <br/><br/>
     <hr>
     <?php
 }
 
 function mini_company_field_callback( $args ) {
-    $options = get_option( 'mini_company_options' );
-    $company_name_default_value = 'Company';
-    $company_address_1_default_value = 'Address line 1';
-    $company_address_2_default_value = 'Address line 2';
-    if ( is_array($options) && array_key_exists('mini_company_name', $options ) && $options['mini_company_name'] != null ) {
-        $company_name_value = $options['mini_company_name'];
-        $company_name_placeholder = null;
-    } else {
-        $company_name_value = null;
-        $company_name_placeholder = $company_name_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_company_address_1', $options ) && $options['mini_company_address_1'] != null ) {
-        $company_address_1_value = $options['mini_company_address_1'];
-        $company_address_1_placeholder = null;
-    } else {
-        $company_address_1_value = null;
-        $company_address_1_placeholder = $company_address_1_default_value;
-    }
-    if ( is_array($options) && array_key_exists('mini_company_address_2', $options ) && $options['mini_company_address_2'] != null ) {
-        $company_address_2_value = $options['mini_company_address_2'];
-        $company_address_2_placeholder = null;
-    } else {
-        $company_address_2_value = null;
-        $company_address_2_placeholder = $company_address_2_default_value;
-    }
     ?>
-    <h4 class=""><?= esc_html__( 'Company name', 'mini' ) ?></h4>
-    <input
-        type="text"
-        id="mini_company_name"
-        name="mini_company_options[mini_company_name]"
-        value="<?= $company_name_value ?>"
-        placeholder="<?= $company_name_placeholder ?>"
-        style="width: 33.333333%;"
-    >
-    <h4 class=""><?= esc_html__( 'Address', 'mini' ) ?></h4>
-    <input
-        type="text"
-        id="mini_company_address_1"
-        name="mini_company_options[mini_company_address_1]"
-        value="<?= $company_address_1_value ?>"
-        placeholder="<?= $company_address_1_placeholder ?>"
-        style="width: 100%;"
-    >
-    <br/>
-    <br/>
-    <input
-        type="text"
-        id="mini_company_address_2"
-        name="mini_company_options[mini_company_address_2]"
-        value="<?= $company_address_2_value ?>"
-        placeholder="<?= $company_address_2_placeholder ?>"
-        style="width: 100%;"
-    >
-    <br/>
-    <br/>
-    <hr>
+    <h3 class=""><?= esc_html__( 'Istitutional data', 'mini' ) ?></h3>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Company name', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_name','', 'width: 33.3333333%;'); ?>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:4;">
+            <h4 class=""><?= esc_html__( 'Address', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_address',''); ?>
+        </div>
+        <div style="flex:1;">
+        <h4 class=""><?= esc_html__( 'House number', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_house_number',''); ?>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'City', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_city',''); ?>
+            <br/>
+        </div>
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Province', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_province',''); ?>
+            <br/>
+        </div>
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Country', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_country',''); ?>
+            <br/>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_email',''); ?>
+        </div>
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_phone',''); ?>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'PEC', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_pec',''); ?>
+        </div>
+    </div>
+
+    <br/><hr>
+
+    <h3 class=""><?= esc_html__( 'Technical addresses', 'mini' ) ?></h3>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_service_email',''); ?>
+        </div>
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_service_phone',''); ?>
+        </div>
+    </div>
+    <br/><hr>
     <?php
 }
 
@@ -1922,6 +1191,106 @@ function mini_options_page() {
     );
 }
 
+
+/**
+ * SHORTCODES
+ */
+function get_variable($option_group, $option) {
+    $options = get_option( $option_group );
+    $variable = false;
+    if ( 
+        is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
+    ) {
+        $variable = $options[$option];
+    }
+    return $variable;
+}
+
+function get_company_name() {
+    if ( get_variable('mini_company_options', 'mini_company_name') != false ) {
+        return get_variable('mini_company_options', 'mini_company_name');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_name', 'get_company_name');
+
+function get_company_address_line_1() {
+    if ( 
+        get_variable('mini_company_options', 'mini_company_address') != false &&
+        get_variable('mini_company_options', 'mini_company_house_number')
+    ) {
+        return get_variable('mini_company_options', 'mini_company_address').' '.get_variable('mini_company_options', 'mini_company_house_number');
+    } else {
+        return 'NONE';
+    }
+}
+function get_company_address_line_2() {
+    if ( 
+        get_variable('mini_company_options', 'mini_company_city') != false &&
+        get_variable('mini_company_options', 'mini_company_province') != false &&
+        get_variable('mini_company_options', 'mini_company_country')
+    ) {
+        return get_variable('mini_company_options', 'mini_company_city').' ['.get_variable('mini_company_options', 'mini_company_province').'], '.get_variable('mini_company_options', 'mini_company_country');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_address_line_1', 'get_company_address_line_1');
+add_shortcode('get_company_address_line_2', 'get_company_address_line_2');
+
+function get_company_email() {
+    if ( get_variable('mini_company_options', 'mini_company_email') != false ) {
+        return get_variable('mini_company_options', 'mini_company_email');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_email', 'get_company_email');
+
+function get_company_phone() {
+    if ( get_variable('mini_company_options', 'mini_company_phone') != false ) {
+        return get_variable('mini_company_options', 'mini_company_phone');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_phone', 'get_company_phone');
+
+function get_company_pec() {
+    if ( get_variable('mini_company_options', 'mini_company_pec') != false ) {
+        return get_variable('mini_company_options', 'mini_company_pec');
+    } else {
+        if ( get_variable('mini_company_options', 'mini_company_email') != false ) {
+            return get_variable('mini_company_options', 'mini_company_email');
+        } else {
+            return 'NONE';
+        }
+    }
+}
+add_shortcode('get_company_pec', 'get_company_pec');
+
+function get_company_service_email() {
+    if ( get_variable('mini_company_options', 'mini_company_service_email') != false ) {
+        return get_variable('mini_company_options', 'mini_company_service_email');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_service_email', 'get_company_service_email');
+
+function get_company_service_phone() {
+    if ( get_variable('mini_company_options', 'mini_company_service_phone') != false ) {
+        return get_variable('mini_company_options', 'mini_company_service_phone');
+    } else {
+        return 'NONE';
+    }
+}
+add_shortcode('get_company_service_phone', 'get_company_service_phone');
+
+/**
+ * END OF SHORTCODES
+ */
 
 /**
  * Register our mini_options_page to the admin_menu action hook.

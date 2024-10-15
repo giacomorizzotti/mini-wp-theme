@@ -21,206 +21,50 @@
 	<?php wp_head(); ?>
 
 	<style>
-		:root {<?php
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_main_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_main_color'] != null 
-		) {
-			echo '--main-color:'.get_option( 'mini_colors_options' )['mini_main_color'].';';
+		:root {
+		<?php
+		function variable_from_option($options_group, $option, $variable_name) {
+			$options = get_option( $options_group );
+			if ( 
+				is_array($options) && 
+				array_key_exists($option, $options) && 
+				$options[$option] != null 
+			) {
+				echo $variable_name.':'.$options[$option].';';
+			}
 		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_main_color_dark', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_main_color_dark'] != null 
-		) {
-			echo '--main-color-dark:'.get_option( 'mini_colors_options' )['mini_main_color_dark'].';';
+		variable_from_option('mini_colors_options','mini_main_color','--main-color');
+		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
+		variable_from_option('mini_colors_options','mini_main_color_transp','--main-color-transp');
+		variable_from_option('mini_colors_options','mini_second_color','--second-color');
+		variable_from_option('mini_colors_options','mini_second_color_dark','--second-color-dark');
+		variable_from_option('mini_colors_options','mini_third_color','--third-color');
+		variable_from_option('mini_colors_options','mini_third_color_dark','--third-color-dark');
+		variable_from_option('mini_colors_options','mini_fourth_color','--fourth-color');
+		variable_from_option('mini_colors_options','mini_fourth_color_dark','--fourth-color-dark');
+		variable_from_option('mini_colors_options','mini_link_color','--link-color');
+		variable_from_option('mini_colors_options','mini_link_hover_color','--link-hover-color');
+		variable_from_option('mini_colors_options','mini_sheet_color','--sheet-color');
+		variable_from_option('mini_colors_options','mini_menu_toggle_color','--link-menu-toggle-color');
+		variable_from_option('mini_colors_options','mini_semaphore_color_info','--info');
+		variable_from_option('mini_colors_options','mini_semaphore_color_success','--success');
+		variable_from_option('mini_colors_options','mini_semaphore_color_warning','--warning');
+		variable_from_option('mini_colors_options','mini_semaphore_color_danger','--danger');
+		variable_from_option('mini_colors_options','mini_semaphore_color_bad','--bad');
+		variable_from_option('mini_colors_options','mini_blacks_color_black','--black');
+		variable_from_option('mini_colors_options','mini_blacks_color_false_black','--false-black');
+		variable_from_option('mini_colors_options','mini_blacks_color_dark_grey','--dark-grey');
+		variable_from_option('mini_colors_options','mini_blacks_color_grey','--grey');
+		variable_from_option('mini_colors_options','mini_blacks_color_light_grey','--light-grey');
+		variable_from_option('mini_colors_options','mini_blacks_color_false_white','--false-white');
+		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
+		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
+		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
+		variable_from_option('mini_size_options','mini_logo_height','--logo-height');
+		variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
+		?>
 		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_main_color_transp', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_main_color_transp'] != null 
-		) {
-			echo '--main-color-transp:'.get_option( 'mini_colors_options' )['mini_main_color_transp'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_second_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_second_color'] != null 
-		) {
-			echo '--second-color:'.get_option( 'mini_colors_options' )['mini_second_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_second_color_dark', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_second_color_dark'] != null 
-		) {
-			echo '--second-color-dark:'.get_option( 'mini_colors_options' )['mini_second_color_dark'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_third_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_third_color'] != null 
-		) {
-			echo '--third-color:'.get_option( 'mini_colors_options' )['mini_third_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_third_color_dark', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_third_color_dark'] != null 
-		) {
-			echo '--third-color-dark:'.get_option( 'mini_colors_options' )['mini_third_color_dark'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_fourth_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_fourth_color'] != null 
-		) {
-			echo '--fourth-color:'.get_option( 'mini_colors_options' )['mini_fourth_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_second_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_second_color'] != null 
-		) {
-			echo '--second-color:'.get_option( 'mini_colors_options' )['mini_second_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_second_color_dark', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_second_color_dark'] != null 
-		) {
-			echo '--second-color-dark:'.get_option( 'mini_colors_options' )['mini_second_color_dark'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_fourth_color_dark', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_fourth_color_dark'] != null 
-		) {
-			echo '--fourth-color-dark:'.get_option( 'mini_colors_options' )['mini_fourth_color_dark'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_link_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_link_color'] != null 
-		) {
-			echo '--link-color:'.get_option( 'mini_colors_options' )['mini_link_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_link_hover_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_link_hover_color'] != null 
-		) {
-			echo '--link-hover-color:'.get_option( 'mini_colors_options' )['mini_link_hover_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_sheet_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_sheet_color'] != null 
-		) {
-			echo '--sheet-color:'.get_option( 'mini_colors_options' )['mini_sheet_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_menu_toggle_color', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_menu_toggle_color'] != null 
-		) {
-			echo '--menu-toggle-color:'.get_option( 'mini_colors_options' )['mini_menu_toggle_color'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_semaphore_color_info', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_semaphore_color_info'] != null 
-		) {
-			echo '--info:'.get_option( 'mini_colors_options' )['mini_semaphore_color_info'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_semaphore_color_success', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_semaphore_color_success'] != null 
-		) {
-			echo '--success:'.get_option( 'mini_colors_options' )['mini_semaphore_color_success'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_semaphore_color_warning', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_semaphore_color_warning'] != null 
-		) {
-			echo '--warning:'.get_option( 'mini_colors_options' )['mini_semaphore_color_warning'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_semaphore_color_danger', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_semaphore_color_danger'] != null 
-		) {
-			echo '--danger:'.get_option( 'mini_colors_options' )['mini_semaphore_color_danger'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_semaphore_color_bad', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_semaphore_color_bad'] != null 
-		) {
-			echo '--bad:'.get_option( 'mini_colors_options' )['mini_semaphore_color_bad'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_black', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_black'] != null 
-		) {
-			echo '--black:'.get_option( 'mini_colors_options' )['mini_blacks_color_black'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_false_black', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_false_black'] != null 
-		) {
-			echo '--false-black:'.get_option( 'mini_colors_options' )['mini_blacks_color_false_black'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_dark_grey', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_dark_grey'] != null 
-		) {
-			echo '--dark-grey:'.get_option( 'mini_colors_options' )['mini_blacks_color_dark_grey'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_grey', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_grey'] != null 
-		) {
-			echo '--grey:'.get_option( 'mini_colors_options' )['mini_blacks_color_grey'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_light_grey', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_light_grey'] != null 
-		) {
-			echo '--light-grey:'.get_option( 'mini_colors_options' )['mini_blacks_color_light_grey'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_false_white', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_false_white'] != null 
-		) {
-			echo '--false-white:'.get_option( 'mini_colors_options' )['mini_blacks_color_false_white'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_false_white_transp', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_false_white_transp'] != null 
-		) {
-			echo '--false-white-transp:'.get_option( 'mini_colors_options' )['mini_blacks_color_false_white_transp'].';';
-		}
-		if ( 
-			is_array(get_option( 'mini_colors_options' )) && 
-			array_key_exists('mini_blacks_color_white', get_option( 'mini_colors_options' ) ) && 
-			get_option( 'mini_colors_options' )['mini_blacks_color_white'] != null 
-		) {
-			echo '--white:'.get_option( 'mini_colors_options' )['mini_blacks_color_white'].';';
-		}
-		?>}
 	</style>
-
 
 <?php
 	if ( 
@@ -256,6 +100,23 @@
 	}
 ?>
 
+<?php
+	if ( 
+		get_variable('mini_analytics_options','mini_google_analytics') != false &&
+		get_variable('mini_analytics_options','mini_google_analytics_code') != false
+	) {
+?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?=get_variable('mini_analytics_options','mini_google_analytics_code')?>"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag("js", new Date());
+	gtag("config", "<?=get_variable('mini_analytics_options','mini_google_analytics_code')?>");
+</script>
+
+<?php
+	}
+?>
 </head>
 
 <body <?php body_class('mini'); ?>>
