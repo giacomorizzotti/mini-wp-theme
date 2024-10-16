@@ -25,7 +25,7 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 get_header();
 ?>
 
-	<main id="primary" class="site-main blog">
+	<main id="primary" class="site-main" template="blog">
 		<div class="container fw">
 			<div class="container <?= $container_width ?>">
 				<div class="boxes space-top-bot">

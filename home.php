@@ -1,13 +1,7 @@
 <?php
 /**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * 
+ * The template for the blog of your website
  *
  * @package mini
  */
@@ -23,7 +17,7 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 get_header();
 ?>
 
-	<main id="primary" class="site-main" template="index">
+	<main id="primary" class="site-main" template="home">
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">

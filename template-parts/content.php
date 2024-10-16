@@ -7,16 +7,18 @@
  * @package mini
  */
 
+$container_width = get_post_meta($post->ID, 'page_container', true);
+
 ?>
 
-<div class="box box-100 my-0 \p-0">
+<div class="box box-100 my-0 p-0">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		
 		<div class="boxes">
 
 			<div class="space space-3"></div>
 
-			<header class="box box-100 my-0 p-0 entry-header">
+			<header class="box box-100 my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> entry-header">
 				<?php
 				if ( is_singular() ) :
 					the_title( '<h1 class="entry-title">', '</h1>' );
@@ -38,7 +40,7 @@
 				<?php mini_post_thumbnail(); ?>
 			</div>
 
-			<div class="box box-100 mt-0 mb-2 p-0 entry-content">
+			<div class="box box-100 mt-0 mb-2 py-0 entry-content">
 				<?php
 				the_content(
 					sprintf(
@@ -64,7 +66,7 @@
 				?>
 			</div><!-- .entry-content -->
 
-			<footer class="entry-footer box box-100 my-0 p-0 S">
+			<footer class="entry-footer box box-100 my-0 py-0 S">
 				<?php mini_entry_footer(); ?>
 			</footer><!-- .entry-footer -->
 

@@ -13,11 +13,11 @@ $container_width = get_post_meta($post->ID, 'page_container', true);
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" template="search">
 	<div class="container fw">
 		<div class="container">
 			<div class="boxes space-top-bot">
-				<div class="box my-0 \p-0 <?= $content_size ?>">
+				<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
 					<div class="boxes">
 
 						<?php if ( have_posts() ) : ?>

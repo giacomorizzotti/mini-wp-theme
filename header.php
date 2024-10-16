@@ -10,6 +10,9 @@
  */
 
 
+$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
+$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
+
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -23,15 +26,20 @@
 	<style>
 		:root {
 		<?php
-		function variable_from_option($options_group, $option, $variable_name) {
+		function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {
 			$options = get_option( $options_group );
 			if ( 
 				is_array($options) && 
 				array_key_exists($option, $options) && 
 				$options[$option] != null 
 			) {
-				echo $variable_name.':'.$options[$option].';';
+				if ($var_refer==true) {
+					$variable = $variable_name.':var('.$options[$option].');';
+				} else {
+					$variable = $variable_name.':'.$options[$option].';';
+				}
 			}
+			echo $variable;
 		}
 		variable_from_option('mini_colors_options','mini_main_color','--main-color');
 		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
@@ -45,7 +53,7 @@
 		variable_from_option('mini_colors_options','mini_link_color','--link-color');
 		variable_from_option('mini_colors_options','mini_link_hover_color','--link-hover-color');
 		variable_from_option('mini_colors_options','mini_sheet_color','--sheet-color');
-		variable_from_option('mini_colors_options','mini_menu_toggle_color','--link-menu-toggle-color');
+		variable_from_option('mini_colors_options','mini_menu_toggle_color','--menu-toggle-color');
 		variable_from_option('mini_colors_options','mini_semaphore_color_info','--info');
 		variable_from_option('mini_colors_options','mini_semaphore_color_success','--success');
 		variable_from_option('mini_colors_options','mini_semaphore_color_warning','--warning');
@@ -62,6 +70,9 @@
 		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
 		variable_from_option('mini_size_options','mini_logo_height','--logo-height');
 		variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
+		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
+		variable_from_option('mini_font_options','mini_most_used_font','--font', true);
+		
 		?>
 		}
 	</style>
@@ -127,7 +138,7 @@
     <div id="top"></div>
     <a href="#top"><div class="top-link"><p class=""><i class="iconoir-dot-arrow-up"></i></p></div></a>
 
-	<header id="header" class="header">
+	<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
         <div class="container">
             <div class="boxes align-items-center justify-content-between">
                 <div class="box brand px-2">

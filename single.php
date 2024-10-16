@@ -18,11 +18,11 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
+	<main id="primary" class="site-main" template="single">
 		<div class="container fw">
 			<div class="container <?=$container_width?>">
 				<div class="boxes space-top-bot">
-					<div class="box my-0 \p-0 <?= $content_size ?>">
+					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
 						<div class="boxes">
 
 							<?php

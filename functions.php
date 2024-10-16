@@ -398,8 +398,97 @@ function page_container_save_postdata( $post_id ) {
     update_post_meta( $post_id, 'page_container', $pageContainerStyle );
 }
 
+/**
+ * ADD header styling meta box to page edit
+ */
 
+// Add blocks to the main column on the page pages
+add_action( 'add_meta_boxes', 'add_header_styling_box' );
 
+// Saving data when the post is saved
+add_action( 'save_post', 'header_styling_save_postdata' );
+
+function add_header_styling_box() {
+    add_meta_box(
+        'header-styling',
+        'Header styling',
+        'header_styling_box_html',
+        'page',
+        'side'
+    );
+}
+
+// HTML code of the block
+function header_styling_box_html( $post, $meta ){
+
+    // field value
+    $header_styling_top_style = get_post_meta( $post->ID, 'header_styling_top', true);
+    $header_styling_scroll_style = get_post_meta( $post->ID, 'header_styling_scroll', true);
+
+    $header_styling_state_top_standard = null;
+    if ( $header_styling_top_style == '') { $header_styling_state_top_standard = ' selected'; }
+    $header_styling_state_top_white = null;
+    if ( $header_styling_top_style == 'top-wh') { $header_styling_state_top_white = ' selected'; }
+    $header_styling_state_top_black = null;
+    if ( $header_styling_top_style == 'top-bk') { $header_styling_state_top_black = ' selected'; }
+    $header_styling_state_top_color = null;
+    if ( $header_styling_top_style == 'top-col') { $header_styling_state_top_color = ' selected'; }
+    $header_styling_state_top_negative = null;
+    if ( $header_styling_top_style == 'top-inv') { $header_styling_state_top_negative = ' selected'; }
+
+    $header_styling_state_scroll_standard = null;
+    if ( $header_styling_scroll_style == '') { $header_styling_state_scroll_standard = ' selected'; }
+    $header_styling_state_scroll_white = null;
+    if ( $header_styling_scroll_style == 'scroll-wh') { $header_styling_state_scroll_white = ' selected'; }
+    $header_styling_state_scroll_black = null;
+    if ( $header_styling_scroll_style == 'scroll-bk') { $header_styling_state_scroll_black = ' selected'; }
+    $header_styling_state_scroll_color = null;
+    if ( $header_styling_scroll_style == 'scroll-col') { $header_styling_state_scroll_color = ' selected'; }
+    $header_styling_state_scroll_negative = null;
+    if ( $header_styling_scroll_style == 'scroll-inv') { $header_styling_state_scroll_negative = ' selected'; }
+
+    // Form fields for entering data
+    ?>
+    <label for="header_styling_top" style="display: block; margin-bottom: 5px;"><?=__("Header top styling", 'header_styling_top_box_textdomain' )?></label>
+    <select name="header_styling_top">
+		<option value=""<?=$header_styling_state_top_standard?>>Default</option>
+		<option value="top-wh"<?=$header_styling_state_top_white?>>Top white background</option>
+		<option value="top-bk"<?=$header_styling_state_top_black?>>Top black background</option>
+		<option value="top-col"<?=$header_styling_state_top_color?>>Top main color background</option>
+		<option value="top-inv"<?=$header_styling_state_top_negative?>>Top inverted colors</option>
+	</select>
+    <br/><br/>
+    <label for="header_styling_scroll" style="display: block; margin-bottom: 5px;"><?=__("Header scroll styling", 'header_styling_scroll_box_textdomain' )?></label>
+    <select name="header_styling_scroll">
+		<option value=""<?=$header_styling_state_scroll_standard?>>Default</option>
+		<option value="scroll-wh"<?=$header_styling_state_scroll_white?>>Scroll white background</option>
+		<option value="scroll-bk"<?=$header_styling_state_scroll_black?>>Scroll black background</option>
+		<option value="scroll-col"<?=$header_styling_state_scroll_color?>>Scroll main color background</option>
+		<option value="scroll-inv"<?=$header_styling_state_scroll_negative?>>Scroll inverted colors</option>
+	</select>
+<?php
+}
+
+function header_styling_save_postdata( $post_id ) {
+
+    // make sure the field is set.
+    if ( ! isset( $_POST['header_styling_top'] ) && ! isset( $_POST['header_styling_scroll'] ) ) { return; }
+
+    // if this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+
+    // check user permission
+    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+
+    // Everything is OK. Now, we need to find and save the data
+    // Define the value of the input field.
+    $header_style_top = $_POST['header_styling_top'];
+    $header_style_scroll = $_POST['header_styling_scroll'];
+    // Update data in the database.
+    update_post_meta( $post_id, 'header_styling_top', $header_style_top );
+    update_post_meta( $post_id, 'header_styling_scroll', $header_style_scroll );
+    
+}
 
 
 
@@ -465,6 +554,30 @@ function mini_login_url( $url ) {
 }
 add_filter( 'login_headerurl', 'mini_login_url', 10, 1 );
 // END - MINI LOGIN
+
+// mini admin bar image class
+function dashboard_logo() {
+    echo '
+    <style type="text/css">
+        #wpadminbar #wp-admin-bar-wp-logo>.ab-item {
+            padding: 0 7px;
+            background-image: url('.get_stylesheet_directory_uri().'/img/mini_emblem.svg) !important;
+            background-size: 70%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #wpadminbar #wp-admin-bar-wp-logo>.ab-item {
+        }
+        #wpadminbar #wp-admin-bar-wp-logo>.ab-item .ab-icon:before {
+            content: " ";
+            top: 2px;
+        }
+    </style>
+    ';
+}
+add_action('wp_before_admin_bar_render', 'dashboard_logo');
+
+
 
 
 /**
@@ -828,6 +941,57 @@ function checkbox_option(
     ';
 }
 
+function option_list_option(
+    string $option_group, 
+    string $option, 
+    array $select_options, 
+    string $label,
+    string $style='width: 100%;',
+) {
+    /**
+     * $options = [
+     *  'Main font' => 'main-font',
+     *  'Socondary font' => 'secondary-font',
+     * ]
+     */
+    $options = get_option( $option_group );
+    $stored_choice = '';
+    if (
+        is_array($options) && array_key_exists($option, $options) && $options[$option] != null 
+    ) {
+        $stored_choice = $options[$option];
+    }
+
+    $select_field = '
+    <label for="'.$option.'">' . __($label, 'mini' ) . '</label>
+    <br/><br/>
+    ';
+    $select_field .= '
+    <select name="'.$option_group.'['.$option.']" style="'.$style.'">
+    ';
+    $select_field .= '
+        <option value="" selected>Default</option>
+    ';
+    $o = 1;
+    foreach($select_options as $select_option => $value ) {
+        $state = null;
+        if($value == $stored_choice) {
+            $state = ' selected';
+        }
+        $select_field .= '
+        <option value="'.$value.'"'.$state.'>'.$select_option.'</option>
+        ';
+        $o++;
+    }
+    $select_field .= '
+    </select>
+    ';
+
+    return $select_field;
+    
+}
+
+
 /**
  * CDN field callback function.
  *
@@ -985,6 +1149,17 @@ function mini_logo_size_field_callback( $args ) {
 
 function mini_fonts_field_callback( $args ) {
     ?>
+    <h4 class="">
+        <?php esc_html_e( 'Font for titles', 'mini' ); ?>
+    </h4>
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <?= option_list_option('mini_font_options','mini_title_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
+        </div>
+        <div style="flex:1;">
+            <?= option_list_option('mini_font_options','mini_most_used_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
+        </div>
+    </div>
     <h4 class="">
         <?php esc_html_e( 'Main font', 'mini' ); ?>
     </h4>
