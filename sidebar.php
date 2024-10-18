@@ -12,6 +12,10 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 }
 ?>
 
-<aside id="sidebar" class="box box-25 p-2 widget-area">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
+<aside id="sidebar" class="box box-25 my-0 p-0 widget-area">
+	<div class="boxes space-top-bot">
+		<div class="box box-100 p-2">
+			<?php dynamic_sidebar( 'sidebar-1' ); ?>
+		</div>
+	</div>
 </aside><!-- #secondary -->

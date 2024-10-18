@@ -19,21 +19,19 @@ get_header();
 
 	<main id="primary" class="site-main" template="home">
 		<div class="container fw">
-			<div class="container">
-				<div class="boxes space-top-bot">
-					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
-						<div class="boxes">
+			<div class="container <?= $container_width ?>">
+				<div class="boxes">
+					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php else: ?> py-0<?php endif; ?> <?= $content_size ?>">
+						<div class="boxes space-top">
+							
+							<div class="box box-100 my-2">
+								<header class="entry-header">
+									<h1 class="page-title m-0"><?php single_post_title(); ?></h1>
+								</header><!-- .entry-header -->
+							</div>
 
 							<?php
 							if ( have_posts() ) :
-
-								if ( is_home() && ! is_front_page() ) :
-									?>
-									<header>
-										<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-									</header>
-									<?php
-								endif;
 
 								/* Start the Loop */
 								while ( have_posts() ) :

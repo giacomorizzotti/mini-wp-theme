@@ -498,9 +498,14 @@ function header_styling_save_postdata( $post_id ) {
 
 
 
+// mini favicon
+function mini_favicon(){
+    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
+}
+add_action( 'wp_head', 'mini_favicon');
 
-
-
+// Contact form 7 BUG FIX
+add_filter('wpcf7_autop_or_not', '__return_false');
 
 // mini logo image class
 add_filter( 'get_custom_logo', 'change_logo_class' );
@@ -800,6 +805,20 @@ function mini_settings_init() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Register our mini_settings_init to the admin_init action hook.
  */
@@ -860,7 +879,7 @@ function mini_company_section_callback( $args ) {
 
 
 /**
- * Generif functions
+ * Generic functions
  */
 function text_field_option(
     string $option_group, 
