@@ -25,8 +25,6 @@
                     <p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p>
                     <p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p>
 
-                    <p class="grey-text S">A <a href="https://mini.uwa.agency/" target="_blank" class="mini-text"><i>mini</i></a> based website by <a href="https://www.uwa.agency/" target="_blank" class="mini-text"><strong>UWA</strong></a></p>
-
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">

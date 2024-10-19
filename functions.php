@@ -1035,9 +1035,9 @@ function mini_cdn_field_callback( $args ) {
     ?>
     <?= checkbox_option('mini_cdn_options','cdn'); ?>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
+    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css'); ?>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
+    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
@@ -1756,7 +1756,6 @@ function mini_css(){
 
 // Adding .js from CDN or from ext source or from local theme folder
 add_action( 'wp_enqueue_scripts', 'mini_js' );
-
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
