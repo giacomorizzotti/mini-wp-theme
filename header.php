@@ -12,6 +12,7 @@
 
 $header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
 $header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
+$custom_logo = get_custom_logo();
 
 ?>
 <!doctype html>
@@ -144,7 +145,7 @@ $header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
                 <div class="box brand px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
 						<?php if (has_custom_logo()): ?>
-                        <?= the_custom_logo(); ?>
+                        <?= $custom_logo ?>
                         <?php else: ?>
 							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
 						<?php endif; ?>

@@ -510,8 +510,8 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 // mini logo image class
 add_filter( 'get_custom_logo', 'change_logo_class' );
 function change_logo_class( $html ) {
-    $html = str_replace( 'custom-logo', 'your-custom-class', $html );
-    $html = str_replace( 'custom-logo-link', 'your-custom-class', $html );
+    $html = str_replace( 'custom-logo', 'logo', $html );
+    $html = str_replace( 'custom-logo-link', 'logo-link', $html );
     return $html;
 }
 
