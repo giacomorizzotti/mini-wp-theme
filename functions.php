@@ -1035,9 +1035,9 @@ function mini_cdn_field_callback( $args ) {
     ?>
     <?= checkbox_option('mini_cdn_options','cdn'); ?>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css'); ?>
+    <?= text_field_option('mini_cdn_options','css_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css'*/'https://mini.uwa.agency/css/mini.min.css'); ?>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js'); ?>
+    <?= text_field_option('mini_cdn_options','js_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js'*/'https://mini.uwa.agency/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
@@ -1742,8 +1742,8 @@ add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css';
-        //$mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
+        //$mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css';
+        $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
             $mini_CSS = $options['css_cdn_url'];
@@ -1759,8 +1759,8 @@ add_action( 'wp_enqueue_scripts', 'mini_js' );
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js';
-        //$mini_JS = 'https://mini.uwa.agency/js/mini.js';
+        //$mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js';
+        $mini_JS = 'https://mini.uwa.agency/js/mini.js';
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
             $mini_JS = $options['js_cdn_url'];
