@@ -150,9 +150,15 @@ $custom_logo = get_custom_logo();
 							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
 						<?php endif; ?>
                     </a>
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
-					<?php /*
+					<?php
 					$mini_description = get_bloginfo( 'description', 'display' );
+					?>
+					<?php
+					if ( $mini_description || is_customize_preview() ) :
+					?>
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
+					<?php endif; ?>
+					<?php /*
 					if ( $mini_description || is_customize_preview() ) :
 					?>
 						<p class="site-description"><?php echo $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
