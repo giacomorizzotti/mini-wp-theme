@@ -69,11 +69,12 @@ $custom_logo = get_custom_logo();
 		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
 		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
 		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
-		variable_from_option('mini_size_options','mini_logo_height','--logo-height');
-		variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
+		//variable_from_option('mini_size_options','mini_logo_height','--logo-height');
+		//variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
 		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
 		variable_from_option('mini_font_options','mini_most_used_font','--font', true);
-		
+		if (get_theme_mod( 'logo-height' )) { echo '--logo-height:'.get_theme_mod( 'logo-height' ).';'; }
+		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }
 		?>
 		}
 	</style>

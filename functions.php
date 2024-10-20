@@ -673,10 +673,9 @@ function mini_settings_init() {
         )
     );
 
-    // Register a new setting for "mini" page.
+    /*
     register_setting( 'mini_size', 'mini_size_options');
 
-    // Register a new section in the "mini" page.
     add_settings_section(
         'mini_size_section',
         __( 'Mini size settings', 'mini' ),
@@ -685,8 +684,7 @@ function mini_settings_init() {
     );
 
     add_settings_field(
-        'mini_logo_size', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
+        'mini_logo_size',
         __( 'Logo size', 'mini' ),
         'mini_logo_size_field_callback',
         'mini-size',
@@ -697,6 +695,7 @@ function mini_settings_init() {
             'mini_custom_data' => 'custom',
         )
     );
+    */
 
     // Register a new setting for "mini" page.
     register_setting( 'mini_font', 'mini_font_options');
@@ -852,11 +851,13 @@ function mini_colors_section_callback( $args ) {
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the colors section', 'mini' ); ?></p>
     <?php
 }
+/*
 function mini_size_section_callback( $args ) {
     ?>
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the sizes section', 'mini' ); ?></p>
     <?php
 }
+*/
 function mini_font_section_callback( $args ) {
     ?>
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the font section', 'mini' ); ?></p>
@@ -955,7 +956,7 @@ function checkbox_option(
     return '
     <input
         type="checkbox"
-        id="cdn"
+        id="'.$option.'"
         name="'.$option_group.'['.$option.']"
         '.$status.'
     >
@@ -1035,14 +1036,29 @@ function mini_field_callback( $args ) {
 
 function mini_cdn_field_callback( $args ) {
     ?>
+    <p class="description small">
+        <?php esc_html_e( 'Use mini from CDN', 'mini' ); ?>
+    </p>
     <?= checkbox_option('mini_cdn_options','cdn'); ?>
     <br/><br/>
+    <p class="description small">
+        <?php esc_html_e( 'Use development CDN (slower but latest)', 'mini' ); ?>
+    </p>
+    <?= checkbox_option('mini_cdn_options','cdn_dev'); ?>
+    <br/><br/>
+    <p class="description small">
+        <?php esc_html_e( 'Absolute or relative CSS path', 'mini' ); ?>
+    </p>
     <?= text_field_option('mini_cdn_options','css_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css'*/'https://mini.uwa.agency/css/mini.min.css'); ?>
+    <p class="description small">
+        <?php esc_html_e( 'Absolute or relative JS path', 'mini' ); ?>
+    </p>
     <br/><br/>
     <?= text_field_option('mini_cdn_options','js_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js'*/'https://mini.uwa.agency/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
+    <br/><br/>
     <p class="description small">
         <?php esc_html_e( 'If you want to avoid the CDN due to performance reasons, please ensure to get .css .js files locally!', 'mini' ); ?>
     </p>
@@ -1149,7 +1165,7 @@ function mini_colors_callback( $args ) {
     <?php
 }
 
-
+/*
 function mini_logo_size_field_callback( $args ) {
     ?>
     <h4 class="">Logo height</h4>
@@ -1166,6 +1182,7 @@ function mini_logo_size_field_callback( $args ) {
     </p>
     <?php
 }
+*/
 
 
 function mini_fonts_field_callback( $args ) {
@@ -1309,6 +1326,11 @@ function mini_company_field_callback( $args ) {
             <br/>
         </div>
         <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'City code', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_city_code',''); ?>
+            <br/>
+        </div>
+        <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Province', 'mini' ) ?></h4>
             <?= text_field_option('mini_company_options','mini_company_province',''); ?>
             <br/>
@@ -1328,6 +1350,17 @@ function mini_company_field_callback( $args ) {
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
             <?= text_field_option('mini_company_options','mini_company_phone',''); ?>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'Tax number', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_tax_number',''); ?>
+        </div>
+        <div style="flex:1;">
+            <h4 class=""><?= esc_html__( 'ID code', 'mini' ) ?></h4>
+            <?= text_field_option('mini_company_options','mini_company_id_code',''); ?>
         </div>
     </div>
 
@@ -1393,6 +1426,7 @@ function mini_options_page() {
         'mini-fonts',
         'mini_font_options_page_html'
     );
+    /*
     add_submenu_page(
         'mini',
         'Size options',
@@ -1401,6 +1435,7 @@ function mini_options_page() {
         'mini-size',
         'mini_size_options_page_html'
     );
+    */
     add_submenu_page(
         'mini',
         'External libraries options',
@@ -1622,6 +1657,7 @@ function mini_color_options_page_html() {
 }
 
 // Sizes options page
+/*
 function mini_size_options_page_html() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
@@ -1643,6 +1679,7 @@ function mini_size_options_page_html() {
     </div>
     <?php
 }
+*/
 
 // Fonts options page
 function mini_font_options_page_html() {
@@ -1744,8 +1781,10 @@ add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        //$mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css';
-        $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
+        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css';
+        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
+            $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
+        }
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
             $mini_CSS = $options['css_cdn_url'];
@@ -1761,8 +1800,10 @@ add_action( 'wp_enqueue_scripts', 'mini_js' );
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        //$mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js';
-        $mini_JS = 'https://mini.uwa.agency/js/mini.js';
+        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js';
+        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
+            $mini_JS = 'https://mini.uwa.agency/js/mini.js';
+        }
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
             $mini_JS = $options['js_cdn_url'];

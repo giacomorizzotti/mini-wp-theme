@@ -59,3 +59,48 @@ function mini_customize_preview_js() {
 	wp_enqueue_script( 'mini-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
 }
 add_action( 'customize_preview_init', 'mini_customize_preview_js' );
+
+
+
+function wpctmz_logo_height( $wp_customize ){
+
+	//Setting
+	$wp_customize->add_setting( 'logo-height', array( 'default' => '' ) );
+	$wp_customize->add_setting( 'scroll-logo-height', array( 'default' => '' ) );
+
+	//Section
+	$wp_customize->add_section(
+		'logo-height-settings',
+		array(
+			'title' => __( 'Logo height', '_s' ),
+			'priority' => 30,
+			'description' => __( 'Enter the logo height for top or scrolled screen', '_s' )
+		)
+	);
+
+	//Control
+	//Logo height
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'logo-height',
+			array(
+				'label' => __( 'Logo height', '_s' ),
+				'section' => 'logo-height-settings',
+				'settings' => 'logo-height'
+			)
+		)
+	);
+	//Scroll logo height
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'scroll-logo-height',
+			array(
+				'label' => __( 'Logo height (scrolled)', '_s' ),
+				'section' => 'logo-height-settings',
+				'settings' => 'scroll-logo-height'
+			)
+		)
+	);
+	
+}
+add_action('customize_register', 'wpctmz_logo_height');
