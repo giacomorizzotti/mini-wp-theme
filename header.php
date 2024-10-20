@@ -158,11 +158,12 @@ $custom_logo = get_custom_logo();
 					?>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
 					<?php endif; ?>
-					<?php /*
+					<?php
 					if ( $mini_description || is_customize_preview() ) :
 					?>
-						<p class="site-description"><?php echo $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-					<?php endif; */?>
+						<div class="sep"></div>
+						<p class="site-description m-0"><?php echo $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<?php endif; ?>
                 </div>
                 <div class="box menus px-2">
                     <div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>

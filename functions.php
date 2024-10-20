@@ -73,6 +73,7 @@ function mini_setup() {
     );
 
     // Set up the WordPress core custom background feature.
+    /*
     add_theme_support(
         'custom-background',
         apply_filters(
@@ -83,6 +84,7 @@ function mini_setup() {
             )
         )
     );
+    */
 
     // Add theme support for selective refresh for widgets.
     add_theme_support( 'customize-selective-refresh-widgets' );
@@ -155,7 +157,7 @@ add_action( 'wp_enqueue_scripts', 'mini_scripts' );
 /**
  * Implement the Custom Header feature.
  */
-require get_template_directory() . '/inc/custom-header.php';
+//require get_template_directory() . '/inc/custom-header.php';
 
 /**
  * Custom template tags for this theme.
@@ -510,7 +512,7 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 // mini logo image class
 add_filter( 'get_custom_logo', 'change_logo_class' );
 function change_logo_class( $html ) {
-    $html = str_replace( 'custom-logo', 'logo', $html );
+    $html = str_replace( 'custom-logo', 'logo me-1', $html );
     $html = str_replace( 'custom-logo-link', 'logo-link', $html );
     return $html;
 }
