@@ -19,11 +19,14 @@
                 <div class="box box-33 footer-info px-2">
                     <p class="m-0 L"><?php echo date("Y"); ?>&nbsp;©&nbsp;<span class="bold"><?= do_shortcode('[get_company_name]'); ?></span></p>
                     <div class="space-1"></div>
-                    <p class="m-0"><?= do_shortcode('[get_company_address_line_1]'); ?></p>
-                    <p class="m-0"><?= do_shortcode('[get_company_address_line_2]'); ?></p>
-                    <div class="space-1"></div>
-                    <p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p>
-                    <p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p>
+                    <?php if (do_shortcode('[get_company_address_line_1]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_1]'); ?></p><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_address_line_2]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_2]'); ?></p><?php endif; ?>
+                    <?php if ( do_shortcode('[get_company_email]') != false || do_shortcode('[get_company_phone]') != false ): ?><div class="space-1"></div><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_email]') != false): ?><p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_phone]') != false): ?><p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p><?php endif; ?>
+                    <?php if ( do_shortcode('[get_company_tax_number]') != false || do_shortcode('[get_company_id_code]') != false ): ?><div class="space-1"></div><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_tax_number]') != false): ?><p class="m-0"><span class="label">P.IVA</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_tax_number]'); ?></p><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_id_code]') != false): ?><p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_id_code]'); ?></p><?php endif; ?>
 
                 </div>
                 <div class="box box-33 footer-logo px-2">

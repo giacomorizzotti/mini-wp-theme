@@ -52,13 +52,89 @@ footer {
             -webkit-border-radius: 3px;
             -moz-border-radius: 3px;
             border-radius: 3px;
-            color: var(--white);
-            border-color: var(--link-color);
-            background: var(--link-color);
+        }
+        &.btn, &.btn-bg {
+            border: 0;
+            margin: 0;
+            padding: 0!important;
+            background: 0;
             &:hover {
+                border: 0;
+                margin: 0;
+                padding: 0;
+                background: 0;
+            }
+        }
+        &.btn {
+            .wp-block-button__link {
+                color: var(--link-color);
+                border-color: var(--link-color);
+                background: var(--white);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--link-hover-color);
+                    background: var(--link-hover-color);
+                }
+            }
+        }
+        &.btn-bg {
+            .wp-block-button__link {
                 color: var(--white);
-                border-color: var(--link-hover-color);
-                background: var(--link-hover-color);
+                border-color: var(--link-color);
+                background: var(--link-color);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--link-hover-color);
+                    background: var(--link-hover-color);
+                }
+            }
+        }
+        &.color-btn {
+            .wp-block-button__link {
+                color: var(--main-color);
+                border-color: var(--main-color);
+                background: var(--white);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--main-color-dark);
+                    background: var(--main-color-dark);
+                }
+            }
+        }
+        &.color-btn-bg {
+            .wp-block-button__link {
+                color: var(--white);
+                border-color: var(--main-color);
+                background: var(--main-color);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--main-color-dark);
+                    background: var(--main-color-dark);
+                }
+            }
+        }
+        &.second-color-btn {
+            .wp-block-button__link {
+                color: var(--second-color);
+                border-color: var(--second-color);
+                background: var(--white);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--second-color-dark);
+                    background: var(--second-color-dark);
+                }
+            }
+        }
+        &.second-color-btn-bg {
+            .wp-block-button__link {
+                color: var(--white);
+                border-color: var(--second-color);
+                background: var(--second-color);
+                &:hover {
+                    color: var(--white);
+                    border-color: var(--second-color-dark);
+                    background: var(--second-color-dark);
+                }
             }
         }
         &.XL {
