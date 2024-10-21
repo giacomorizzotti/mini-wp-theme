@@ -42,19 +42,6 @@ $custom_logo = get_custom_logo();
 			}
 			echo $variable;
 		}
-		variable_from_option('mini_colors_options','mini_main_color','--main-color');
-		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
-		variable_from_option('mini_colors_options','mini_main_color_transp','--main-color-transp');
-		variable_from_option('mini_colors_options','mini_second_color','--second-color');
-		variable_from_option('mini_colors_options','mini_second_color_dark','--second-color-dark');
-		variable_from_option('mini_colors_options','mini_third_color','--third-color');
-		variable_from_option('mini_colors_options','mini_third_color_dark','--third-color-dark');
-		variable_from_option('mini_colors_options','mini_fourth_color','--fourth-color');
-		variable_from_option('mini_colors_options','mini_fourth_color_dark','--fourth-color-dark');
-		variable_from_option('mini_colors_options','mini_link_color','--link-color');
-		variable_from_option('mini_colors_options','mini_link_hover_color','--link-hover-color');
-		variable_from_option('mini_colors_options','mini_sheet_color','--sheet-color');
-		variable_from_option('mini_colors_options','mini_menu_toggle_color','--menu-toggle-color');
 		variable_from_option('mini_colors_options','mini_semaphore_color_info','--info');
 		variable_from_option('mini_colors_options','mini_semaphore_color_success','--success');
 		variable_from_option('mini_colors_options','mini_semaphore_color_warning','--warning');
@@ -69,12 +56,46 @@ $custom_logo = get_custom_logo();
 		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
 		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
 		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
-		//variable_from_option('mini_size_options','mini_logo_height','--logo-height');
-		//variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
 		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
 		variable_from_option('mini_font_options','mini_most_used_font','--font', true);
+
+		//variable_from_option('mini_size_options','mini_logo_height','--logo-height');
+		//variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
 		if (get_theme_mod( 'logo-height' )) { echo '--logo-height:'.get_theme_mod( 'logo-height' ).';'; }
 		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_main_color','--main-color');
+		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
+		variable_from_option('mini_colors_options','mini_main_color_transp','--main-color-transp');
+		if (get_theme_mod( 'main-color' )) { echo '--main-color:'.get_theme_mod( 'main-color' ).';'; }
+		if (get_theme_mod( 'main-color-dark' )) { echo '--main-color-dark:'.get_theme_mod( 'main-color-dark' ).';'; }
+		if (get_theme_mod( 'main-color-transp' )) { echo '--main-color-transp:'.get_theme_mod( 'main-color-transp' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_second_color','--second-color');
+		variable_from_option('mini_colors_options','mini_second_color_dark','--second-color-dark');
+		if (get_theme_mod( 'second-color' )) { echo '--second-color:'.get_theme_mod( 'second-color' ).';'; }
+		if (get_theme_mod( 'second-color-dark' )) { echo '--second-color-dark:'.get_theme_mod( 'second-color-dark' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_third_color','--third-color');
+		variable_from_option('mini_colors_options','mini_third_color_dark','--third-color-dark');
+		if (get_theme_mod( 'third-color' )) { echo '--third-color:'.get_theme_mod( 'third-color' ).';'; }
+		if (get_theme_mod( 'third-color-dark' )) { echo '--third-color-dark:'.get_theme_mod( 'third-color-dark' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_fourth_color','--fourth-color');
+		variable_from_option('mini_colors_options','mini_fourth_color_dark','--fourth-color-dark');
+		if (get_theme_mod( 'fourth-color' )) { echo '--fourth-color:'.get_theme_mod( 'fourth-color' ).';'; }
+		if (get_theme_mod( 'fourth-color-dark' )) { echo '--fourth-color-dark:'.get_theme_mod( 'fourth-color-dark' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_link_color','--link-color');
+		variable_from_option('mini_colors_options','mini_link_hover_color','--link-hover-color');
+		if (get_theme_mod( 'link-color' )) { echo '--link-color:'.get_theme_mod( 'link-color' ).';'; }
+		if (get_theme_mod( 'link-hover-color' )) { echo '--link-hover-color:'.get_theme_mod( 'link-hover-color' ).';'; }
+		
+		variable_from_option('mini_colors_options','mini_sheet_color','--sheet-color');
+		variable_from_option('mini_colors_options','mini_menu_toggle_color','--menu-toggle-color');
+		if (get_theme_mod( 'sheet-color' )) { echo '--sheet-color:'.get_theme_mod( 'sheet-color' ).';'; }
+		if (get_theme_mod( 'menu-toggle-color' )) { echo '--menu-toggle-color:'.get_theme_mod( 'menu-toggle-color' ).';'; }
+
 		?>
 		}
 	</style>
@@ -152,18 +173,20 @@ $custom_logo = get_custom_logo();
 						<?php endif; ?>
                     </a>
 					<?php
+					$mini_title = get_bloginfo( 'name', 'display' );
 					$mini_description = get_bloginfo( 'description', 'display' );
 					?>
 					<?php
-					if ( $mini_description || is_customize_preview() ) :
+					if ( ( $mini_title && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
 					?>
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
 					<?php endif; ?>
 					<?php
-					if ( $mini_description || is_customize_preview() ) :
+					if ( ( $mini_description && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
 					?>
 						<div class="sep"></div>
-						<p class="site-description m-0"><?php echo $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+						<div class="space-05"></div>
+						<p class="site-description m-0"><?= $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 					<?php endif; ?>
                 </div>
                 <div class="box menus px-2">

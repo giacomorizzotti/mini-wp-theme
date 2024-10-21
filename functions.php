@@ -160,6 +160,11 @@ add_action( 'wp_enqueue_scripts', 'mini_scripts' );
 //require get_template_directory() . '/inc/custom-header.php';
 
 /**
+ * Implement the Custom Logo feature.
+ */
+require get_template_directory() . '/inc/custom-logo.php';
+
+/**
  * Custom template tags for this theme. 
  */
 require get_template_directory() . '/inc/template-tags.php';
@@ -1111,8 +1116,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Link color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_link_color','rgb( 60 185 225 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_link_hover_color','rgb( 40 130 160 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_link_color','rgb(121 48 238 / 100% )'); ?>
+    <?= text_field_color_option('mini_colors_options','mini_link_hover_color','rgb(72 34 176 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Link and buttons color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>

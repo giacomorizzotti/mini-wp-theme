@@ -22,7 +22,7 @@ get_header();
 			<div class="container <?= $container_width ?>">
 				<div class="boxes">
 					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php else: ?> py-0<?php endif; ?> <?= $content_size ?>">
-						<div class="boxes space-top">
+						<div class="boxes space-top-bot">
 							
 							<div class="box box-100 my-2">
 								<header class="entry-header">
