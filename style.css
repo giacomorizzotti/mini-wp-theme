@@ -950,6 +950,14 @@ footer .edit-link a {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+  color: var(--link-color);
+  border-color: var(--link-color);
+  background: var(--white);
+}
+.wp-block-buttons .wp-block-button .wp-block-button__link:hover {
+  color: var(--white);
+  border-color: var(--link-hover-color);
+  background: var(--link-hover-color);
 }
 .wp-block-buttons .wp-block-button.btn, .wp-block-buttons .wp-block-button.btn-bg {
   border: 0;

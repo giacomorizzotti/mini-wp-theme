@@ -1143,6 +1143,15 @@ function mini_colors_callback( $args ) {
     <br/>
     <hr>
     <h4 class="m-0">
+        Theme color
+    </h4>
+    <?= text_field_color_option('mini_colors_options','mini_theme_color','rgb( 60 90 255 / 100% )'); ?>
+    <p class="description">
+        <?php esc_html_e( 'Android browser bar', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
+    </p>
+    <br/>
+    <hr>
+    <h4 class="m-0">
         Semaphore colors
     </h4>
     <?= text_field_color_option('mini_colors_options','mini_semaphore_color_info','rgb( 113 202 189 )'); ?>

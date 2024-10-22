@@ -9,10 +9,37 @@
  * @package mini
  */
 
-
 $header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
 $header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
 $custom_logo = get_custom_logo();
+
+function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {
+	$options = get_option( $options_group );
+	if ( 
+		is_array($options) && 
+		array_key_exists($option, $options) && 
+		$options[$option] != null 
+	) {
+		if ($var_refer==true) {
+			$variable = $variable_name.':var('.$options[$option].');';
+		} else {
+			$variable = $variable_name.':'.$options[$option].';';
+		}
+	}
+	echo $variable;
+}
+function check_variable_from_option($options_group, $option) {
+	$options = get_option( $options_group );
+	if ( 
+		is_array($options) && 
+		array_key_exists($option, $options) && 
+		$options[$option] != null 
+	) {
+		return true;
+	} else {
+		return false;
+	}
+}
 
 ?>
 <!doctype html>
@@ -24,24 +51,17 @@ $custom_logo = get_custom_logo();
 
 	<?php wp_head(); ?>
 
+    <?php if ( check_variable_from_option('mini_colors_options','mini_semaphore_color_info') == true ): ?>
+		<?php if (get_theme_mod( 'sheet-color' )): ?>
+			<meta name="theme-color" content="<?= get_theme_mod( 'sheet-color' ) ?>" />
+		<?php else: ?>
+			<meta name="theme-color" content="<?= get_option('mini_colors_options')['mini_theme_color'] ?>" />
+		<?php endif; ?>
+	<?php endif; ?>
+
 	<style>
 		:root {
 		<?php
-		function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {
-			$options = get_option( $options_group );
-			if ( 
-				is_array($options) && 
-				array_key_exists($option, $options) && 
-				$options[$option] != null 
-			) {
-				if ($var_refer==true) {
-					$variable = $variable_name.':var('.$options[$option].');';
-				} else {
-					$variable = $variable_name.':'.$options[$option].';';
-				}
-			}
-			echo $variable;
-		}
 		variable_from_option('mini_colors_options','mini_semaphore_color_info','--info');
 		variable_from_option('mini_colors_options','mini_semaphore_color_success','--success');
 		variable_from_option('mini_colors_options','mini_semaphore_color_warning','--warning');

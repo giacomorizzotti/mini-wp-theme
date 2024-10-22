@@ -129,6 +129,8 @@ function wpctmz_color_palette( $wp_customize ){
 	$wp_customize->add_setting( 'sheet-color', array( 'default' => 'rgb( 20 10 40 / 100% )' ) );
 	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => 'rgb( 20 10 40 / 100% )' ) );
 	
+	$wp_customize->add_setting( 'theme-color', array( 'default' => 'rgb( 60 90 255 / 100% )' ) );
+	
 	/*
 	$wp_customize->add_setting( 'semaphore-info-color', array( 'default' => 'rgb( 113 202 189 )' ) );
 	$wp_customize->add_setting( 'semaphore-success-color', array( 'default' => 'rgb( 160 220 110 )' ) );
@@ -293,6 +295,18 @@ function wpctmz_color_palette( $wp_customize ){
 				'label' => __( 'Menu toggle color', 'mini' ),
 				'section' => 'color-settings',
 				'settings' => 'menu-toggle-color',
+			)
+		)
+	);
+
+	//theme color
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'theme-color',
+			array(
+				'label' => __( 'Theme color', 'mini' ),
+				'section' => 'color-settings',
+				'settings' => 'theme-color',
 			)
 		)
 	);

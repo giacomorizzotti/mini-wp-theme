@@ -52,6 +52,15 @@ footer {
             -webkit-border-radius: 3px;
             -moz-border-radius: 3px;
             border-radius: 3px;
+            
+            color: var(--link-color);
+            border-color: var(--link-color);
+            background: var(--white);
+            &:hover {
+                color: var(--white);
+                border-color: var(--link-hover-color);
+                background: var(--link-hover-color);
+            }
         }
         &.btn, &.btn-bg {
             border: 0;
