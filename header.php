@@ -25,8 +25,8 @@ function variable_from_option($options_group, $option, $variable_name, $var_refe
 		} else {
 			$variable = $variable_name.':'.$options[$option].';';
 		}
+		echo $variable;
 	}
-	echo $variable;
 }
 function check_variable_from_option($options_group, $option) {
 	$options = get_option( $options_group );
