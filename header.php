@@ -224,7 +224,7 @@ function check_variable_from_option($options_group, $option) {
 
 	<div class="sheet"><?php /* starting .sheet div */ ?>
 
-		<aside id="side-menu" class="">
+		<aside id="side-right" class="">
 			<nav class="menu main-menu">
 				<?php
 				wp_nav_menu(
