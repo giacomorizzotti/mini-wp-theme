@@ -58,7 +58,7 @@
     </footer>
 <?php
 if ( 
-    get_variable('mini_options','credits') != false
+    get_variable('mini_options','mini_credits') != false
 ) {
 ?>
     <div id="credits" class="fw-bg">

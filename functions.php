@@ -1041,9 +1041,14 @@ function option_list_option(
 
 function mini_field_callback( $args ) {
     ?>
-    <?= checkbox_option('mini_options','credits'); ?>
+    <?= checkbox_option('mini_options','mini_credits'); ?>
     <p class="description">
         <?php esc_html_e( 'Footer credits strip', 'mini' ); ?>
+    </p>
+    <br/><br/>
+    <?= checkbox_option('mini_options','mini_slider'); ?>
+    <p class="description">
+        <?php esc_html_e( 'Use mini slider', 'mini' ); ?>
     </p>
     <?php
 }
@@ -1063,12 +1068,12 @@ function mini_cdn_field_callback( $args ) {
     <p class="description small">
         <?php esc_html_e( 'Absolute or relative CSS path', 'mini' ); ?>
     </p>
-    <?= text_field_option('mini_cdn_options','css_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css'*/'https://mini.uwa.agency/css/mini.min.css'); ?>
+    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
     <p class="description small">
         <?php esc_html_e( 'Absolute or relative JS path', 'mini' ); ?>
     </p>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','js_cdn_url',/*'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js'*/'https://mini.uwa.agency/js/mini.js'); ?>
+    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
@@ -1823,7 +1828,7 @@ add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/css/mini.min.css';
+        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
             $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
         }
@@ -1842,7 +1847,7 @@ add_action( 'wp_enqueue_scripts', 'mini_js' );
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@latest/js/mini.js';
+        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
             $mini_JS = 'https://mini.uwa.agency/js/mini.js';
         }
@@ -1851,6 +1856,25 @@ function mini_js(){
             $mini_JS = $options['js_cdn_url'];
         } else {
             $mini_JS = get_stylesheet_directory_uri().'/mini/mini.js';
+        }
+    }
+    wp_enqueue_script( 'wp_footer', $mini_JS, array(), _S_VERSION, true);
+}
+
+// Adding .js from CDN or from ext source or from local theme folder
+add_action( 'wp_enqueue_scripts', 'mini_slider' );
+function mini_slider(){
+    $options = get_option( 'mini_options' );
+    if (is_array($options) && array_key_exists('mini_slider', $options) && $options['mini_slider'] != null) {
+        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/slider.js';
+        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
+            $mini_JS = 'https://mini.uwa.agency/js/slider.js';
+        }
+    } else {
+        if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
+            $mini_JS = $options['js_cdn_url'];
+        } else {
+            $mini_JS = get_stylesheet_directory_uri().'/mini/slider.js';
         }
     }
     wp_enqueue_script( 'wp_footer', $mini_JS, array(), _S_VERSION, true);
