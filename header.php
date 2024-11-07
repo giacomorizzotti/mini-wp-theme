@@ -11,7 +11,7 @@
 
 $header_top_style = '';
 $header_scroll_style = '';
-if (!is_home() && !is_archive()) {
+if ( !is_archive()) {
 	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
 	$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
 }

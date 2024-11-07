@@ -6,12 +6,22 @@
  * @package mini
  */
 
-$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
-$container_width = get_post_meta($post->ID, 'page_container', true);
+/* page options */
+$pageID = get_option('page_for_posts');
 
+/* title */
+$title_presence = get_post_meta($pageID, 'title_presence', true);
+/* sidebar */
+$sidebar_presence = get_post_meta($pageID, 'sidebar_presence', true);
+/* container width */
+$container_width = get_post_meta($pageID, 'page_container', true);
+
+/* content size with and without sidebar sidebar */
 $content_size = 'box-100';
 if ( is_active_sidebar( 'sidebar-1' ) ) {
-	$content_size = 'box-75';
+	if ($sidebar_presence != false) {
+		$content_size = 'box-75';
+	}
 }
 
 get_header();
@@ -19,17 +29,35 @@ get_header();
 ?>
 
 	<main id="primary" class="site-main" template="home">
+
+		<?php if ( has_post_thumbnail($pageID) ): ?>
+		<div class="container fw" <?php if ( has_post_thumbnail($pageID) ): ?>style="background-image: url('<?= get_the_post_thumbnail_url($pageID); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
+			<div class="container <?=$container_width?>">
+				<div class="boxes hfh align-content-end">
+					<?php if ($title_presence): ?>
+					<header class="box box-100 my-0 p-0 entry-header">
+					 	<h1 class="entry-title m-0 wh-box"><?= single_post_title()?></h1>
+						<div class="space-2"></div>
+					</header>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="container fw">
-			<div class="container <?= $container_width ?>">
+			<div class="container<?= ' '.$container_width ?>">
 				<div class="boxes space-top-bot">
 					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php else: ?> py-0<?php endif; ?> <?= $content_size ?>">
 						<div class="boxes">
 							
+							<?php if ( !has_post_thumbnail($pageID) && $title_presence): ?>
 							<div class="box box-100 my-2">
 								<header class="entry-header">
 									<h1 class="page-title m-0"><?php single_post_title(); ?></h1>
 								</header><!-- .entry-header -->
 							</div>
+							<?php endif; ?>
 
 							<?php
 							if ( have_posts() ) :
@@ -64,7 +92,9 @@ get_header();
 					</div>
 
 					<?php
-					get_sidebar();
+					if ($sidebar_presence != false) {
+						get_sidebar();
+					}
 					?>
 
 				</div>

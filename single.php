@@ -91,7 +91,9 @@ get_header();
 					</div>
 
 					<?php
-					get_sidebar();
+					if ($sidebar_presence != false) {
+						get_sidebar();
+					}
 					?>
 
 				</div>

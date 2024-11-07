@@ -5,11 +5,19 @@
  * @package mini
  */
 
-$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
-$container_width = get_post_meta($post->ID, 'page_container', true);
+/* page options */
+$pageID = get_option('page_on_front');
 
-$space_top = get_post_meta($post->ID, 'space_top', true);
-$space_bottom = get_post_meta($post->ID, 'space_bot', true);
+/* title */
+$title_presence = get_post_meta($pageID, 'title_presence', true);
+/* sidebar */
+$sidebar_presence = get_post_meta($pageID, 'sidebar_presence', true);
+/* container width */
+$container_width = get_post_meta($pageID, 'page_container', true);
+
+/* top and bottom spacing */
+$space_top = get_post_meta($pageID, 'space_top', true);
+$space_bottom = get_post_meta($pageID, 'space_bot', true);
 $spacing_class= '';
 if($space_top==true && $space_top==false) {
 	$spacing_class= 'space-top';
@@ -19,6 +27,7 @@ if($space_top==true && $space_top==false) {
 	$spacing_class= 'space-top-bot';
 }
 
+/* content size with and without sidebar sidebar */
 $content_size = 'box-100';
 if ( is_active_sidebar( 'sidebar-1' ) ) {
 	if ($sidebar_presence != false) {
@@ -54,15 +63,9 @@ get_header();
 					</div>
 					
 					<?php
-					if ($sidebar_presence == true):
-					?>
-
-					<?php
-					get_sidebar();
-					?>
-					
-					<?php
-					endif;
+					if ($sidebar_presence != false) {
+						get_sidebar();
+					}
 					?>
 					
 				</div>

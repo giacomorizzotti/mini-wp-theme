@@ -22,7 +22,7 @@ if ( has_post_thumbnail() ) {
 			<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>
 		<?php /*<div class="container<?php if ($container_width!='fw'): ?><?=' '.$container_width?><?php endif; ?>">*/ ?>
-		<div class="container<?=' '.$container_width?>">
+		<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
 			<div class="boxes <?php if ( has_post_thumbnail() ): ?> <?php if ( is_singular() ): ?>hfh<?php else: ?>one-third-full-height<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
@@ -47,7 +47,7 @@ if ( has_post_thumbnail() ) {
 	</div>
 	<?php endif; ?>
 	
-	<div class="container<?=' '.$container_width?>">
+	<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
 
 		<div class="boxes">
 

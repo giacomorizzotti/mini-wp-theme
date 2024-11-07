@@ -86,17 +86,11 @@ get_header();
 
 						</div>
 					</div>
-					
-					<?php
-					if ($sidebar_presence == true):
-					?>
 
 					<?php
-					get_sidebar();
-					?>
-					
-					<?php
-					endif;
+					if ($sidebar_presence != false) {
+						get_sidebar();
+					}
 					?>
 					
 				</div>
