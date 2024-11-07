@@ -296,7 +296,7 @@ function add_sidebar_presence_box() {
         'sidebar-presence',
         'Show sidebar',
         'sidebar_presence_box_html',
-        'page',
+        ['page', 'post'],
         'side'
     );
 }
@@ -341,6 +341,74 @@ function sidebar_presence_save_postdata( $post_id ) {
 
 }
 
+
+/**
+ * ADD space-top-bot option
+ */
+
+add_action( 'add_meta_boxes', 'add_space_top_bot_box' );
+
+// Saving data when the post is saved
+add_action( 'save_post', 'space_top_bot_save_postdata' );
+
+function add_space_top_bot_box() {
+    add_meta_box(
+        'space-top-bot',
+        'Top and bottom spacing',
+        'space_top_bot_box_html',
+        ['page', 'post'],
+        'side'
+    );
+}
+
+// HTML code of the block
+function space_top_bot_box_html( $post, $meta ){
+
+    $spaceTop = get_post_meta( $post->ID, 'space_top', true);
+    $spaceTopState = null;
+    if ( $spaceTop == true ) {
+        $spaceTopState = ' checked';
+    }
+    
+    $spaceBot = get_post_meta( $post->ID, 'space_top', true);
+    $spaceBotState = null;
+    if ( $spaceBot == true ) {
+        $spaceBotState = ' checked';
+    }
+
+    echo '<label for="space_top" style="display: block; margin-bottom: 5px;">' . __("Space top", 'space_top_box_textdomain' ) . '</label> ';
+    echo '<input type="checkbox" id="space_top" name="space_top"'.$spaceTopState.'>';
+    echo '<label for="space_bot" style="display: block; margin-bottom: 5px;">' . __("Space bottom", 'space_bot_box_textdomain' ) . '</label> ';
+    echo '<input type="checkbox" id="space_bot" name="space_bot"'.$spaceBotState.'>';
+
+}
+
+function space_top_bot_save_postdata( $post_id ) {
+
+    // if this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+
+    // check user permission
+    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+
+    // Everything is OK. Now, we need to find and save the data
+    // Define the value of the input field.
+    if ( isset($_POST['space_top']) ) {
+        $spaceTop = true;
+    } else {
+        $spaceTop = false;
+    }
+    if ( isset($_POST['space_bot']) ) {
+        $spaceBot = true;
+    } else {
+        $spaceBot = false;
+    }
+    // Update data in the database.
+    update_post_meta( $post_id, 'space_top', $spaceTop );
+    update_post_meta( $post_id, 'space_bot', $spaceBot );
+
+}
+
 /**
  * ADD page container meta box to page edit
  */
@@ -356,7 +424,7 @@ function add_page_container_box() {
         'page-container',
         'Page container',
         'page_container_box_html',
-        'page',
+        ['page', 'post'],
         'side'
     );
 }
@@ -420,7 +488,7 @@ function add_header_styling_box() {
         'header-styling',
         'Header styling',
         'header_styling_box_html',
-        'page',
+        ['page', 'post'],
         'side'
     );
 }

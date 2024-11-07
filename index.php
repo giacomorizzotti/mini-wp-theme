@@ -15,6 +15,17 @@
 $sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
 $container_width = get_post_meta($post->ID, 'page_container', true);
 
+$space_top = get_post_meta($post->ID, 'space_top', true);
+$space_bottom = get_post_meta($post->ID, 'space_bot', true);
+$spacing_class= '';
+if($space_top==true && $space_top==false) {
+	$spacing_class= 'space-top';
+}else if($space_top==false && $space_top==true) {
+	$spacing_class= 'space-bot';
+}else if($space_top==true && $space_top==true) {
+	$spacing_class= 'space-top-bot';
+}
+
 $content_size = 'box-100';
 if ( is_active_sidebar( 'sidebar-1' ) ) {
 	$content_size = 'box-75';
@@ -26,7 +37,7 @@ get_header();
 	<main id="primary" class="site-main" template="index">
 		<div class="container fw">
 			<div class="container">
-				<div class="boxes">
+				<div class="boxes <?=$spacing_class?>">
 					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
 						<div class="boxes">
 

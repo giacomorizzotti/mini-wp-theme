@@ -9,8 +9,12 @@
  * @package mini
  */
 
-$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
-$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
+$header_top_style = '';
+$header_scroll_style = '';
+if (!is_home()) {
+	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
+	$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
+}
 $custom_logo = get_custom_logo();
 
 function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {

@@ -15,14 +15,15 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 }
 
 get_header();
+
 ?>
 
 	<main id="primary" class="site-main" template="home">
 		<div class="container fw">
 			<div class="container <?= $container_width ?>">
-				<div class="boxes">
+				<div class="boxes space-top-bot">
 					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php else: ?> py-0<?php endif; ?> <?= $content_size ?>">
-						<div class="boxes space-top-bot">
+						<div class="boxes">
 							
 							<div class="box box-100 my-2">
 								<header class="entry-header">
@@ -43,6 +44,10 @@ get_header();
 									* called content-___.php (where ___ is the Post Type name) and that will be used instead.
 									*/
 									get_template_part( 'template-parts/content', get_post_type() );
+
+							?>
+							<div class="sep-1 light-grey-bg my-3"></div>
+							<?php
 
 								endwhile;
 

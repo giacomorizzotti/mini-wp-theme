@@ -14,7 +14,7 @@ $title_presence = get_post_meta($post->ID, 'title_presence', true);
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ($title_presence == true): ?>
+	<?php if ($title_presence == true && !has_post_thumbnail()): ?>
 	<div class="container fw forced"
 		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 		>
