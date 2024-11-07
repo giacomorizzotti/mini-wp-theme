@@ -17,7 +17,7 @@ if ( has_post_thumbnail() ) {
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ( !has_post_thumbnail() || is_home() ): ?>
+	<?php if ( !has_post_thumbnail() || is_home() || is_archive() ): ?>
 	<div class="container fw"
 			<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>
