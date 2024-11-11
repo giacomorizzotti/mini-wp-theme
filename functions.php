@@ -583,10 +583,10 @@ function header_styling_save_postdata( $post_id ) {
 add_filter( 'should_load_remote_block_patterns', '__return_false' );
 
 // mini favicon
-function mini_favicon(){
-    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
-}
-add_action( 'wp_head', 'mini_favicon');
+//function mini_favicon(){
+//    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
+//}
+//add_action( 'wp_head', 'mini_favicon');
 
 // Contact form 7 BUG FIX
 add_filter('wpcf7_autop_or_not', '__return_false');
