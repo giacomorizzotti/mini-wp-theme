@@ -186,7 +186,7 @@ if ( defined( 'JETPACK__VERSION' ) ) {
     require get_template_directory() . '/inc/jetpack.php';
 }
 
-// Allow SVG
+/* Allow SVG */
 add_filter( 'wp_check_filetype_and_ext', function($data, $file, $filename, $mimes) {
 
     global $wp_version;
@@ -583,9 +583,10 @@ function header_styling_save_postdata( $post_id ) {
 add_filter( 'should_load_remote_block_patterns', '__return_false' );
 
 // mini favicon
-//function mini_favicon(){
-//    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
-//}
+function mini_favicon(){
+    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
+}
+add_action( 'admin_head', 'mini_favicon' );
 //add_action( 'wp_head', 'mini_favicon');
 
 // Contact form 7 BUG FIX
@@ -637,14 +638,15 @@ function mini_login_style() { ?>
     </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'mini_login_style' );
-// mini login link
+
+/* START - mini login link */
 function mini_login_url( $url ) {
 	return get_bloginfo( 'url' );
 }
 add_filter( 'login_headerurl', 'mini_login_url', 10, 1 );
-// END - MINI LOGIN
+/* END - mini login link */
 
-// mini admin bar image class
+/* START - mini admin bar image class */
 function dashboard_logo() {
     echo '
     <style type="text/css">
@@ -665,6 +667,7 @@ function dashboard_logo() {
     ';
 }
 add_action('wp_before_admin_bar_render', 'dashboard_logo');
+/* END - mini admin bar image class */
 
 
 
@@ -966,7 +969,27 @@ function mini_company_section_callback( $args ) {
 /**
  * Generic functions
  */
-function text_field_option(
+function mini_theme_checkbox_option(
+    string $option_group, 
+    string $option, 
+    string $status = '',
+) {
+    $options = get_option( $option_group );
+    if (is_array($options) && array_key_exists($option, $options)) {
+        if ($options[$option] == true) {
+            $status = 'checked';
+        }
+    }
+    return '
+    <input
+        type="checkbox"
+        id="'.$option.'"
+        name="'.$option_group.'['.$option.']"
+        '.$status.'
+    >
+    ';
+}
+function mini_theme_text_field_option(
     string $option_group, 
     string $option, 
     string $default_value = '', 
@@ -993,7 +1016,7 @@ function text_field_option(
     >
     ';
 }
-function text_field_color_option(
+function mini_theme_text_field_color_option(
     string $option_group, 
     string $option, 
     string $default_value = '', 
@@ -1024,28 +1047,8 @@ function text_field_color_option(
     >
     ';
 }
-function checkbox_option(
-    string $option_group, 
-    string $option, 
-    string $status = '',
-) {
-    $options = get_option( $option_group );
-    if (is_array($options) && array_key_exists($option, $options)) {
-        if ($options[$option] == true) {
-            $status = 'checked';
-        }
-    }
-    return '
-    <input
-        type="checkbox"
-        id="'.$option.'"
-        name="'.$option_group.'['.$option.']"
-        '.$status.'
-    >
-    ';
-}
 
-function option_list_option(
+function mini_theme_option_list_option(
     string $option_group, 
     string $option, 
     array $select_options, 
@@ -1109,12 +1112,12 @@ function option_list_option(
 
 function mini_field_callback( $args ) {
     ?>
-    <?= checkbox_option('mini_options','mini_credits'); ?>
+    <?= mini_theme_checkbox_option('mini_options','mini_credits'); ?>
     <p class="description">
         <?php esc_html_e( 'Footer credits strip', 'mini' ); ?>
     </p>
     <br/><br/>
-    <?= checkbox_option('mini_options','mini_slider'); ?>
+    <?= mini_theme_checkbox_option('mini_options','mini_slider'); ?>
     <p class="description">
         <?php esc_html_e( 'Use mini slider', 'mini' ); ?>
     </p>
@@ -1126,22 +1129,22 @@ function mini_cdn_field_callback( $args ) {
     <p class="description small">
         <?php esc_html_e( 'Use mini from CDN', 'mini' ); ?>
     </p>
-    <?= checkbox_option('mini_cdn_options','cdn'); ?>
+    <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
     <br/><br/>
     <p class="description small">
         <?php esc_html_e( 'Use development CDN (slower but latest)', 'mini' ); ?>
     </p>
-    <?= checkbox_option('mini_cdn_options','cdn_dev'); ?>
+    <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
     <br/><br/>
     <p class="description small">
         <?php esc_html_e( 'Absolute or relative CSS path', 'mini' ); ?>
     </p>
-    <?= text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
+    <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
     <p class="description small">
         <?php esc_html_e( 'Absolute or relative JS path', 'mini' ); ?>
     </p>
     <br/><br/>
-    <?= text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
+    <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
     <p class="description">
         <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
     </p>
@@ -1157,9 +1160,9 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Main color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_main_color','rgb( 60 90 255 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_main_color_dark','rgb( 50 75 180 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_main_color_transp','rgb( 60 90 255 / 20% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color','rgb( 60 90 255 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color_dark','rgb( 50 75 180 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color_transp','rgb( 60 90 255 / 20% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Main color, dark version and transparent version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1168,8 +1171,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Second color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_second_color','rgb( 50 75 180 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_second_color_dark','rgb( 37 56 133 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_second_color','rgb( 50 75 180 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_second_color_dark','rgb( 37 56 133 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Second color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1178,8 +1181,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Third color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_third_color','rgb( 60 30 99 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_third_color_dark','rgb( 34 15 61 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_third_color','rgb( 60 30 99 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_third_color_dark','rgb( 34 15 61 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Third color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1188,8 +1191,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Fourth color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_fourth_color','rgb( 220 230 0 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_fourth_color_dark','rgb( 180 190 0 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_fourth_color','rgb( 220 230 0 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_fourth_color_dark','rgb( 180 190 0 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Fourth color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1198,8 +1201,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Link color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_link_color','rgb(121 48 238 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_link_hover_color','rgb(72 34 176 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_link_color','rgb(121 48 238 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_link_hover_color','rgb(72 34 176 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Link and buttons color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1208,8 +1211,8 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Sheet & menu colors
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_sheet_color','rgb( 20 10 40 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_menu_toggle_color','rgb( 20 10 40 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_sheet_color','rgb( 20 10 40 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_menu_toggle_color','rgb( 20 10 40 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Page second level background and menu icon color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1218,7 +1221,7 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Theme color
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_theme_color','rgb( 60 90 255 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_theme_color','rgb( 60 90 255 / 100% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Android browser bar', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1227,13 +1230,13 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Semaphore colors
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_info','rgb( 113 202 189 )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_info','rgb( 113 202 189 )'); ?>
     <br/><br/>
-    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_success','rgb( 160 220 110 )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_warning','rgb( 248 187 83 )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_danger','rgb( 255 111 97 )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_success','rgb( 160 220 110 )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_warning','rgb( 248 187 83 )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_danger','rgb( 255 111 97 )'); ?>
     <br/><br/>
-    <?= text_field_color_option('mini_colors_options','mini_semaphore_color_bad','rgb( 235 55 80 )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_bad','rgb( 235 55 80 )'); ?>
     <p class="description">
         <?php esc_html_e( 'Color used for semaphore logic', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1242,18 +1245,18 @@ function mini_colors_callback( $args ) {
     <h4 class="m-0">
         Blacks
     </h4>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_black','rgb( 10 10 20 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_black','rgb( 20 10 40 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_black','rgb( 10 10 20 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_black','rgb( 20 10 40 / 100% )'); ?>
     <br/><br/>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_dark_grey','rgb( 55 55 80 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_grey','rgb( 120 120 150 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_light_grey','rgb( 215 210 230 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_dark_grey','rgb( 55 55 80 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_grey','rgb( 120 120 150 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_light_grey','rgb( 215 210 230 / 100% )'); ?>
     <br/><br/>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_white','rgb( 250 248 255 / 100% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_white_transp','rgb( 0 0 0 / 3% )'); ?>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_white','rgb( 255 255 255 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_white','rgb( 250 248 255 / 100% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_white_transp','rgb( 0 0 0 / 3% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_white','rgb( 255 255 255 / 100% )'); ?>
     <br/><br/>
-    <?= text_field_color_option('mini_colors_options','mini_blacks_color_false_transp','rgb( 0 0 0 / 0% )'); ?>
+    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_transp','rgb( 0 0 0 / 0% )'); ?>
     <p class="description">
         <?php esc_html_e( 'Greyscale', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1265,14 +1268,14 @@ function mini_colors_callback( $args ) {
 function mini_logo_size_field_callback( $args ) {
     ?>
     <h4 class="">Logo height</h4>
-    <?= text_field_option('mini_size_options','mini_logo_height','2rem', 'width: auto;'); ?>
+    <?= mini_theme_text_field_option('mini_size_options','mini_logo_height','2rem', 'width: auto;'); ?>
     <p class="description">
         <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <br/>
     <hr>
     <h4 class="">Height when page is scrolled</h4>
-    <?= text_field_option('mini_size_options','mini_scroll_logo_height','1.25rem', 'width: auto;'); ?>
+    <?= mini_theme_text_field_option('mini_size_options','mini_scroll_logo_height','1.25rem', 'width: auto;'); ?>
     <p class="description">
         <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1288,38 +1291,38 @@ function mini_fonts_field_callback( $args ) {
     </h4>
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
-            <?= option_list_option('mini_font_options','mini_title_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
+            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
         </div>
         <div style="flex:1;">
-            <?= option_list_option('mini_font_options','mini_most_used_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
+            <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
         </div>
     </div>
     <h4 class="">
         <?php esc_html_e( 'Main font', 'mini' ); ?>
     </h4>
-    <?= text_field_option('mini_font_options','mini_main_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_main_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_main_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_main_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Used for paragraphs and most of the website\'s content. Sans Serif.', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <h4 class="">
         <?php esc_html_e( 'Secondary font', 'mini' ); ?>
     </h4>
-    <?= text_field_option('mini_font_options','mini_secondary_font','\'Oswald\', sans-serif', 'width=auto;'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_secondary_font','\'Oswald\', sans-serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <h4 class="">
         <?php esc_html_e( 'Serif font', 'mini' ); ?>
     </h4>
-    <?= checkbox_option('mini_font_options','mini_serif_fontz_status'); ?>
+    <?= mini_theme_checkbox_option('mini_font_options','mini_serif_fontz_status'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_serif_font','\'Playfair Display\', serif', 'width=auto;'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_serif_font','\'Playfair Display\', serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Serif font, used in CSS class ".serif"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1327,22 +1330,22 @@ function mini_fonts_field_callback( $args ) {
     <h4 class="">
         <?php esc_html_e( 'Mono font', 'mini' ); ?>
     </h4>
-    <?= checkbox_option('mini_font_options','mini_mono_font_status'); ?>
+    <?= mini_theme_checkbox_option('mini_font_options','mini_mono_font_status'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_mono_font','\'Roboto Mono\', monospace', 'width=auto;'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_mono_font','\'Roboto Mono\', monospace', 'width=auto;'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Monospace font, used in CSS class ".mono"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <h4 class="">
         <?php esc_html_e( 'Handwriting font', 'mini' ); ?>
     </h4>
-    <?= checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
+    <?= mini_theme_checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_handwriting_font','\'Edu VIC WA NT Beginner\', serif'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_handwriting_font','\'Edu VIC WA NT Beginner\', serif'); ?>
     <br/><br/>
-    <?= text_field_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">'); ?>
     <p class="description">
         <?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1353,15 +1356,15 @@ function mini_fonts_field_callback( $args ) {
 function mini_ext_lib_field_callback( $args ) {
     ?>
     <h4 class="">AOS</h4>
-    <?= checkbox_option('mini_ext_lib_options','mini_aos'); ?>
+    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_aos'); ?>
     <br/><br/>
     <hr>
     <h4 class="">Iconoir</h4>
-    <?= checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
+    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
     <br/><br/>
     <hr>
     <h4 class="">Fontawesome</h4>
-    <?= checkbox_option('mini_ext_lib_options','mini_fontawesome'); ?>
+    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_fontawesome'); ?>
     <br/><br/>
     <hr>
     <?php
@@ -1385,9 +1388,9 @@ function mini_analytics_field_callback( $args ) {
     }
     ?>
     <h4 class="">Google Analytics</h4>
-    <?= checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
+    <?= mini_theme_checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
     <br/><br/>
-    <?= text_field_option('mini_analytics_options','mini_google_analytics_code',''); ?>
+    <?= mini_theme_text_field_option('mini_analytics_options','mini_google_analytics_code',''); ?>
     <br/><br/>
     <hr>
     <?php
@@ -1400,40 +1403,40 @@ function mini_company_field_callback( $args ) {
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Company name', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_name','', 'width: 33.3333333%;'); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_name','', 'width: 33.3333333%;'); ?>
         </div>
     </div>
 
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:4;">
             <h4 class=""><?= esc_html__( 'Address', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_address',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_address',''); ?>
         </div>
         <div style="flex:1;">
         <h4 class=""><?= esc_html__( 'House number', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_house_number',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_house_number',''); ?>
         </div>
     </div>
 
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'City', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_city',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_city',''); ?>
             <br/>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'City code', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_city_code',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_city_code',''); ?>
             <br/>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Province', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_province',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_province',''); ?>
             <br/>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Country', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_country',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_country',''); ?>
             <br/>
         </div>
     </div>
@@ -1441,29 +1444,29 @@ function mini_company_field_callback( $args ) {
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_email',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_email',''); ?>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_phone',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_phone',''); ?>
         </div>
     </div>
 
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Tax number', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_tax_number',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_tax_number',''); ?>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'ID code', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_id_code',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_id_code',''); ?>
         </div>
     </div>
 
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'PEC', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_pec',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_pec',''); ?>
         </div>
     </div>
 
@@ -1474,11 +1477,11 @@ function mini_company_field_callback( $args ) {
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_service_email',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_service_email',''); ?>
         </div>
         <div style="flex:1;">
             <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
-            <?= text_field_option('mini_company_options','mini_company_service_phone',''); ?>
+            <?= mini_theme_text_field_option('mini_company_options','mini_company_service_phone',''); ?>
         </div>
     </div>
     <br/><hr>
@@ -1490,13 +1493,23 @@ function mini_company_field_callback( $args ) {
  * Add the top level menu page.
  */
 function mini_options_page() {
-    add_menu_page(
-        'mini options',
+    if ( empty ( $GLOBALS['admin_page_hooks']['mini'] ) ) {
+        add_menu_page(
+            'mini options',
+            'mini',
+            'manage_options',
+            'mini',
+            'mini_theme_main_page_html',
+            'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_space_around.svg'
+        );
+    }
+    add_submenu_page(
         'mini',
+        'General options',
+        'General',
         'manage_options',
-        'mini',
-        'mini_options_page_html',
-        'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_space_around.svg'
+        'mini-general',
+        'mini_options_page_html'
     );
     add_submenu_page(
         'mini',
@@ -1558,6 +1571,19 @@ function mini_options_page() {
     );
 }
 
+
+function mini_theme_main_page_html() {
+    // check user capabilities
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <p class=""><span class="bold">mini</span> is a frontend framework.</p>
+    </div>
+    <?php
+}
 
 /**
  * SHORTCODES
