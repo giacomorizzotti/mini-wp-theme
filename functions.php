@@ -1588,15 +1588,17 @@ function mini_theme_main_page_html() {
 /**
  * SHORTCODES
  */
-function get_variable($option_group, $option) {
-    $options = get_option( $option_group );
-    $variable = false;
-    if ( 
-        is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
-    ) {
-        $variable = $options[$option];
+if (!function_exists('get_variable')) {
+    function get_variable($option_group, $option) {
+        $options = get_option( $option_group );
+        $variable = false;
+        if ( 
+            is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
+        ) {
+            $variable = $options[$option];
+        }
+        return $variable;
     }
-    return $variable;
 }
 
 function get_company_name() {
