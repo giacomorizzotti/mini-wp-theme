@@ -424,7 +424,7 @@ function add_page_container_box() {
         'page-container',
         'Page container',
         'page_container_box_html',
-        ['page', 'post'],
+        ['page', 'post', 'event'],
         'side'
     );
 }
