@@ -235,7 +235,7 @@ function wpctmz_color_palette( $wp_customize ){
 		new WP_Customize_Control(
 			$wp_customize, 'fourth-color',
 			array(
-				'label' => __( 'Third color', 'mini' ),
+				'label' => __( 'Fourth color', 'mini' ),
 				'section' => 'color-settings',
 				'settings' => 'fourth-color',
 			)
