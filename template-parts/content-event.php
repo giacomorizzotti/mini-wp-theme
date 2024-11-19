@@ -16,12 +16,12 @@ $container_width = get_post_meta($post->ID, 'page_container', true);
 	<div class="container fw">
 		<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
 			<div class="boxes">
-				<header class="box box-100 my-0 entry-header">
+				<header class="box box-100 entry-header">
 				<?php
 					if ( is_singular() ) {
-						the_title( '<h1 class="entry-title m-0">', '</h1>' );
+						the_title( '<h1 class="entry-title big under-bg inline-block">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title m-0 under-bg inline-block"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h2>' );
 					}
 					?>
 				</header><!-- .entry-header -->
@@ -42,14 +42,15 @@ $container_width = get_post_meta($post->ID, 'page_container', true);
 				<?php
 				if ( get_post_meta(get_the_ID(), 'location_name') != null ):
 				?>
-				<h4 class="m-0 bold XL '.$text_color.'">
+				<h4 class="m-0 bold XL bk-box">
 					<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
 				</h4>
+				<div class="sep"></div>
 				<?php endif; ?>
 				<?php
 				if ( get_post_meta(get_the_ID(), 'location_address') != null ):
 				?>
-				<p class="m-0 L '.$text_color.'">
+				<p class="m-0 L dark-grey-box">
 					<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
 				</p>
 				<?php endif; ?>
