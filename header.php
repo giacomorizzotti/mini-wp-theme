@@ -187,7 +187,7 @@ function check_variable_from_option($options_group, $option) {
 
 	<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
         <div class="container">
-            <div class="boxes flex-flow-row-nowrap align-items-center justify-content-between">
+            <div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
                 <div class="box brand px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
 						<?php if (has_custom_logo()): ?>
