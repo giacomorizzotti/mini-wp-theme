@@ -1926,7 +1926,7 @@ function mini_css(){
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
         $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
-            $mini_CSS = 'https://mini.uwa.agency/css/mini.min.css';
+            $mini_CSS = 'https://serversaur.doingthings.space/mini/css/mini.min.css';
         }
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
@@ -1945,7 +1945,7 @@ function mini_js(){
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
         $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
-            $mini_JS = 'https://mini.uwa.agency/js/mini.js';
+            $mini_JS = 'https://serversaur.doingthings.space/mini/js/mini.js';
         }
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
