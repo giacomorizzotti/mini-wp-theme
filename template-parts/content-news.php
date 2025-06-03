@@ -74,7 +74,7 @@
 				if ( !is_singular() ):
 				?>
 				<p class="">
-					<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
+					<a href="<?=get_the_permalink()?>" class="btn b-rad-0"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
 				<?php
 				endif;
@@ -86,7 +86,7 @@
 				);
 				?>
 			</div><!-- .entry-content -->
-			<div class="sep-10 bk-bg mx-2" style="width: 10px;"></div>
+			<div class="sep-10 bk-bg mx-1" style="width: 10px;"></div>
 			<footer class="box box-100 my-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->

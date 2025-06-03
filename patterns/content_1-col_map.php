@@ -10,7 +10,7 @@
 <section id="where" class="page-menu" menuItemName="Dove siamo">
 <div class="container fw \fw-bg">
 <div class="container">
-<div class="boxes py-4 hfh">
+<div class="boxes py-4 hh">
 <!-- /wp:html -->
 
 <!-- wp:html -->

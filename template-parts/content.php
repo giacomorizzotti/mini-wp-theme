@@ -23,7 +23,7 @@ if ( has_post_thumbnail() ) {
 			>
 		<?php /*<div class="container<?php if ($container_width!='fw'): ?><?=' '.$container_width?><?php endif; ?>">*/ ?>
 		<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
-			<div class="boxes <?php if ( has_post_thumbnail() ): ?> <?php if ( is_singular() ): ?>hfh<?php else: ?>one-third-full-height<?php endif; ?> align-content-end<?php endif; ?>">
+			<div class="boxes <?php if ( has_post_thumbnail() ): ?> <?php if ( is_singular() ): ?>hh<?php else: ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
 					<p class="entry-meta S m-0 fw-box">

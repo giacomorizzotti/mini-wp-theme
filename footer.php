@@ -21,18 +21,18 @@
                     <div class="space-1"></div>
                     <?php if (do_shortcode('[get_company_address_line_1]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_1]'); ?></p><?php endif; ?>
                     <?php if (do_shortcode('[get_company_address_line_2]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_2]'); ?></p><?php endif; ?>
-                    <?php if ( do_shortcode('[get_company_email]') != false || do_shortcode('[get_company_phone]') != false ): ?><div class="space-1"></div><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_email]') != false || do_shortcode('[get_company_phone]') != false ): ?><div class="space-1"></div><?php endif; ?>
                     <?php if (do_shortcode('[get_company_email]') != false): ?><p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p><?php endif; ?>
                     <?php if (do_shortcode('[get_company_phone]') != false): ?><p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p><?php endif; ?>
-                    <?php if ( do_shortcode('[get_company_tax_number]') != false || do_shortcode('[get_company_id_code]') != false ): ?><div class="space-1"></div><?php endif; ?>
+                    <?php if (do_shortcode('[get_company_tax_number]') != false || do_shortcode('[get_company_id_code]') != false ): ?><div class="space-1"></div><?php endif; ?>
                     <?php if (do_shortcode('[get_company_tax_number]') != false): ?><p class="m-0"><span class="label">P.IVA</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_tax_number]'); ?></p><?php endif; ?>
                     <?php if (do_shortcode('[get_company_id_code]') != false): ?><p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_id_code]'); ?></p><?php endif; ?>
-
+                    <p class="m-0"><span class="label">Codice affiliazione FISR:</span>&nbsp;&nbsp;3745, N. Reg. CONI 234821</p>
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">
 						<?php if (has_custom_logo()): ?>
-                        <?php the_custom_logo(); ?>
+							<img src="<?= esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ) ?>" class="logo emblem" alt="emblem"/>
                         <?php else: ?>
 							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem" alt="emblem"/>
 						<?php endif; ?>
@@ -52,6 +52,18 @@
 				);
 				?>
                     </nav>
+                    <div class="sep-1 my-3 light-grey-bg"></div>
+                    <ul class="menu flex-direction-row">
+                        <li class="p-1">
+                            <a href="" class=""><i class="iconoir-instagram XXL"></i></a>
+                        </li>
+                        <li class="p-1">
+                            <a href="" class=""><i class="iconoir-youtube XXL"></i></a>
+                        </li>
+                        <li class="p-1">
+                            <a href="" class=""><i class="iconoir-facebook XXL"></i></a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

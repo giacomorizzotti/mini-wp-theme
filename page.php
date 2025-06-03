@@ -43,7 +43,7 @@ get_header();
 		<?php if ( has_post_thumbnail() ): ?>
 		<div class="container fw" <?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
 			<div class="container">
-				<div class="boxes hfh align-content-end">
+				<div class="boxes hh align-content-end">
 					<?php if ($title_presence): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
 					<?php if ( 'post' === get_post_type() ) :?>

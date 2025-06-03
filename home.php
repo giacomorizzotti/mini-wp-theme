@@ -33,7 +33,7 @@ get_header();
 		<?php if ( has_post_thumbnail($pageID) ): ?>
 		<div class="container fw" <?php if ( has_post_thumbnail($pageID) ): ?>style="background-image: url('<?= get_the_post_thumbnail_url($pageID); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
 			<div class="container <?=$container_width?>">
-				<div class="boxes hfh align-content-end">
+				<div class="boxes hh align-content-end">
 					<?php if ($title_presence): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
 					 	<h1 class="entry-title m-0 wh-box"><?= single_post_title()?></h1>

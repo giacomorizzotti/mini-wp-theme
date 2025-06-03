@@ -28,10 +28,11 @@ get_header();
 							<?php if ( have_posts() ) : ?>
 
 								<header class="page-header box-100">
-									<?php
+									<h1 class="m-0"> <span class="color-box m-0"><?= esc_html__( 'News', 'mini') ?></span></h1>
+									<?php /*
 									the_archive_title( '<h1 class="page-title m-0">', '</h1>' );
 									the_archive_description( '<div class="archive-description m-0">', '</div>' );
-									?>
+									*/ ?>
 								</header><!-- .page-header -->
 
 								<?php
@@ -60,8 +61,8 @@ get_header();
 						</div>
 					</div>
 
-					<div class="box-25 p-2 fw-bg">
-						<h4 class=""><?=esc_html__( 'Monthly archive:', 'mini' )?></h4>
+					<div class="box-25 p-2">
+						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
 						<ul>
 						<?php wp_get_archives( array( 'post_type' => 'news', 'type' => 'monthly' ) ); ?>
 						</ul>

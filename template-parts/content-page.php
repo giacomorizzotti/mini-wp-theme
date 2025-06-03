@@ -19,7 +19,7 @@ $title_presence = get_post_meta($post->ID, 'title_presence', true);
 		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 		>
 		<div class="container<?php if ($container_width!='fw'): ?><?=' '.$container_width?><?php endif; ?>">
-			<div class="boxes space-top<?php if ( has_post_thumbnail() ): ?> hfh align-content-end<?php endif; ?>">
+			<div class="boxes space-top<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
 				<div class="box box-100 my-2">
 					<header class="entry-header">
 						<?php if ( has_post_thumbnail() ): ?>

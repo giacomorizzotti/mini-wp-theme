@@ -424,7 +424,7 @@ function add_page_container_box() {
         'page-container',
         'Page container',
         'page_container_box_html',
-        ['page', 'post', 'event'],
+        ['page', 'post', 'event', 'match', 'slide'],
         'side'
     );
 }
@@ -488,7 +488,7 @@ function add_header_styling_box() {
         'header-styling',
         'Header styling',
         'header_styling_box_html',
-        ['page', 'post'],
+        ['page', 'post', 'match'],
         'side'
     );
 }
@@ -595,7 +595,7 @@ add_filter('wpcf7_autop_or_not', '__return_false');
 // mini logo image class
 add_filter( 'get_custom_logo', 'change_logo_class' );
 function change_logo_class( $html ) {
-    $html = str_replace( 'custom-logo', 'logo me-1', $html );
+    $html = str_replace( 'custom-logo', 'logo', $html );
     $html = str_replace( 'custom-logo-link', 'logo-link', $html );
     return $html;
 }
@@ -612,7 +612,7 @@ function mini_login_style() { ?>
         }
         body.login-action-login #login h1 a, .login h1 a {
             background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg);
-            width:100px;
+            width: 100px;
             height: 58px;
             background-size: contain;
             background-repeat: no-repeat;
@@ -903,7 +903,10 @@ function mini_settings_init() {
 
 
 
-
+function mini_load_theme_textdomain() {
+    load_theme_textdomain( 'mini', get_template_directory() . '/languages' );
+}
+add_action( 'after_setup_theme', 'mini_load_theme_textdomain' );
 
 /**
  * Register our mini_settings_init to the admin_init action hook.
@@ -1932,10 +1935,10 @@ function mini_css(){
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
             $mini_CSS = $options['css_cdn_url'];
         } else {
-            $mini_CSS = get_stylesheet_directory_uri().'/mini/mini.min.css';
+            $mini_CSS = get_stylesheet_directory_uri().'/mini.min.css';
         }
     }
-    wp_enqueue_style( 'wp_header', $mini_CSS, array(), _S_VERSION);
+    wp_enqueue_style( 'mini_header_css', $mini_CSS, array(), _S_VERSION);
 }
 
 // Adding .js from CDN or from ext source or from local theme folder
@@ -1951,94 +1954,97 @@ function mini_js(){
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
             $mini_JS = $options['js_cdn_url'];
         } else {
-            $mini_JS = get_stylesheet_directory_uri().'/mini/mini.js';
+            $mini_JS = get_theme_root_uri().'/mini/js/mini.js';
         }
     }
-    wp_enqueue_script( 'wp_footer', $mini_JS, array(), _S_VERSION, true);
+    wp_enqueue_script( 'mini_footer_js', $mini_JS, array(), _S_VERSION, true);
 }
 
 // Adding .js from CDN or from ext source or from local theme folder
 add_action( 'wp_enqueue_scripts', 'mini_slider' );
 function mini_slider(){
     $options = get_option( 'mini_options' );
-    if (is_array($options) && array_key_exists('mini_slider', $options) && $options['mini_slider'] != null) {
-        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/slider.js';
-        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
-            $mini_JS = 'https://mini.uwa.agency/js/slider.js';
-        }
-    } else {
-        if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
-            $mini_JS = $options['js_cdn_url'];
+    $cdn_options = get_option( 'mini_cdn_options' );
+    if ( is_array($options) && array_key_exists('mini_slider', $options) && $options['mini_slider'] != null ) {
+        if (is_array($cdn_options) && array_key_exists('cdn', $cdn_options) && $cdn_options['cdn'] != null) {
+            $mini_slider_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/slider.js';
+            if (is_array($cdn_options) && array_key_exists('cdn_dev', $cdn_options) && $cdn_options['cdn_dev'] != null) {
+                $mini_slider_JS = 'https://serversaur.doingthings.space/mini/js/slider.js';
+            }
         } else {
-            $mini_JS = get_stylesheet_directory_uri().'/mini/slider.js';
+            if (is_array($cdn_options) && array_key_exists('mini_slider_js_url', $cdn_options) && $cdn_options['mini_slider_js_url'] != null) {
+                $mini_slider_JS = $cdn_options['mini_slider_js_url'];
+            } else {
+                $mini_slider_JS = get_theme_root_uri().'/mini/js/slider.js';
+            }
         }
+        wp_enqueue_script( 'mini_slider_footer_js', $mini_slider_JS, array(), _S_VERSION, true);
     }
-    wp_enqueue_script( 'wp_footer', $mini_JS, array(), _S_VERSION, true);
 }
 
-// Adding Google Web Fonts
-/*
-add_action( 'wp_head', 'themeprefix_load_fonts' ); 
-function themeprefix_load_fonts() { 
-    ?> 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <?php
+# Google fonts
+
+function get_the_font($string) {
+    $pos_1 = strpos( $string, 'family=');
+    $pos_2 = strpos( $string, '&');
+    $output = substr($string, $pos_1, ($pos_2-$pos_1));
+    return $output;
 }
-*/
-add_action( 'wp_enqueue_scripts', 'mini_main_gwf_font' );
-function mini_main_gwf_font(){
+
+add_action( 'wp_enqueue_scripts', 'mini_gwf_font' );
+function mini_gwf_font(){
+    $google_font_url = 'https://fonts.googleapis.com/css2?';
+
     $options = get_option( 'mini_font_options' );
     if (is_array($options) && array_key_exists('mini_main_font_embed_link', $options) && $options['mini_main_font_embed_link'] != null) {
         $main_font_gwf_embed_link = $options['mini_main_font_embed_link'] ;
     } else {
         $main_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
     }
-    wp_enqueue_style( 'google_fonts', $main_font_gwf_embed_link, array(), _S_VERSION);
-}
-add_action( 'wp_enqueue_scripts', 'mini_secondary_gwf_font' );
-function mini_secondary_gwf_font(){
+
     $options = get_option( 'mini_font_options' );
     if (is_array($options) && array_key_exists('mini_secondary_font_embed_link', $options) && $options['mini_secondary_font_embed_link'] != null) {
         $secondary_font_gwf_embed_link = $options['mini_secondary_font_embed_link'] ;
     } else {
         $secondary_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
     }
-    wp_enqueue_style( 'google_fonts', $secondary_font_gwf_embed_link, array(), _S_VERSION);
-}
-add_action( 'wp_enqueue_scripts', 'mini_serif_gwf_font' );
-function mini_serif_gwf_font(){
+
     $options = get_option( 'mini_font_options' );
     if (is_array($options) && array_key_exists('mini_serif_font_embed_link', $options) && $options['mini_serif_font_embed_link'] != null) {
         $serif_font_gwf_embed_link = $options['mini_serif_font_embed_link'] ;
     } else {
         $serif_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap';
     }
-    if (is_array($options) && array_key_exists('mini_serif_font_status', $options) && $options['mini_serif_font_status'] != null) {
-        wp_enqueue_style( 'google_fonts', $serif_font_gwf_embed_link, array(), _S_VERSION);
-    }
-}
-add_action( 'wp_enqueue_scripts', 'mini_mono_gwf_font' );
-function mini_mono_gwf_font(){
+    
     $options = get_option( 'mini_font_options' );
     if (is_array($options) && array_key_exists('mini_mono_font_embed_link', $options) && $options['mini_mono_font_embed_link'] != null) {
         $mono_font_gwf_embed_link = $options['mini_mono_font_embed_link'] ;
     } else {
         $mono_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap';
     }
-    if (is_array($options) && array_key_exists('mini_mono_font_status', $options) && $options['mini_mono_font_status'] != null) {
-        wp_enqueue_style( 'google_fonts', $mono_font_gwf_embed_link, array(), _S_VERSION);
-    }
-}
-add_action( 'wp_enqueue_scripts', 'mini_handwriting_gwf_font' );
-function mini_handwriting_gwf_font(){
+    
     $options = get_option( 'mini_font_options' );
     if (is_array($options) && array_key_exists('mini_handwriting_font_embed_link', $options) && $options['mini_handwriting_font_embed_link'] != null) {
         $handwriting_font_gwf_embed_link = $options['mini_handwriting_font_embed_link'] ;
     } else {
         $handwriting_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap';
     }
-    if (is_array($options) && array_key_exists('mini_handwriting_font_status', $options) && $options['mini_handwriting_font_status'] != null) {
-        wp_enqueue_style( 'google_fonts', $handwriting_font_gwf_embed_link, array(), _S_VERSION);
+
+    $main_font_url=get_the_font($main_font_gwf_embed_link);
+    $secondary_font_url=get_the_font($secondary_font_gwf_embed_link);
+    $serif_font_url = "";
+    $mono_font_url = "";
+    $handwriting_font_url = "";
+
+    if (is_array($options) && array_key_exists('mini_serif_font_status', $options) && $options['mini_serif_font_status'] != null) {
+        $serif_font_url=get_the_font($secondary_font_gwf_embed_link);
     }
+    if (is_array($options) && array_key_exists('mini_mono_font_status', $options) && $options['mini_mono_font_status'] != null) {
+        $mono_font_url=get_the_font($mono_font_gwf_embed_link);
+    }
+    if (is_array($options) && array_key_exists('mini_handwriting_font_status', $options) && $options['mini_handwriting_font_status'] != null) {
+        $handwriting_font_url=get_the_font($handwriting_font_gwf_embed_link);
+    }
+
+    wp_enqueue_style( 'google_fonts', $google_font_url."&".$main_font_url."&".$secondary_font_url."&".$serif_font_url."&".$mono_font_url."&".$handwriting_font_url."&display=swap/", [], null);
 }

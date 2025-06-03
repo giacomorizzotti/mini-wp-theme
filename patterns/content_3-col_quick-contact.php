@@ -10,7 +10,7 @@
 <section id="\sample" class="\page-menu" menuItemName="Sample section">
 <div class="container fw color-bg">
 <div class="container">
-<div class="boxes py-4 hfh align-content-center align-items-stretch">
+<div class="boxes py-4 hh align-content-center align-items-stretch">
 <div class="box box-33 wh-bg p-2 box-shadow">
 <!-- /wp:html -->
 
