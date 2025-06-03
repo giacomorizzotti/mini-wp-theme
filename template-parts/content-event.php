@@ -87,16 +87,16 @@ $it_date_year = new IntlDateFormatter(
 					<div class="date-box">
 						<div class="flex">
 							<p class="m-0 huge black center" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center color-box p-15 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
+								<span class="square flex align-items-center justify-content-center second-color-box p-15 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
 							</p>
 							<div class="flex align-items-start flex-direction-column">
 								<div>
 									<p class="m-0 up-case <?php if ( is_singular() ): ?>XL<?php else: ?>L<?php endif; ?>">
-										<span class="color-dark-box m-0 py-1 px-15"><?= $date_day_name ?></span>
+										<span class="second-color-dark-box m-0 py-1 px-15"><?= $date_day_name ?></span>
 									</p>
 								</div>
 								<div>
-									<span class="color-box bold XXL m-0 px-15"><?= ucfirst($date_month) ?></span><span class="color-dark-box L light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
+									<span class="second-color-box bold XXL m-0 px-15"><?= ucfirst($date_month) ?></span><span class="second-color-dark-box L light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
@@ -105,7 +105,7 @@ $it_date_year = new IntlDateFormatter(
 								?>
 								<div class="time-box m-0">
 									<p class="m-0 wh-text up-case L bold" >
-										<span class="color-dark-box m-0 px-15"><?=$time?></span>
+										<span class="second-color-dark-box m-0 px-15"><?=$time?></span>
 									</p>
 								</div>
 							</div>
@@ -116,7 +116,7 @@ $it_date_year = new IntlDateFormatter(
 					if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
 					?>
 					<div class="location-box">
-						<h4 class="m-0 bold XL second-color-dark-box px-15">
+						<h4 class="m-0 bold XL second-color-box px-15">
 							<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
 						</h4>
 						<div class="sep"></div>
@@ -124,7 +124,7 @@ $it_date_year = new IntlDateFormatter(
 						<?php
 						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 						?>
-						<p class="m-0 L second-color-box px-15">
+						<p class="m-0 L second-color-dark-box px-15">
 							<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
 						</p>
 					</div>
