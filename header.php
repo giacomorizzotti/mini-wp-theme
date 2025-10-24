@@ -185,49 +185,49 @@ function check_variable_from_option($options_group, $option) {
     <div id="top"></div>
     <a href="#top"><div class="top-link"><p class=""><i class="iconoir-dot-arrow-up"></i></p></div></a>
 
-	<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
-        <div class="container">
-            <div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
-                <div class="box brand px-2">
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
-						<?php if (has_custom_logo()): ?>
-                        <?= $custom_logo ?>
-                        <?php else: ?>
-							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
+	<div id="sheet"><?php /* starting .sheet div */ ?>
+
+		<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
+			<div class="container">
+				<div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
+					<div class="box brand px-2">
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
+							<?php if (has_custom_logo()): ?>
+							<?= $custom_logo ?>
+							<?php else: ?>
+								<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
+							<?php endif; ?>
+						</a>
+						<?php
+						$mini_title = get_bloginfo( 'name', 'display' );
+						$mini_description = get_bloginfo( 'description', 'display' );
+						?>
+						<?php
+						if ( ( $mini_title && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
+						?>
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
 						<?php endif; ?>
-                    </a>
-					<?php
-					$mini_title = get_bloginfo( 'name', 'display' );
-					$mini_description = get_bloginfo( 'description', 'display' );
-					?>
-					<?php
-					if ( ( $mini_title && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
-					?>
-                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
-					<?php endif; ?>
-					<?php
-					if ( ( $mini_description && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
-					?>
-						<div class="sep"></div>
-						<div class="space-05"></div>
-						<p class="site-description m-0"><?= $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-					<?php endif; ?>
-                </div>
-                <div class="box menus px-2">
-                    <div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
-                    <div id="head-menu" class="head-menu">
-                        <nav class="menu page-menu">
-                            <ul id="page-menu" class="menu page-menu">
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-	<div class="sheet"><?php /* starting .sheet div */ ?>
-
+						<?php
+						if ( ( $mini_description && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
+						?>
+							<div class="sep"></div>
+							<div class="space-05"></div>
+							<p class="site-description m-0"><?= $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+						<?php endif; ?>
+					</div>
+					<div class="box menus px-2">
+						<div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+						<div id="head-menu" class="head-menu">
+							<nav id="page-menu" class="menu page-menu">
+								<ul class="menu page-menu">
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		
 		<aside id="side-right" class="">
 			<nav class="menu main-menu">
 				<?php
