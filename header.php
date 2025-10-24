@@ -9,8 +9,12 @@
  * @package mini
  */
 
-$header_top_style = '';
-$header_scroll_style = '';
+if ( $header_top_style == null ) {
+	$header_top_style = '';
+}
+if ( $header_scroll_style == null ) {
+	$header_scroll_style = '';
+}
 
 if ( is_singular() && isset($post->ID) ) {
 	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);

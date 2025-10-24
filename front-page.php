@@ -37,7 +37,10 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 		$content_size = 'box-75';
 	}
 }
-
+$header_top_style = "";
+if (is_front_page() and is_home()) {
+	$header_top_style = 'top-inv';
+}
 get_header();
 ?>
 
