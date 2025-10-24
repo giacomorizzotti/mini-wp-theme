@@ -20,6 +20,10 @@ if ( is_singular() && isset($post->ID) ) {
 	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
 	$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
 }
+if (is_home() || is_front_page()) {
+	$header_top_style = 'top-inv';
+}
+
 $custom_logo = get_custom_logo();
 
 function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {
