@@ -9,10 +9,10 @@
  * @package mini
  */
 
-if ( $header_top_style == null ) {
+if ( !isset($header_top_style) ) {
 	$header_top_style = '';
 }
-if ( $header_scroll_style == null ) {
+if ( !isset($header_scroll_style) ) {
 	$header_scroll_style = '';
 }
 
