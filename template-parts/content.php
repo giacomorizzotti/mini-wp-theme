@@ -53,9 +53,11 @@ if ( has_post_thumbnail() ) {
 
 			<div class="box box-100 entry-content">
 				<?php
-				if ( !is_singular() && has_excerpt() ) {
+				if ( !is_singular() ) {
+					// Show excerpt on archive pages, category pages, etc.
 					the_excerpt();
 				} else {
+					// Show full content on single post pages
 					the_content(
 						sprintf(
 							wp_kses(
