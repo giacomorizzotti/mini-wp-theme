@@ -53,17 +53,19 @@
 				?>
                     </nav>
                     <div class="sep-1 my-3 light-grey-bg"></div>
-                    <ul class="menu flex-direction-row">
-                        <li class="p-1">
-                            <a href="" class=""><i class="iconoir-instagram XXL"></i></a>
-                        </li>
-                        <li class="p-1">
-                            <a href="" class=""><i class="iconoir-youtube XXL"></i></a>
-                        </li>
-                        <li class="p-1">
-                            <a href="" class=""><i class="iconoir-facebook XXL"></i></a>
-                        </li>
-                    </ul>
+                    <nav class="menu social-menu">
+                        <ul class="menu flex-direction-row">
+                            <li class="p-1">
+                                <a href="" class=""><i class="iconoir-instagram XXL"></i></a>
+                            </li>
+                            <li class="p-1">
+                                <a href="" class=""><i class="iconoir-youtube XXL"></i></a>
+                            </li>
+                            <li class="p-1">
+                                <a href="" class=""><i class="iconoir-facebook XXL"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
