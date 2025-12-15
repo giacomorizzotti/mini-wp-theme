@@ -69,12 +69,15 @@ get_header();
 								get_template_part( 'template-parts/content', get_post_type() );
 							?>
 							
-							<div class="box-100">
+							<div class="sep-1 my-1 light-grey-bg">
+								
+							</div>
+							<div class="box-100 w-100">
 							<?php
 								the_post_navigation(
 									array(
-										'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'mini' ) . '</span> <span class="nav-title">%title</span>',
-										'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'mini' ) . '</span> <span class="nav-title">%title</span>',
+										'prev_text' => '<span class="label">' . esc_html__( 'Previous', 'mini' ) . ':</span> <span class="nav-title" style="line-height: 1.8;">%title</span><br/>',
+										'next_text' => '<span class="label">' . esc_html__( 'Next', 'mini' ) . ':</span> <span class="nav-title" style="line-height: 1.8;">%title</span>',
 									)
 								);
 

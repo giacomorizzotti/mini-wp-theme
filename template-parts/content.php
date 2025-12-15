@@ -74,8 +74,6 @@ if ( has_post_thumbnail() ) {
 					);
 				}
 				
-
-
 				wp_link_pages(
 					array(
 						'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'mini' ),
@@ -84,7 +82,7 @@ if ( has_post_thumbnail() ) {
 				);
 				?>
 			</div><!-- .entry-content -->
-			<div class="sep-1 grey-bg mx-2" style="width: 60px;"></div>
+			<div class="sep-1 grey-bg mx-1" style="width: 60px;"></div>
 			<footer class="box box-100 my-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
