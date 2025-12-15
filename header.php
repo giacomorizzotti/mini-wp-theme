@@ -89,8 +89,13 @@ function check_variable_from_option($options_group, $option) {
 		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
 		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
 		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
+		variable_from_option('mini_font_options','mini_sans_font','--font-sans');
+		variable_from_option('mini_font_options','mini_secondary_font','--font-second');
+		variable_from_option('mini_font_options','mini_serif_font','--font-serif');
+		variable_from_option('mini_font_options','mini_handwriting_font','--font-handwriting');
+		variable_from_option('mini_font_options','mini_mono_font','--font-mono');
 		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
-		variable_from_option('mini_font_options','mini_most_used_font','--font', true);
+		variable_from_option('mini_font_options','mini_most_used_font','--font-main', true);
 
 		//variable_from_option('mini_size_options','mini_logo_height','--logo-height');
 		//variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');

@@ -1000,25 +1000,51 @@ function mini_theme_text_field_option(
 ) {
     $options = get_option( $option_group );
     if ( 
-        is_array($options) && array_key_exists($option, $options ) && $options[$option] != null 
+        is_array($options) && array_key_exists($option, $options )
     ) {
         $value = $options[$option];
-        $placeholder = null;
     } else {
-        $value = $options[$option];
-        $placeholder = $default_value;
+        $value = '';
     }
     return '
     <input
         type="text"
         id="'.$option.'"
         name="'.$option_group.'['.$option.']"
-        value="'.$value.'"
-        placeholder="'.htmlspecialchars($placeholder).'"
+        value="'.esc_attr($value).'"
+        placeholder="'.esc_attr($default_value).'"
         style="'.$style.'";
     >
     ';
 }
+
+function mini_theme_textarea_option(
+    string $option_group, 
+    string $option, 
+    string $default_value = '', 
+    string $style='width: 100%;',
+    int $rows = 3
+) {
+    $options = get_option( $option_group );
+    if ( 
+        is_array($options) && array_key_exists($option, $options )
+    ) {
+        $value = $options[$option];
+    } else {
+        $value = '';
+    }
+    $placeholder_attr = $default_value ? 'placeholder="'.esc_attr($default_value).'"' : '';
+    return '
+    <textarea
+        id="'.$option.'"
+        name="'.$option_group.'['.$option.']"
+        '.$placeholder_attr.'
+        style="'.$style.'"
+        rows="'.$rows.'"
+    >'.esc_textarea($value).'</textarea>
+    ';
+}
+
 function mini_theme_text_field_color_option(
     string $option_group, 
     string $option, 
@@ -1294,18 +1320,18 @@ function mini_fonts_field_callback( $args ) {
     </h4>
     <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
         <div style="flex:1;">
-            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
+            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
         </div>
         <div style="flex:1;">
-            <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Main font' => '--font', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
+            <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
         </div>
     </div>
     <h4 class="">
-        <?php esc_html_e( 'Main font', 'mini' ); ?>
+        <?php esc_html_e( 'Sans Serif font', 'mini' ); ?>
     </h4>
-    <?= mini_theme_text_field_option('mini_font_options','mini_main_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
+    <?= mini_theme_text_field_option('mini_font_options','mini_sans_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_main_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_textarea_option('mini_font_options','mini_sans_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
     <p class="description">
         <?php esc_html_e( 'Used for paragraphs and most of the website\'s content. Sans Serif.', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1314,18 +1340,18 @@ function mini_fonts_field_callback( $args ) {
     </h4>
     <?= mini_theme_text_field_option('mini_font_options','mini_secondary_font','\'Oswald\', sans-serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_textarea_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
     <p class="description">
         <?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
     <h4 class="">
         <?php esc_html_e( 'Serif font', 'mini' ); ?>
     </h4>
-    <?= mini_theme_checkbox_option('mini_font_options','mini_serif_fontz_status'); ?>
+    <?= mini_theme_checkbox_option('mini_font_options','mini_serif_font_status'); ?>
     <br/><br/>
     <?= mini_theme_text_field_option('mini_font_options','mini_serif_font','\'Playfair Display\', serif', 'width=auto;'); ?>
     <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_textarea_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
     <p class="description">
         <?php esc_html_e( 'Serif font, used in CSS class ".serif"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1337,7 +1363,7 @@ function mini_fonts_field_callback( $args ) {
     <br/><br/>
     <?= mini_theme_text_field_option('mini_font_options','mini_mono_font','\'Roboto Mono\', monospace', 'width=auto;'); ?>
     <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_textarea_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
     <p class="description">
         <?php esc_html_e( 'Monospace font, used in CSS class ".mono"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1348,7 +1374,7 @@ function mini_fonts_field_callback( $args ) {
     <br/><br/>
     <?= mini_theme_text_field_option('mini_font_options','mini_handwriting_font','\'Edu VIC WA NT Beginner\', serif'); ?>
     <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">'); ?>
+    <?= mini_theme_textarea_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
     <p class="description">
         <?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
@@ -1996,8 +2022,8 @@ function mini_gwf_font(){
     $google_font_url = 'https://fonts.googleapis.com/css2?';
 
     $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_main_font_embed_link', $options) && $options['mini_main_font_embed_link'] != null) {
-        $main_font_gwf_embed_link = $options['mini_main_font_embed_link'] ;
+    if (is_array($options) && array_key_exists('mini_sans_font_embed_link', $options) && $options['mini_sans_font_embed_link'] != null) {
+        $main_font_gwf_embed_link = $options['mini_sans_font_embed_link'] ;
     } else {
         $main_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
     }
