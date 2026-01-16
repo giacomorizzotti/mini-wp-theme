@@ -222,7 +222,7 @@ function check_variable_from_option($options_group, $option) {
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
 						<?php endif; ?>
 						<?php
-						if ( ( $mini_description && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
+						if ( ( $mini_description && get_theme_mod('header_text') == 1 && get_theme_mod('show-tagline', true) ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 && get_theme_mod('show-tagline', true) ) ) :
 						?>
 							<div class="sep"></div>
 							<div class="space-05"></div>
