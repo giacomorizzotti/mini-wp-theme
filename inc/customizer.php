@@ -110,26 +110,26 @@ add_action('customize_register', 'wpctmz_logo_height');
 function wpctmz_color_palette( $wp_customize ){
 
 	//Setting
-	$wp_customize->add_setting( 'main-color', array( 'default' => 'rgb( 60 90 255 / 100% )' ) );
-	$wp_customize->add_setting( 'main-color-dark', array( 'default' => 'rgb( 50 75 180 / 100% )' ) );
-	$wp_customize->add_setting( 'main-color-transp', array( 'default' => 'rgb( 60 90 255 / 20% )' ) );
+	$wp_customize->add_setting( 'main-color', array( 'default' => '#3c5aff' ) );
+	$wp_customize->add_setting( 'main-color-dark', array( 'default' => '#324bb4' ) );
+	$wp_customize->add_setting( 'main-color-transp', array( 'default' => '#3c5aff' ) );
 	
-	$wp_customize->add_setting( 'second-color', array( 'default' => 'rgb( 50 75 180 / 100% )' ) );
-	$wp_customize->add_setting( 'second-color-dark', array( 'default' => 'rgb( 37 56 133 / 100% )' ) );
+	$wp_customize->add_setting( 'second-color', array( 'default' => '#324bb4' ) );
+	$wp_customize->add_setting( 'second-color-dark', array( 'default' => '#253885' ) );
 	
-	$wp_customize->add_setting( 'third-color', array( 'default' => 'rgb( 60 30 99 / 100% )' ) );
-	$wp_customize->add_setting( 'third-color-dark', array( 'default' => 'rgb( 34 15 61 / 100% )' ) );
+	$wp_customize->add_setting( 'third-color', array( 'default' => '#3c1e63' ) );
+	$wp_customize->add_setting( 'third-color-dark', array( 'default' => '#220f3d' ) );
 	
-	$wp_customize->add_setting( 'fourth-color', array( 'default' => 'rgb( 220 230 0 / 100% )' ) );
-	$wp_customize->add_setting( 'fourth-color-dark', array( 'default' => 'rgb( 180 190 0 / 100% )' ) );
+	$wp_customize->add_setting( 'fourth-color', array( 'default' => '#dce600' ) );
+	$wp_customize->add_setting( 'fourth-color-dark', array( 'default' => '#b4be00' ) );
 	
-	$wp_customize->add_setting( 'link-color', array( 'default' => 'rgb(121 48 238 / 100% )' ) );
-	$wp_customize->add_setting( 'link-hover-color', array( 'default' => 'rgb(72 34 176 / 100% )' ) );
+	$wp_customize->add_setting( 'link-color', array( 'default' => '#7930ee' ) );
+	$wp_customize->add_setting( 'link-hover-color', array( 'default' => '#4822b0' ) );
 	
-	$wp_customize->add_setting( 'sheet-color', array( 'default' => 'rgb( 20 10 40 / 100% )' ) );
-	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => 'rgb( 20 10 40 / 100% )' ) );
+	$wp_customize->add_setting( 'sheet-color', array( 'default' => '#140a28' ) );
+	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => '#140a28' ) );
 	
-	$wp_customize->add_setting( 'theme-color', array( 'default' => 'rgb( 60 90 255 / 100% )' ) );
+	$wp_customize->add_setting( 'theme-color', array( 'default' => '#3c5aff' ) );
 	
 	/*
 	$wp_customize->add_setting( 'semaphore-info-color', array( 'default' => 'rgb( 113 202 189 )' ) );
@@ -152,7 +152,7 @@ function wpctmz_color_palette( $wp_customize ){
 	//Control
 	//Main color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'main-color',
 			array(
 				'label' => __( 'Main color', 'mini' ),
@@ -163,7 +163,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Main color dark
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'main-color-dark',
 			array(
 				'label' => __( 'Main color dark', 'mini' ),
@@ -174,7 +174,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Main color transparent
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'main-color-transp',
 			array(
 				'label' => __( 'Main color transparent', 'mini' ),
@@ -186,7 +186,7 @@ function wpctmz_color_palette( $wp_customize ){
 
 	//Second color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'second-color',
 			array(
 				'label' => __( 'Second color', 'mini' ),
@@ -197,7 +197,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Second color dark
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'second-color-dark',
 			array(
 				'label' => __( 'Second color dark', 'mini' ),
@@ -209,7 +209,7 @@ function wpctmz_color_palette( $wp_customize ){
 
 	//Third color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'third-color',
 			array(
 				'label' => __( 'Third color', 'mini' ),
@@ -220,7 +220,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Third color dark
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'third-color-dark',
 			array(
 				'label' => __( 'Third color dark', 'mini' ),
@@ -232,7 +232,7 @@ function wpctmz_color_palette( $wp_customize ){
 
 	//Fourth color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'fourth-color',
 			array(
 				'label' => __( 'Fourth color', 'mini' ),
@@ -243,7 +243,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Fourth color dark
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'fourth-color-dark',
 			array(
 				'label' => __( 'Fourth color dark', 'mini' ),
@@ -255,7 +255,7 @@ function wpctmz_color_palette( $wp_customize ){
 
 	//Link color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'link-color',
 			array(
 				'label' => __( 'Link color', 'mini' ),
@@ -266,7 +266,7 @@ function wpctmz_color_palette( $wp_customize ){
 	);
 	//Link hover color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'link-hover-color',
 			array(
 				'label' => __( 'Link hover color', 'mini' ),
@@ -276,9 +276,9 @@ function wpctmz_color_palette( $wp_customize ){
 		)
 	);
 
-	//Link color
+	//Sheet color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'sheet-color',
 			array(
 				'label' => __( 'Sheet color', 'mini' ),
@@ -287,9 +287,9 @@ function wpctmz_color_palette( $wp_customize ){
 			)
 		)
 	);
-	//Link hover color
+	//Menu toggle color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'menu-toggle-color',
 			array(
 				'label' => __( 'Menu toggle color', 'mini' ),
@@ -301,7 +301,7 @@ function wpctmz_color_palette( $wp_customize ){
 
 	//theme color
 	$wp_customize->add_control(
-		new WP_Customize_Control(
+		new WP_Customize_Color_Control(
 			$wp_customize, 'theme-color',
 			array(
 				'label' => __( 'Theme color', 'mini' ),
@@ -373,3 +373,26 @@ function wpctmz_color_palette( $wp_customize ){
 	
 }
 add_action('customize_register', 'wpctmz_color_palette');
+
+
+
+function wpctmz_tagline_visibility( $wp_customize ){
+
+	//Setting
+	$wp_customize->add_setting( 'show-tagline', array( 'default' => true ) );
+
+	//Control
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'show-tagline',
+			array(
+				'label' => __( 'Show tagline', 'mini' ),
+				'section' => 'title_tagline',
+				'settings' => 'show-tagline',
+				'type' => 'checkbox',
+			)
+		)
+	);
+	
+}
+add_action('customize_register', 'wpctmz_tagline_visibility');
