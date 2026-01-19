@@ -65,39 +65,66 @@ add_action( 'customize_preview_init', 'mini_customize_preview_js' );
 function wpctmz_logo_height( $wp_customize ){
 
 	//Setting
+	$wp_customize->add_setting( 'show-tagline', array( 'default' => true ) );
 	$wp_customize->add_setting( 'logo-height', array( 'default' => '' ) );
 	$wp_customize->add_setting( 'scroll-logo-height', array( 'default' => '' ) );
+	$wp_customize->add_setting( 'menu-toggle-height', array( 'default' => '' ) );
+	$wp_customize->add_setting( 'scroll-menu-toggle-height', array( 'default' => '' ) );
 
-	//Section
-	$wp_customize->add_section(
-		'logo-height-settings',
-		array(
-			'title' => __( 'Logo height', '_s' ),
-			'priority' => 30,
-			'description' => __( 'Enter the logo height for top or scrolled screen', 'mini' )
+	// Control
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'show-tagline',
+			array(
+				'label' => __( 'Show tagline', 'mini' ),
+				'section' => 'title_tagline',
+				'settings' => 'show-tagline',
+				'type' => 'checkbox',
+			)
 		)
 	);
-
-	//Control
-	//Logo height
+	// Logo height
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize, 'logo-height',
 			array(
 				'label' => __( 'Logo height', 'mini' ),
-				'section' => 'logo-height-settings',
-				'settings' => 'logo-height'
+				'section' => 'title_tagline',
+				'settings' => 'logo-height',
+				'description' => __( 'Enter the logo and menu toggle height for top or scrolled screen', 'mini' )
 			)
 		)
 	);
-	//Scroll logo height
+	// Scroll logo height
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize, 'scroll-logo-height',
 			array(
 				'label' => __( 'Logo height (scrolled)', 'mini' ),
-				'section' => 'logo-height-settings',
+				'section' => 'title_tagline',
 				'settings' => 'scroll-logo-height'
+			)
+		)
+	);
+	// Menu toggle height
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'menu-toggle-height',
+			array(
+				'label' => __( 'Menu toggle height', 'mini' ),
+				'section' => 'title_tagline',
+				'settings' => 'menu-toggle-height'
+			)
+		)
+	);
+	// Scroll menu toggle height
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize, 'scroll-menu-toggle-height',
+			array(
+				'label' => __( 'Menu toggle height (scrolled)', 'mini' ),
+				'section' => 'title_tagline',
+				'settings' => 'scroll-menu-toggle-height'
 			)
 		)
 	);
@@ -110,35 +137,31 @@ add_action('customize_register', 'wpctmz_logo_height');
 function wpctmz_color_palette( $wp_customize ){
 
 	//Setting
-	$wp_customize->add_setting( 'main-color', array( 'default' => '#3c5aff' ) );
-	$wp_customize->add_setting( 'main-color-dark', array( 'default' => '#324bb4' ) );
-	$wp_customize->add_setting( 'main-color-transp', array( 'default' => '#3c5aff' ) );
+	$wp_customize->add_setting( 'main-color', array( 'default' => '#1b9958' ) );
+	$wp_customize->add_setting( 'main-color-dark', array( 'default' => '#155f39' ) );
+	$wp_customize->add_setting( 'main-color-transp', array( 'default' => '#1b994725' ) );
 	
-	$wp_customize->add_setting( 'second-color', array( 'default' => '#324bb4' ) );
-	$wp_customize->add_setting( 'second-color-dark', array( 'default' => '#253885' ) );
+	$wp_customize->add_setting( 'second-color', array( 'default' => '#025A5B' ) );
+	$wp_customize->add_setting( 'second-color-dark', array( 'default' => '#003838' ) );
 	
-	$wp_customize->add_setting( 'third-color', array( 'default' => '#3c1e63' ) );
-	$wp_customize->add_setting( 'third-color-dark', array( 'default' => '#220f3d' ) );
+	$wp_customize->add_setting( 'third-color', array( 'default' => '#FF512C' ) );
+	$wp_customize->add_setting( 'third-color-dark', array( 'default' => '#8D3522' ) );
 	
-	$wp_customize->add_setting( 'fourth-color', array( 'default' => '#dce600' ) );
-	$wp_customize->add_setting( 'fourth-color-dark', array( 'default' => '#b4be00' ) );
+	$wp_customize->add_setting( 'fourth-color', array( 'default' => '#5E0099' ) );
+	$wp_customize->add_setting( 'fourth-color-dark', array( 'default' => '#2F004D' ) );
 	
-	$wp_customize->add_setting( 'link-color', array( 'default' => '#7930ee' ) );
-	$wp_customize->add_setting( 'link-hover-color', array( 'default' => '#4822b0' ) );
+	$wp_customize->add_setting( 'link-color', array( 'default' => '#00C68F' ) );
+	$wp_customize->add_setting( 'link-hover-color', array( 'default' => '#20896C' ) );
 	
-	$wp_customize->add_setting( 'sheet-color', array( 'default' => '#140a28' ) );
-	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => '#140a28' ) );
+	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => '#141428' ) );
 	
-	$wp_customize->add_setting( 'theme-color', array( 'default' => '#3c5aff' ) );
+	$wp_customize->add_setting( 'theme-color', array( 'default' => '#1b9958' ) );
 	
-	/*
-	$wp_customize->add_setting( 'semaphore-info-color', array( 'default' => 'rgb( 113 202 189 )' ) );
-	$wp_customize->add_setting( 'semaphore-success-color', array( 'default' => 'rgb( 160 220 110 )' ) );
-	$wp_customize->add_setting( 'semaphore-warning-color', array( 'default' => 'rgb( 248 187 83 )' ) );
-	$wp_customize->add_setting( 'semaphore-danger-color', array( 'default' => 'rgb( 255 111 97 )' ) );
-	$wp_customize->add_setting( 'semaphore-bad-color', array( 'default' => 'rgb( 235 55 80 )' ) );
-	*/
-
+	$wp_customize->add_setting( 'semaphore-info-color', array( 'default' => '#4ba99f' ) );
+	$wp_customize->add_setting( 'semaphore-success-color', array( 'default' => '#a5db67' ) );
+	$wp_customize->add_setting( 'semaphore-warning-color', array( 'default' => '#ffbb6e' ) );
+	$wp_customize->add_setting( 'semaphore-danger-color', array( 'default' => '#fb7467' ) );
+	$wp_customize->add_setting( 'semaphore-bad-color', array( 'default' => '#eb3750' ) );
 	//Section
 	$wp_customize->add_section(
 		'color-settings',
@@ -374,25 +397,3 @@ function wpctmz_color_palette( $wp_customize ){
 }
 add_action('customize_register', 'wpctmz_color_palette');
 
-
-
-function wpctmz_tagline_visibility( $wp_customize ){
-
-	//Setting
-	$wp_customize->add_setting( 'show-tagline', array( 'default' => true ) );
-
-	//Control
-	$wp_customize->add_control(
-		new WP_Customize_Control(
-			$wp_customize, 'show-tagline',
-			array(
-				'label' => __( 'Show tagline', 'mini' ),
-				'section' => 'title_tagline',
-				'settings' => 'show-tagline',
-				'type' => 'checkbox',
-			)
-		)
-	);
-	
-}
-add_action('customize_register', 'wpctmz_tagline_visibility');

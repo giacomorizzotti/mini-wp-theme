@@ -1,0 +1,70 @@
+<?php
+/**
+ * Example: Custom template part
+ * 
+ * This shows how to create a custom template part in your child theme
+ * that can be used with get_template_part()
+ *
+ * @package Mini_Child
+ */
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class('child-custom-article'); ?>>
+    
+    <?php if (has_post_thumbnail()) : ?>
+        <div class="post-thumbnail">
+            <?php the_post_thumbnail('large'); ?>
+        </div>
+    <?php endif; ?>
+    
+    <header class="entry-header">
+        <?php
+        if (is_singular()) :
+            the_title('<h1 class="entry-title">', '</h1>');
+        else :
+            the_title('<h2 class="entry-title"><a href="' . esc_url(get_permalink()) . '">', '</a></h2>');
+        endif;
+        ?>
+        
+        <div class="entry-meta">
+            <span class="posted-on">
+                <time datetime="<?php echo get_the_date('c'); ?>">
+                    <?php echo get_the_date(); ?>
+                </time>
+            </span>
+            <span class="byline">
+                <?php the_author_posts_link(); ?>
+            </span>
+        </div>
+    </header>
+
+    <div class="entry-content">
+        <?php
+        the_content();
+        
+        wp_link_pages(array(
+            'before' => '<div class="page-links">' . __('Pages:', 'mini-child'),
+            'after'  => '</div>',
+        ));
+        ?>
+    </div>
+
+    <?php if (is_singular()) : ?>
+        <footer class="entry-footer">
+            <?php
+            // Categories
+            if (has_category()) {
+                echo '<div class="cat-links">';
+                the_category(', ');
+                echo '</div>';
+            }
+            
+            // Tags
+            if (has_tag()) {
+                the_tags('<div class="tags-links">', ', ', '</div>');
+            }
+            ?>
+        </footer>
+    <?php endif; ?>
+    
+</article>

@@ -12,6 +12,7 @@
  * @package mini
  */
 
+$title_presence = get_post_meta($post->ID, 'title_presence', true);
 $sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
 $container_width = get_post_meta($post->ID, 'page_container', true);
 
@@ -33,8 +34,6 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 	}
 }
 
-$title_presence = get_post_meta($post->ID, 'title_presence', true);
-
 get_header();
 ?>
 
@@ -55,7 +54,7 @@ get_header();
 						</p><!-- .entry-meta -->
 						<div class="space"></div>
 					<?php endif; ?>
-					<?php the_title( '<h1 class="entry-title m-0 wh-box">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title m-0 wh-bg p-1 inline-block">', '</h1>' ); ?>
 						<div class="space-2"></div>
 					</header>
 					<?php endif; ?>

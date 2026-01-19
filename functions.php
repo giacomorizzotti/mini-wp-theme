@@ -155,6 +155,39 @@ function mini_scripts() {
 add_action( 'wp_enqueue_scripts', 'mini_scripts' );
 
 /**
+ * Remove wrapper div from button blocks and add 'btn' class
+ */
+function mini_render_block_button( $block_content, $block ) {
+    if ( 'core/button' === $block['blockName'] ) {
+        // Extract the link element
+        if ( preg_match( '/<a\s+class="([^"]*)"([^>]*)>([^<]*)<\/a>/', $block_content, $matches ) ) {
+            $classes = $matches[1];
+            $attributes = $matches[2];
+            $text = $matches[3];
+            
+            // Get wrapper classes and merge them to the link
+            if ( preg_match( '/class="wp-block-button\s+([^"]*)"/', $block_content, $wrapper_matches ) ) {
+                $wrapper_classes = $wrapper_matches[1];
+                // Remove 'wp-block-button' prefix classes, keep only style classes
+                $wrapper_classes = preg_replace( '/\bwp-block-button__\S+/', '', $wrapper_classes );
+                $wrapper_classes = trim( $wrapper_classes );
+                
+                if ( ! empty( $wrapper_classes ) ) {
+                    $classes .= ' ' . $wrapper_classes;
+                }
+            }
+            
+            $classes .= ' btn';
+            
+            // Return just the link without wrapper div
+            return '<a class="' . esc_attr( trim( $classes ) ) . '"' . $attributes . '>' . $text . '</a>';
+        }
+    }
+    return $block_content;
+}
+add_filter( 'render_block', 'mini_render_block_button', 10, 2 );
+
+/**
  * Implement the Custom Header feature.
  */
 //require get_template_directory() . '/inc/custom-header.php';
@@ -244,6 +277,9 @@ function add_title_presence_box() {
 // HTML code of the block
 function title_presence_box_html( $post, $meta ){
 
+    // Add nonce field for security
+    wp_nonce_field( 'title_presence_save', 'title_presence_nonce' );
+
     // field value
     $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
 
@@ -260,8 +296,10 @@ function title_presence_box_html( $post, $meta ){
 
 function title_presence_save_postdata( $post_id ) {
 
-    // make sure the field is set.
-    // if ( ! isset( $_POST['title_presence'] ) ) { return; }
+    // Verify nonce
+    if ( ! isset( $_POST['title_presence_nonce'] ) || ! wp_verify_nonce( $_POST['title_presence_nonce'], 'title_presence_save' ) ) {
+        return;
+    }
 
     // if this is autosave do nothing
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
@@ -320,8 +358,10 @@ function sidebar_presence_box_html( $post, $meta ){
 
 function sidebar_presence_save_postdata( $post_id ) {
 
-    // make sure the field is set.
-    // if ( ! isset( $_POST['title_presence'] ) ) { return; }
+    // Verify nonce
+    if ( ! isset( $_POST['sidebar_presence_nonce'] ) || ! wp_verify_nonce( $_POST['sidebar_presence_nonce'], 'sidebar_presence_save' ) ) {
+        return;
+    }
 
     // if this is autosave do nothing
     if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
@@ -605,13 +645,13 @@ function change_logo_class( $html ) {
 function mini_login_style() { ?>
     <style type="text/css">
         body.login-action-login {
-            background: -webkit-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
-            background: -moz-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
-            background: -o-linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
-            background: linear-gradient(135deg, rgb(60 90 255) 0, rgb(60 30 99) 100%) !important;
+            background: -webkit-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+            background: -moz-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+            background: -o-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+            background: linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
         }
         body.login-action-login #login h1 a, .login h1 a {
-            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg);
+            background-image: url('<?= get_stylesheet_directory_uri(); ?>/img/mini2_emblem.svg');
             width: 100px;
             height: 58px;
             background-size: contain;
@@ -634,6 +674,10 @@ function mini_login_style() { ?>
         }
         body.login-action-login .language-switcher #language-switcher label span.dashicons {
             color: white;
+        }
+        body.login-action-login .button.button-primary {
+            background-color: #1b9958;
+            border-color: #1b9958;
         }
     </style>
 <?php }
@@ -727,32 +771,6 @@ function mini_settings_init() {
         'mini_cdn_section',
         array(
             'label_for'         => 'mini_cdn',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-
-    // Register a new setting for "mini" page.
-    register_setting( 'mini_colors', 'mini_colors_options');
-
-    // Register a new section in the "mini" page.
-    add_settings_section(
-        'mini_colors_section',
-        __( 'Mini Colors settings', 'mini' ),
-        'mini_colors_section_callback',
-        'mini-colors'
-    );
-
-    // Register a new field in the "mini_section" section, inside the "mini" page.
-    add_settings_field(
-        'mini_colors', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Colors', 'mini' ),
-        'mini_colors_callback',
-        'mini-colors',
-        'mini_colors_section',
-        array(
-            'label_for'         => 'mini_colors',
             'class'             => 'mini_row',
             'mini_custom_data' => 'custom',
         )
@@ -1184,135 +1202,6 @@ function mini_cdn_field_callback( $args ) {
     <?php
 }
 
-function mini_colors_callback( $args ) {
-    ?>
-    <h4 class="m-0">
-        Main color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color','rgb( 60 90 255 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color_dark','rgb( 50 75 180 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_main_color_transp','rgb( 60 90 255 / 20% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Main color, dark version and transparent version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Second color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_second_color','rgb( 50 75 180 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_second_color_dark','rgb( 37 56 133 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Second color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Third color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_third_color','rgb( 60 30 99 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_third_color_dark','rgb( 34 15 61 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Third color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Fourth color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_fourth_color','rgb( 220 230 0 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_fourth_color_dark','rgb( 180 190 0 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Fourth color and dark version', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Link color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_link_color','rgb(121 48 238 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_link_hover_color','rgb(72 34 176 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Link and buttons color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Sheet & menu colors
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_sheet_color','rgb( 20 10 40 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_menu_toggle_color','rgb( 20 10 40 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Page second level background and menu icon color', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Theme color
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_theme_color','rgb( 60 90 255 / 100% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Android browser bar', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Semaphore colors
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_info','rgb( 113 202 189 )'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_success','rgb( 160 220 110 )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_warning','rgb( 248 187 83 )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_danger','rgb( 255 111 97 )'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_semaphore_color_bad','rgb( 235 55 80 )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Color used for semaphore logic', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="m-0">
-        Blacks
-    </h4>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_black','rgb( 10 10 20 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_black','rgb( 20 10 40 / 100% )'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_dark_grey','rgb( 55 55 80 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_grey','rgb( 120 120 150 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_light_grey','rgb( 215 210 230 / 100% )'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_white','rgb( 250 248 255 / 100% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_white_transp','rgb( 0 0 0 / 3% )'); ?>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_white','rgb( 255 255 255 / 100% )'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_color_option('mini_colors_options','mini_blacks_color_false_transp','rgb( 0 0 0 / 0% )'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Greyscale', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-
-    <?php
-}
-
-/*
-function mini_logo_size_field_callback( $args ) {
-    ?>
-    <h4 class="">Logo height</h4>
-    <?= mini_theme_text_field_option('mini_size_options','mini_logo_height','2rem', 'width: auto;'); ?>
-    <p class="description">
-        <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <br/>
-    <hr>
-    <h4 class="">Height when page is scrolled</h4>
-    <?= mini_theme_text_field_option('mini_size_options','mini_scroll_logo_height','1.25rem', 'width: auto;'); ?>
-    <p class="description">
-        <i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <?php
-}
-*/
-
-
 function mini_fonts_field_callback( $args ) {
     ?>
     <h4 class="">
@@ -1547,14 +1436,6 @@ function mini_options_page() {
         'manage_options',
         'mini-cdn',
         'mini_cdn_options_page_html'
-    );
-    add_submenu_page(
-        'mini',
-        'Color options',
-        'Colors',
-        'manage_options',
-        'mini-colors',
-        'mini_color_options_page_html'
     );
     add_submenu_page(
         'mini',
@@ -1798,29 +1679,6 @@ function mini_cdn_options_page_html() {
             <?php
             settings_fields( 'mini_cdn' );
             do_settings_sections( 'mini-cdn' );
-            submit_button( 'Save Settings' );
-            ?>
-        </form>
-    </div>
-    <?php
-}
-
-// Colors options page
-function mini_color_options_page_html() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
-    if ( isset( $_GET['settings-updated'] ) ) {
-        add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
-    }
-    settings_errors( 'mini_messages' );
-    ?>
-    <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <form action="options.php" method="post">
-            <?php
-            settings_fields( 'mini_colors' );
-            do_settings_sections( 'mini-colors' );
             submit_button( 'Save Settings' );
             ?>
         </form>
@@ -2073,4 +1931,169 @@ function mini_gwf_font(){
     }
 
     wp_enqueue_style( 'google_fonts', $google_font_url."&".$main_font_url."&".$secondary_font_url."&".$serif_font_url."&".$mono_font_url."&".$handwriting_font_url."&display=swap/", [], null);
+}
+
+/**
+ * ========================================
+ * INSTANCE-SPECIFIC OVERRIDES SYSTEM
+ * ========================================
+ * This system allows you to customize theme files per WordPress instance
+ * without modifying the core theme files.
+ */
+
+/**
+ * Load instance-specific template file if it exists
+ * 
+ * @param string $template The template path
+ * @return string Modified template path
+ */
+function mini_load_override_template( $template ) {
+    static $override_dir = null;
+    
+    // Cache the override directory path
+    if ( $override_dir === null ) {
+        $override_dir = get_template_directory() . '/overrides/templates/';
+    }
+    
+    $template_name = basename( $template );
+    $override_path = $override_dir . $template_name;
+    
+    // Check if override exists
+    if ( file_exists( $override_path ) ) {
+        return $override_path;
+    }
+    
+    return $template;
+}
+add_filter( 'template_include', 'mini_load_override_template', 99 );
+
+/**
+ * Load instance-specific template parts
+ * 
+ * @param string $slug The slug name for the generic template
+ * @param string $name The name of the specialised template
+ */
+function mini_get_template_part_override( $slug, $name = null ) {
+    static $override_dir = null;
+    
+    // Cache the override directory path
+    if ( $override_dir === null ) {
+        $override_dir = get_template_directory() . '/overrides/';
+    }
+    
+    // Build template file names
+    $templates = array();
+    if ( $name ) {
+        $templates[] = "{$slug}-{$name}.php";
+    }
+    $templates[] = "{$slug}.php";
+    
+    // Check in overrides/parts first
+    foreach ( $templates as $template_name ) {
+        $override_path = $override_dir . 'parts/' . $template_name;
+        if ( file_exists( $override_path ) ) {
+            load_template( $override_path, false );
+            return;
+        }
+    }
+    
+    // Check in overrides/patterns
+    foreach ( $templates as $template_name ) {
+        $override_path = $override_dir . 'patterns/' . $template_name;
+        if ( file_exists( $override_path ) ) {
+            load_template( $override_path, false );
+            return;
+        }
+    }
+    
+    // Fall back to default get_template_part
+    get_template_part( $slug, $name );
+}
+
+/**
+ * Load instance-specific custom functions
+ * Loaded early to allow overrides to hook into WordPress
+ */
+function mini_load_custom_functions() {
+    $custom_functions = get_template_directory() . '/overrides/custom-functions.php';
+    if ( file_exists( $custom_functions ) ) {
+        require_once $custom_functions;
+    }
+}
+add_action( 'after_setup_theme', 'mini_load_custom_functions', 5 );
+
+/**
+ * Enqueue instance-specific custom styles
+ */
+function mini_enqueue_override_styles() {
+    static $custom_css_checked = false;
+    static $custom_css_exists = false;
+    static $custom_css_path = null;
+    
+    // Check only once per request
+    if ( ! $custom_css_checked ) {
+        $custom_css_path = get_template_directory() . '/overrides/styles/custom.css';
+        $custom_css_exists = file_exists( $custom_css_path );
+        $custom_css_checked = true;
+    }
+    
+    if ( $custom_css_exists ) {
+        wp_enqueue_style( 
+            'mini-custom-overrides', 
+            get_template_directory_uri() . '/overrides/styles/custom.css', 
+            array( 'mini-style' ), 
+            filemtime( $custom_css_path ) 
+        );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'mini_enqueue_override_styles', 99 );
+
+/**
+ * Helper function to check if an override exists
+ * 
+ * @param string $type Type of override (template, part, pattern, style, function)
+ * @param string $file Filename to check
+ * @return bool
+ */
+function mini_has_override( $type, $file ) {
+    static $override_dir = null;
+    static $cache = array();
+    
+    // Cache the override directory path
+    if ( $override_dir === null ) {
+        $override_dir = get_template_directory() . '/overrides/';
+    }
+    
+    // Create cache key
+    $cache_key = $type . '_' . $file;
+    
+    // Return cached result if available
+    if ( isset( $cache[ $cache_key ] ) ) {
+        return $cache[ $cache_key ];
+    }
+    
+    // Check file existence based on type
+    $exists = false;
+    switch ( $type ) {
+        case 'template':
+            $exists = file_exists( $override_dir . 'templates/' . $file );
+            break;
+        case 'part':
+            $exists = file_exists( $override_dir . 'parts/' . $file );
+            break;
+        case 'pattern':
+            $exists = file_exists( $override_dir . 'patterns/' . $file );
+            break;
+        case 'style':
+            $exists = file_exists( $override_dir . 'styles/' . $file );
+            break;
+        case 'function':
+            $exists = file_exists( $override_dir . $file );
+            break;
+    }
+    
+    // Cache the result
+    $cache[ $cache_key ] = $exists;
+    
+    return $exists;
 }

@@ -1,0 +1,8 @@
+# Ignore all files in overrides directory (instance-specific customizations)
+*
+!.gitignore
+!README.md
+
+# But allow example files
+!*.example.php
+!*.example.css

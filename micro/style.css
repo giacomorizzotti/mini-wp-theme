@@ -1,0 +1,103 @@
+/*
+ Theme Name:   Mini Child Theme
+ Theme URI:    https://yoursite.com
+ Description:  Child theme for Mini WordPress theme
+ Author:       Your Name
+ Author URI:   https://yoursite.com
+ Template:     mini
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Text Domain:  mini-child
+*/
+
+/*
+ * ==========================================================================
+ * IMPORTANT: Before deploying, update the following in this file:
+ * - Theme Name (make it instance-specific)
+ * - Description
+ * - Author information
+ * - Theme URI
+ * ==========================================================================
+ */
+
+/* ==========================================================================
+   Custom Styles
+   ========================================================================== */
+
+/* Add your custom CSS below */
+
+/* Example: Custom colors */
+/*
+:root {
+    --child-primary-color: #3498db;
+    --child-secondary-color: #2ecc71;
+    --child-accent-color: #e74c3c;
+}
+*/
+
+/* Example: Override parent theme styles */
+/*
+.site-header {
+    background-color: var(--child-primary-color);
+}
+
+.site-title a {
+    color: #ffffff;
+    font-size: 2rem;
+}
+*/
+
+/* Example: Custom navigation styles */
+/*
+.main-navigation a {
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+}
+
+.main-navigation a:hover {
+    background-color: var(--child-accent-color);
+    color: #ffffff;
+}
+*/
+
+/* Example: Custom button styles */
+/*
+.wp-block-button__link,
+.button,
+button[type="submit"] {
+    background-color: var(--child-primary-color);
+    border-radius: 4px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.wp-block-button__link:hover {
+    background-color: var(--child-secondary-color);
+    transform: translateY(-2px);
+}
+*/
+
+/* Example: Custom footer */
+/*
+.site-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 3rem 0;
+    text-align: center;
+}
+*/
+
+/* Responsive adjustments */
+/*
+@media screen and (max-width: 768px) {
+    .site-header {
+        padding: 1rem;
+    }
+    
+    .main-navigation {
+        font-size: 14px;
+    }
+}
+*/

@@ -23,8 +23,8 @@
 
 <!-- wp:html -->
 </div>
-<div class="box-66 my-0 p-0">
 <div class="boxes">
+<div class="box-66 my-0 p-0">
 <!-- /wp:html -->
 
 <!-- wp:shortcode -->

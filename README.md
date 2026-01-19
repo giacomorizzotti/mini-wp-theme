@@ -68,3 +68,37 @@ $ npm install
 Now you're ready to go! The next step is easy to say, but harder to do: make an awesome WordPress theme. :)
 
 Good luck!
+
+## 🎯 Instance Customization - Two Approaches
+
+This theme provides **two flexible ways** to customize for different WordPress instances:
+
+### 1️⃣ Override System (Quick & Simple)
+For minor tweaks and small customizations:
+```bash
+# Copy example files and edit
+cp overrides/styles/custom.example.css overrides/styles/custom.css
+# Add your customizations - done!
+```
+
+### 2️⃣ Child Theme (Full Customization)
+For major changes and client sites:
+```bash
+# Copy the starter kit
+cp -r micro ../mini-yoursite
+# Edit style.css and activate in WordPress
+```
+
+### 🤔 Which Should I Use?
+
+- **Override System** → 1-5 changes, mostly CSS/minor tweaks, quick deployment
+- **Child Theme** → 10+ changes, custom post types, client sites, extensive rebrand
+
+**📚 Decision Guide:** See [CUSTOMIZATION-GUIDE.md](CUSTOMIZATION-GUIDE.md) for detailed comparison and use cases
+
+**Documentation:**
+- [Customization Strategy Guide](CUSTOMIZATION-GUIDE.md) ⭐ Start here!
+- [Override System](overrides/README.md) | [Quick Start](overrides/QUICKSTART.md)
+- [Child Theme](micro/README.md) | [Quick Deploy](micro/QUICKSTART.md)
+
+Both approaches keep your parent theme clean and updateable!

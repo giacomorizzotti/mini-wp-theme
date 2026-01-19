@@ -29,7 +29,7 @@ get_header();
 
 								<header class="page-header box-100">
 									<?php
-									the_archive_title( '<h1 class="page-title m-0">', '</h1>' );
+									the_archive_title( '<h1 class="page-title m-0 p-1">', '</h1>' );
 									the_archive_description( '<div class="archive-description m-0">', '</div>' );
 									?>
 								</header><!-- .page-header -->

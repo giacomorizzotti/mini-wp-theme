@@ -1,0 +1,9 @@
+# Ignore instance-specific files
+# Keep only the starter template in version control
+
+# Ignore if you deploy this starter as an actual child theme
+*.log
+*.cache
+
+# But keep example files
+!*.example

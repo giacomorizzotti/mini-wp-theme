@@ -20,8 +20,19 @@ if ( is_singular() && isset($post->ID) ) {
 	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
 	$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
 }
-if (is_home() || is_front_page()) {
-	$header_top_style = 'top-inv';
+if (is_home()) {
+	$pageID = get_option('page_for_posts');
+	if ($pageID) {
+		$header_top_style = get_post_meta($pageID, 'header_styling_top', true);
+		$header_scroll_style = get_post_meta($pageID, 'header_styling_scroll', true);
+	}
+}
+if (is_front_page() && !is_home()) {
+	$pageID = get_option('page_on_front');
+	if ($pageID) {
+		$header_top_style = get_post_meta($pageID, 'header_styling_top', true);
+		$header_scroll_style = get_post_meta($pageID, 'header_styling_scroll', true);
+	}
 }
 
 $custom_logo = get_custom_logo();
@@ -64,12 +75,8 @@ function check_variable_from_option($options_group, $option) {
 
 	<?php wp_head(); ?>
 
-    <?php if ( check_variable_from_option('mini_colors_options','mini_semaphore_color_info') == true ): ?>
-		<?php if (get_theme_mod( 'sheet-color' )): ?>
-			<meta name="theme-color" content="<?= get_theme_mod( 'sheet-color' ) ?>" />
-		<?php else: ?>
-			<meta name="theme-color" content="<?= get_option('mini_colors_options')['mini_theme_color'] ?>" />
-		<?php endif; ?>
+    <?php if ( check_variable_from_option('mini_colors_options','mini_theme_color') == true ): ?>
+		<meta name="theme-color" content="<?= get_option('mini_colors_options')['mini_theme_color'] ?>" />
 	<?php endif; ?>
 
 	<style>
@@ -97,10 +104,11 @@ function check_variable_from_option($options_group, $option) {
 		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
 		variable_from_option('mini_font_options','mini_most_used_font','--font-main', true);
 
-		//variable_from_option('mini_size_options','mini_logo_height','--logo-height');
-		//variable_from_option('mini_size_options','mini_scroll_logo_height','--scroll-logo-height');
 		if (get_theme_mod( 'logo-height' )) { echo '--logo-height:'.get_theme_mod( 'logo-height' ).';'; }
 		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }
+
+		if (get_theme_mod( 'menu-toggle-height' )) { echo '--menu-toggle-height:'.get_theme_mod( 'menu-toggle-height' ).';'; }
+		if (get_theme_mod( 'scroll-menu-toggle-height' )) { echo '--scroll-menu-toggle-height:'.get_theme_mod( 'scroll-menu-toggle-height' ).';'; }
 		
 		variable_from_option('mini_colors_options','mini_main_color','--main-color');
 		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
@@ -129,9 +137,7 @@ function check_variable_from_option($options_group, $option) {
 		if (get_theme_mod( 'link-color' )) { echo '--link-color:'.get_theme_mod( 'link-color' ).';'; }
 		if (get_theme_mod( 'link-hover-color' )) { echo '--link-hover-color:'.get_theme_mod( 'link-hover-color' ).';'; }
 		
-		variable_from_option('mini_colors_options','mini_sheet_color','--sheet-color');
 		variable_from_option('mini_colors_options','mini_menu_toggle_color','--menu-toggle-color');
-		if (get_theme_mod( 'sheet-color' )) { echo '--sheet-color:'.get_theme_mod( 'sheet-color' ).';'; }
 		if (get_theme_mod( 'menu-toggle-color' )) { echo '--menu-toggle-color:'.get_theme_mod( 'menu-toggle-color' ).';'; }
 
 		?>
@@ -199,7 +205,7 @@ function check_variable_from_option($options_group, $option) {
     <div id="top"></div>
     <a href="#top"><div class="top-link"><p class=""><i class="iconoir-dot-arrow-up"></i></p></div></a>
 
-	<div id="sheet"><?php /* starting .sheet div */ ?>
+	<div id="sheet" class="grainy-grad-second"><?php /* starting .sheet div */ ?>
 
 		<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
 			<div class="container">
@@ -209,7 +215,7 @@ function check_variable_from_option($options_group, $option) {
 							<?php if (has_custom_logo()): ?>
 							<?= $custom_logo ?>
 							<?php else: ?>
-								<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem me-1" alt="emblem"/>
+							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini2_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem me-1" alt="emblem"/>
 							<?php endif; ?>
 						</a>
 						<?php

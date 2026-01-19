@@ -27,14 +27,13 @@
                     <?php if (do_shortcode('[get_company_tax_number]') != false || do_shortcode('[get_company_id_code]') != false ): ?><div class="space-1"></div><?php endif; ?>
                     <?php if (do_shortcode('[get_company_tax_number]') != false): ?><p class="m-0"><span class="label">P.IVA</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_tax_number]'); ?></p><?php endif; ?>
                     <?php if (do_shortcode('[get_company_id_code]') != false): ?><p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_id_code]'); ?></p><?php endif; ?>
-                    <p class="m-0"><span class="label">Codice affiliazione FISR:</span>&nbsp;&nbsp;3745, N. Reg. CONI 234821</p>
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">
 						<?php if (has_custom_logo()): ?>
 							<img src="<?= esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ) ?>" class="logo emblem" alt="emblem"/>
                         <?php else: ?>
-							<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="logo emblem" alt="emblem"/>
+							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini2_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem" alt="emblem"/>
 						<?php endif; ?>
                     </a>
                 </div>

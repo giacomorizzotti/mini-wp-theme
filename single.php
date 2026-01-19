@@ -28,14 +28,17 @@ if ( is_active_sidebar( 'sidebar-1' ) ) {
 	}
 }
 
+$title_presence = get_post_meta($post->ID, 'title_presence', true);
+
 get_header();
 ?>
 	<main id="primary" class="site-main" template="single">
 
 		<?php if ( has_post_thumbnail() ): ?>
 		<div class="container fw" <?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
-			<div class="container <?=$container_width?>">
+			<div class="container">
 				<div class="boxes hh align-content-end">
+					<?php if ($title_presence): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
 					<?php if ( 'post' === get_post_type() ) :?>
 						<p class="entry-meta S m-0 fw-box">
@@ -46,9 +49,10 @@ get_header();
 						</p><!-- .entry-meta -->
 						<div class="space"></div>
 					<?php endif; ?>
-					<?php the_title( '<h1 class="entry-title m-0 wh-box">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title m-0 wh-bg p-1 inline-block">', '</h1>' ); ?>
 						<div class="space-2"></div>
 					</header>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>
