@@ -33,7 +33,7 @@
 						<?php if (has_custom_logo()): ?>
 							<img src="<?= esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ) ?>" class="logo emblem" alt="emblem"/>
                         <?php else: ?>
-							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini2_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem" alt="emblem"/>
+							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem" alt="emblem"/>
 						<?php endif; ?>
                     </a>
                 </div>

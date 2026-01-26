@@ -651,7 +651,7 @@ function mini_login_style() { ?>
             background: linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
         }
         body.login-action-login #login h1 a, .login h1 a {
-            background-image: url('<?= get_stylesheet_directory_uri(); ?>/img/mini2_emblem.svg');
+            background-image: url('<?= get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg');
             width: 100px;
             height: 58px;
             background-size: contain;
@@ -683,6 +683,18 @@ function mini_login_style() { ?>
 <?php }
 add_action( 'login_enqueue_scripts', 'mini_login_style' );
 
+function mini_admin_styles() {
+    echo '<style>
+        #adminmenu .wp-menu-image img {
+            /* your styles here */
+            width: 20px;
+            height: 20px;
+            padding: 6px 0;
+        }
+    </style>';
+}
+add_action('admin_head', 'mini_admin_styles');
+
 /* START - mini login link */
 function mini_login_url( $url ) {
 	return get_bloginfo( 'url' );
@@ -696,8 +708,8 @@ function dashboard_logo() {
     <style type="text/css">
         #wpadminbar #wp-admin-bar-wp-logo>.ab-item {
             padding: 0 7px;
-            background-image: url('.get_stylesheet_directory_uri().'/img/mini_emblem.svg) !important;
-            background-size: 70%;
+            background-image: url('.get_stylesheet_directory_uri().'/img/mini_emblem_2.svg) !important;
+            background-size: 50%;
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -952,6 +964,42 @@ function mini_cdn_section_callback( $args ) {
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the CDN section', 'mini' ); ?></p>
     <?php
 }
+
+function mini_get_github_versions() {
+    $transient_key = 'mini_github_versions';
+    $versions = get_transient($transient_key);
+    
+    if ($versions === false) {
+        $response = wp_remote_get('https://api.github.com/repos/giacomorizzotti/mini/tags', array(
+            'timeout' => 10,
+            'headers' => array(
+                'User-Agent' => 'WordPress-Mini-Theme'
+            )
+        ));
+        
+        if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+            $body = wp_remote_retrieve_body($response);
+            $tags = json_decode($body, true);
+            
+            $versions = array();
+            if (is_array($tags)) {
+                foreach ($tags as $tag) {
+                    if (isset($tag['name'])) {
+                        $versions[] = $tag['name'];
+                    }
+                }
+            }
+            
+            // Cache for 1 hour
+            set_transient($transient_key, $versions, HOUR_IN_SECONDS);
+        } else {
+            $versions = array();
+        }
+    }
+    
+    return $versions;
+}
+
 function mini_colors_section_callback( $args ) {
     ?>
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the colors section', 'mini' ); ?></p>
@@ -1172,33 +1220,83 @@ function mini_field_callback( $args ) {
 }
 
 function mini_cdn_field_callback( $args ) {
+    $options = get_option('mini_cdn_options');
+    $cdn_enabled = isset($options['cdn']) && $options['cdn'];
+    $selected_version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
+    $versions = mini_get_github_versions();
     ?>
-    <p class="description small">
-        <?php esc_html_e( 'Use mini from CDN', 'mini' ); ?>
-    </p>
-    <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
-    <br/><br/>
-    <p class="description small">
-        <?php esc_html_e( 'Use development CDN (slower but latest)', 'mini' ); ?>
-    </p>
-    <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
-    <br/><br/>
-    <p class="description small">
-        <?php esc_html_e( 'Absolute or relative CSS path', 'mini' ); ?>
-    </p>
-    <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css'); ?>
-    <p class="description small">
-        <?php esc_html_e( 'Absolute or relative JS path', 'mini' ); ?>
-    </p>
-    <br/><br/>
-    <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url','https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Use external (CDN) files for this website', 'mini' ); ?>
-    </p>
-    <br/><br/>
-    <p class="description small">
-        <?php esc_html_e( 'If you want to avoid the CDN due to performance reasons, please ensure to get .css .js files locally!', 'mini' ); ?>
-    </p>
+    <div class="boxes">
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Use CDN', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
+            <p class="" for="mini_news">This option will let you use external CDN to load <i>mini</i> library framework files for this website.</p>
+        </div>
+        <div id="mini_cdn_version_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'GitHub Version', 'mini' ); ?></h4>
+            <select id="cdn_version" name="mini_cdn_options[cdn_version]" class="regular-text">
+                <option value="main" <?php selected($selected_version, 'main'); ?>>@main (latest)</option>
+                <?php if (!empty($versions)) : ?>
+                    <?php foreach ($versions as $version) : ?>
+                        <option value="<?php echo esc_attr($version); ?>" <?php selected($selected_version, $version); ?>><?php echo esc_html($version); ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </select>
+            <p class="" for="mini_news">Select which version/tag from GitHub to use when CDN is enabled.</p>
+        </div>
+        <div id="mini_cdn_dev_box" class="box-50 p-2 warning-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="white-text" for="mini_match"><?php esc_html_e( 'Use DEV CDN', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
+            <p class="white-text" for="mini_news">This option let you use the development version of the CDN, which is slower but contains the latest updates.</p>
+            <p class="white-text S" for="mini_news"><b>⚠️ Pay attention</b> when enabling this option in production environments, it can cause visualization problems.</p>
+        </div>
+        <div id="mini_custom_css_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Absolute (or relative) <i>mini.min.css</i> path', 'mini' ); ?></h4>
+            <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url', '/css/mini.min.css'); ?>
+            <p class="" for="mini_news">Specify a custom path to mini.min.css (default: theme's /css/mini.min.css).</p>
+        </div>
+        <div id="mini_custom_js_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Absolute (or relative) <i>mini.js</i> path', 'mini' ); ?></h4>
+            <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url', '/js/mini.js'); ?>
+            <p class="" for="mini_news">Specify a custom path to mini.js (default: theme's /js/mini.js).</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cdnCheckbox = document.getElementById('cdn');
+            const versionBox = document.getElementById('mini_cdn_version_box');
+            const devBox = document.getElementById('mini_cdn_dev_box');
+            const customCssBox = document.getElementById('mini_custom_css_box');
+            const customJsBox = document.getElementById('mini_custom_js_box');
+            
+            if (cdnCheckbox && versionBox && devBox && customCssBox && customJsBox) {
+                cdnCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Show CDN options
+                        versionBox.classList.remove('hidden');
+                        versionBox.classList.add('shown');
+                        devBox.classList.remove('hidden');
+                        devBox.classList.add('shown');
+                        // Hide custom path options
+                        customCssBox.classList.remove('shown');
+                        customCssBox.classList.add('hidden');
+                        customJsBox.classList.remove('shown');
+                        customJsBox.classList.add('hidden');
+                    } else {
+                        // Hide CDN options
+                        versionBox.classList.remove('shown');
+                        versionBox.classList.add('hidden');
+                        devBox.classList.remove('shown');
+                        devBox.classList.add('hidden');
+                        // Show custom path options
+                        customCssBox.classList.remove('hidden');
+                        customCssBox.classList.add('shown');
+                        customJsBox.classList.remove('hidden');
+                        customJsBox.classList.add('shown');
+                    }
+                });
+            }
+        });
+    </script>
     <?php
 }
 
@@ -1418,7 +1516,7 @@ function mini_options_page() {
             'manage_options',
             'mini',
             'mini_theme_main_page_html',
-            'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_space_around.svg'
+            'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_wh.svg'
         );
     }
     add_submenu_page(
@@ -1811,15 +1909,23 @@ add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/css/mini.min.css';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
             $mini_CSS = 'https://serversaur.doingthings.space/mini/css/mini.min.css';
+        } else {
+            $version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
+            $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/css/mini.min.css';
         }
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
             $mini_CSS = $options['css_cdn_url'];
         } else {
-            $mini_CSS = get_stylesheet_directory_uri().'/mini.min.css';
+            // Check if mini.min.css exists in child theme, otherwise use parent theme
+            $child_css = get_stylesheet_directory() . '/css/mini.min.css';
+            if (is_child_theme() && !file_exists($child_css)) {
+                $mini_CSS = get_template_directory_uri() . '/css/mini.min.css';
+            } else {
+                $mini_CSS = get_stylesheet_directory_uri() . '/css/mini.min.css';
+            }
         }
     }
     wp_enqueue_style( 'mini_header_css', $mini_CSS, array(), _S_VERSION);
@@ -1830,15 +1936,23 @@ add_action( 'wp_enqueue_scripts', 'mini_js' );
 function mini_js(){
     $options = get_option( 'mini_cdn_options' );
     if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/mini.js';
         if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
             $mini_JS = 'https://serversaur.doingthings.space/mini/js/mini.js';
+        } else {
+            $version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
+            $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/js/mini.js';
         }
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
             $mini_JS = $options['js_cdn_url'];
         } else {
-            $mini_JS = get_theme_root_uri().'/mini/js/mini.js';
+            // Check if mini.js exists in child theme, otherwise use parent theme
+            $child_js = get_stylesheet_directory() . '/js/mini.js';
+            if (is_child_theme() && !file_exists($child_js)) {
+                $mini_JS = get_template_directory_uri() . '/js/mini.js';
+            } else {
+                $mini_JS = get_stylesheet_directory_uri() . '/js/mini.js';
+            }
         }
     }
     wp_enqueue_script( 'mini_footer_js', $mini_JS, array(), _S_VERSION, true);
@@ -1851,9 +1965,11 @@ function mini_slider(){
     $cdn_options = get_option( 'mini_cdn_options' );
     if ( is_array($options) && array_key_exists('mini_slider', $options) && $options['mini_slider'] != null ) {
         if (is_array($cdn_options) && array_key_exists('cdn', $cdn_options) && $cdn_options['cdn'] != null) {
-            $mini_slider_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/js/slider.js';
             if (is_array($cdn_options) && array_key_exists('cdn_dev', $cdn_options) && $cdn_options['cdn_dev'] != null) {
                 $mini_slider_JS = 'https://serversaur.doingthings.space/mini/js/slider.js';
+            } else {
+                $version = isset($cdn_options['cdn_version']) ? $cdn_options['cdn_version'] : 'main';
+                $mini_slider_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/js/slider.js';
             }
         } else {
             if (is_array($cdn_options) && array_key_exists('mini_slider_js_url', $cdn_options) && $cdn_options['mini_slider_js_url'] != null) {

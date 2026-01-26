@@ -215,7 +215,7 @@ function check_variable_from_option($options_group, $option) {
 							<?php if (has_custom_logo()): ?>
 							<?= $custom_logo ?>
 							<?php else: ?>
-							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini2_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem me-1" alt="emblem"/>
+							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem me-1" alt="emblem"/>
 							<?php endif; ?>
 						</a>
 						<?php
