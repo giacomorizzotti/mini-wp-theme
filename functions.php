@@ -155,6 +155,15 @@ function mini_scripts() {
 add_action( 'wp_enqueue_scripts', 'mini_scripts' );
 
 /**
+ * Enqueue styles for admin area.
+ */
+function mini_admin_styles() {
+    wp_enqueue_style( 'mini-admin-style', get_stylesheet_uri(), array(), _S_VERSION );
+}
+add_action( 'admin_enqueue_scripts', 'mini_admin_styles' );
+add_action( 'login_enqueue_scripts', 'mini_admin_styles' );
+
+/**
  * Remove wrapper div from button blocks and add 'btn' class
  */
 function mini_render_block_button( $block_content, $block ) {
@@ -640,63 +649,6 @@ function change_logo_class( $html ) {
     return $html;
 }
 
-// START - MINI LOGIN
-// mini login style
-function mini_login_style() { ?>
-    <style type="text/css">
-        body.login-action-login {
-            background: -webkit-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
-            background: -moz-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
-            background: -o-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
-            background: linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
-        }
-        body.login-action-login #login h1 a, .login h1 a {
-            background-image: url('<?= get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg');
-            width: 100px;
-            height: 58px;
-            background-size: contain;
-            background-repeat: no-repeat;
-            margin-bottom: 3rem;
-            filter: brightness(0) invert(1);
-        }
-        body.login-action-login #loginform {
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            border:0;
-            box-shadow: 0 0 10px 0 rgb( 0 0 0 / 45%);
-        }
-        body.login-action-login #nav a.wp-login-lost-password, body.login-action-login #backtoblog a, .privacy-policy-page-link a.privacy-policy-link {
-            color: white;
-        }
-        body.login-action-login #nav a.wp-login-lost-password:hover, body.login-action-login #backtoblog a:hover, .privacy-policy-page-link a.privacy-policy-link:hover {
-            color: #CCCCCC;
-        }
-        body.login-action-login .language-switcher #language-switcher label span.dashicons {
-            color: white;
-        }
-        body.login-action-login .button.button-primary {
-            background-color: #1b9958;
-            border-color: #1b9958;
-        }
-    </style>
-<?php }
-add_action( 'login_enqueue_scripts', 'mini_login_style' );
-
-function mini_admin_styles() {
-    echo '<style>
-        #adminmenu .wp-menu-image img {
-            /* your styles here */
-            width: 20px;
-            height: 20px;
-            padding: 0;
-        }
-        .nav-tab-wrapper, .wrap h2.nav-tab-wrapper, h1.nav-tab-wrapper {
-            margin: calc(var(--margin)*2) 0;
-        }
-    </style>';
-}
-add_action('admin_head', 'mini_admin_styles');
 
 /* START - mini login link */
 function mini_login_url( $url ) {

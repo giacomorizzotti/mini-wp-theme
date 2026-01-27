@@ -1,6 +1,6 @@
 /*!
 Theme Name: mini
-Theme URI: http://underscores.me/
+Theme URI: https://mini.uwa.agency/
 Author: Giacomo Rizzotti
 Author URI: https://www.giacomorizzotti.com
 Description: a minimal theme based on mini framework.
@@ -21,68 +21,91 @@ Underscores is distributed under the terms of the GNU GPL v2 or later.
 Normalizing styles have been helped along thanks to the fine work of
 Nicolas Gallagher and Jonathan Neal https://necolas.github.io/normalize.css/
 */
-/*--------------------------------------------------------------
->>> TABLE OF CONTENTS:
-----------------------------------------------------------------
-# Generic
-	- Normalize
-	- Box sizing
-# Base
-	- Typography
-	- Elements
-	- Links
-	- Forms
-## Layouts
-# Components
-	- Navigation
-	- Posts and pages
-	- Comments
-	- Widgets
-	- Media
-	- Captions
-	- Galleries
-# plugins
-	- Jetpack infinite scroll
-# Utilities
-	- Accessibility
-	- Alignments
+body.admin-bar header#header {
+  top: 32px;
+}
+body.admin-bar header#header.open-menu {
+  top: 0;
+}
 
---------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# Generic
---------------------------------------------------------------*/
-/* Normalize
---------------------------------------------- */
-/*@import "generic/normalize";*/
-/* Box sizing
---------------------------------------------- */
-/*@import "generic/box-sizing";*/
-/*--------------------------------------------------------------
-# Base
---------------------------------------------------------------*/
-/*@import "base/base";*/
-/*--------------------------------------------------------------
-# Layouts
---------------------------------------------------------------*/
-/*--------------------------------------------------------------
-# Components
---------------------------------------------------------------*/
-/*@import "components/components";*/
-/*--------------------------------------------------------------
-# Plugins
---------------------------------------------------------------*/
-/* Jetpack infinite scroll
---------------------------------------------- */
-/*@import "plugins/jetpack/infinite-scroll";*/
-/*--------------------------------------------------------------
-# Utilities
---------------------------------------------------------------*/
-/* Accessibility
---------------------------------------------- */
-/*@import "utilities/accessibility";*/
-/* Alignments
---------------------------------------------- */
-/*@import "utilities/alignments";*/
+body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
+  display: inline-block;
+}
+body.wp-admin p.search-box {
+  flex-wrap: nowrap;
+  margin-bottom: var(--margin) !important;
+}
+body.wp-admin .tablenav {
+  height: auto;
+}
+body.wp-admin .bulkactions, body.wp-admin .actions {
+  display: flex;
+}
+body.wp-admin .desc {
+  font-style: inherit;
+  margin-top: 4px;
+  margin-left: 7px;
+  line-height: inherit;
+  font-size: var(--p) !important;
+}
+body.wp-admin .postbox-header .handle-actions {
+  display: flex;
+}
+body.wp-admin ul {
+  margin: 0;
+}
+body.wp-admin.update-core-php h2 {
+  margin-top: calc(var(--margin) * 2);
+}
+body.wp-admin .wp-core-ui .button-link {
+  font-size: var(--p);
+}
+body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox], body.wp-admin :not(#iubenda-iframe) input[type=checkbox] {
+  margin: calc(var(--margin) * 0.5);
+  width: 16px !important;
+  height: 16px !important;
+}
+body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]::before, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]::before {
+  width: 20px;
+  height: 20px;
+}
+body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]:checked::after {
+  width: 10px;
+  height: 10px;
+}
+body.wp-admin .attachments-browser .media-toolbar-secondary {
+  max-width: 66%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+body.wp-admin .view-switch.media-grid-view-switch {
+  display: flex;
+}
+body.wp-admin .button-link {
+  margin: 0;
+  padding: 0 calc(var(--padding) * 0.5);
+  box-shadow: none;
+  border: 0;
+  border-radius: 5px;
+  background: var(--link-color);
+  cursor: pointer;
+  text-align: left;
+  color: var(--white);
+  text-decoration: none;
+  transition-property: border, background, color;
+  transition-duration: 0.05s;
+  transition-timing-function: ease-in-out;
+  vertical-align: middle;
+  font-size: calc(var(--p) * 0.85);
+}
+body.wp-admin .button-link:hover, body.wp-admin .button-link:focus {
+  background: var(--link-hover-color);
+  color: var(--white);
+  text-decoration: none;
+}
+
 footer .edit-link {
   display: block;
   background: var(--warning);
@@ -128,6 +151,63 @@ footer .edit-link a {
 
 .njt-gdpr .njt-gdpr-content {
   line-height: 1.5;
+}
+
+#adminmenu .wp-menu-image img {
+  /* your styles here */
+  width: 20px;
+  height: 20px;
+  padding: 0;
+}
+
+.nav-tab-wrapper, .wrap h2.nav-tab-wrapper, h1.nav-tab-wrapper {
+  margin: calc(var(--margin) * 2) 0;
+}
+
+.theme-browser .theme .theme-name {
+  height: auto;
+}
+
+body.login-action-login {
+  background: -webkit-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+  background: -moz-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+  background: -o-linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+  background: linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
+}
+
+body.login-action-login #login h1 a, .login h1 a {
+  background-image: url("<?= get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg");
+  width: 100px;
+  height: 58px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 3rem;
+  filter: brightness(0) invert(1);
+}
+
+body.login-action-login #loginform {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.45);
+}
+
+body.login-action-login #nav a.wp-login-lost-password, body.login-action-login #backtoblog a, .privacy-policy-page-link a.privacy-policy-link {
+  color: white;
+}
+
+body.login-action-login #nav a.wp-login-lost-password:hover, body.login-action-login #backtoblog a:hover, .privacy-policy-page-link a.privacy-policy-link:hover {
+  color: #CCCCCC;
+}
+
+body.login-action-login .language-switcher #language-switcher label span.dashicons {
+  color: white;
+}
+
+body.login-action-login .button.button-primary {
+  background-color: #1b9958;
+  border-color: #1b9958;
 }
 
 /*# sourceMappingURL=style.css.map */
