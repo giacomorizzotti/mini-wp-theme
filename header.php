@@ -158,17 +158,6 @@ function check_variable_from_option($options_group, $option) {
 <?php
 	if ( 
 		is_array(get_option( 'mini_ext_lib_options' )) && 
-		array_key_exists('mini_fontawesome', get_option( 'mini_ext_lib_options' ) ) && 
-		get_option( 'mini_ext_lib_options' )['mini_fontawesome'] != null 
-	) {
-?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" />
-<?php
-	}
-?>
-<?php
-	if ( 
-		is_array(get_option( 'mini_ext_lib_options' )) && 
 		array_key_exists('mini_aos', get_option( 'mini_ext_lib_options' ) ) && 
 		get_option( 'mini_ext_lib_options' )['mini_aos'] != null 
 	) {
@@ -205,7 +194,7 @@ function check_variable_from_option($options_group, $option) {
     <div id="top"></div>
     <a href="#top"><div class="top-link"><p class=""><i class="iconoir-dot-arrow-up"></i></p></div></a>
 
-	<div id="sheet" class="grainy-grad-second"><?php /* starting .sheet div */ ?>
+	<div id="sheet" class="grad-second"><?php /* starting .sheet div */ ?>
 
 		<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
 			<div class="container">
