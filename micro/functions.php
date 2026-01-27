@@ -55,6 +55,38 @@ function mini_child_enqueue_styles() {
 add_action('wp_enqueue_scripts', 'mini_child_enqueue_styles', 20);
 
 /**
+ * Enqueue parent and child theme styles for admin area
+ */
+function mini_child_admin_enqueue_styles() {
+    // Enqueue parent theme stylesheet
+    wp_enqueue_style(
+        'mini-parent-admin-style',
+        get_template_directory_uri() . '/style.css',
+        array(),
+        wp_get_theme()->parent()->get('Version')
+    );
+    
+    // Enqueue child theme stylesheet
+    wp_enqueue_style(
+        'mini-child-admin-style',
+        get_stylesheet_uri(),
+        array('mini-parent-admin-style'),
+        wp_get_theme()->get('Version')
+    );
+    
+    // Enqueue custom child theme CSS if exists
+    if (file_exists(get_stylesheet_directory() . '/assets/css/custom.css')) {
+        wp_enqueue_style(
+            'mini-child-custom-admin-style',
+            get_stylesheet_directory_uri() . '/assets/css/custom.css',
+            array('mini-child-admin-style'),
+            filemtime(get_stylesheet_directory() . '/assets/css/custom.css')
+        );
+    }
+}
+add_action('admin_enqueue_scripts', 'mini_child_admin_enqueue_styles', 20);
+
+/**
  * ========================================================================
  * CUSTOM FUNCTIONALITY
  * Add your custom functions below
