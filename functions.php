@@ -689,7 +689,10 @@ function mini_admin_styles() {
             /* your styles here */
             width: 20px;
             height: 20px;
-            padding: 6px 0;
+            padding: 0;
+        }
+        .nav-tab-wrapper, .wrap h2.nav-tab-wrapper, h1.nav-tab-wrapper {
+            margin: calc(var(--margin)*2) 0;
         }
     </style>';
 }
@@ -744,23 +747,9 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_section',
-        __( 'Mini general settings', 'mini' ),
+        __( '<i>mini</i> general settings', 'mini' ),
         'mini_section_callback',
         'mini'
-    );
-
-    add_settings_field(
-        'mini_field', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'General options', 'mini' ),
-        'mini_field_callback',
-        'mini',
-        'mini_section',
-        array(
-            'label_for'         => 'mini',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
     );
 
     // Register a new setting for "mini" page.
@@ -772,20 +761,6 @@ function mini_settings_init() {
         __( 'Mini CDN settings', 'mini' ),
         'mini_cdn_section_callback',
         'mini-cdn'
-    );
-
-    add_settings_field(
-        'mini_cdn_field', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'CDN', 'mini' ),
-        'mini_cdn_field_callback',
-        'mini-cdn',
-        'mini_cdn_section',
-        array(
-            'label_for'         => 'mini_cdn',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
     );
 
     /*
@@ -843,23 +818,9 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_ext_lib_section',
-        __( 'Mini external libraries settings', 'mini' ),
+        __( '<i>mini</i> external libraries settings', 'mini' ),
         'mini_ext_lib_section_callback',
         'mini-ext-lib'
-    );
-
-    add_settings_field(
-        'mini_ext_lib', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'External libraries', 'mini' ),
-        'mini_ext_lib_field_callback',
-        'mini-ext-lib',
-        'mini_ext_lib_section',
-        array(
-            'label_for'         => 'mini_ext_lib',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
     );
 
     // Register a new setting for "mini" page.
@@ -956,12 +917,103 @@ add_action( 'admin_init', 'mini_settings_init' );
  */
 function mini_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the General options section', 'mini' ); ?></p>
+    <div class="boxes">
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Footer credit strip', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_options','mini_credits'); ?>
+            <p class="" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
+        </div>
+    </div>
     <?php
 }
 function mini_cdn_section_callback( $args ) {
+    $options = get_option('mini_cdn_options');
+    $cdn_enabled = isset($options['cdn']) && $options['cdn'];
+    $selected_version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
+    $versions = mini_get_github_versions();
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the CDN section', 'mini' ); ?></p>
+    <div class="boxes">
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Use CDN', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
+            <p class="" for="mini_news">This option will let you use external CDN to load <i>mini</i> library framework files for this website.</p>
+        </div>
+        <div id="mini_cdn_version_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'GitHub Version', 'mini' ); ?></h4>
+            <select id="cdn_version" name="mini_cdn_options[cdn_version]" class="regular-text">
+                <option value="main" <?php selected($selected_version, 'main'); ?>>@main (latest)</option>
+                <?php if (!empty($versions)) : ?>
+                    <?php foreach ($versions as $version) : ?>
+                        <option value="<?php echo esc_attr($version); ?>" <?php selected($selected_version, $version); ?>><?php echo esc_html($version); ?></option>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </select>
+            <p class="" for="mini_news">Select which version/tag from GitHub to use when CDN is enabled.</p>
+        </div>
+        <div id="mini_cdn_dev_box" class="box-50 p-2 warning-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="white-text" for="mini_match"><?php esc_html_e( 'Use DEV CDN', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
+            <p class="white-text" for="mini_news">This option let you use the development version of the CDN, which is slower but contains the latest updates.</p>
+            <p class="white-text S" for="mini_news"><b>⚠️ Pay attention</b> when enabling this option in production environments, it can cause visualization problems.</p>
+        </div>
+        <div id="mini_custom_css_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>mini.min.css</i> path', 'mini' ); ?></h4>
+            <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url', '/css/mini.min.css'); ?>
+            <p class="" for="mini_news">Specify a custom path to mini.min.css (default: theme's /css/mini.min.css).</p>
+        </div>
+        <div id="mini_custom_js_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>mini.js</i> path', 'mini' ); ?></h4>
+            <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url', '/js/mini.js'); ?>
+            <p class="" for="mini_news">Specify a custom path to mini.js (default: theme's /js/mini.js).</p>
+        </div>
+        <div id="mini_custom_slider_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
+            <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>slider.js</i> path', 'mini' ); ?></h4>
+            <?= mini_theme_text_field_option('mini_cdn_options','slider_cdn_url', '/js/slider.js'); ?>
+            <p class="" for="mini_news">Specify a custom path to slider.js (default: theme's /js/slider.js).</p>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cdnCheckbox = document.getElementById('cdn');
+            const versionBox = document.getElementById('mini_cdn_version_box');
+            const devBox = document.getElementById('mini_cdn_dev_box');
+            const customCssBox = document.getElementById('mini_custom_css_box');
+            const customJsBox = document.getElementById('mini_custom_js_box');
+            const customSliderBox = document.getElementById('mini_custom_slider_box');
+            
+            if (cdnCheckbox && versionBox && devBox && customCssBox && customJsBox && customSliderBox) {
+                cdnCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Show CDN options
+                        versionBox.classList.remove('hidden');
+                        versionBox.classList.add('shown');
+                        devBox.classList.remove('hidden');
+                        devBox.classList.add('shown');
+                        // Hide custom path options
+                        customCssBox.classList.remove('shown');
+                        customCssBox.classList.add('hidden');
+                        customJsBox.classList.remove('shown');
+                        customJsBox.classList.add('hidden');
+                        customSliderBox.classList.remove('shown');
+                        customSliderBox.classList.add('hidden');
+                    } else {
+                        // Hide CDN options
+                        versionBox.classList.remove('shown');
+                        versionBox.classList.add('hidden');
+                        devBox.classList.remove('shown');
+                        devBox.classList.add('hidden');
+                        // Show custom path options
+                        customCssBox.classList.remove('hidden');
+                        customCssBox.classList.add('shown');
+                        customJsBox.classList.remove('hidden');
+                        customJsBox.classList.add('shown');
+                        customSliderBox.classList.remove('hidden');
+                        customSliderBox.classList.add('shown');
+                    }
+                });
+            }
+        });
+    </script>
     <?php
 }
 
@@ -1019,7 +1071,18 @@ function mini_font_section_callback( $args ) {
 }
 function mini_ext_lib_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the external libraries section', 'mini' ); ?></p>
+    <div class="boxes">
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'AOS', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_aos'); ?>
+            <p class="" for="mini_news">This option enables the AOS (Animate On Scroll) library for animations on scroll events.</p>
+        </div>
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_match"><?php esc_html_e( 'Iconoir', 'mini' ); ?></h4>
+            <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
+            <p class="" for="mini_news">This option enables the Iconoir library for icons.</p>
+        </div>
+    </div>
     <?php
 }
 function mini_analytics_section_callback( $args ) {
@@ -1205,100 +1268,6 @@ function mini_theme_option_list_option(
  * @param array $args
  */
 
-function mini_field_callback( $args ) {
-    ?>
-    <?= mini_theme_checkbox_option('mini_options','mini_credits'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Footer credits strip', 'mini' ); ?>
-    </p>
-    <br/><br/>
-    <?= mini_theme_checkbox_option('mini_options','mini_slider'); ?>
-    <p class="description">
-        <?php esc_html_e( 'Use mini slider', 'mini' ); ?>
-    </p>
-    <?php
-}
-
-function mini_cdn_field_callback( $args ) {
-    $options = get_option('mini_cdn_options');
-    $cdn_enabled = isset($options['cdn']) && $options['cdn'];
-    $selected_version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
-    $versions = mini_get_github_versions();
-    ?>
-    <div class="boxes">
-        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'Use CDN', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
-            <p class="" for="mini_news">This option will let you use external CDN to load <i>mini</i> library framework files for this website.</p>
-        </div>
-        <div id="mini_cdn_version_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'GitHub Version', 'mini' ); ?></h4>
-            <select id="cdn_version" name="mini_cdn_options[cdn_version]" class="regular-text">
-                <option value="main" <?php selected($selected_version, 'main'); ?>>@main (latest)</option>
-                <?php if (!empty($versions)) : ?>
-                    <?php foreach ($versions as $version) : ?>
-                        <option value="<?php echo esc_attr($version); ?>" <?php selected($selected_version, $version); ?>><?php echo esc_html($version); ?></option>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </select>
-            <p class="" for="mini_news">Select which version/tag from GitHub to use when CDN is enabled.</p>
-        </div>
-        <div id="mini_cdn_dev_box" class="box-50 p-2 warning-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
-            <h4 class="white-text" for="mini_match"><?php esc_html_e( 'Use DEV CDN', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
-            <p class="white-text" for="mini_news">This option let you use the development version of the CDN, which is slower but contains the latest updates.</p>
-            <p class="white-text S" for="mini_news"><b>⚠️ Pay attention</b> when enabling this option in production environments, it can cause visualization problems.</p>
-        </div>
-        <div id="mini_custom_css_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'Absolute (or relative) <i>mini.min.css</i> path', 'mini' ); ?></h4>
-            <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url', '/css/mini.min.css'); ?>
-            <p class="" for="mini_news">Specify a custom path to mini.min.css (default: theme's /css/mini.min.css).</p>
-        </div>
-        <div id="mini_custom_js_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'Absolute (or relative) <i>mini.js</i> path', 'mini' ); ?></h4>
-            <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url', '/js/mini.js'); ?>
-            <p class="" for="mini_news">Specify a custom path to mini.js (default: theme's /js/mini.js).</p>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cdnCheckbox = document.getElementById('cdn');
-            const versionBox = document.getElementById('mini_cdn_version_box');
-            const devBox = document.getElementById('mini_cdn_dev_box');
-            const customCssBox = document.getElementById('mini_custom_css_box');
-            const customJsBox = document.getElementById('mini_custom_js_box');
-            
-            if (cdnCheckbox && versionBox && devBox && customCssBox && customJsBox) {
-                cdnCheckbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        // Show CDN options
-                        versionBox.classList.remove('hidden');
-                        versionBox.classList.add('shown');
-                        devBox.classList.remove('hidden');
-                        devBox.classList.add('shown');
-                        // Hide custom path options
-                        customCssBox.classList.remove('shown');
-                        customCssBox.classList.add('hidden');
-                        customJsBox.classList.remove('shown');
-                        customJsBox.classList.add('hidden');
-                    } else {
-                        // Hide CDN options
-                        versionBox.classList.remove('shown');
-                        versionBox.classList.add('hidden');
-                        devBox.classList.remove('shown');
-                        devBox.classList.add('hidden');
-                        // Show custom path options
-                        customCssBox.classList.remove('hidden');
-                        customCssBox.classList.add('shown');
-                        customJsBox.classList.remove('hidden');
-                        customJsBox.classList.add('shown');
-                    }
-                });
-            }
-        });
-    </script>
-    <?php
-}
 
 function mini_fonts_field_callback( $args ) {
     ?>
@@ -1365,24 +1334,6 @@ function mini_fonts_field_callback( $args ) {
     <p class="description">
         <?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
     </p>
-    <?php
-}
-
-
-function mini_ext_lib_field_callback( $args ) {
-    ?>
-    <h4 class="">AOS</h4>
-    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_aos'); ?>
-    <br/><br/>
-    <hr>
-    <h4 class="">Iconoir</h4>
-    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
-    <br/><br/>
-    <hr>
-    <h4 class="">Fontawesome</h4>
-    <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_fontawesome'); ?>
-    <br/><br/>
-    <hr>
     <?php
 }
 
@@ -1586,9 +1537,11 @@ function mini_theme_main_page_html() {
         return;
     }
     ?>
-    <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <p class=""><span class="bold">mini</span> is a frontend framework.</p>
+    <div class="boxes">
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow mb-2">
+            <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+            <img src="https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_logo_full_wh.svg" alt="mini logo" style="max-width: 300px;">
+        </div>
     </div>
     <?php
 }
@@ -1744,7 +1697,6 @@ function mini_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <p class=""><span class="bold">mini</span> is a frontend framework.</p>
         <br/>
         <form action="options.php" method="post">
             <?php
@@ -1961,9 +1913,9 @@ function mini_js(){
 // Adding .js from CDN or from ext source or from local theme folder
 add_action( 'wp_enqueue_scripts', 'mini_slider' );
 function mini_slider(){
-    $options = get_option( 'mini_options' );
     $cdn_options = get_option( 'mini_cdn_options' );
-    if ( is_array($options) && array_key_exists('mini_slider', $options) && $options['mini_slider'] != null ) {
+    // Load slider only if 'slide' post type is registered (enabled in mini plugin)
+    if ( post_type_exists( 'slide' ) ) {
         if (is_array($cdn_options) && array_key_exists('cdn', $cdn_options) && $cdn_options['cdn'] != null) {
             if (is_array($cdn_options) && array_key_exists('cdn_dev', $cdn_options) && $cdn_options['cdn_dev'] != null) {
                 $mini_slider_JS = 'https://serversaur.doingthings.space/mini/js/slider.js';
@@ -1972,10 +1924,15 @@ function mini_slider(){
                 $mini_slider_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/js/slider.js';
             }
         } else {
-            if (is_array($cdn_options) && array_key_exists('mini_slider_js_url', $cdn_options) && $cdn_options['mini_slider_js_url'] != null) {
-                $mini_slider_JS = $cdn_options['mini_slider_js_url'];
+            if (is_array($cdn_options) && array_key_exists('slider_cdn_url', $cdn_options) && $cdn_options['slider_cdn_url'] != null) {
+                $mini_slider_JS = $cdn_options['slider_cdn_url'];
             } else {
-                $mini_slider_JS = get_theme_root_uri().'/mini/js/slider.js';
+                // Use parent theme path if child theme is active, otherwise use current theme
+                if (is_child_theme()) {
+                    $mini_slider_JS = get_template_directory_uri() . '/js/slider.js';
+                } else {
+                    $mini_slider_JS = get_stylesheet_directory_uri() . '/js/slider.js';
+                }
             }
         }
         wp_enqueue_script( 'mini_slider_footer_js', $mini_slider_JS, array(), _S_VERSION, true);
