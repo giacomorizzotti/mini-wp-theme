@@ -51,20 +51,40 @@
 				);
 				?>
                     </nav>
-                    <div class="sep-1 my-3 light-grey-bg"></div>
+                    <?php 
+                    $social_networks = get_enabled_social_networks();
+                    if (!empty($social_networks)): 
+                    ?>
+                    <div class="sep-1 my-2 light-grey-bg"></div>
                     <nav class="menu social-menu">
                         <ul class="menu flex-direction-row">
+                            <?php foreach ($social_networks as $key => $social): ?>
                             <li class="p-1">
-                                <a href="" class=""><i class="iconoir-instagram XXL"></i></a>
+                                <a href="<?= esc_url($social['url']) ?>" target="_blank" rel="noopener noreferrer" title="<?= esc_attr($social['name']) ?>">
+                                    <i class="<?= esc_attr($social['icon']) ?> XXL"></i>
+                                </a>
                             </li>
-                            <li class="p-1">
-                                <a href="" class=""><i class="iconoir-youtube XXL"></i></a>
-                            </li>
-                            <li class="p-1">
-                                <a href="" class=""><i class="iconoir-facebook XXL"></i></a>
-                            </li>
+                            <?php endforeach; ?>
                         </ul>
                     </nav>
+                    <?php endif; ?>
+                    <?php 
+                    $get_in_touch = get_enabled_messaging_apps();
+                    if (!empty($get_in_touch)): 
+                    ?>
+                    <div class="sep-1 my-2 light-grey-bg"></div>
+                    <nav class="menu social-menu">
+                        <ul class="menu flex-direction-row">
+                            <?php foreach ($get_in_touch as $key => $messaging_app): ?>
+                            <li class="p-1">
+                                <a href="<?= esc_url($messaging_app['url']) ?>" target="_blank" rel="noopener noreferrer" title="<?= esc_attr($messaging_app['name']) ?>">
+                                    <i class="<?= esc_attr($messaging_app['icon']) ?> XXL"></i>
+                                </a>
+                            </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </nav>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

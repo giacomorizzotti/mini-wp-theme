@@ -710,7 +710,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_cdn_section',
-        __( 'Mini CDN settings', 'mini' ),
+        __( '<i>mini</i> CDN settings', 'mini' ),
         'mini_cdn_section_callback',
         'mini-cdn'
     );
@@ -745,23 +745,9 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_font_section',
-        __( 'Mini font settings', 'mini' ),
+        __( '<i>mini</i> font settings', 'mini' ),
         'mini_font_section_callback',
         'mini-font'
-    );
-
-    add_settings_field(
-        'mini_fonts', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Fonts', 'mini' ),
-        'mini_fonts_field_callback',
-        'mini-font',
-        'mini_font_section',
-        array(
-            'label_for'         => 'mini_fonts',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
     );
 
     // Register a new setting for "mini" page.
@@ -786,20 +772,6 @@ function mini_settings_init() {
         'mini-analytics'
     );
 
-    add_settings_field(
-        'mini_analytics', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Analytics', 'mini' ),
-        'mini_analytics_field_callback',
-        'mini-analytics',
-        'mini_analytics_section',
-        array(
-            'label_for'         => 'mini_analytics',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-
     // Register a new setting for "mini" page.
     register_setting( 'mini_company', 'mini_company_options');
 
@@ -809,20 +781,6 @@ function mini_settings_init() {
         __( 'Mini company settings', 'mini' ),
         'mini_company_section_callback',
         'mini-company'
-    );
-
-    add_settings_field(
-        'mini_company', // As of WP 4.6 this value is used only internally.
-        // Use $args' label_for to populate the id inside the callback.
-        __( 'Company / Ownership', 'mini' ),
-        'mini_company_field_callback',
-        'mini-company',
-        'mini_company_section',
-        array(
-            'label_for'         => 'mini_company',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
     );
 
 }
@@ -1017,8 +975,107 @@ function mini_size_section_callback( $args ) {
 }
 */
 function mini_font_section_callback( $args ) {
+    $fonts = mini_get_google_fonts();
+    $options = get_option('mini_font_options');
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the font section', 'mini' ); ?></p>
+    <div class="boxes">
+        <!-- Font Usage Selection -->
+        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Font for titles', 'mini' ); ?></h4>
+            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
+        </div>
+        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Most used font', 'mini' ); ?></h4>
+            <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
+        </div>
+
+        <!-- Sans Serif Font -->
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Sans Serif font', 'mini' ); ?></h4>
+            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <select name="mini_font_options[mini_sans_font]" style="width: 100%; margin-top: 8px;">
+                <option value="">Default (Barlow)</option>
+                <?php foreach ($fonts['sans'] as $name => $data): 
+                    $selected = (isset($options['mini_sans_font']) && $options['mini_sans_font'] === $name) ? 'selected' : '';
+                ?>
+                <option value="<?= esc_attr($name) ?>" <?= $selected ?>><?= esc_html($name) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Used for paragraphs and most of the website\'s content.', 'mini' ); ?> <b><?php esc_html_e( 'Always enabled.', 'mini' ); ?></b></p>
+        </div>
+
+        <!-- Secondary Font -->
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Secondary font', 'mini' ); ?></h4>
+            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <select name="mini_font_options[mini_secondary_font]" style="width: 100%; margin-top: 8px;">
+                <option value="">Default (Oswald)</option>
+                <?php foreach ($fonts['secondary'] as $name => $data): 
+                    $selected = (isset($options['mini_secondary_font']) && $options['mini_secondary_font'] === $name) ? 'selected' : '';
+                ?>
+                <option value="<?= esc_attr($name) ?>" <?= $selected ?>><?= esc_html($name) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two".', 'mini' ); ?> <b><?php esc_html_e( 'Always enabled.', 'mini' ); ?></b></p>
+        </div>
+
+        <!-- Serif Font -->
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Serif font', 'mini' ); ?></h4>
+            <label style="display: block; margin-bottom: 8px;">
+                <?= mini_theme_checkbox_option('mini_font_options','mini_serif_font_status'); ?>
+                <?php esc_html_e( 'Enable serif font', 'mini' ); ?>
+            </label>
+            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <select name="mini_font_options[mini_serif_font]" style="width: 100%; margin-top: 8px;">
+                <option value="">Default (Playfair Display)</option>
+                <?php foreach ($fonts['serif'] as $name => $data): 
+                    $selected = (isset($options['mini_serif_font']) && $options['mini_serif_font'] === $name) ? 'selected' : '';
+                ?>
+                <option value="<?= esc_attr($name) ?>" <?= $selected ?>><?= esc_html($name) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Serif font, used in CSS class ".serif"', 'mini' ); ?></p>
+        </div>
+
+        <!-- Mono Font -->
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Mono font', 'mini' ); ?></h4>
+            <label style="display: block; margin-bottom: 8px;">
+                <?= mini_theme_checkbox_option('mini_font_options','mini_mono_font_status'); ?>
+                <?php esc_html_e( 'Enable mono font', 'mini' ); ?>
+            </label>
+            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <select name="mini_font_options[mini_mono_font]" style="width: 100%; margin-top: 8px;">
+                <option value="">Default (Roboto Mono)</option>
+                <?php foreach ($fonts['mono'] as $name => $data): 
+                    $selected = (isset($options['mini_mono_font']) && $options['mini_mono_font'] === $name) ? 'selected' : '';
+                ?>
+                <option value="<?= esc_attr($name) ?>" <?= $selected ?>><?= esc_html($name) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Monospace font, used in CSS class ".mono"', 'mini' ); ?></p>
+        </div>
+
+        <!-- Handwriting Font -->
+        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Handwriting font', 'mini' ); ?></h4>
+            <label style="display: block; margin-bottom: 8px;">
+                <?= mini_theme_checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
+                <?php esc_html_e( 'Enable handwriting font', 'mini' ); ?>
+            </label>
+            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <select name="mini_font_options[mini_handwriting_font]" style="width: 100%; margin-top: 8px;">
+                <option value="">Default (Edu VIC WA NT Beginner)</option>
+                <?php foreach ($fonts['handwriting'] as $name => $data): 
+                    $selected = (isset($options['mini_handwriting_font']) && $options['mini_handwriting_font'] === $name) ? 'selected' : '';
+                ?>
+                <option value="<?= esc_attr($name) ?>" <?= $selected ?>><?= esc_html($name) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <p class="description"><?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?></p>
+        </div>
+    </div>
     <?php
 }
 function mini_ext_lib_section_callback( $args ) {
@@ -1039,12 +1096,193 @@ function mini_ext_lib_section_callback( $args ) {
 }
 function mini_analytics_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the analytics section', 'mini' ); ?></p>
+    <div class="boxes">
+        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
+            <h4><?php esc_html_e( 'Google Analytics', 'mini' ); ?></h4>
+            <label style="display: block; margin-bottom: 8px;">
+                <?= mini_theme_checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
+                <?php esc_html_e( 'Enable Google Analytics', 'mini' ); ?>
+            </label>
+            <label><?php esc_html_e( 'Google Analytics Code', 'mini' ); ?></label>
+            <?= mini_theme_text_field_option('mini_analytics_options','mini_google_analytics_code','G-XXXXXXXXXX', 'width: 100%; margin-top: 8px;'); ?>
+            <p class="description"><?php esc_html_e( 'Enter your Google Analytics measurement ID (e.g., G-XXXXXXXXXX)', 'mini' ); ?></p>
+        </div>
+    </div>
     <?php
 }
 function mini_company_section_callback( $args ) {
     ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the company/ownership section', 'mini' ); ?></p>
+    <div class="boxes">
+        <div class="box-66 p-2 white-bg b-rad-5 box-shadow">
+            <h3 class=""><?= esc_html__( 'Your data', 'mini' ) ?></h3>
+            <p class="m-0">These data will populate the footer of this web application.</p>
+            <p class="s m-0">They could also be used in the "About us" page, in "Cookie policy", in "Privacy policy" or in other sections.</p>
+        </div>
+        <div class="box-66 white-bg b-rad-5 box-shadow">
+            <div class="boxes">
+                <div class="box-100">
+                    <h4 class="m-0">Company details</h4>
+                </div>
+                <div class="box-75">
+                    <p class="label"><?php esc_html_e( 'Company / Owner', 'mini' ); ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_name',''); ?>
+                </div>
+                <div class="box-50">
+                    <p class="label"><?= esc_html__( 'Address', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_address',''); ?>
+                </div>
+                <div class="box-25">
+                    <p class="label"><?= esc_html__( 'House number', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_house_number',''); ?>
+                </div>
+            </div>
+            <div class="boxes">
+                <div class="box-25">
+                    <p class="label"><?= esc_html__( 'City', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_city',''); ?>
+                </div>
+                <div class="box-25">
+                    <p class="label"><?= esc_html__( 'City code', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_city_code',''); ?>
+                </div>
+                <div class="box-12">
+                    <p class="label"><?= esc_html__( 'Province', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_province',''); ?>
+                </div>
+                <div class="box-12">
+                    <p class="label"><?= esc_html__( 'Country', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_country',''); ?>
+                </div>
+            </div>
+            <div class="boxes">
+                <div class="box-50">
+                    <p class="label"><?= esc_html__( 'Email', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_email',''); ?>
+                    <p class="description"><?= esc_html__( 'This email could be used by users.', 'mini' ) ?></p>
+                </div>
+                <div class="box-50">
+                    <p class="label"><?= esc_html__( 'Phone', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_phone',''); ?>
+                    <p class="description"><?= esc_html__( 'This phone number could be used by users.', 'mini' ) ?></p>
+                </div>
+            </div>
+            <div class="boxes">
+                <div class="box-33">
+                    <p class="label"><?= esc_html__( 'Tax number', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_tax_number',''); ?>
+                    <p class="description"><?= esc_html__( 'Also known as VAT number (Partita IVA).', 'mini' ) ?></p>
+                </div>
+                <div class="box-33">
+                    <p class="label"><?= esc_html__( 'ID code', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_id_code',''); ?>
+                    <p class="description"><?= esc_html__( 'Also known as Fiscal Code (Codice Fiscale).', 'mini' ) ?></p>
+                </div>
+                <div class="box-33">
+                    <p class="label"><?= esc_html__( 'PEC', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_pec',''); ?>
+                    <p class="description"><?= esc_html__( 'Only for Italian companies: Certified Email (Posta Elettronica Certificata).', 'mini' ) ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="box-100 white-bg b-rad-5 box-shadow">
+            <div class="boxes">
+                <div class="box-100">
+                    <h4 class="m-0">Social networks</h4>
+                    <p class="description m-0"><?= esc_html__( 'Enable the social networks you want to use and add your profile URLs', 'mini' ) ?></p>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_instagram_enabled'); ?>
+                        <strong><?= esc_html__( 'Instagram', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_instagram','https://instagram.com/yourprofile'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_facebook_enabled'); ?>
+                        <strong><?= esc_html__( 'Facebook', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_facebook','https://facebook.com/yourpage'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_x_enabled'); ?>
+                        <strong><?= esc_html__( 'X (Twitter)', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_x','https://x.com/yourhandle'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_linkedin_enabled'); ?>
+                        <strong><?= esc_html__( 'LinkedIn', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_linkedin','https://linkedin.com/company/yourcompany'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_youtube_enabled'); ?>
+                        <strong><?= esc_html__( 'YouTube', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_youtube','https://youtube.com/@yourchannel'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_tiktok_enabled'); ?>
+                        <strong><?= esc_html__( 'TikTok', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_tiktok','https://tiktok.com/@yourhandle'); ?>
+                </div>
+                <div class="box-25">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_threads_enabled'); ?>
+                        <strong><?= esc_html__( 'Threads', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_threads','https://threads.net/@yourhandle'); ?>
+                </div>
+            </div>
+        </div>
+        <div class="box-66 white-bg b-rad-5 box-shadow">
+            <div class="boxes">
+                <div class="box-100">
+                    <h4 class="m-0">Messaging apps</h4>
+                    <p class="description m-0"><?= esc_html__( 'Enable messaging apps for direct customer contact', 'mini' ) ?></p>
+                </div>
+                <div class="box-50">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_whatsapp_enabled'); ?>
+                        <strong><?= esc_html__( 'WhatsApp', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_whatsapp','https://wa.me/1234567890'); ?>
+                    <p class="description"><?= esc_html__( 'Format: https://wa.me/1234567890', 'mini' ) ?></p>
+                </div>
+                <div class="box-50">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_telegram_enabled'); ?>
+                        <strong><?= esc_html__( 'Telegram', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_telegram','https://t.me/yourusername'); ?>
+                    <p class="description"><?= esc_html__( 'Format: https://t.me/yourusername', 'mini' ) ?></p>
+                </div>
+            </div>
+        </div>  
+<?php /*
+        <div class="box-66 p-2 white-bg b-rad-5 box-shadow">
+            <div class="boxes">
+                <div class="box-100">
+                    <h4 class="m-0">Technical contacts</h4>
+                </div>
+                <div class="box-50">
+                    <p class="label"><?= esc_html__( 'Email', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_service_email',''); ?>
+                </div>
+                <div class="box-50">
+                    <p class="label"><?= esc_html__( 'Phone', 'mini' ) ?></p>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_service_phone',''); ?>
+                </div>
+            </div>
+        </div>
+*/ ?>
+    </div>
     <?php
 }
 
@@ -1060,7 +1298,7 @@ function mini_theme_checkbox_option(
 ) {
     $options = get_option( $option_group );
     if (is_array($options) && array_key_exists($option, $options)) {
-        if ($options[$option] == true) {
+        if ($options[$option]) {
             $status = 'checked';
         }
     }
@@ -1069,6 +1307,7 @@ function mini_theme_checkbox_option(
         type="checkbox"
         id="'.$option.'"
         name="'.$option_group.'['.$option.']"
+        value="1"
         '.$status.'
     >
     ';
@@ -1221,192 +1460,48 @@ function mini_theme_option_list_option(
  */
 
 
-function mini_fonts_field_callback( $args ) {
-    ?>
-    <h4 class="">
-        <?php esc_html_e( 'Font for titles', 'mini' ); ?>
-    </h4>
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
-        </div>
-        <div style="flex:1;">
-            <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
-        </div>
-    </div>
-    <h4 class="">
-        <?php esc_html_e( 'Sans Serif font', 'mini' ); ?>
-    </h4>
-    <?= mini_theme_text_field_option('mini_font_options','mini_sans_font','\'Roboto\', sans-serif', 'width=auto;'); ?>
-    <br/><br/>
-    <?= mini_theme_textarea_option('mini_font_options','mini_sans_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
-    <p class="description">
-        <?php esc_html_e( 'Used for paragraphs and most of the website\'s content. Sans Serif.', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <h4 class="">
-        <?php esc_html_e( 'Secondary font', 'mini' ); ?>
-    </h4>
-    <?= mini_theme_text_field_option('mini_font_options','mini_secondary_font','\'Oswald\', sans-serif', 'width=auto;'); ?>
-    <br/><br/>
-    <?= mini_theme_textarea_option('mini_font_options','mini_secondary_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
-    <p class="description">
-        <?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<b><?php esc_html_e( 'Enabled by default.', 'mini' ); ?></b>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <h4 class="">
-        <?php esc_html_e( 'Serif font', 'mini' ); ?>
-    </h4>
-    <?= mini_theme_checkbox_option('mini_font_options','mini_serif_font_status'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_serif_font','\'Playfair Display\', serif', 'width=auto;'); ?>
-    <br/><br/>
-    <?= mini_theme_textarea_option('mini_font_options','mini_serif_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
-    <p class="description">
-        <?php esc_html_e( 'Serif font, used in CSS class ".serif"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    
-    <h4 class="">
-        <?php esc_html_e( 'Mono font', 'mini' ); ?>
-    </h4>
-    <?= mini_theme_checkbox_option('mini_font_options','mini_mono_font_status'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_mono_font','\'Roboto Mono\', monospace', 'width=auto;'); ?>
-    <br/><br/>
-    <?= mini_theme_textarea_option('mini_font_options','mini_mono_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
-    <p class="description">
-        <?php esc_html_e( 'Monospace font, used in CSS class ".mono"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <h4 class="">
-        <?php esc_html_e( 'Handwriting font', 'mini' ); ?>
-    </h4>
-    <?= mini_theme_checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_option('mini_font_options','mini_handwriting_font','\'Edu VIC WA NT Beginner\', serif'); ?>
-    <br/><br/>
-    <?= mini_theme_textarea_option('mini_font_options','mini_handwriting_font_embed_link', '<link href="https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap" rel="stylesheet">', 'width: 100%;', 3); ?>
-    <p class="description">
-        <?php esc_html_e( 'Handwriting font, used in CSS class ".handwriting"', 'mini' ); ?>&nbsp;&nbsp;|&nbsp;&nbsp;<i><?php esc_html_e( 'Leave blank to reset.', 'mini' ); ?></i>
-    </p>
-    <?php
+function mini_get_google_fonts() {
+    return [
+        'sans' => [
+            'Barlow' => ['family' => 'Barlow', 'weights' => 'ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900', 'css' => '\'Barlow\', sans-serif'],
+            'Roboto' => ['family' => 'Roboto', 'weights' => 'ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900', 'css' => '\'Roboto\', sans-serif'],
+            'Open Sans' => ['family' => 'Open+Sans', 'weights' => 'ital,wght@0,300..800;1,300..800', 'css' => '\'Open Sans\', sans-serif'],
+            'Lato' => ['family' => 'Lato', 'weights' => 'ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900', 'css' => '\'Lato\', sans-serif'],
+            'Montserrat' => ['family' => 'Montserrat', 'weights' => 'ital,wght@0,100..900;1,100..900', 'css' => '\'Montserrat\', sans-serif'],
+            'Inter' => ['family' => 'Inter', 'weights' => 'ital,opsz,wght@0,14..32,100..900;1,14..32,100..900', 'css' => '\'Inter\', sans-serif'],
+            'Poppins' => ['family' => 'Poppins', 'weights' => 'ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900', 'css' => '\'Poppins\', sans-serif'],
+            'Nunito' => ['family' => 'Nunito', 'weights' => 'ital,wght@0,200..1000;1,200..1000', 'css' => '\'Nunito\', sans-serif'],
+        ],
+        'secondary' => [
+            'Oswald' => ['family' => 'Oswald', 'weights' => 'wght@200;300;400;500;600;700', 'css' => '\'Oswald\', sans-serif'],
+            'Bebas Neue' => ['family' => 'Bebas+Neue', 'weights' => '', 'css' => '\'Bebas Neue\', sans-serif'],
+            'Anton' => ['family' => 'Anton', 'weights' => '', 'css' => '\'Anton\', sans-serif'],
+            'Raleway' => ['family' => 'Raleway', 'weights' => 'ital,wght@0,100..900;1,100..900', 'css' => '\'Raleway\', sans-serif'],
+            'Ubuntu' => ['family' => 'Ubuntu', 'weights' => 'ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700', 'css' => '\'Ubuntu\', sans-serif'],
+        ],
+        'serif' => [
+            'Playfair Display' => ['family' => 'Playfair+Display', 'weights' => 'ital,wght@0,400..900;1,400..900', 'css' => '\'Playfair Display\', serif'],
+            'Merriweather' => ['family' => 'Merriweather', 'weights' => 'ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900', 'css' => '\'Merriweather\', serif'],
+            'Lora' => ['family' => 'Lora', 'weights' => 'ital,wght@0,400..700;1,400..700', 'css' => '\'Lora\', serif'],
+            'EB Garamond' => ['family' => 'EB+Garamond', 'weights' => 'ital,wght@0,400..800;1,400..800', 'css' => '\'EB Garamond\', serif'],
+            'Crimson Text' => ['family' => 'Crimson+Text', 'weights' => 'ital,wght@0,400;0,600;0,700;1,400;1,600;1,700', 'css' => '\'Crimson Text\', serif'],
+        ],
+        'mono' => [
+            'Roboto Mono' => ['family' => 'Roboto+Mono', 'weights' => 'ital,wght@0,100..700;1,100..700', 'css' => '\'Roboto Mono\', monospace'],
+            'Source Code Pro' => ['family' => 'Source+Code+Pro', 'weights' => 'ital,wght@0,200..900;1,200..900', 'css' => '\'Source Code Pro\', monospace'],
+            'JetBrains Mono' => ['family' => 'JetBrains+Mono', 'weights' => 'ital,wght@0,100..800;1,100..800', 'css' => '\'JetBrains Mono\', monospace'],
+            'Fira Code' => ['family' => 'Fira+Code', 'weights' => 'wght@300..700', 'css' => '\'Fira Code\', monospace'],
+            'Courier Prime' => ['family' => 'Courier+Prime', 'weights' => 'ital,wght@0,400;0,700;1,400;1,700', 'css' => '\'Courier Prime\', monospace'],
+        ],
+        'handwriting' => [
+            'Edu VIC WA NT Beginner' => ['family' => 'Edu+VIC+WA+NT+Beginner', 'weights' => 'wght@400..700', 'css' => '\'Edu VIC WA NT Beginner\', cursive'],
+            'Caveat' => ['family' => 'Caveat', 'weights' => 'wght@400..700', 'css' => '\'Caveat\', cursive'],
+            'Pacifico' => ['family' => 'Pacifico', 'weights' => '', 'css' => '\'Pacifico\', cursive'],
+            'Dancing Script' => ['family' => 'Dancing+Script', 'weights' => 'wght@400..700', 'css' => '\'Dancing Script\', cursive'],
+            'Permanent Marker' => ['family' => 'Permanent+Marker', 'weights' => '', 'css' => '\'Permanent Marker\', cursive'],
+        ]
+    ];
 }
-
-function mini_analytics_field_callback( $args ) {
-    $options = get_option( 'mini_analytics_options' );
-    $default_google_analytics_status = '';
-    if (is_array($options) && array_key_exists('mini_google_analytics', $options)) {
-        if ($options['mini_google_analytics'] == true) {
-            $google_analytics_status = 'checked';
-        }
-    }
-    $default_google_analytics_code_default_value = 'Insert here Google Analytics G- code';
-    if ( is_array($options) && array_key_exists('mini_google_analytics_code', $options ) && $options['mini_google_analytics_code'] != null ) {
-        $google_analytics_code_value = $options['mini_google_analytics_code'];
-        $google_analytics_code_placeholder = null;
-    } else {
-        $google_analytics_code_value = null;
-        $google_analytics_code_placeholder = $default_google_analytics_code_default_value;
-    }
-    ?>
-    <h4 class="">Google Analytics</h4>
-    <?= mini_theme_checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
-    <br/><br/>
-    <?= mini_theme_text_field_option('mini_analytics_options','mini_google_analytics_code',''); ?>
-    <br/><br/>
-    <hr>
-    <?php
-}
-
-function mini_company_field_callback( $args ) {
-    ?>
-    <h3 class=""><?= esc_html__( 'Istitutional data', 'mini' ) ?></h3>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Company name', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_name','', 'width: 33.3333333%;'); ?>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:4;">
-            <h4 class=""><?= esc_html__( 'Address', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_address',''); ?>
-        </div>
-        <div style="flex:1;">
-        <h4 class=""><?= esc_html__( 'House number', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_house_number',''); ?>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'City', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_city',''); ?>
-            <br/>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'City code', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_city_code',''); ?>
-            <br/>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Province', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_province',''); ?>
-            <br/>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Country', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_country',''); ?>
-            <br/>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_email',''); ?>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_phone',''); ?>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Tax number', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_tax_number',''); ?>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'ID code', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_id_code',''); ?>
-        </div>
-    </div>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'PEC', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_pec',''); ?>
-        </div>
-    </div>
-
-    <br/><hr>
-
-    <h3 class=""><?= esc_html__( 'Technical addresses', 'mini' ) ?></h3>
-
-    <div style="display: flex; flex-flow: row wrap; gap: 1rem;">
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Email', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_service_email',''); ?>
-        </div>
-        <div style="flex:1;">
-            <h4 class=""><?= esc_html__( 'Phone', 'mini' ) ?></h4>
-            <?= mini_theme_text_field_option('mini_company_options','mini_company_service_phone',''); ?>
-        </div>
-    </div>
-    <br/><hr>
-    <?php
-}
-
 
 /**
  * Add the top level menu page.
@@ -1492,6 +1587,7 @@ function mini_theme_main_page_html() {
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow mb-2">
             <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+            <div class="space"></div>
             <img src="https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_logo_full_wh.svg" alt="mini logo" style="max-width: 300px;">
         </div>
     </div>
@@ -1615,6 +1711,61 @@ function get_company_id_code() {
 }
 add_shortcode('get_company_id_code', 'get_company_id_code');
 
+// Social networks helper function
+function get_enabled_social_networks() {
+    $socials = [
+        'instagram' => ['icon' => 'iconoir-instagram', 'name' => 'Instagram'],
+        'facebook' => ['icon' => 'iconoir-facebook', 'name' => 'Facebook'],
+        'x' => ['icon' => 'iconoir-x', 'name' => 'X'],
+        'linkedin' => ['icon' => 'iconoir-linkedin', 'name' => 'LinkedIn'],
+        'youtube' => ['icon' => 'iconoir-youtube', 'name' => 'YouTube'],
+        'tiktok' => ['icon' => 'iconoir-tiktok', 'name' => 'TikTok'],
+        'threads' => ['icon' => 'iconoir-threads', 'name' => 'Threads'],
+    ];
+    
+    $enabled = [];
+    foreach ($socials as $key => $data) {
+        $enabled_key = 'mini_company_' . $key . '_enabled';
+        $url_key = 'mini_company_' . $key;
+        
+        if (get_variable('mini_company_options', $enabled_key) && 
+            get_variable('mini_company_options', $url_key)) {
+            $enabled[$key] = [
+                'url' => get_variable('mini_company_options', $url_key),
+                'icon' => $data['icon'],
+                'name' => $data['name']
+            ];
+        }
+    }
+    
+    return $enabled;
+}
+
+// Messaging apps helper function
+function get_enabled_messaging_apps() {
+    $messaging = [
+        'whatsapp' => ['icon' => 'iconoir-chat-bubble', 'name' => 'WhatsApp'],
+        'telegram' => ['icon' => 'iconoir-telegram', 'name' => 'Telegram'],
+    ];
+    
+    $enabled = [];
+    foreach ($messaging as $key => $data) {
+        $enabled_key = 'mini_company_' . $key . '_enabled';
+        $url_key = 'mini_company_' . $key;
+        
+        if (get_variable('mini_company_options', $enabled_key) && 
+            get_variable('mini_company_options', $url_key)) {
+            $enabled[$key] = [
+                'url' => get_variable('mini_company_options', $url_key),
+                'icon' => $data['icon'],
+                'name' => $data['name']
+            ];
+        }
+    }
+    
+    return $enabled;
+}
+
 /**
  * END OF SHORTCODES
  */
@@ -1649,7 +1800,7 @@ function mini_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <br/>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             // output security fields for the registered setting "mini"
@@ -1677,6 +1828,7 @@ function mini_cdn_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'mini_cdn' );
@@ -1725,6 +1877,7 @@ function mini_font_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'mini_font' );
@@ -1749,6 +1902,7 @@ function mini_ext_lib_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'mini_ext_lib' );
@@ -1772,6 +1926,7 @@ function mini_analytics_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'mini_analytics' );
@@ -1795,6 +1950,7 @@ function mini_company_options_page_html() {
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+        <div class="space"></div>
         <form action="options.php" method="post">
             <?php
             settings_fields( 'mini_company' );
@@ -1893,69 +2049,100 @@ function mini_slider(){
 
 # Google fonts
 
-function get_the_font($string) {
-    $pos_1 = strpos( $string, 'family=');
-    $pos_2 = strpos( $string, '&');
-    $output = substr($string, $pos_1, ($pos_2-$pos_1));
-    return $output;
-}
-
 add_action( 'wp_enqueue_scripts', 'mini_gwf_font' );
 function mini_gwf_font(){
-    $google_font_url = 'https://fonts.googleapis.com/css2?';
-
-    $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_sans_font_embed_link', $options) && $options['mini_sans_font_embed_link'] != null) {
-        $main_font_gwf_embed_link = $options['mini_sans_font_embed_link'] ;
-    } else {
-        $main_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap';
-    }
-
-    $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_secondary_font_embed_link', $options) && $options['mini_secondary_font_embed_link'] != null) {
-        $secondary_font_gwf_embed_link = $options['mini_secondary_font_embed_link'] ;
-    } else {
-        $secondary_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap';
-    }
-
-    $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_serif_font_embed_link', $options) && $options['mini_serif_font_embed_link'] != null) {
-        $serif_font_gwf_embed_link = $options['mini_serif_font_embed_link'] ;
-    } else {
-        $serif_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap';
+    $options = get_option('mini_font_options');
+    $fonts_data = mini_get_google_fonts();
+    $fonts_to_load = [];
+    
+    // Sans Serif (always enabled)
+    $sans_font = isset($options['mini_sans_font']) && !empty($options['mini_sans_font']) 
+        ? $options['mini_sans_font'] : 'Barlow';
+    if (isset($fonts_data['sans'][$sans_font])) {
+        $fonts_to_load[] = $fonts_data['sans'][$sans_font];
     }
     
-    $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_mono_font_embed_link', $options) && $options['mini_mono_font_embed_link'] != null) {
-        $mono_font_gwf_embed_link = $options['mini_mono_font_embed_link'] ;
-    } else {
-        $mono_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap';
+    // Secondary (always enabled)
+    $secondary_font = isset($options['mini_secondary_font']) && !empty($options['mini_secondary_font']) 
+        ? $options['mini_secondary_font'] : 'Oswald';
+    if (isset($fonts_data['secondary'][$secondary_font])) {
+        $fonts_to_load[] = $fonts_data['secondary'][$secondary_font];
     }
     
-    $options = get_option( 'mini_font_options' );
-    if (is_array($options) && array_key_exists('mini_handwriting_font_embed_link', $options) && $options['mini_handwriting_font_embed_link'] != null) {
-        $handwriting_font_gwf_embed_link = $options['mini_handwriting_font_embed_link'] ;
-    } else {
-        $handwriting_font_gwf_embed_link = 'https://fonts.googleapis.com/css2?family=Edu+VIC+WA+NT+Beginner:wght@400..700&display=swap';
+    // Initialize optional font variables
+    $serif_font = null;
+    $mono_font = null;
+    $handwriting_font = null;
+    
+    // Serif (optional)
+    if (isset($options['mini_serif_font_status']) && $options['mini_serif_font_status']) {
+        $serif_font = isset($options['mini_serif_font']) && !empty($options['mini_serif_font']) 
+            ? $options['mini_serif_font'] : 'Playfair Display';
+        if (isset($fonts_data['serif'][$serif_font])) {
+            $fonts_to_load[] = $fonts_data['serif'][$serif_font];
+        }
     }
-
-    $main_font_url=get_the_font($main_font_gwf_embed_link);
-    $secondary_font_url=get_the_font($secondary_font_gwf_embed_link);
-    $serif_font_url = "";
-    $mono_font_url = "";
-    $handwriting_font_url = "";
-
-    if (is_array($options) && array_key_exists('mini_serif_font_status', $options) && $options['mini_serif_font_status'] != null) {
-        $serif_font_url=get_the_font($secondary_font_gwf_embed_link);
+    
+    // Mono (optional)
+    if (isset($options['mini_mono_font_status']) && $options['mini_mono_font_status']) {
+        $mono_font = isset($options['mini_mono_font']) && !empty($options['mini_mono_font']) 
+            ? $options['mini_mono_font'] : 'Roboto Mono';
+        if (isset($fonts_data['mono'][$mono_font])) {
+            $fonts_to_load[] = $fonts_data['mono'][$mono_font];
+        }
     }
-    if (is_array($options) && array_key_exists('mini_mono_font_status', $options) && $options['mini_mono_font_status'] != null) {
-        $mono_font_url=get_the_font($mono_font_gwf_embed_link);
+    
+    // Handwriting (optional)
+    if (isset($options['mini_handwriting_font_status']) && $options['mini_handwriting_font_status']) {
+        $handwriting_font = isset($options['mini_handwriting_font']) && !empty($options['mini_handwriting_font']) 
+            ? $options['mini_handwriting_font'] : 'Edu VIC WA NT Beginner';
+        if (isset($fonts_data['handwriting'][$handwriting_font])) {
+            $fonts_to_load[] = $fonts_data['handwriting'][$handwriting_font];
+        }
     }
-    if (is_array($options) && array_key_exists('mini_handwriting_font_status', $options) && $options['mini_handwriting_font_status'] != null) {
-        $handwriting_font_url=get_the_font($handwriting_font_gwf_embed_link);
+    
+    // Build Google Fonts URL
+    if (!empty($fonts_to_load)) {
+        $families = [];
+        foreach ($fonts_to_load as $font) {
+            $family = $font['family'];
+            if (!empty($font['weights'])) {
+                $family .= ':' . $font['weights'];
+            }
+            $families[] = $family;
+        }
+        
+        $google_fonts_url = 'https://fonts.googleapis.com/css2?family=' . implode('&family=', $families) . '&display=swap';
+        wp_enqueue_style('mini_google_fonts', $google_fonts_url, array(), null);
     }
-
-    wp_enqueue_style( 'google_fonts', $google_font_url."&".$main_font_url."&".$secondary_font_url."&".$serif_font_url."&".$mono_font_url."&".$handwriting_font_url."&display=swap/", [], null);
+    
+    // Add inline CSS for font variables
+    $css_vars = ':root {';
+    
+    if (isset($fonts_data['sans'][$sans_font])) {
+        $css_vars .= '--font-sans: ' . $fonts_data['sans'][$sans_font]['css'] . ';';
+    }
+    
+    if (isset($fonts_data['secondary'][$secondary_font])) {
+        $css_vars .= '--font-second: ' . $fonts_data['secondary'][$secondary_font]['css'] . ';';
+    }
+    
+    if ($serif_font && isset($fonts_data['serif'][$serif_font])) {
+        $css_vars .= '--font-serif: ' . $fonts_data['serif'][$serif_font]['css'] . ';';
+    }
+    
+    if ($mono_font && isset($fonts_data['mono'][$mono_font])) {
+        $css_vars .= '--font-mono: ' . $fonts_data['mono'][$mono_font]['css'] . ';';
+    }
+    
+    if ($handwriting_font && isset($fonts_data['handwriting'][$handwriting_font])) {
+        $css_vars .= '--font-handwriting: ' . $fonts_data['handwriting'][$handwriting_font]['css'] . ';';
+    }
+    
+    $css_vars .= '}';
+    
+    // Add inline styles to mini_header_css (mini.min.css) so they override the framework defaults
+    wp_add_inline_style('mini_header_css', $css_vars);
 }
 
 /**

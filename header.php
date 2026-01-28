@@ -72,6 +72,8 @@ function check_variable_from_option($options_group, $option) {
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
+	<link rel="icon" type="image/x-icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
+	<link rel="icon" type="image/png" href="<?php echo get_template_directory_uri(); ?>/img/favicon.ico">
 
 	<?php wp_head(); ?>
 
@@ -96,13 +98,14 @@ function check_variable_from_option($options_group, $option) {
 		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
 		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
 		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
-		variable_from_option('mini_font_options','mini_sans_font','--font-sans');
-		variable_from_option('mini_font_options','mini_secondary_font','--font-second');
-		variable_from_option('mini_font_options','mini_serif_font','--font-serif');
-		variable_from_option('mini_font_options','mini_handwriting_font','--font-handwriting');
-		variable_from_option('mini_font_options','mini_mono_font','--font-mono');
-		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
+		
+		// Font usage variables that reference the base font variables
 		variable_from_option('mini_font_options','mini_most_used_font','--font-main', true);
+		variable_from_option('mini_font_options','mini_most_used_font','--text-font', true);
+		?>
+		--font: var(--font-main);
+		<?php
+		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
 
 		if (get_theme_mod( 'logo-height' )) { echo '--logo-height:'.get_theme_mod( 'logo-height' ).';'; }
 		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }

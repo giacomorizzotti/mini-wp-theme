@@ -28,6 +28,9 @@ body.admin-bar header#header.open-menu {
   top: 0;
 }
 
+body.wp-admin a {
+  color: var(--black);
+}
 body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
   display: inline-block;
 }
@@ -151,6 +154,18 @@ footer .edit-link a {
 
 .njt-gdpr .njt-gdpr-content {
   line-height: 1.5;
+}
+
+.wp-core-ui .button, .wp-core-ui .button-secondary {
+  color: var(--white);
+  border-color: var(--link-color);
+  background: var(--link-color);
+}
+
+.wrap .add-new-h2, .wrap .add-new-h2:active, .wrap .page-title-action, .wrap .page-title-action:active {
+  color: var(--white);
+  border-color: var(--link-hover-color);
+  background: var(--link-hover-color);
 }
 
 #adminmenu .wp-menu-image img {
