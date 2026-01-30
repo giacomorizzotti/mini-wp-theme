@@ -9,61 +9,10 @@
  * @package mini
  */
 
-if ( !isset($header_top_style) ) {
-	$header_top_style = '';
-}
-if ( !isset($header_scroll_style) ) {
-	$header_scroll_style = '';
-}
-
-if ( is_singular() && isset($post->ID) ) {
-	$header_top_style = get_post_meta($post->ID, 'header_styling_top', true);
-	$header_scroll_style = get_post_meta($post->ID, 'header_styling_scroll', true);
-}
-if (is_home()) {
-	$pageID = get_option('page_for_posts');
-	if ($pageID) {
-		$header_top_style = get_post_meta($pageID, 'header_styling_top', true);
-		$header_scroll_style = get_post_meta($pageID, 'header_styling_scroll', true);
-	}
-}
-if (is_front_page() && !is_home()) {
-	$pageID = get_option('page_on_front');
-	if ($pageID) {
-		$header_top_style = get_post_meta($pageID, 'header_styling_top', true);
-		$header_scroll_style = get_post_meta($pageID, 'header_styling_scroll', true);
-	}
-}
-
-$custom_logo = get_custom_logo();
-
-function variable_from_option($options_group, $option, $variable_name, $var_refer=false) {
-	$options = get_option( $options_group );
-	if ( 
-		is_array($options) && 
-		array_key_exists($option, $options) && 
-		$options[$option] != null 
-	) {
-		if ($var_refer==true) {
-			$variable = $variable_name.':var('.$options[$option].');';
-		} else {
-			$variable = $variable_name.':'.$options[$option].';';
-		}
-		echo $variable;
-	}
-}
-function check_variable_from_option($options_group, $option) {
-	$options = get_option( $options_group );
-	if ( 
-		is_array($options) && 
-		array_key_exists($option, $options) && 
-		$options[$option] != null 
-	) {
-		return true;
-	} else {
-		return false;
-	}
-}
+// Get header styling for current page
+$header_styling = mini_get_header_styling();
+$header_top_style = $header_styling['top'];
+$header_scroll_style = $header_styling['scroll'];
 
 ?>
 <!doctype html>
@@ -77,8 +26,8 @@ function check_variable_from_option($options_group, $option) {
 
 	<?php wp_head(); ?>
 
-    <?php if ( check_variable_from_option('mini_colors_options','mini_theme_color') == true ): ?>
-		<meta name="theme-color" content="<?= get_option('mini_colors_options')['mini_theme_color'] ?>" />
+    <?php if ( mini_check_option( 'mini_colors_options', 'mini_theme_color' ) ): ?>
+		<meta name="theme-color" content="<?php echo esc_attr( mini_get_option( 'mini_colors_options', 'mini_theme_color' ) ); ?>" />
 	<?php endif; ?>
 
 	<style>
@@ -110,83 +59,98 @@ function check_variable_from_option($options_group, $option) {
 		if ( get_theme_mod( 'logo-height' ) ) { 
 			echo esc_html( '--logo-height:' . get_theme_mod( 'logo-height' ) . ';' ); 
 		}
-		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }
-
-		if (get_theme_mod( 'menu-toggle-height' )) { echo '--menu-toggle-height:'.get_theme_mod( 'menu-toggle-height' ).';'; }
-		if (get_theme_mod( 'scroll-menu-toggle-height' )) { echo '--scroll-menu-toggle-height:'.get_theme_mod( 'scroll-menu-toggle-height' ).';'; }
+		if ( get_theme_mod( 'scroll-logo-height' ) ) { 
+			echo esc_html( '--scroll-logo-height:' . get_theme_mod( 'scroll-logo-height' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'menu-toggle-height' ) ) { 
+			echo esc_html( '--menu-toggle-height:' . get_theme_mod( 'menu-toggle-height' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'scroll-menu-toggle-height' ) ) { 
+			echo esc_html( '--scroll-menu-toggle-height:' . get_theme_mod( 'scroll-menu-toggle-height' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_main_color','--main-color');
-		variable_from_option('mini_colors_options','mini_main_color_dark','--main-color-dark');
-		variable_from_option('mini_colors_options','mini_main_color_transp','--main-color-transp');
-		if (get_theme_mod( 'main-color' )) { echo '--main-color:'.get_theme_mod( 'main-color' ).';'; }
-		if (get_theme_mod( 'main-color-dark' )) { echo '--main-color-dark:'.get_theme_mod( 'main-color-dark' ).';'; }
-		if (get_theme_mod( 'main-color-transp' )) { echo '--main-color-transp:'.get_theme_mod( 'main-color-transp' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_main_color', '--main-color' );
+		mini_css_variable( 'mini_colors_options', 'mini_main_color_dark', '--main-color-dark' );
+		mini_css_variable( 'mini_colors_options', 'mini_main_color_transp', '--main-color-transp' );
+		if ( get_theme_mod( 'main-color' ) ) { 
+			echo esc_html( '--main-color:' . get_theme_mod( 'main-color' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'main-color-dark' ) ) { 
+			echo esc_html( '--main-color-dark:' . get_theme_mod( 'main-color-dark' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'main-color-transp' ) ) { 
+			echo esc_html( '--main-color-transp:' . get_theme_mod( 'main-color-transp' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_second_color','--second-color');
-		variable_from_option('mini_colors_options','mini_second_color_dark','--second-color-dark');
-		if (get_theme_mod( 'second-color' )) { echo '--second-color:'.get_theme_mod( 'second-color' ).';'; }
-		if (get_theme_mod( 'second-color-dark' )) { echo '--second-color-dark:'.get_theme_mod( 'second-color-dark' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_second_color', '--second-color' );
+		mini_css_variable( 'mini_colors_options', 'mini_second_color_dark', '--second-color-dark' );
+		if ( get_theme_mod( 'second-color' ) ) { 
+			echo esc_html( '--second-color:' . get_theme_mod( 'second-color' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'second-color-dark' ) ) { 
+			echo esc_html( '--second-color-dark:' . get_theme_mod( 'second-color-dark' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_third_color','--third-color');
-		variable_from_option('mini_colors_options','mini_third_color_dark','--third-color-dark');
-		if (get_theme_mod( 'third-color' )) { echo '--third-color:'.get_theme_mod( 'third-color' ).';'; }
-		if (get_theme_mod( 'third-color-dark' )) { echo '--third-color-dark:'.get_theme_mod( 'third-color-dark' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_third_color', '--third-color' );
+		mini_css_variable( 'mini_colors_options', 'mini_third_color_dark', '--third-color-dark' );
+		if ( get_theme_mod( 'third-color' ) ) { 
+			echo esc_html( '--third-color:' . get_theme_mod( 'third-color' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'third-color-dark' ) ) { 
+			echo esc_html( '--third-color-dark:' . get_theme_mod( 'third-color-dark' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_fourth_color','--fourth-color');
-		variable_from_option('mini_colors_options','mini_fourth_color_dark','--fourth-color-dark');
-		if (get_theme_mod( 'fourth-color' )) { echo '--fourth-color:'.get_theme_mod( 'fourth-color' ).';'; }
-		if (get_theme_mod( 'fourth-color-dark' )) { echo '--fourth-color-dark:'.get_theme_mod( 'fourth-color-dark' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_fourth_color', '--fourth-color' );
+		mini_css_variable( 'mini_colors_options', 'mini_fourth_color_dark', '--fourth-color-dark' );
+		if ( get_theme_mod( 'fourth-color' ) ) { 
+			echo esc_html( '--fourth-color:' . get_theme_mod( 'fourth-color' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'fourth-color-dark' ) ) { 
+			echo esc_html( '--fourth-color-dark:' . get_theme_mod( 'fourth-color-dark' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_link_color','--link-color');
-		variable_from_option('mini_colors_options','mini_link_hover_color','--link-hover-color');
-		if (get_theme_mod( 'link-color' )) { echo '--link-color:'.get_theme_mod( 'link-color' ).';'; }
-		if (get_theme_mod( 'link-hover-color' )) { echo '--link-hover-color:'.get_theme_mod( 'link-hover-color' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_link_color', '--link-color' );
+		mini_css_variable( 'mini_colors_options', 'mini_link_hover_color', '--link-hover-color' );
+		if ( get_theme_mod( 'link-color' ) ) { 
+			echo esc_html( '--link-color:' . get_theme_mod( 'link-color' ) . ';' ); 
+		}
+		if ( get_theme_mod( 'link-hover-color' ) ) { 
+			echo esc_html( '--link-hover-color:' . get_theme_mod( 'link-hover-color' ) . ';' ); 
+		}
 		
-		variable_from_option('mini_colors_options','mini_menu_toggle_color','--menu-toggle-color');
-		if (get_theme_mod( 'menu-toggle-color' )) { echo '--menu-toggle-color:'.get_theme_mod( 'menu-toggle-color' ).';'; }
+		mini_css_variable( 'mini_colors_options', 'mini_menu_toggle_color', '--menu-toggle-color' );
+		if ( get_theme_mod( 'menu-toggle-color' ) ) { 
+			echo esc_html( '--menu-toggle-color:' . get_theme_mod( 'menu-toggle-color' ) . ';' ); 
+		}
 
 		?>
 		}
 	</style>
 
-<?php
-	if ( 
-		is_array(get_option( 'mini_ext_lib_options' )) && 
-		array_key_exists('mini_iconoir', get_option( 'mini_ext_lib_options' ) ) && 
-		get_option( 'mini_ext_lib_options' )['mini_iconoir'] != null 
-	) {
-	?>
-<link href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" rel="stylesheet">
-<?php
-	}
-?>
-<?php
-	if ( 
-		is_array(get_option( 'mini_ext_lib_options' )) && 
-		array_key_exists('mini_aos', get_option( 'mini_ext_lib_options' ) ) && 
-		get_option( 'mini_ext_lib_options' )['mini_aos'] != null 
-	) {
-?>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<?php
-	}
-?>
+<?php if ( mini_check_option( 'mini_ext_lib_options', 'mini_iconoir' ) ): ?>
+	<link href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" rel="stylesheet">
+<?php endif; ?>
+
+<?php if ( mini_check_option( 'mini_ext_lib_options', 'mini_aos' ) ): ?>
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<?php endif; ?>
 
 <?php
-	if ( 
-		get_variable('mini_analytics_options','mini_google_analytics') != false &&
-		get_variable('mini_analytics_options','mini_google_analytics_code') != false
-	) {
+if ( 
+	mini_check_option( 'mini_analytics_options', 'mini_google_analytics' ) &&
+	mini_check_option( 'mini_analytics_options', 'mini_google_analytics_code' )
+) {
+	$ga_code = mini_get_option( 'mini_analytics_options', 'mini_google_analytics_code' );
 ?>
-<script async src="https://www.googletagmanager.com/gtag/js?id=<?=get_variable('mini_analytics_options','mini_google_analytics_code')?>"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag("js", new Date());
-	gtag("config", "<?=get_variable('mini_analytics_options','mini_google_analytics_code')?>");
-</script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $ga_code ); ?>"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag("js", new Date());
+		gtag("config", "<?php echo esc_js( $ga_code ); ?>");
+	</script>
 <?php
-	}
+}
 ?>
 
 </head>
@@ -201,39 +165,39 @@ function check_variable_from_option($options_group, $option) {
 
 	<div id="sheet" class="grad-second"><?php /* starting .sheet div */ ?>
 
-		<header id="header" class="header <?=$header_top_style?> <?=$header_scroll_style?>">
+		<header id="header" class="header <?php echo esc_attr( $header_top_style ); ?> <?php echo esc_attr( $header_scroll_style ); ?>">
 			<div class="container">
 				<div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
 					<div class="box brand px-2">
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
-							<?php if (has_custom_logo()): ?>
-							<?= $custom_logo ?>
+							<?php if ( has_custom_logo() ): ?>
+								<?php the_custom_logo(); ?>
 							<?php else: ?>
-							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem me-1" alt="emblem"/>
+								<img src="<?php if ( mini_check_option( 'mini_cdn_options', 'cdn_dev' ) ): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem me-1" alt="emblem"/>
 							<?php endif; ?>
 						</a>
 						<?php
 						$mini_title = get_bloginfo( 'name', 'display' );
 						$mini_description = get_bloginfo( 'description', 'display' );
+						
+						if ( ( $mini_title && get_theme_mod( 'header_text' ) == 1 ) || is_customize_preview() ):
 						?>
-						<?php
-						if ( ( $mini_title && get_theme_mod('header_text') == 1 ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 ) ) :
-						?>
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" retl="home"><h3 class="site-title"><?php bloginfo( 'name' ); ?></h3></a>
+							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
+								<h3 class="site-title"><?php bloginfo( 'name' ); ?></h3>
+							</a>
 						<?php endif; ?>
-						<?php
-						if ( ( $mini_description && get_theme_mod('header_text') == 1 && get_theme_mod('show-tagline', true) ) || ( is_customize_preview() && get_theme_mod('header_text') == 1 && get_theme_mod('show-tagline', true) ) ) :
-						?>
+						
+						<?php if ( ( $mini_description && get_theme_mod( 'header_text' ) == 1 && get_theme_mod( 'show-tagline', true ) ) || is_customize_preview() ): ?>
 							<div class="sep"></div>
 							<div class="space-05"></div>
-							<p class="site-description m-0"><?= $mini_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+							<p class="site-description m-0"><?php echo esc_html( $mini_description ); ?></p>
 						<?php endif; ?>
 					</div>
 					<div class="box menus px-2">
 						<div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
 						<div id="head-menu" class="head-menu">
 							<nav id="page-menu" class="menu page-menu">
-								<ul class="menu page-menu">
+								<ul class="menu page-menu m-0">
 								</ul>
 							</nav>
 						</div>

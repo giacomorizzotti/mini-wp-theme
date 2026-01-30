@@ -7,19 +7,8 @@
  * @package mini
  */
 
-$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
-$container_width = get_post_meta($post->ID, 'page_container', true);
-
-$space_top = get_post_meta($post->ID, 'space_top', true);
-$space_bottom = get_post_meta($post->ID, 'space_bot', true);
-$spacing_class= '';
-if($space_top==true && $space_top==false) {
-	$spacing_class= 'space-top';
-}else if($space_top==false && $space_top==true) {
-	$spacing_class= 'space-bot';
-}else if($space_top==true && $space_top==true) {
-	$spacing_class= 'space-top-bot';
-}
+// Get page layout settings
+$layout = mini_get_page_layout();
 
 get_header();
 ?>
@@ -69,15 +58,9 @@ get_header();
 				</div>
 					
 				<?php
-				if ($sidebar_presence == true):
-				?>
-
-				<?php
-				get_sidebar();
-				?>
-					
-				<?php
-				endif;
+				if ( $layout['sidebar_presence'] ) {
+					get_sidebar();
+				}
 				?>
 
 				</div>
@@ -87,5 +70,4 @@ get_header();
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();

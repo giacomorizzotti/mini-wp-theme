@@ -7,14 +7,17 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
+// Get page layout settings if not already set
+if ( ! isset( $layout ) ) {
+	$layout = mini_get_page_layout();
+}
 
 ?>
 
-<div class="box box-100 my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?>">
+<div class="box box-100 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-<?php if($container_width=='fw'): ?>
+<?php if( $layout['container_width'] == 'fw' ): ?>
 		</div>
 		<div class="container">
 			<div class="boxes">
@@ -33,7 +36,7 @@ $container_width = get_post_meta($post->ID, 'page_container', true);
 			<?php endif; ?>
 		</header><!-- .entry-header -->
 		
-<?php if($container_width=='fw'): ?>
+<?php if( $layout['container_width'] == 'fw' ): ?>
 			</div>
 		</div>
 		<div class="boxes">

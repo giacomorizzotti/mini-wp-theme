@@ -7,15 +7,15 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
-
+// Get page layout settings
+$layout = mini_get_page_layout();
 
 get_header();
 ?>
 	<main id="primary" class="site-main" template="single">
 
 		<div class="container fw">
-			<div class="container <?=$container_width?>">
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				
 				<div class="boxes space-top-bot">
 					

@@ -7,7 +7,10 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
+// Get page layout settings if not already set
+if ( ! isset( $layout ) ) {
+	$layout = mini_get_page_layout();
+}
 $it_date_month = new IntlDateFormatter(
     'it_IT',
     IntlDateFormatter::FULL,
@@ -46,7 +49,7 @@ $it_date_year = new IntlDateFormatter(
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
 	<div class="container fw">
-		<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
+		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
 				<header class="box box-100 entry-header">
 				<?php
@@ -61,7 +64,7 @@ $it_date_year = new IntlDateFormatter(
 		</div>
 	</div>
 	
-	<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
+	<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 
 		<div class="boxes">
 			<?php 

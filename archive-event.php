@@ -7,7 +7,9 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
+// Get page layout settings
+$layout = mini_get_page_layout();
+
 get_header();
 
 ?>
@@ -16,7 +18,7 @@ get_header();
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
-					<div class="box-75 my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?>">
+					<div class="box-75 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
 						<div class="boxes">
 
 							<?php if ( have_posts() ) : ?>

@@ -7,7 +7,8 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
+// Get page layout settings
+$layout = mini_get_page_layout();
 
 get_header();
 
@@ -15,7 +16,7 @@ get_header();
 	<main id="primary" class="site-main" template="single">
 
 		<?php if ( has_post_thumbnail() ): ?>
-			<div class="container fw" style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat;">
+			<div class="container fw" style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat;">
 				<div clasS="container">
 					<div class="boxes space-top align-items-end" style="min-height: 75vh;">
 						<?php

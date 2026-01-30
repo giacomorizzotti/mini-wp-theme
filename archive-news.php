@@ -7,13 +7,8 @@
  * @package mini
  */
 
-$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
-$container_width = get_post_meta($post->ID, 'page_container', true);
-
-$content_size = 'box-100';
-if ( is_active_sidebar( 'sidebar-1' ) ) {
-	$content_size = 'box-75';
-}
+// Get page layout settings
+$layout = mini_get_page_layout();
 
 get_header();
 ?>
@@ -22,7 +17,7 @@ get_header();
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
-					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
+					<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 						<div class="boxes">
 
 							<?php if ( have_posts() ) : ?>

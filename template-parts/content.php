@@ -7,7 +7,10 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
+// Get page layout settings if not already set
+if ( ! isset( $layout ) ) {
+	$layout = mini_get_page_layout();
+}
 $title_classes_if_thumbnail = '';
 if ( has_post_thumbnail() ) {
 	$title_classes_if_thumbnail = ' wh-box';
@@ -17,12 +20,11 @@ if ( has_post_thumbnail() ) {
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ( !has_post_thumbnail() || is_home() || is_archive() ): ?>
+	<?php if ( ! has_post_thumbnail() || is_home() || is_archive() ): ?>
 	<div class="container fw"
-			<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
+			<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>
-		<?php /*<div class="container<?php if ($container_width!='fw'): ?><?=' '.$container_width?><?php endif; ?>">*/ ?>
-		<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
+		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes <?php if ( has_post_thumbnail() ): ?> <?php if ( is_singular() ): ?>hh<?php else: ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
@@ -47,7 +49,7 @@ if ( has_post_thumbnail() ) {
 	</div>
 	<?php endif; ?>
 	
-	<div class="container<?php if ( !is_home() && !is_archive() ){echo ' '.$container_width;}?>">
+	<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 
 		<div class="boxes">
 

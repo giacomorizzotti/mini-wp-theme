@@ -7,18 +7,20 @@
  * @package mini
  */
 
-$container_width = get_post_meta($post->ID, 'page_container', true);
-$title_presence = get_post_meta($post->ID, 'title_presence', true);
+// Get page layout settings if not already set
+if ( ! isset( $layout ) ) {
+	$layout = mini_get_page_layout();
+}
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ($title_presence == true && !has_post_thumbnail()): ?>
+	<?php if ( $layout['title_presence'] && ! has_post_thumbnail() ): ?>
 	<div class="container fw forced"
-		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
+		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 		>
-		<div class="container<?php if ($container_width!='fw'): ?><?=' '.$container_width?><?php endif; ?>">
+		<div class="container<?php if ( $layout['container_width'] != 'fw' ): ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
 			<div class="boxes space-top<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
 				<div class="box box-100 my-2">
 					<header class="entry-header">
@@ -34,7 +36,7 @@ $title_presence = get_post_meta($post->ID, 'title_presence', true);
 	</div>
 	<?php endif; ?>
 	
-	<div class="container <?=$container_width?>">
+	<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 
 		<div class="entry-content">
 			<?php

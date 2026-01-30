@@ -68,7 +68,7 @@ get_header();
 					</div>
 
 					<?php
-					if ($sidebar_presence != false) {
+					if ( $layout['sidebar_presence'] ) {
 						get_sidebar();
 					}
 					?>
