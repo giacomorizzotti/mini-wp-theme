@@ -46,10 +46,8 @@ body.wp-admin .bulkactions, body.wp-admin .actions {
 }
 body.wp-admin .desc {
   font-style: inherit;
-  margin-top: 4px;
-  margin-left: 7px;
   line-height: inherit;
-  font-size: var(--p) !important;
+  font-size: var(--p);
 }
 body.wp-admin .postbox-header .handle-actions {
   display: flex;
@@ -71,6 +69,7 @@ body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox], body.wp-admin :not(
 body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]::before, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]::before {
   width: 20px;
   height: 20px;
+  margin: 0;
 }
 body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]:checked::after {
   width: 10px;
@@ -107,6 +106,13 @@ body.wp-admin .button-link:hover, body.wp-admin .button-link:focus {
   background: var(--link-hover-color);
   color: var(--white);
   text-decoration: none;
+}
+body.wp-admin button:hover {
+  box-shadow: none;
+}
+
+body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
+  box-sizing: border-box;
 }
 
 footer .edit-link {
@@ -223,6 +229,36 @@ body.login-action-login .language-switcher #language-switcher label span.dashico
 body.login-action-login .button.button-primary {
   background-color: #1b9958;
   border-color: #1b9958;
+}
+
+#mini_seo_meta_box {
+  min-height: 50vh;
+  background: var(--false-white);
+  border-left: 5px solid var(--third-color);
+}
+#mini_seo_meta_box.closed {
+  min-height: auto;
+}
+#mini_seo_meta_box .nav-tab-wrapper {
+  padding-bottom: 0;
+}
+#mini_seo_meta_box .nav-tab-wrapper .nav-tab.mini-seo-tab {
+  background: var(--light-grey);
+}
+#mini_seo_meta_box .nav-tab-wrapper .nav-tab.mini-seo-tab.nav-tab-active {
+  background: var(--false-white);
+  border-bottom: 1px solid var(--false-white);
+}
+
+#header-styling, #inpage-elements, #page-customization {
+  background: var(--false-white);
+  border-left: 5px solid var(--third-color);
+}
+#header-styling .handle-order-higher, #header-styling .handle-order-lower, #header-styling .handlediv, #inpage-elements .handle-order-higher, #inpage-elements .handle-order-lower, #inpage-elements .handlediv, #page-customization .handle-order-higher, #page-customization .handle-order-lower, #page-customization .handlediv {
+  width: auto;
+}
+#header-styling .inside, #inpage-elements .inside, #page-customization .inside {
+  margin-top: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

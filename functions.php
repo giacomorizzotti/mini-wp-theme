@@ -264,262 +264,154 @@ add_action( 'admin_head', 'fix_svg' );
 
 
 /**
- * ADD title presence meta box to page edit
+ * ADD In-page elements meta box (title and sidebar visibility)
  */
 
-// Add blocks to the main column on the page pages
-add_action( 'add_meta_boxes', 'add_title_presence_box' );
+add_action( 'add_meta_boxes', 'add_inpage_elements_box' );
+add_action( 'save_post', 'inpage_elements_save_postdata' );
 
-// Saving data when the post is saved
-add_action( 'save_post', 'title_presence_save_postdata' );
-
-function add_title_presence_box() {
+function add_inpage_elements_box() {
     add_meta_box(
-        'title-presence',
-        'Show title',
-        'title_presence_box_html',
-        'page',
-        'side'
-    );
-}
-
-// HTML code of the block
-function title_presence_box_html( $post, $meta ){
-
-    // Add nonce field for security
-    wp_nonce_field( 'title_presence_save', 'title_presence_nonce' );
-
-    // field value
-    $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
-
-    $titlePresenceState = null;
-    if ( $titlePresence == true ) {
-        $titlePresenceState = ' checked';
-    }
-
-    // Form fields for entering data
-    echo '<label for="title_presence" style="display: block; margin-bottom: 5px;">' . __("Show title", 'title_presence_box_textdomain' ) . '</label> ';
-    echo '<input type="checkbox" id="title_presence" name="title_presence"'.$titlePresenceState.'>';
-
-}
-
-function title_presence_save_postdata( $post_id ) {
-
-    // Verify nonce
-    if ( ! isset( $_POST['title_presence_nonce'] ) || ! wp_verify_nonce( $_POST['title_presence_nonce'], 'title_presence_save' ) ) {
-        return;
-    }
-
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
-
-    // Everything is OK. Now, we need to find and save the data
-    // Define the value of the input field.
-    if ( isset($_POST['title_presence']) ) {
-        $titlePresence = true;
-    } else {
-        $titlePresence = false;
-    }
-    // Update data in the database.
-    update_post_meta( $post_id, 'title_presence', $titlePresence );
-
-}
-
-/**
- * ADD sidebar presence meta box to page edit
- */
-
-// Add blocks to the main column on the page pages
-add_action( 'add_meta_boxes', 'add_sidebar_presence_box' );
-
-// Saving data when the post is saved
-add_action( 'save_post', 'sidebar_presence_save_postdata' );
-
-function add_sidebar_presence_box() {
-    add_meta_box(
-        'sidebar-presence',
-        'Show sidebar',
-        'sidebar_presence_box_html',
+        'inpage-elements',
+        'In-page elements',
+        'inpage_elements_box_html',
         ['page', 'post'],
         'side'
     );
 }
 
-// HTML code of the block
-function sidebar_presence_box_html( $post, $meta ){
+function inpage_elements_box_html( $post, $meta ) {
+    // Add nonce field for security
+    wp_nonce_field( 'inpage_elements_save', 'inpage_elements_nonce' );
 
-    // field value
+    // Get field values
+    $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
     $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true);
 
-    $sidebarPresenceState = null;
-    if ( $sidebarPresence == true ) {
-        $sidebarPresenceState = ' checked';
-    }
+    $titlePresenceState = $titlePresence == true ? ' checked' : '';
+    $sidebarPresenceState = $sidebarPresence == true ? ' checked' : '';
 
-    // Form fields for entering data
-    echo '<label for="sidebar_presence" style="display: block; margin-bottom: 5px;">' . __("Show sidebar", 'sidebar_presence_box_textdomain' ) . '</label> ';
-    echo '<input type="checkbox" id="sidebar_presence" name="sidebar_presence"'.$sidebarPresenceState.'>';
-
+    // Form fields
+    echo '<div class="my-1">';
+    echo '<label for="title_presence">
+            <input type="checkbox" id="title_presence" name="title_presence"' . $titlePresenceState . '>&nbsp;' 
+            . __("Show title", 'mini' ) . '
+          </label>';
+    
+    echo '<label for="sidebar_presence">
+            <input type="checkbox" id="sidebar_presence" name="sidebar_presence"' . $sidebarPresenceState . '>&nbsp;' 
+            . __("Show sidebar", 'mini' ) . '
+          </label>';
+    echo '</div>';
 }
 
-function sidebar_presence_save_postdata( $post_id ) {
-
+function inpage_elements_save_postdata( $post_id ) {
     // Verify nonce
-    if ( ! isset( $_POST['sidebar_presence_nonce'] ) || ! wp_verify_nonce( $_POST['sidebar_presence_nonce'], 'sidebar_presence_save' ) ) {
+    if ( ! isset( $_POST['inpage_elements_nonce'] ) || ! wp_verify_nonce( $_POST['inpage_elements_nonce'], 'inpage_elements_save' ) ) {
         return;
     }
 
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
-
-    // Everything is OK. Now, we need to find and save the data
-    // Define the value of the input field.
-    if ( isset($_POST['sidebar_presence']) ) {
-        $sidebarPresence = true;
-    } else {
-        $sidebarPresence = false;
+    // If this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
     }
-    // Update data in the database.
+
+    // Check user permission
+    if( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Save title presence
+    $titlePresence = isset($_POST['title_presence']) ? true : false;
+    update_post_meta( $post_id, 'title_presence', $titlePresence );
+
+    // Save sidebar presence
+    $sidebarPresence = isset($_POST['sidebar_presence']) ? true : false;
     update_post_meta( $post_id, 'sidebar_presence', $sidebarPresence );
-
 }
 
 
 /**
- * ADD space-top-bot option
+ * ADD Page customization settings meta box (spacing and container)
  */
 
-add_action( 'add_meta_boxes', 'add_space_top_bot_box' );
+add_action( 'add_meta_boxes', 'add_page_customization_box' );
+add_action( 'save_post', 'page_customization_save_postdata' );
 
-// Saving data when the post is saved
-add_action( 'save_post', 'space_top_bot_save_postdata' );
-
-function add_space_top_bot_box() {
+function add_page_customization_box() {
     add_meta_box(
-        'space-top-bot',
-        'Top and bottom spacing',
-        'space_top_bot_box_html',
-        ['page', 'post'],
-        'side'
-    );
-}
-
-// HTML code of the block
-function space_top_bot_box_html( $post, $meta ){
-
-    $spaceTop = get_post_meta( $post->ID, 'space_top', true);
-    $spaceTopState = null;
-    if ( $spaceTop == true ) {
-        $spaceTopState = ' checked';
-    }
-    
-    $spaceBot = get_post_meta( $post->ID, 'space_top', true);
-    $spaceBotState = null;
-    if ( $spaceBot == true ) {
-        $spaceBotState = ' checked';
-    }
-
-    echo '<label for="space_top" style="display: block; margin-bottom: 5px;">' . __("Space top", 'space_top_box_textdomain' ) . '</label> ';
-    echo '<input type="checkbox" id="space_top" name="space_top"'.$spaceTopState.'>';
-    echo '<label for="space_bot" style="display: block; margin-bottom: 5px;">' . __("Space bottom", 'space_bot_box_textdomain' ) . '</label> ';
-    echo '<input type="checkbox" id="space_bot" name="space_bot"'.$spaceBotState.'>';
-
-}
-
-function space_top_bot_save_postdata( $post_id ) {
-
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
-
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
-
-    // Everything is OK. Now, we need to find and save the data
-    // Define the value of the input field.
-    if ( isset($_POST['space_top']) ) {
-        $spaceTop = true;
-    } else {
-        $spaceTop = false;
-    }
-    if ( isset($_POST['space_bot']) ) {
-        $spaceBot = true;
-    } else {
-        $spaceBot = false;
-    }
-    // Update data in the database.
-    update_post_meta( $post_id, 'space_top', $spaceTop );
-    update_post_meta( $post_id, 'space_bot', $spaceBot );
-
-}
-
-/**
- * ADD page container meta box to page edit
- */
-
-// Add blocks to the main column on the page pages
-add_action( 'add_meta_boxes', 'add_page_container_box' );
-
-// Saving data when the post is saved
-add_action( 'save_post', 'page_container_save_postdata' );
-
-function add_page_container_box() {
-    add_meta_box(
-        'page-container',
-        'Page container',
-        'page_container_box_html',
+        'page-customization',
+        'Page customization',
+        'page_customization_box_html',
         ['page', 'post', 'event', 'match', 'slide'],
         'side'
     );
 }
 
-// HTML code of the block
-function page_container_box_html( $post, $meta ){
+function page_customization_box_html( $post, $meta ) {
+    // Add nonce field for security
+    wp_nonce_field( 'page_customization_save', 'page_customization_nonce' );
 
-    // field value
+    // Get field values for spacing
+    $spaceTop = get_post_meta( $post->ID, 'space_top', true);
+    $spaceBot = get_post_meta( $post->ID, 'space_bot', true);
+    $spaceTopState = $spaceTop == true ? ' checked' : '';
+    $spaceBotState = $spaceBot == true ? ' checked' : '';
+
+    // Get field value for container
     $pageContainerStyle = get_post_meta( $post->ID, 'page_container', true);
 
-    $pageContainerStdDefaultState = null;
-    if ( $pageContainerStyle == 'fw') { $pageContainerStdDefaultState = ' selected'; }
-    $pageContainerFullDefaultState = null;
-    if ( $pageContainerStyle == '') { $pageContainerFullDefaultState = ' selected'; }
-    $pageContainerThinDefaultState = null;
-    if ( $pageContainerStyle == 'thin') { $pageContainerThinDefaultState = ' selected'; }
-    $pageContainerWideDefaultState = null;
-    if ( $pageContainerStyle == 'wide') { $pageContainerWideDefaultState = ' selected'; }
+    // Output spacing checkboxes
+    echo '<div class="my-1">';
+    echo '<label for="space_bot" style="display: block; margin-bottom: 5px;">
+            <input type="checkbox" id="space_bot" name="space_bot"' . $spaceBotState . '>&nbsp;' 
+            . __("Space bottom", 'mini' ) . '
+          </label>';
+    echo '<label for="space_top" style="display: block; margin-bottom: 8px;">
+            <input type="checkbox" id="space_top" name="space_top"' . $spaceTopState . '>&nbsp;' 
+            . __("Space top", 'mini' ) . '
+          </label>';
+    echo '</div>';
 
-    // Form fields for entering data
-    echo '<label for="page_container" style="display: block; margin-bottom: 5px;">' . __("Page container", 'page_container_box_textdomain' ) . '</label> ';
-    echo '<select name="page_container">
-		<option value="fw"'.$pageContainerStdDefaultState.'>Full width</option>
-		<option value=""'.$pageContainerFullDefaultState.'>Standard</option>
-		<option value="thin"'.$pageContainerThinDefaultState.'>Thin</option>
-		<option value="wide"'.$pageContainerWideDefaultState.'>Wide</option>
-	</select>';
-
+    // Output container dropdown
+    echo '<div>';
+    echo '<label for="page_container" style="display: block; margin-bottom: 5px; font-weight: 600;">' . __("Container", 'mini' ) . '</label>';
+    echo '<select name="page_container" style="width: 100%;">
+        <option value="fw"' . ($pageContainerStyle == 'fw' ? ' selected' : '') . '>Full width</option>
+        <option value=""' . ($pageContainerStyle == '' ? ' selected' : '') . '>Standard</option>
+        <option value="thin"' . ($pageContainerStyle == 'thin' ? ' selected' : '') . '>Thin</option>
+        <option value="wide"' . ($pageContainerStyle == 'wide' ? ' selected' : '') . '>Wide</option>
+    </select>';
+    echo '</div>';
 }
 
-function page_container_save_postdata( $post_id ) {
+function page_customization_save_postdata( $post_id ) {
+    // Verify nonce
+    if ( ! isset( $_POST['page_customization_nonce'] ) || ! wp_verify_nonce( $_POST['page_customization_nonce'], 'page_customization_save' ) ) {
+        return;
+    }
 
-    // make sure the field is set.
-    if ( ! isset( $_POST['page_container'] ) ) { return; }
+    // If this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
 
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+    // Check user permission
+    if( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
 
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+    // Save spacing options
+    $spaceTop = isset($_POST['space_top']) ? true : false;
+    update_post_meta( $post_id, 'space_top', $spaceTop );
 
-    // Everything is OK. Now, we need to find and save the data
-    // Define the value of the input field.
-    $pageContainerStyle = $_POST['page_container'];
-    // Update data in the database.
-    update_post_meta( $post_id, 'page_container', $pageContainerStyle );
+    $spaceBot = isset($_POST['space_bot']) ? true : false;
+    update_post_meta( $post_id, 'space_bot', $spaceBot );
+
+    // Save container style
+    if ( isset( $_POST['page_container'] ) ) {
+        update_post_meta( $post_id, 'page_container', $_POST['page_container'] );
+    }
 }
 
 /**

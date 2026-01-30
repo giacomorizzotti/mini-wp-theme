@@ -28,10 +28,8 @@ body.wp-admin {
   }
   .desc {
     font-style: inherit;
-    margin-top: 4px;
-    margin-left: 7px;
     line-height: inherit;
-    font-size: var(--p)!important;
+    font-size: var(--p);
   }
   .postbox-header .handle-actions {
     display: flex;
@@ -53,6 +51,7 @@ body.wp-admin {
   :not(#iubenda-cs-banner) input[type=checkbox]::before, :not(#iubenda-iframe) input[type=checkbox]::before {
     width: 20px;
     height: 20px;
+    margin:0;
   }
   :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, :not(#iubenda-iframe) input[type=checkbox]:checked::after {
     width: 10px;
@@ -90,8 +89,15 @@ body.wp-admin {
       text-decoration: none;
     }
   }
+  button {
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
-
+body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
+  box-sizing: border-box;
+}
 footer {
     .edit-link {
         display: block;
@@ -202,4 +208,35 @@ body.login-action-login .language-switcher #language-switcher label span.dashico
 body.login-action-login .button.button-primary {
     background-color: #1b9958;
     border-color: #1b9958;
+}
+#mini_seo_meta_box {
+  min-height: 50vh;
+  background: var(--false-white);
+  border-left: 5px solid var(--third-color);
+  &.closed {
+    min-height: auto;
+  }
+  .nav-tab-wrapper {
+    padding-bottom: 0;
+    .nav-tab.mini-seo-tab {
+      background: var(--light-grey);
+      &.nav-tab-active {
+        background: var(--false-white);
+        border-bottom: 1px solid var(--false-white);
+      }
+    }
+  }
+}
+#header-styling, #inpage-elements, #page-customization {
+  background: var(--false-white);
+  border-left: 5px solid var(--third-color);
+  h2.hndle {
+
+  }
+  .handle-order-higher, .handle-order-lower, .handlediv {
+    width: auto;
+  }
+  .inside {
+    margin-top: 0;
+  }
 }
