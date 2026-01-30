@@ -17,23 +17,39 @@
         <div class="container space-top-bot">
             <div class="boxes">
                 <div class="box box-33 footer-info px-2">
-                    <p class="m-0 L"><?php echo date("Y"); ?>&nbsp;©&nbsp;<span class="bold"><?= do_shortcode('[get_company_name]'); ?></span></p>
+                    <p class="m-0 L"><?php echo esc_html( date( 'Y' ) ); ?>&nbsp;©&nbsp;<span class="bold"><?php echo do_shortcode( '[get_company_name]' ); ?></span></p>
                     <div class="space-1"></div>
-                    <?php if (do_shortcode('[get_company_address_line_1]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_1]'); ?></p><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_address_line_2]') != false): ?><p class="m-0"><?= do_shortcode('[get_company_address_line_2]'); ?></p><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_email]') != false || do_shortcode('[get_company_phone]') != false ): ?><div class="space-1"></div><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_email]') != false): ?><p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_email]'); ?></p><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_phone]') != false): ?><p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_phone]'); ?></p><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_tax_number]') != false || do_shortcode('[get_company_id_code]') != false ): ?><div class="space-1"></div><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_tax_number]') != false): ?><p class="m-0"><span class="label">P.IVA</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_tax_number]'); ?></p><?php endif; ?>
-                    <?php if (do_shortcode('[get_company_id_code]') != false): ?><p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?= do_shortcode('[get_company_id_code]'); ?></p><?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_address_line_1]' ) ): ?>
+                        <p class="m-0"><?php echo do_shortcode( '[get_company_address_line_1]' ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_address_line_2]' ) ): ?>
+                        <p class="m-0"><?php echo do_shortcode( '[get_company_address_line_2]' ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_email]' ) || do_shortcode( '[get_company_phone]' ) ): ?>
+                        <div class="space-1"></div>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_email]' ) ): ?>
+                        <p class="m-0"><span class="label">email</span>&nbsp;&nbsp;<?php echo do_shortcode( '[get_company_email]' ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_phone]' ) ): ?>
+                        <p class="m-0"><span class="label">phone</span>&nbsp;&nbsp;<?php echo do_shortcode( '[get_company_phone]' ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_tax_number]' ) || do_shortcode( '[get_company_id_code]' ) ): ?>
+                        <div class="space-1"></div>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_tax_number]' ) ): ?>
+                        <p class="m-0"><span class="label">P.IVA</span>&nbsp;&nbsp;<?php echo do_shortcode( '[get_company_tax_number]' ); ?></p>
+                    <?php endif; ?>
+                    <?php if ( do_shortcode( '[get_company_id_code]' ) ): ?>
+                        <p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?php echo do_shortcode( '[get_company_id_code]' ); ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="box box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">
-						<?php if (has_custom_logo()): ?>
-							<img src="<?= esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ) ?>" class="logo emblem" alt="emblem"/>
+						<?php if ( has_custom_logo() ): ?>
+							<img src="<?php echo esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ); ?>" class="logo emblem" alt="emblem"/>
                         <?php else: ?>
-							<img src="<?php if (check_variable_from_option('mini_cdn_options', 'cdn_dev')): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem" alt="emblem"/>
+							<img src="<?php if ( mini_check_option( 'mini_cdn_options', 'cdn_dev' ) ): ?>https://serversaur.doingthings.space/mini/img/brand/mini_emblem.svg<?php else: ?>https://mini.uwa.agency/img/brand/mini_emblem.svg<?php endif; ?>" class="logo emblem" alt="emblem"/>
 						<?php endif; ?>
                     </a>
                 </div>

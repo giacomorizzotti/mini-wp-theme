@@ -12,27 +12,8 @@
  * @package mini
  */
 
-$title_presence = get_post_meta($post->ID, 'title_presence', true);
-$sidebar_presence = get_post_meta($post->ID, 'sidebar_presence', true);
-$container_width = get_post_meta($post->ID, 'page_container', true);
-
-$space_top = get_post_meta($post->ID, 'space_top', true);
-$space_bottom = get_post_meta($post->ID, 'space_bot', true);
-$spacing_class= '';
-if($space_top==true && $space_top==false) {
-	$spacing_class= 'space-top';
-}else if($space_top==false && $space_top==true) {
-	$spacing_class= 'space-bot';
-}else if($space_top==true && $space_top==true) {
-	$spacing_class= 'space-top-bot';
-}
-
-$content_size = 'box-100';
-if ( is_active_sidebar( 'sidebar-1' ) ) {
-	if ($sidebar_presence != false) {
-		$content_size = 'box-75';
-	}
-}
+// Get page layout settings
+$layout = mini_get_page_layout();
 
 get_header();
 ?>
@@ -40,10 +21,10 @@ get_header();
 	<main id="primary" class="site-main" template="page">
 
 		<?php if ( has_post_thumbnail() ): ?>
-		<div class="container fw" <?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?=get_the_post_thumbnail_url(); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
+		<div class="container fw" style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;">
 			<div class="container">
 				<div class="boxes hh align-content-end">
-					<?php if ($title_presence): ?>
+					<?php if ( $layout['title_presence'] ): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
 					<?php if ( 'post' === get_post_type() ) :?>
 						<p class="entry-meta S m-0 fw-box">
@@ -64,9 +45,9 @@ get_header();
 		<?php endif; ?>
 
 		<div class="container fw">
-			<div class="container <?= $container_width ?>">
-				<div class="boxes <?=$spacing_class?>">
-					<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php else: ?> py-0<?php endif; ?> <?= $content_size ?>">
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
+				<div class="boxes <?php echo esc_attr( $layout['spacing_class'] ); ?>">
+					<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 						<div class="boxes">
 
 							<?php

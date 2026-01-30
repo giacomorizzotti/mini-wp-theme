@@ -410,7 +410,13 @@ function page_customization_save_postdata( $post_id ) {
 
     // Save container style
     if ( isset( $_POST['page_container'] ) ) {
-        update_post_meta( $post_id, 'page_container', $_POST['page_container'] );
+        $allowed_values = array( 'fw', '', 'thin', 'wide' );
+        $container_value = sanitize_text_field( $_POST['page_container'] );
+        
+        // Only save if it's a valid value
+        if ( in_array( $container_value, $allowed_values, true ) ) {
+            update_post_meta( $post_id, 'page_container', $container_value );
+        }
     }
 }
 
@@ -436,6 +442,8 @@ function add_header_styling_box() {
 
 // HTML code of the block
 function header_styling_box_html( $post, $meta ){
+    // Add nonce field for security
+    wp_nonce_field( 'header_styling_save', 'header_styling_nonce' );
 
     // field value
     $header_styling_top_style = get_post_meta( $post->ID, 'header_styling_top', true);
@@ -486,39 +494,35 @@ function header_styling_box_html( $post, $meta ){
 }
 
 function header_styling_save_postdata( $post_id ) {
+    // Verify nonce
+    if ( ! isset( $_POST['header_styling_nonce'] ) || ! wp_verify_nonce( $_POST['header_styling_nonce'], 'header_styling_save' ) ) {
+        return;
+    }
 
-    // make sure the field is set.
-    if ( ! isset( $_POST['header_styling_top'] ) && ! isset( $_POST['header_styling_scroll'] ) ) { return; }
+    // If this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
 
-    // if this is autosave do nothing
-    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) { return; }
+    // Check user permission
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
 
-    // check user permission
-    if( ! current_user_can( 'edit_post', $post_id ) ) { return; }
+    // Make sure the fields are set
+    if ( ! isset( $_POST['header_styling_top'] ) && ! isset( $_POST['header_styling_scroll'] ) ) {
+        return;
+    }
 
-    // Everything is OK. Now, we need to find and save the data
-    // Define the value of the input field.
-    $header_style_top = $_POST['header_styling_top'];
-    $header_style_scroll = $_POST['header_styling_scroll'];
-    // Update data in the database.
-    update_post_meta( $post_id, 'header_styling_top', $header_style_top );
-    update_post_meta( $post_id, 'header_styling_scroll', $header_style_scroll );
+    // Sanitize and save the data
+    if ( isset( $_POST['header_styling_top'] ) ) {
+        update_post_meta( $post_id, 'header_styling_top', sanitize_text_field( $_POST['header_styling_top'] ) );
+    }
     
+    if ( isset( $_POST['header_styling_scroll'] ) ) {
+        update_post_meta( $post_id, 'header_styling_scroll', sanitize_text_field( $_POST['header_styling_scroll'] ) );
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Patterns
 add_filter( 'should_load_remote_block_patterns', '__return_false' );
@@ -607,30 +611,6 @@ function mini_settings_init() {
         'mini-cdn'
     );
 
-    /*
-    register_setting( 'mini_size', 'mini_size_options');
-
-    add_settings_section(
-        'mini_size_section',
-        __( 'Mini size settings', 'mini' ),
-        'mini_size_section_callback',
-        'mini-size'
-    );
-
-    add_settings_field(
-        'mini_logo_size',
-        __( 'Logo size', 'mini' ),
-        'mini_logo_size_field_callback',
-        'mini-size',
-        'mini_size_section',
-        array(
-            'label_for'         => 'mini_logo_size',
-            'class'             => 'mini_row',
-            'mini_custom_data' => 'custom',
-        )
-    );
-    */
-
     // Register a new setting for "mini" page.
     register_setting( 'mini_font', 'mini_font_options');
 
@@ -677,29 +657,7 @@ function mini_settings_init() {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function mini_load_theme_textdomain() {
-    load_theme_textdomain( 'mini', get_template_directory() . '/languages' );
-}
-add_action( 'after_setup_theme', 'mini_load_theme_textdomain' );
+// Theme textdomain is already loaded in mini_setup() function
 
 /**
  * Register our mini_settings_init to the admin_init action hook.
@@ -718,11 +676,16 @@ add_action( 'admin_init', 'mini_settings_init' );
  * @param array $args  The settings array, defining title, id, callback.
  */
 function mini_section_callback( $args ) {
+    $options = get_option('mini_options');
+    $credits_enabled = isset($options['mini_credits']) && $options['mini_credits'];
     ?>
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="" for="mini_match"><?php esc_html_e( 'Footer credit strip', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_options','mini_credits'); ?>
+            <label class="">
+                <input type="checkbox" id="mini_credits" name="mini_options[mini_credits]" value="1" <?php checked($credits_enabled, true); ?>>
+                <?php esc_html_e( 'Enable footer credits', 'mini' ); ?>
+            </label>
             <p class="" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
         </div>
     </div>
@@ -737,8 +700,11 @@ function mini_cdn_section_callback( $args ) {
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="" for="mini_match"><?php esc_html_e( 'Use CDN', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_cdn_options','cdn'); ?>
-            <p class="" for="mini_news">This option will let you use external CDN to load <i>mini</i> library framework files for this website.</p>
+            <label class="">
+                <input type="checkbox" id="cdn" name="mini_cdn_options[cdn]" value="1" <?php checked($cdn_enabled, true); ?>>
+                <?php esc_html_e( 'Enable CDN', 'mini' ); ?>
+            </label>
+            <p class="" for="mini_news">Load mini CSS and JS from GitHub CDN instead of local files.</p>
         </div>
         <div id="mini_cdn_version_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php esc_html_e( 'GitHub Version', 'mini' ); ?></h4>
@@ -1189,20 +1155,17 @@ function mini_theme_checkbox_option(
     string $status = '',
 ) {
     $options = get_option( $option_group );
-    if (is_array($options) && array_key_exists($option, $options)) {
-        if ($options[$option]) {
-            $status = 'checked';
-        }
+    if ( is_array( $options ) && isset( $options[$option] ) && $options[$option] ) {
+        $status = 'checked';
     }
-    return '
-    <input
-        type="checkbox"
-        id="'.$option.'"
-        name="'.$option_group.'['.$option.']"
-        value="1"
-        '.$status.'
-    >
-    ';
+    
+    return sprintf(
+        '<input type="checkbox" id="%s" name="%s[%s]" value="1" %s>',
+        esc_attr( $option ),
+        esc_attr( $option_group ),
+        esc_attr( $option ),
+        $status
+    );
 }
 function mini_theme_text_field_option(
     string $option_group, 
@@ -1211,23 +1174,21 @@ function mini_theme_text_field_option(
     string $style='width: 100%;',
 ) {
     $options = get_option( $option_group );
-    if ( 
-        is_array($options) && array_key_exists($option, $options )
-    ) {
+    $value = '';
+    
+    if ( is_array( $options ) && isset( $options[$option] ) ) {
         $value = $options[$option];
-    } else {
-        $value = '';
     }
-    return '
-    <input
-        type="text"
-        id="'.$option.'"
-        name="'.$option_group.'['.$option.']"
-        value="'.esc_attr($value).'"
-        placeholder="'.esc_attr($default_value).'"
-        style="'.$style.'";
-    >
-    ';
+    
+    return sprintf(
+        '<input type="text" id="%s" name="%s[%s]" value="%s" placeholder="%s" style="%s">',
+        esc_attr( $option ),
+        esc_attr( $option_group ),
+        esc_attr( $option ),
+        esc_attr( $value ),
+        esc_attr( $default_value ),
+        esc_attr( $style )
+    );
 }
 
 function mini_theme_textarea_option(
@@ -1238,23 +1199,24 @@ function mini_theme_textarea_option(
     int $rows = 3
 ) {
     $options = get_option( $option_group );
-    if ( 
-        is_array($options) && array_key_exists($option, $options )
-    ) {
+    $value = '';
+    
+    if ( is_array( $options ) && isset( $options[$option] ) ) {
         $value = $options[$option];
-    } else {
-        $value = '';
     }
-    $placeholder_attr = $default_value ? 'placeholder="'.esc_attr($default_value).'"' : '';
-    return '
-    <textarea
-        id="'.$option.'"
-        name="'.$option_group.'['.$option.']"
-        '.$placeholder_attr.'
-        style="'.$style.'"
-        rows="'.$rows.'"
-    >'.esc_textarea($value).'</textarea>
-    ';
+    
+    $placeholder_attr = $default_value ? sprintf( 'placeholder="%s"', esc_attr( $default_value ) ) : '';
+    
+    return sprintf(
+        '<textarea id="%s" name="%s[%s]" %s style="%s" rows="%d">%s</textarea>',
+        esc_attr( $option ),
+        esc_attr( $option_group ),
+        esc_attr( $option ),
+        $placeholder_attr,
+        esc_attr( $style ),
+        absint( $rows ),
+        esc_textarea( $value )
+    );
 }
 
 function mini_theme_text_field_color_option(
@@ -1312,7 +1274,6 @@ function mini_theme_option_list_option(
 
     $select_field = '
     <label for="'.$option.'">' . __($label, 'mini' ) . '</label>
-    <br/><br/>
     ';
     $select_field .= '
     <select name="'.$option_group.'['.$option.']" style="'.$style.'">

@@ -84,30 +84,32 @@ function check_variable_from_option($options_group, $option) {
 	<style>
 		:root {
 		<?php
-		variable_from_option('mini_colors_options','mini_semaphore_color_info','--info');
-		variable_from_option('mini_colors_options','mini_semaphore_color_success','--success');
-		variable_from_option('mini_colors_options','mini_semaphore_color_warning','--warning');
-		variable_from_option('mini_colors_options','mini_semaphore_color_danger','--danger');
-		variable_from_option('mini_colors_options','mini_semaphore_color_bad','--bad');
-		variable_from_option('mini_colors_options','mini_blacks_color_black','--black');
-		variable_from_option('mini_colors_options','mini_blacks_color_false_black','--false-black');
-		variable_from_option('mini_colors_options','mini_blacks_color_dark_grey','--dark-grey');
-		variable_from_option('mini_colors_options','mini_blacks_color_grey','--grey');
-		variable_from_option('mini_colors_options','mini_blacks_color_light_grey','--light-grey');
-		variable_from_option('mini_colors_options','mini_blacks_color_false_white','--false-white');
-		variable_from_option('mini_colors_options','mini_blacks_color_false_white_transp','--false-white-transp');
-		variable_from_option('mini_colors_options','mini_blacks_color_white','--white');
-		variable_from_option('mini_colors_options','mini_blacks_color_transp','--transp');
+		mini_css_variable( 'mini_colors_options', 'mini_semaphore_color_info', '--info' );
+		mini_css_variable( 'mini_colors_options', 'mini_semaphore_color_success', '--success' );
+		mini_css_variable( 'mini_colors_options', 'mini_semaphore_color_warning', '--warning' );
+		mini_css_variable( 'mini_colors_options', 'mini_semaphore_color_danger', '--danger' );
+		mini_css_variable( 'mini_colors_options', 'mini_semaphore_color_bad', '--bad' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_black', '--black' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_false_black', '--false-black' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_dark_grey', '--dark-grey' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_grey', '--grey' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_light_grey', '--light-grey' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_false_white', '--false-white' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_false_white_transp', '--false-white-transp' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_white', '--white' );
+		mini_css_variable( 'mini_colors_options', 'mini_blacks_color_transp', '--transp' );
 		
 		// Font usage variables that reference the base font variables
-		variable_from_option('mini_font_options','mini_most_used_font','--font-main', true);
-		variable_from_option('mini_font_options','mini_most_used_font','--text-font', true);
+		mini_css_variable( 'mini_font_options', 'mini_most_used_font', '--font-main', true );
+		mini_css_variable( 'mini_font_options', 'mini_most_used_font', '--text-font', true );
 		?>
 		--font: var(--font-main);
 		<?php
-		variable_from_option('mini_font_options','mini_title_font','--title-font', true);
+		mini_css_variable( 'mini_font_options', 'mini_title_font', '--title-font', true );
 
-		if (get_theme_mod( 'logo-height' )) { echo '--logo-height:'.get_theme_mod( 'logo-height' ).';'; }
+		if ( get_theme_mod( 'logo-height' ) ) { 
+			echo esc_html( '--logo-height:' . get_theme_mod( 'logo-height' ) . ';' ); 
+		}
 		if (get_theme_mod( 'scroll-logo-height' )) { echo '--scroll-logo-height:'.get_theme_mod( 'scroll-logo-height' ).';'; }
 
 		if (get_theme_mod( 'menu-toggle-height' )) { echo '--menu-toggle-height:'.get_theme_mod( 'menu-toggle-height' ).';'; }

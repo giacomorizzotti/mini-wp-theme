@@ -9,92 +9,6 @@ body {
   }
 }
 
-body.wp-admin {
-  a {
-    color: var(--black);
-  }
-  input, select, textarea {
-    display: inline-block;
-  }
-  p.search-box {
-    flex-wrap: nowrap;
-    margin-bottom: var(--margin)!important;
-  }
-  .tablenav {
-    height: auto;
-  }
-  .bulkactions, .actions {
-    display: flex;
-  }
-  .desc {
-    font-style: inherit;
-    line-height: inherit;
-    font-size: var(--p);
-  }
-  .postbox-header .handle-actions {
-    display: flex;
-  }
-  ul {
-    margin: 0;
-  }
-  &.update-core-php h2 {
-    margin-top: calc(var(--margin) * 2);
-  }
-  .wp-core-ui .button-link {
-    font-size: var(--p);
-  }
-  :not(#iubenda-cs-banner) input[type=checkbox], :not(#iubenda-iframe) input[type=checkbox]{
-    margin: calc(var(--margin) * 0.5);
-    width: 16px !important;
-    height: 16px !important;
-  }
-  :not(#iubenda-cs-banner) input[type=checkbox]::before, :not(#iubenda-iframe) input[type=checkbox]::before {
-    width: 20px;
-    height: 20px;
-    margin:0;
-  }
-  :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, :not(#iubenda-iframe) input[type=checkbox]:checked::after {
-    width: 10px;
-    height: 10px;
-  }
-  .attachments-browser .media-toolbar-secondary {
-    max-width: 66%;
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-  .view-switch.media-grid-view-switch {
-    display: flex;
-  }
-  .button-link {
-    margin: 0;
-    padding: 0 calc(var(--padding) * 0.5);
-    box-shadow: none;
-    border: 0;
-    border-radius: 5px;
-    background: var(--link-color);
-    cursor: pointer;
-    text-align: left;
-    color: var(--white);
-    text-decoration: none;
-    transition-property: border, background, color;
-    transition-duration: .05s;
-    transition-timing-function: ease-in-out; 
-    vertical-align: middle;
-    font-size: calc(var(--p) * 0.85);
-    &:hover, &:focus {
-      background: var(--link-hover-color);
-      color: var(--white);
-      text-decoration: none;
-    }
-  }
-  button {
-    &:hover {
-      box-shadow: none;
-    }
-  }
-}
 body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
   box-sizing: border-box;
 }
@@ -181,7 +95,7 @@ body.login-action-login {
     background: linear-gradient(135deg, #1b9958 0, #025A5B 100%) !important;
 }
 body.login-action-login #login h1 a, .login h1 a {
-    background-image: url('<?= get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg');
+    background-image: url('https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/img/brand/mini_logo.svg');
     width: 100px;
     height: 58px;
     background-size: contain;

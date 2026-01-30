@@ -28,89 +28,6 @@ body.admin-bar header#header.open-menu {
   top: 0;
 }
 
-body.wp-admin a {
-  color: var(--black);
-}
-body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
-  display: inline-block;
-}
-body.wp-admin p.search-box {
-  flex-wrap: nowrap;
-  margin-bottom: var(--margin) !important;
-}
-body.wp-admin .tablenav {
-  height: auto;
-}
-body.wp-admin .bulkactions, body.wp-admin .actions {
-  display: flex;
-}
-body.wp-admin .desc {
-  font-style: inherit;
-  line-height: inherit;
-  font-size: var(--p);
-}
-body.wp-admin .postbox-header .handle-actions {
-  display: flex;
-}
-body.wp-admin ul {
-  margin: 0;
-}
-body.wp-admin.update-core-php h2 {
-  margin-top: calc(var(--margin) * 2);
-}
-body.wp-admin .wp-core-ui .button-link {
-  font-size: var(--p);
-}
-body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox], body.wp-admin :not(#iubenda-iframe) input[type=checkbox] {
-  margin: calc(var(--margin) * 0.5);
-  width: 16px !important;
-  height: 16px !important;
-}
-body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]::before, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]::before {
-  width: 20px;
-  height: 20px;
-  margin: 0;
-}
-body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]:checked::after {
-  width: 10px;
-  height: 10px;
-}
-body.wp-admin .attachments-browser .media-toolbar-secondary {
-  max-width: 66%;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-body.wp-admin .view-switch.media-grid-view-switch {
-  display: flex;
-}
-body.wp-admin .button-link {
-  margin: 0;
-  padding: 0 calc(var(--padding) * 0.5);
-  box-shadow: none;
-  border: 0;
-  border-radius: 5px;
-  background: var(--link-color);
-  cursor: pointer;
-  text-align: left;
-  color: var(--white);
-  text-decoration: none;
-  transition-property: border, background, color;
-  transition-duration: 0.05s;
-  transition-timing-function: ease-in-out;
-  vertical-align: middle;
-  font-size: calc(var(--p) * 0.85);
-}
-body.wp-admin .button-link:hover, body.wp-admin .button-link:focus {
-  background: var(--link-hover-color);
-  color: var(--white);
-  text-decoration: none;
-}
-body.wp-admin button:hover {
-  box-shadow: none;
-}
-
 body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
   box-sizing: border-box;
 }
@@ -197,7 +114,7 @@ body.login-action-login {
 }
 
 body.login-action-login #login h1 a, .login h1 a {
-  background-image: url("<?= get_stylesheet_directory_uri(); ?>/img/mini_emblem.svg");
+  background-image: url("https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@main/img/brand/mini_logo.svg");
   width: 100px;
   height: 58px;
   background-size: contain;
