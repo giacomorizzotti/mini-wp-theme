@@ -275,7 +275,7 @@ function add_inpage_elements_box() {
         'inpage-elements',
         'In-page elements',
         'inpage_elements_box_html',
-        ['page', 'post'],
+        ['page', 'post', 'course', 'lesson'],
         'side'
     );
 }
@@ -343,7 +343,7 @@ function add_page_customization_box() {
         'page-customization',
         'Page customization',
         'page_customization_box_html',
-        ['page', 'post', 'event', 'match', 'slide'],
+        ['page', 'post', 'event', 'match', 'slide', 'course', 'lesson'],
         'side'
     );
 }
@@ -435,7 +435,7 @@ function add_header_styling_box() {
         'header-styling',
         'Header styling',
         'header_styling_box_html',
-        ['page', 'post', 'match'],
+        ['page', 'post', 'match', 'course', 'lesson'],
         'side'
     );
 }

@@ -167,14 +167,14 @@ body.login-action-login .button.button-primary {
   border-bottom: 1px solid var(--false-white);
 }
 
-#header-styling, #inpage-elements, #page-customization {
+#header-styling, #inpage-elements, #page-customization, #date-time, #date-only, #location {
   background: var(--false-white);
   border-left: 5px solid var(--third-color);
 }
-#header-styling .handle-order-higher, #header-styling .handle-order-lower, #header-styling .handlediv, #inpage-elements .handle-order-higher, #inpage-elements .handle-order-lower, #inpage-elements .handlediv, #page-customization .handle-order-higher, #page-customization .handle-order-lower, #page-customization .handlediv {
+#header-styling .handle-order-higher, #header-styling .handle-order-lower, #header-styling .handlediv, #inpage-elements .handle-order-higher, #inpage-elements .handle-order-lower, #inpage-elements .handlediv, #page-customization .handle-order-higher, #page-customization .handle-order-lower, #page-customization .handlediv, #date-time .handle-order-higher, #date-time .handle-order-lower, #date-time .handlediv, #date-only .handle-order-higher, #date-only .handle-order-lower, #date-only .handlediv, #location .handle-order-higher, #location .handle-order-lower, #location .handlediv {
   width: auto;
 }
-#header-styling .inside, #inpage-elements .inside, #page-customization .inside {
+#header-styling .inside, #inpage-elements .inside, #page-customization .inside, #date-time .inside, #date-only .inside, #location .inside {
   margin-top: 0;
 }
 
@@ -265,6 +265,12 @@ body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]:checked::after, body
 }
 body.wp-admin a {
   color: var(--black);
+}
+body.wp-admin .welcome-panel {
+  background: transparent;
+}
+body.wp-admin .welcome-panel-content {
+  min-height: auto;
 }
 
 /*# sourceMappingURL=style.css.map */
