@@ -17,7 +17,7 @@ get_header();
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
-					<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
+					<div class="box-75 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
 						<div class="boxes">
 
 							<?php if ( have_posts() ) : ?>
@@ -55,17 +55,9 @@ get_header();
 
 						</div>
 					</div>
-
-					<div class="box-25 p-2">
-						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
-						<ul>
-						<?php wp_get_archives( array( 'post_type' => 'news', 'type' => 'monthly' ) ); ?>
-						</ul>
-						<div class="sep-1 light-grey-bg my-2"></div>
-					</div>
 					
 					<?php
-					/* get_sidebar(); */
+						get_sidebar('news');
 					?>
 						
 				</div>

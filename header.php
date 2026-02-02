@@ -168,7 +168,7 @@ if (
 		<header id="header" class="header <?php echo esc_attr( $header_top_style ); ?> <?php echo esc_attr( $header_scroll_style ); ?>">
 			<div class="container">
 				<div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
-					<div class="box brand px-2">
+					<div class="box brand px-1">
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
 							<?php if ( has_custom_logo() ): ?>
 								<?php the_custom_logo(); ?>

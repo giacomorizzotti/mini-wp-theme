@@ -36,6 +36,7 @@ get_header();
 								while ( have_posts() ) :
 									the_post();
 									get_template_part( 'template-parts/content', get_post_type() );
+									echo '<div class="sep-1 light-grey-border my-2"></div>';	
 								endwhile;
 
 								the_posts_navigation();
@@ -49,14 +50,10 @@ get_header();
 
 						</div>
 					</div>
-
-					<div class="box-25 p-2">
-						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
-						<ul>
-						<?php wp_get_archives( array( 'post_type' => 'course', 'type' => 'monthly' ) ); ?>
-						</ul>
-						<div class="sep-1 light-grey-bg my-2"></div>
-					</div>
+					
+					<?php
+						get_sidebar('course');
+					?>
 						
 				</div>
 			</div>

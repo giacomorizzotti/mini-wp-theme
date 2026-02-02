@@ -7,7 +7,11 @@
  * @package mini
  */
 
+// Get page layout settings
+$layout = mini_get_page_layout();
+
 get_header();
+
 ?>
 	<main id="primary" class="site-main" template="single-news">
 
@@ -16,7 +20,7 @@ get_header();
 				
 				<div class="boxes space-top-bot">
 					
-					<div class="box my-0 p-0 box-75">
+					<div class="box my-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :
@@ -35,6 +39,7 @@ get_header();
 						</div>
 					</div>
 
+					<?php if ($layout['sidebar_presence']): ?>
 					<div class="box-25 p-2 fw-bg">
 						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
 						<ul>
@@ -42,9 +47,12 @@ get_header();
 						</ul>
 						<div class="sep-1 light-grey-bg my-2"></div>
 					</div>
+					<?php endif; ?>
 
 					<?php
-						/* get_sidebar();*/
+						if ($layout['sidebar_presence']) {
+							get_sidebar('news');
+						}
 					?>
 
 				</div>

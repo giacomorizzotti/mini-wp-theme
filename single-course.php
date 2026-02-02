@@ -19,7 +19,7 @@ get_header();
 				
 				<div class="boxes space-top-bot">
 					
-					<div class="box my-0 box-75">
+					<div class="box my-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :
@@ -27,26 +27,25 @@ get_header();
 
 								get_template_part( 'template-parts/content', get_post_type() );
 							?>
+							<?php /*
 							<div class="box-zero-50 fw-bg">
 								<p class=""><?php previous_post_link(); ?></p>
 							</div>
 							<div class="box-zero-50 fw-bg">
 								<p class=""><?php next_post_link(); ?></p>
 							</div>
+							*/ ?>
 							<?php
 							endwhile; // End of the loop.
 							?>
-							</div>
 						</div>
 					</div>
 
-					<div class="box-25 p-2 fw-bg">
-						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
-						<ul>
-						<?php wp_get_archives( array( 'post_type' => 'course', 'type' => 'monthly' ) ); ?>
-						</ul>
-						<div class="sep-1 light-grey-bg my-2"></div>
-					</div>
+					<?php
+						if ($layout['sidebar_presence']) {
+							get_sidebar('course');
+						}
+					?>
 
 				</div>
 			</div>

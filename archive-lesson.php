@@ -50,13 +50,9 @@ get_header();
 						</div>
 					</div>
 
-					<div class="box-25 p-2">
-						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
-						<ul>
-						<?php wp_get_archives( array( 'post_type' => 'lesson', 'type' => 'monthly' ) ); ?>
-						</ul>
-						<div class="sep-1 light-grey-bg my-2"></div>
-					</div>
+					<?php
+						get_sidebar('lesson');
+					?>
 						
 				</div>
 			</div>

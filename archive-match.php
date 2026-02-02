@@ -44,13 +44,11 @@ $the_query = new WP_Query( $args );
 							?>
 						</div>
 					</div>
-					<div class="box-25 p-2">
-						<h4 class=""><?=esc_html__( 'Monthly archive', 'mini' )?>:</h4>
-						<ul>
-						<?php wp_get_archives( array( 'post_type' => 'match', 'type' => 'monthly' ) ); ?>
-						</ul>
-						<div class="sep-1 light-grey-bg my-2"></div>
-					</div>
+					
+					<?php
+						get_sidebar('match');
+					?>
+
 				</div>
 			</div>
 		</div>

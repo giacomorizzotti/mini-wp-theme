@@ -141,12 +141,9 @@ body.login-action-login .button.button-primary {
     }
   }
 }
-#header-styling, #inpage-elements, #page-customization, #date-time, #date-only, #location {
+#header-styling, #inpage-elements, #page-customization, #mini-date, #mini-lesson-date, #mini-time, #location, #teams, #mini-parent-course {
   background: var(--false-white);
   border-left: 5px solid var(--third-color);
-  h2.hndle {
-
-  }
   .handle-order-higher, .handle-order-lower, .handlediv {
     width: auto;
   }

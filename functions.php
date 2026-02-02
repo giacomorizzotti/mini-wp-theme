@@ -125,11 +125,90 @@ add_action( 'after_setup_theme', 'mini_content_width', 0 );
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
 function mini_widgets_init() {
+    // Default sidebar
     register_sidebar(
         array(
-            'name'          => esc_html__( 'Sidebar', 'mini' ),
+            'name'          => esc_html__( 'Default Sidebar', 'mini' ),
             'id'            => 'sidebar-1',
             'description'   => esc_html__( 'Add widgets here.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // Course sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Course Sidebar', 'mini' ),
+            'id'            => 'course-sidebar',
+            'description'   => esc_html__( 'Sidebar for courses.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // Event sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Event Sidebar', 'mini' ),
+            'id'            => 'event-sidebar',
+            'description'   => esc_html__( 'Sidebar for events.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // Lesson sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Lesson Sidebar', 'mini' ),
+            'id'            => 'lesson-sidebar',
+            'description'   => esc_html__( 'Sidebar for lessons.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // News sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'News Sidebar', 'mini' ),
+            'id'            => 'news-sidebar',
+            'description'   => esc_html__( 'Sidebar for news.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // Match sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Match Sidebar', 'mini' ),
+            'id'            => 'match-sidebar',
+            'description'   => esc_html__( 'Sidebar for matches.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
+    
+    // Post sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Post Sidebar', 'mini' ),
+            'id'            => 'post-sidebar',
+            'description'   => esc_html__( 'Sidebar for posts.', 'mini' ),
             'before_widget' => '<section id="%1$s" class="widget %2$s">',
             'after_widget'  => '</section>',
             'before_title'  => '<h2 class="widget-title">',
