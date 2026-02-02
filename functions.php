@@ -240,7 +240,20 @@ function mini_admin_styles() {
     wp_enqueue_style( 'mini-admin-style', get_stylesheet_uri(), array(), _S_VERSION );
 }
 add_action( 'admin_enqueue_scripts', 'mini_admin_styles' );
-add_action( 'login_enqueue_scripts', 'mini_admin_styles' );
+
+/**
+ * Enqueue styles for login page.
+ */
+function mini_login_styles() {
+    // Load parent theme styles
+    wp_enqueue_style( 'mini-login-style', get_template_directory_uri() . '/style.css', array(), _S_VERSION );
+    
+    // Load child theme styles if active
+    if ( get_stylesheet_directory_uri() !== get_template_directory_uri() ) {
+        wp_enqueue_style( 'mini-child-login-style', get_stylesheet_uri(), array('mini-login-style'), _S_VERSION );
+    }
+}
+add_action( 'login_enqueue_scripts', 'mini_login_styles' );
 
 /**
  * Remove wrapper div from button blocks and add 'btn' class
@@ -606,12 +619,21 @@ function header_styling_save_postdata( $post_id ) {
 // Patterns
 add_filter( 'should_load_remote_block_patterns', '__return_false' );
 
-// mini favicon
-function mini_favicon(){
-    echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />" . "\n";
+// mini favicon - fallback if plugin not active
+function mini_theme_favicon() {
+    // Only run if plugin function doesn't exist (plugin not active)
+    if (function_exists('mini_plugin_favicon')) {
+        return;
+    }
+    
+    $favicon_path = get_template_directory() . '/img/favicon.ico';
+    if (file_exists($favicon_path)) {
+        $favicon_url = get_template_directory_uri() . '/img/favicon.ico';
+        echo "<link rel='shortcut icon' href='" . esc_url($favicon_url) . "' />\n";
+    }
 }
-add_action( 'admin_head', 'mini_favicon' );
-//add_action( 'wp_head', 'mini_favicon');
+add_action('admin_head', 'mini_theme_favicon');
+add_action('login_head', 'mini_theme_favicon');
 
 // Contact form 7 BUG FIX
 add_filter('wpcf7_autop_or_not', '__return_false');
