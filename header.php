@@ -78,8 +78,16 @@ $header_scroll_style = $header_styling['scroll'];
 		if ( get_theme_mod( 'main-color-dark' ) ) { 
 			echo esc_html( '--main-color-dark:' . get_theme_mod( 'main-color-dark' ) . ';' ); 
 		}
-		if ( get_theme_mod( 'main-color-transp' ) ) { 
-			echo esc_html( '--main-color-transp:' . get_theme_mod( 'main-color-transp' ) . ';' ); 
+		if ( get_theme_mod( 'main-color-transp' ) ) {
+			$color = get_theme_mod( 'main-color-transp' );
+			$opacity = get_theme_mod( 'main-color-transp-opacity', 25 );
+			// Convert hex to RGB and add opacity
+			$hex = str_replace('#', '', $color);
+			$r = hexdec(substr($hex, 0, 2));
+			$g = hexdec(substr($hex, 2, 2));
+			$b = hexdec(substr($hex, 4, 2));
+			$alpha = $opacity / 100;
+			echo esc_html( '--main-color-transp:rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $alpha . ');' );
 		}
 		
 		mini_css_variable( 'mini_colors_options', 'mini_second_color', '--second-color' );

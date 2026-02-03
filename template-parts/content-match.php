@@ -50,14 +50,16 @@ $it_date_year = new IntlDateFormatter(
 	<div class="container fw">
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
-				<header class="box box-100 entry-header mb-1">
+				<header class="box box-100 entry-header">
+					<div class="space"></div>
 				<?php
 					if ( is_singular() ) {
-						the_title( '<h1 class="entry-title inline-block m-0 color-box py-1 px-15" style="box-shadow:3px 3px 0 white, 7px 7px 0 var(--main-color-dark);">', '</h1>' );
+						the_title( '<h1 class="entry-title second-color-text">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title inline-block m-0 color-box py-1 px-15" style="box-shadow:3px 3px 0 white, 7px 7px 0 var(--main-color-dark);"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 wh-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title second-color-text"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 wh-text">', '</a></h2>' );
 					}
 					?>
+					<div class="space"></div>
 				</header><!-- .entry-header -->
 			</div>
 		</div>
@@ -113,76 +115,83 @@ $it_date_year = new IntlDateFormatter(
 					</div>
 				</div>
 			</div>
+		</div>
 		<?php endif; ?>
 		<?php endif; ?>
-			<?php 
-			if (
-				get_post_meta($post->ID, 'event_date')[0] != null ||
-				get_post_meta($post->ID, 'event_time')[0] != null ||
-				get_post_meta($post->ID, 'location_name')[0] != null ||
-				get_post_meta($post->ID, 'location_address')[0] != null
-			):
-			?>
-			<div class="box-50">
-                <div class="flex flex-flow-column-wrap justify-content-start align-items-start">
-					<?php 
-						if ( get_post_meta($post->ID, 'event_date')[0] != null ) {
-							$date = strtotime(get_post_meta($post->ID, 'event_date')[0]);
-							$date_day_name = $it_date_day_name->format($date);
-							$date_day_number = $it_date_day_number->format($date);
-							$date_month = $it_date_month->format($date);
-							$date_year = $it_date_year->format($date);
-						}
-					?>
-					<?php if ( get_post_meta($post->ID, 'event_date')[0] != null ): ?>
-					<div class="date-box">
+		<?php 
+		if (
+			get_post_meta($post->ID, 'event_date')[0] != null ||
+			get_post_meta($post->ID, 'event_time')[0] != null ||
+			get_post_meta($post->ID, 'location_name')[0] != null ||
+			get_post_meta($post->ID, 'location_address')[0] != null
+		):
+		?>
+		<div class="boxes align-items-start align-content-start">
+			<div class="box-100 my-0">
+				<div class="date-time-box flex flex-wrap">
+					<div class="block flex w-100 flex-direction-row flex-wrap">
 						<div class="flex">
-							<p class="m-0 huge black center" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center second-color-box p-15 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
+						<?php 
+							if ( get_post_meta($post->ID, 'event_date')[0] != null ) {
+								$date = strtotime(get_post_meta($post->ID, 'event_date')[0]);
+								$date_day_name = $it_date_day_name->format($date);
+								$date_day_number = $it_date_day_number->format($date);
+								$date_month = $it_date_month->format($date);
+								$date_year = $it_date_year->format($date);
+							}
+						?>
+						<?php if ( get_post_meta($post->ID, 'event_date')[0] != null ): ?>
+							<p class="m-0" style="line-height: 1!important;">
+								<span class="square flex align-items-center justify-content-center second-color-box huge black py-1 px-2 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
 							</p>
-							<div class="flex align-items-start flex-direction-column">
-								<div>
+							<div class="flex flex-direction-column">
+								<div class="flex">
 									<p class="m-0 up-case <?php if ( is_singular() ): ?>L<?php else: ?><?php endif; ?>">
-										<span class="second-color-dark-box m-0 py-1 px-15"><?= $date_day_name ?></span>
+										<span class="second-color-dark-box py-1 px-15 m-0"><?= ucfirst($date_day_name) ?></span>
 									</p>
 								</div>
-								<div>
-									<span class="second-color-box bold XL m-0 px-15"><?= ucfirst($date_month) ?></span><span class="second-color-dark-box light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
+								<div class="flex">
+									<p class="m-0 bold XL">
+										<span class="second-color-box p-15 m-0"><?= ucfirst($date_month) ?></span>
+									</p>
+									<p class="m-0 XL light">
+										<span class="second-color-dark-box m-0 p-1"><?= $date_year ?></span>
+									</p>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
 										$time = date('H:i', strtotime(get_post_meta($post->ID, 'event_time')[0]));
 									}
 								?>
-								<div class="time-box m-0">
-									<p class="m-0 wh-text up-case bold" >
-										<span class="second-color-dark-box m-0 px-15"><?=$time?></span>
-									</p>
+								<div class="flex">
+									<div class="time-box">
+										<p class="m-0">
+											<span class="second-color-dark-box wh-text px-15 XL bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<?php endif; ?>
-					<?php
-					if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
-					?>
-					<div class="location-box">
-						<h4 class="m-0 bold L second-color-dark-box px-15">
-							<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
-						</h4>
-						<div class="sep"></div>
 						<?php endif; ?>
 						<?php
-						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
+						if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
 						?>
-						<p class="m-0 second-color-box px-15">
-							<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
-						</p>
+							<h4 class="m-0 bold XL py-1 px-15 second-color-box">
+								<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
+							</h4>
+							<div class="sep"></div>
+							<?php endif; ?>
+							<?php
+							if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
+							?>
+							<p class="m-0 p-1 second-color-dark-box">
+								<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+							</p>
+						<?php endif; ?>
 					</div>
-					<?php endif; ?>
 				</div>
 			</div>
-			<?php endif; ?>
+		<?php endif; ?>
 
 		<?php if ( has_excerpt() || get_post()->post_content != '' ): ?>
 			<div class="box box-66 entry-content">
@@ -216,13 +225,13 @@ $it_date_year = new IntlDateFormatter(
 			</div><!-- .entry-content -->
 			<?php endif; ?>
 
+			<?php if ( !is_singular() ): ?>
 			<div class="box-100">
-				<?php if ( !is_singular() ): ?>
 				<p class="m-0">
 					<a href="<?=get_the_permalink()?>" class="second-color-btn b-rad-0 my-0"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
-				<?php endif; ?>
 			</div>
+			<?php endif; ?>
 
 			<footer class="box box-100 my-0 py-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>

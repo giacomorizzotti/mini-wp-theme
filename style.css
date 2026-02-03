@@ -167,14 +167,14 @@ body.login-action-login .button.button-primary {
   border-bottom: 1px solid var(--false-white);
 }
 
-#header-styling, #inpage-elements, #page-customization, #mini-date, #mini-lesson-date, #mini-time, #location, #teams, #mini-parent-course {
+#header-styling, #inpage-elements, #page-customization, #mini-date, #mini-lesson-date, #mini-time, #location, #teams, #mini-parent-course, #date-only, #date-time {
   background: var(--false-white);
   border-left: 5px solid var(--third-color);
 }
-#header-styling .handle-order-higher, #header-styling .handle-order-lower, #header-styling .handlediv, #inpage-elements .handle-order-higher, #inpage-elements .handle-order-lower, #inpage-elements .handlediv, #page-customization .handle-order-higher, #page-customization .handle-order-lower, #page-customization .handlediv, #mini-date .handle-order-higher, #mini-date .handle-order-lower, #mini-date .handlediv, #mini-lesson-date .handle-order-higher, #mini-lesson-date .handle-order-lower, #mini-lesson-date .handlediv, #mini-time .handle-order-higher, #mini-time .handle-order-lower, #mini-time .handlediv, #location .handle-order-higher, #location .handle-order-lower, #location .handlediv, #teams .handle-order-higher, #teams .handle-order-lower, #teams .handlediv, #mini-parent-course .handle-order-higher, #mini-parent-course .handle-order-lower, #mini-parent-course .handlediv {
+#header-styling .handle-order-higher, #header-styling .handle-order-lower, #header-styling .handlediv, #inpage-elements .handle-order-higher, #inpage-elements .handle-order-lower, #inpage-elements .handlediv, #page-customization .handle-order-higher, #page-customization .handle-order-lower, #page-customization .handlediv, #mini-date .handle-order-higher, #mini-date .handle-order-lower, #mini-date .handlediv, #mini-lesson-date .handle-order-higher, #mini-lesson-date .handle-order-lower, #mini-lesson-date .handlediv, #mini-time .handle-order-higher, #mini-time .handle-order-lower, #mini-time .handlediv, #location .handle-order-higher, #location .handle-order-lower, #location .handlediv, #teams .handle-order-higher, #teams .handle-order-lower, #teams .handlediv, #mini-parent-course .handle-order-higher, #mini-parent-course .handle-order-lower, #mini-parent-course .handlediv, #date-only .handle-order-higher, #date-only .handle-order-lower, #date-only .handlediv, #date-time .handle-order-higher, #date-time .handle-order-lower, #date-time .handlediv {
   width: auto;
 }
-#header-styling .inside, #inpage-elements .inside, #page-customization .inside, #mini-date .inside, #mini-lesson-date .inside, #mini-time .inside, #location .inside, #teams .inside, #mini-parent-course .inside {
+#header-styling .inside, #inpage-elements .inside, #page-customization .inside, #mini-date .inside, #mini-lesson-date .inside, #mini-time .inside, #location .inside, #teams .inside, #mini-parent-course .inside, #date-only .inside, #date-time .inside {
   margin-top: 0;
 }
 

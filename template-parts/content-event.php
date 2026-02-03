@@ -108,7 +108,13 @@ $it_date_year = new IntlDateFormatter(
 								?>
 								<div class="time-box m-0">
 									<p class="m-0 wh-text up-case L bold" >
-										<span class="second-color-dark-box m-0 px-15"><?=$time?></span>
+										<?php 
+											if (get_post_meta($post->ID, 'event_end_time')[0] != null) {
+												$end_time = date('H:i', strtotime(get_post_meta($post->ID, 'event_end_time')[0]));
+											}
+										?>
+										<span class="second-color-dark-box m-0 py-1 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
+										
 									</p>
 								</div>
 							</div>
@@ -127,8 +133,8 @@ $it_date_year = new IntlDateFormatter(
 						<?php
 						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 						?>
-						<p class="m-0 L second-color-dark-box px-15">
-							<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+						<p class="m-0 L second-color-dark-box py-1 px-15">
+							<i class="iconoir-map-pin"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
 						</p>
 					</div>
 					<?php endif; ?>

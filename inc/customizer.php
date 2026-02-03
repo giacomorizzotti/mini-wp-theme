@@ -139,7 +139,15 @@ function wpctmz_color_palette( $wp_customize ){
 	//Setting
 	$wp_customize->add_setting( 'main-color', array( 'default' => '#1b9958' ) );
 	$wp_customize->add_setting( 'main-color-dark', array( 'default' => '#155f39' ) );
-	$wp_customize->add_setting( 'main-color-transp', array( 'default' => '#1b994725' ) );
+	$wp_customize->add_setting( 'main-color-transp', array( 
+		'default' => '#1b9947',
+		'transport' => 'refresh',
+	) );
+	$wp_customize->add_setting( 'main-color-transp-opacity', array( 
+		'default' => '25',
+		'transport' => 'refresh',
+		'sanitize_callback' => 'absint',
+	) );
 	
 	$wp_customize->add_setting( 'second-color', array( 'default' => '#025A5B' ) );
 	$wp_customize->add_setting( 'second-color-dark', array( 'default' => '#003838' ) );
@@ -204,6 +212,22 @@ function wpctmz_color_palette( $wp_customize ){
 				'section' => 'color-settings',
 				'settings' => 'main-color-transp',
 			)
+		)
+	);
+	
+	// Opacity for main color transparent
+	$wp_customize->add_control(
+		'main-color-transp-opacity',
+		array(
+			'type' => 'range',
+			'section' => 'color-settings',
+			'label' => __( 'Main color opacity (%)', 'mini' ),
+			'description' => __( 'Set transparency level (0-100%)', 'mini' ),
+			'input_attrs' => array(
+				'min' => 0,
+				'max' => 100,
+				'step' => 1,
+			),
 		)
 	);
 

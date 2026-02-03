@@ -1,3 +1,10 @@
+<?php
+/**
+ * Title: Slider
+ * Slug: mini/slider
+ * Categories: featured
+ */
+?>
 
 <!-- wp:html -->
 <div class="slider-wrapper">
