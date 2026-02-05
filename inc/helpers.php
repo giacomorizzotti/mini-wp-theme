@@ -157,8 +157,9 @@ function mini_theme_option_list_option(
     $select_field .= '
     <select name="'.$option_group.'['.$option.']" style="'.$style.'">
     ';
+    $default_selected = empty($stored_choice) ? ' selected' : '';
     $select_field .= '
-        <option value="" selected>Default</option>
+        <option value=""' . $default_selected . '>Default</option>
     ';
     $o = 1;
     foreach($select_options as $select_option => $value ) {
