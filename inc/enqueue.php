@@ -195,6 +195,8 @@ function mini_gwf_font(){
     
     // Build Google Fonts URL
     if (!empty($fonts_to_load)) {
+        // Remove duplicates to avoid loading the same font twice
+        $fonts_to_load = array_unique($fonts_to_load);
         $fonts_query = implode('&family=', $fonts_to_load);
         $fonts_url = 'https://fonts.googleapis.com/css2?family=' . $fonts_query . '&display=swap';
         
@@ -210,24 +212,41 @@ function mini_gwf_font(){
     $css_vars = ':root {';
     
     if (isset($fonts_data['sans'][$sans_font])) {
-        $css_vars .= '--sans-font:"' . $sans_font . '", sans-serif;';
+        $css_vars .= '--font-sans:"' . $sans_font . '", sans-serif;';
+        $css_vars .= '--sans-font:"' . $sans_font . '", sans-serif;'; // Legacy support
     }
     
     if (isset($fonts_data['secondary'][$secondary_font])) {
-        $css_vars .= '--secondary-font:"' . $secondary_font . '", sans-serif;';
+        $css_vars .= '--font-second:"' . $secondary_font . '", sans-serif;';
+        $css_vars .= '--secondary-font:"' . $secondary_font . '", sans-serif;'; // Legacy support
     }
     
     if ($serif_font && isset($fonts_data['serif'][$serif_font])) {
-        $css_vars .= '--serif-font:"' . $serif_font . '", serif;';
+        $css_vars .= '--font-serif:"' . $serif_font . '", serif;';
+        $css_vars .= '--serif-font:"' . $serif_font . '", serif;'; // Legacy support
     }
     
     if ($mono_font && isset($fonts_data['mono'][$mono_font])) {
-        $css_vars .= '--mono-font:"' . $mono_font . '", monospace;';
+        $css_vars .= '--font-mono:"' . $mono_font . '", monospace;';
+        $css_vars .= '--mono-font:"' . $mono_font . '", monospace;'; // Legacy support
     }
     
     if ($handwriting_font && isset($fonts_data['handwriting'][$handwriting_font])) {
-        $css_vars .= '--handwriting-font:"' . $handwriting_font . '", cursive;';
+        $css_vars .= '--font-handwriting:"' . $handwriting_font . '", cursive;';
+        $css_vars .= '--handwriting-font:"' . $handwriting_font . '", cursive;'; // Legacy support
     }
+    
+    // Get user's font usage preferences
+    $title_font_var = isset($options['mini_title_font']) && !empty($options['mini_title_font']) 
+        ? $options['mini_title_font'] : '--font-second';
+    $most_used_font_var = isset($options['mini_most_used_font']) && !empty($options['mini_most_used_font']) 
+        ? $options['mini_most_used_font'] : '--font-sans';
+    
+    // Apply font usage preferences
+    $css_vars .= '--title-font:var(' . $title_font_var . ');';
+    $css_vars .= '--font-main:var(' . $most_used_font_var . ');';
+    $css_vars .= '--text-font:var(' . $most_used_font_var . ');';
+    $css_vars .= '--font:var(' . $most_used_font_var . ');';
     
     $css_vars .= '}';
     
