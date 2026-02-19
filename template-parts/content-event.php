@@ -90,16 +90,16 @@ $it_date_year = new IntlDateFormatter(
 					<div class="date-box">
 						<div class="flex">
 							<p class="m-0 huge black center" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center second-color-box p-15 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
+								<span class="square flex align-items-center justify-content-center box-shadow white-box p-15 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
 							</p>
-							<div class="flex align-items-start flex-direction-column">
+							<div class="flex align-items-start flex-direction-column oh">
 								<div>
 									<p class="m-0 up-case <?php if ( is_singular() ): ?>XL<?php else: ?>L<?php endif; ?>">
-										<span class="second-color-dark-box m-0 py-1 px-15"><?= $date_day_name ?></span>
+										<span class="fw-box m-0 py-1 px-15"><?= $date_day_name ?></span>
 									</p>
 								</div>
 								<div>
-									<span class="second-color-box bold XXL m-0 px-15"><?= ucfirst($date_month) ?></span><span class="second-color-dark-box L light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
+									<span class="white-box bold XXL m-0 px-15 box-shadow"><?= ucfirst($date_month) ?></span><span class="fw-box L light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
@@ -113,28 +113,29 @@ $it_date_year = new IntlDateFormatter(
 												$end_time = date('H:i', strtotime(get_post_meta($post->ID, 'event_end_time')[0]));
 											}
 										?>
-										<span class="second-color-dark-box m-0 py-1 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
+										<span class="fw-box m-0 py-1 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
 										
 									</p>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="space-2"></div>
 					<?php endif; ?>
 					<?php
 					if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
 					?>
 					<div class="location-box">
-						<h4 class="m-0 bold XL second-color-box px-15">
+						<div class="space-2"></div>
+						<h4 class="m-0 bold XL">
 							<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
 						</h4>
-						<div class="sep"></div>
 						<?php endif; ?>
 						<?php
 						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 						?>
-						<p class="m-0 L second-color-dark-box py-1 px-15">
-							<i class="iconoir-map-pin"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+						<p class="mt-05">
+							<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
 						</p>
 					</div>
 					<?php endif; ?>

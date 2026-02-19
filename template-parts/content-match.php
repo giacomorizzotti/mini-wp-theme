@@ -54,9 +54,9 @@ $it_date_year = new IntlDateFormatter(
 					<div class="space"></div>
 				<?php
 					if ( is_singular() ) {
-						the_title( '<h1 class="entry-title second-color-text">', '</h1>' );
+						the_title( '<h1 class="entry-title">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title second-color-text"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 wh-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 wh-text">', '</a></h2>' );
 					}
 					?>
 					<div class="space"></div>
@@ -78,7 +78,7 @@ $it_date_year = new IntlDateFormatter(
 		?>
 		<div class="boxes">
 			<div class="box-zero-50 <?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>box-sm-40<?php else: ?>box-sm-25<?php endif; ?>">
-				<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?> color-dark-bg<?php else: ?> fw-bg<?php endif; ?> b-rad-25" <?php /*style="border-top-left-radius: 25px; border-top-right-radius: 25px;"*/ ?>>
+				<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?> fw-bg<?php else: ?> fw-bg<?php endif; ?> b-rad-25 box-shadow light-grey-border" <?php /*style="border-top-left-radius: 25px; border-top-right-radius: 25px;"*/ ?>>
 					<?php if ( get_post_meta($post->ID, 'team_1_logo')[0] ):?>
 					<div class="<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>box-50<?php else: ?>box-100<?php endif; ?> p-15 pb-0 square order-zero-2 order-sm-1">
 						<div class="p-15 wh-bg block h-100 box-shadow-light" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -88,16 +88,16 @@ $it_date_year = new IntlDateFormatter(
 					<?php endif; ?>
 					<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>
 					<div class="box-50 flex align-items-center justify-content-center order-zero-1 order-sm-2">
-						<h3 class="huge center wh-text m-0"><?= get_post_meta($post->ID, 'team_1_score')[0] ?></h3>
+						<h3 class="huge center m-0"><?= get_post_meta($post->ID, 'team_1_score')[0] ?></h3>
 					</div>
 					<?php endif; ?>
-					<div class="box-100 second-color-dark-bg box-shadow-dark order-3 px-15">
-						<h2 class="XL wh-text m-0 center"><?= get_post_meta($post->ID, 'team_1')[0] ?></h2>
+					<div class="box-100 black-bg box-shadow-dark order-3 px-15">
+						<h2 class="XL white-text m-0 center"><?= get_post_meta($post->ID, 'team_1')[0] ?></h2>
 					</div>
 				</div>
 			</div>
 			<div class="box-zero-50 <?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>box-sm-40<?php else: ?>box-sm-25<?php endif; ?>">
-				<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?> color-dark-bg<?php else: ?> fw-bg<?php endif; ?> b-rad-25" <?php /*style="border-top-left-radius: 25px; border-top-right-radius: 25px;"*/ ?>>
+				<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?> fw-bg<?php else: ?> fw-bg<?php endif; ?> b-rad-25 box-shadow light-grey-border" <?php /*style="border-top-left-radius: 25px; border-top-right-radius: 25px;"*/ ?>>
 					<?php if ( get_post_meta($post->ID, 'team_2_logo')[0] ):?>
 					<div class="<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>box-50<?php else: ?>box-100<?php endif; ?> p-15 pb-0 square order-zero-2 order-sm-1">
 						<div class="p-15 wh-bg block h-100 box-shadow-light" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -107,15 +107,16 @@ $it_date_year = new IntlDateFormatter(
 					<?php endif; ?>
 					<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>
 					<div class="box-50 flex align-items-center justify-content-center order-zero-1 order-sm-2">
-						<h3 class="huge center wh-text m-0"><?= get_post_meta($post->ID, 'team_2_score')[0] ?></h3>
+						<h3 class="huge center m-0"><?= get_post_meta($post->ID, 'team_2_score')[0] ?></h3>
 					</div>
 					<?php endif; ?>
-					<div class="box-100 second-color-dark-bg box-shadow-dark order-3 px-15">
-						<h2 class="XL wh-text m-0 center"><?= get_post_meta($post->ID, 'team_2')[0] ?></h2>
+					<div class="box-100 black-bg box-shadow-dark order-3 px-15">
+						<h2 class="XL white-text m-0 center"><?= get_post_meta($post->ID, 'team_2')[0] ?></h2>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="space-2"></div>
 		<?php endif; ?>
 		<?php endif; ?>
 		<?php 
@@ -142,20 +143,20 @@ $it_date_year = new IntlDateFormatter(
 						?>
 						<?php if ( get_post_meta($post->ID, 'event_date')[0] != null ): ?>
 							<p class="m-0" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center second-color-box huge black py-1 px-2 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
+								<span class="square flex align-items-center justify-content-center white-box box-shadow huge black py-1 px-2 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
 							</p>
-							<div class="flex flex-direction-column">
+							<div class="flex flex-direction-column oh">
 								<div class="flex">
 									<p class="m-0 up-case <?php if ( is_singular() ): ?>L<?php else: ?><?php endif; ?>">
-										<span class="second-color-dark-box py-1 px-15 m-0"><?= ucfirst($date_day_name) ?></span>
+										<span class="fw-box py-1 px-15 m-0"><?= ucfirst($date_day_name) ?></span>
 									</p>
 								</div>
 								<div class="flex">
 									<p class="m-0 bold XL">
-										<span class="second-color-box p-15 m-0"><?= ucfirst($date_month) ?></span>
+										<span class="white-box p-15 m-0 box-shadow"><?= ucfirst($date_month) ?></span>
 									</p>
 									<p class="m-0 XL light">
-										<span class="second-color-dark-box m-0 p-1"><?= $date_year ?></span>
+										<span class="fw-box m-0 p-1"><?= $date_year ?></span>
 									</p>
 								</div>
 								<?php 
@@ -166,26 +167,27 @@ $it_date_year = new IntlDateFormatter(
 								<div class="flex">
 									<div class="time-box">
 										<p class="m-0">
-											<span class="second-color-dark-box wh-text px-15 XL bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
+											<span class="fw-box wh-text px-15 XL bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
 										</p>
 									</div>
 								</div>
 							</div>
 						</div>
+						<div class="space-2"></div>
 						<?php endif; ?>
 						<?php
 						if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
 						?>
-							<h4 class="m-0 bold XL py-1 px-15 second-color-box">
+							<div class="space-2"></div>
+							<h4 class="m-0 bold XL">
 								<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
 							</h4>
-							<div class="sep"></div>
 							<?php endif; ?>
 							<?php
 							if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 							?>
-							<p class="m-0 p-1 second-color-dark-box">
-								<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+							<p class="mt-05">
+								<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
 							</p>
 						<?php endif; ?>
 					</div>
@@ -228,7 +230,7 @@ $it_date_year = new IntlDateFormatter(
 			<?php if ( !is_singular() ): ?>
 			<div class="box-100">
 				<p class="m-0">
-					<a href="<?=get_the_permalink()?>" class="second-color-btn b-rad-0 my-0"><?=esc_html__( 'Read more', 'mini' )?></a>
+					<a href="<?=get_the_permalink()?>" class="btn my-0"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
 			</div>
 			<?php endif; ?>

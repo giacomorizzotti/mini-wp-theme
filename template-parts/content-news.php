@@ -74,7 +74,7 @@
 				if ( !is_singular() ):
 				?>
 				<p class="">
-					<a href="<?=get_the_permalink()?>" class="btn b-rad-0"><?=esc_html__( 'Read more', 'mini' )?></a>
+					<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
 				<?php
 				endif;

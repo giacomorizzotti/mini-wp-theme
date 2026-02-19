@@ -27,11 +27,11 @@ get_header();
 								the_post();
 								get_template_part( 'template-parts/content', get_post_type() );
 							?>
-							<div class="box-zero-50 fw-bg">
+							<div class="box-zero-50 px-1">
 								<p class=""><?php previous_post_link(); ?></p>
 							</div>
-							<div class="box-zero-50 fw-bg">
-								<p class=""><?php next_post_link(); ?></p>
+							<div class="box-zero-50 px-1">
+								<p class="right"><?php next_post_link(); ?></p>
 							</div>
 							<?php
 								endwhile; // End of the loop.

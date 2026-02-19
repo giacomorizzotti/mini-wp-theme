@@ -26,7 +26,7 @@ get_header();
 							):
 						?>			
 						<div class="box-zero-50 <?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>box-sm-40<?php else: ?>box-sm-25<?php endif; ?> pb-0">
-							<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?> second-color-bg<?php else: ?> fw-bg<?php endif; ?>" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+							<div class="boxes justify-content-between oh light-grey-border g-0<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?> fw-bg<?php else: ?> fw-bg<?php endif; ?>" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
 								<?php if ( get_post_meta($post->ID, 'team_1_logo')[0] ):?>
 								<div class="<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>box-50<?php else: ?>box-100<?php endif; ?> p-15 pb-0 square order-zero-2 order-sm-1">
 									<div class="p-15 wh-bg block h-100 box-shadow-light" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -36,16 +36,16 @@ get_header();
 								<?php endif; ?>
 								<?php if ( get_post_meta($post->ID, 'team_1_score')[0] ):?>
 								<div class="box-50 flex align-items-center justify-content-center square order-zero-1 order-sm-2">
-									<h3 class="huge center wh-text"><?= get_post_meta($post->ID, 'team_1_score')[0] ?></h3>
+									<h3 class="huge center"><?= get_post_meta($post->ID, 'team_1_score')[0] ?></h3>
 								</div>
 								<?php endif; ?>
-								<div class="box-100 second-color-dark-bg box-shadow-dark order-3 px-15">
-									<h2 class="XXL wh-text m-0 center"><?= get_post_meta($post->ID, 'team_1')[0] ?></h2>
+								<div class="box-100 black-bg box-shadow-dark order-3 px-15">
+									<h2 class="XXL white-text m-0 center"><?= get_post_meta($post->ID, 'team_1')[0] ?></h2>
 								</div>
 							</div>
 						</div>
 						<div class="box-zero-50 <?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>box-sm-40<?php else: ?>box-sm-25<?php endif; ?> pb-0">
-							<div class="boxes justify-content-between oh g-0<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?> second-color-bg<?php else: ?> fw-bg<?php endif; ?>" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
+							<div class="boxes justify-content-between oh light-grey-border g-0<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?> fw-bg<?php else: ?> fw-bg<?php endif; ?>" style="border-top-left-radius: 25px; border-top-right-radius: 25px;">
 								<?php if ( get_post_meta($post->ID, 'team_2_logo')[0] ):?>
 								<div class="<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>box-50<?php else: ?>box-100<?php endif; ?> p-15 pb-0 square order-zero-2 order-sm-1">
 									<div class="p-15 wh-bg block h-100 box-shadow-light" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
@@ -55,11 +55,11 @@ get_header();
 								<?php endif; ?>
 								<?php if ( get_post_meta($post->ID, 'team_2_score')[0] ):?>
 								<div class="box-50 flex align-items-center justify-content-center square order-zero-1 order-sm-2">
-									<h3 class="huge center wh-text"><?= get_post_meta($post->ID, 'team_2_score')[0] ?></h3>
+									<h3 class="huge center"><?= get_post_meta($post->ID, 'team_2_score')[0] ?></h3>
 								</div>
 								<?php endif; ?>
-								<div class="box-100 second-color-dark-bg box-shadow-dark order-3 px-15">
-									<h2 class="XXL wh-text m-0 center"><?= get_post_meta($post->ID, 'team_2')[0] ?></h2>
+								<div class="box-100 black-bg box-shadow-dark order-3 px-15">
+									<h2 class="XXL white-text m-0 center"><?= get_post_meta($post->ID, 'team_2')[0] ?></h2>
 								</div>
 							</div>
 						</div>
@@ -81,11 +81,11 @@ get_header();
 								the_post();
 								get_template_part( 'template-parts/content', get_post_type() );
 							?>
-							<div class="box-zero-50 fw-bg">
+							<div class="box-zero-50 px-1">
 								<p class=""><?php previous_post_link(); ?></p>
 							</div>
-							<div class="box-zero-50 fw-bg">
-								<p class=""><?php next_post_link(); ?></p>
+							<div class="box-zero-50 px-1">
+								<p class="right"><?php next_post_link(); ?></p>
 							</div>
 							<?php
 							endwhile; // End of the loop.
