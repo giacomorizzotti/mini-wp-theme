@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Enqueue scripts and styles for frontend
  */
 function mini_scripts() {
-    wp_enqueue_style( 'mini-style', get_stylesheet_uri(), array(), _S_VERSION );
+    wp_enqueue_style( 'mini-style', get_stylesheet_uri(), array(), MINI_VERSION );
     wp_style_add_data( 'mini-style', 'rtl', 'replace' );
 
-    wp_enqueue_script( 'mini-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+    wp_enqueue_script( 'mini-navigation', get_template_directory_uri() . '/js/navigation.js', array(), MINI_VERSION, true );
 
     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
         wp_enqueue_script( 'comment-reply' );
@@ -31,7 +31,7 @@ add_action( 'wp_enqueue_scripts', 'mini_scripts' );
  * Enqueue styles for admin area
  */
 function mini_admin_styles() {
-    wp_enqueue_style( 'mini-admin-style', get_stylesheet_uri(), array(), _S_VERSION );
+    wp_enqueue_style( 'mini-admin-style', get_stylesheet_uri(), array(), MINI_VERSION );
 }
 add_action( 'admin_enqueue_scripts', 'mini_admin_styles' );
 
@@ -40,11 +40,11 @@ add_action( 'admin_enqueue_scripts', 'mini_admin_styles' );
  */
 function mini_login_styles() {
     // Load parent theme styles
-    wp_enqueue_style( 'mini-login-style', get_template_directory_uri() . '/style.css', array(), _S_VERSION );
+    wp_enqueue_style( 'mini-login-style', get_template_directory_uri() . '/style.css', array(), MINI_VERSION );
     
     // Load child theme styles if active
     if ( get_stylesheet_directory_uri() !== get_template_directory_uri() ) {
-        wp_enqueue_style( 'mini-child-login-style', get_stylesheet_uri(), array('mini-login-style'), _S_VERSION );
+        wp_enqueue_style( 'mini-child-login-style', get_stylesheet_uri(), array('mini-login-style'), MINI_VERSION );
     }
 }
 add_action( 'login_enqueue_scripts', 'mini_login_styles' );
@@ -75,7 +75,7 @@ function mini_css(){
             }
         }
     }
-    wp_enqueue_style( 'mini_header_css', $mini_CSS, array(), _S_VERSION);
+    wp_enqueue_style( 'mini_header_css', $mini_CSS, array(), MINI_VERSION);
 }
 
 /**
@@ -104,7 +104,7 @@ function mini_js(){
             }
         }
     }
-    wp_enqueue_script( 'mini_footer_js', $mini_JS, array(), _S_VERSION, true);
+    wp_enqueue_script( 'mini_footer_js', $mini_JS, array(), MINI_VERSION, true);
 }
 
 /**
@@ -134,7 +134,7 @@ function mini_slider(){
                 }
             }
         }
-        wp_enqueue_script( 'mini_slider_footer_js', $mini_slider_JS, array(), _S_VERSION, true);
+        wp_enqueue_script( 'mini_slider_footer_js', $mini_slider_JS, array(), MINI_VERSION, true);
     }
 }
 

@@ -56,7 +56,7 @@ function mini_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function mini_customize_preview_js() {
-	wp_enqueue_script( 'mini-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
+	wp_enqueue_script( 'mini-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), MINI_VERSION, true );
 }
 add_action( 'customize_preview_init', 'mini_customize_preview_js' );
 

@@ -7,9 +7,9 @@
  * @package mini
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
+if ( ! defined( 'MINI_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( '_S_VERSION', '1.1.5' );
+    define( 'MINI_VERSION', '1.1.5' );
 }
 
 /**
