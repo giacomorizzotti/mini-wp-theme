@@ -60,7 +60,8 @@ get_header();
 									get_template_part( 'template-parts/content', get_post_type() );
 
 							?>
-							<div class="sep-1 light-grey-bg my-3"></div>
+							<!--<div class="sep-1 light-grey-bg my-3"></div>-->
+							<div class="space-5"></div>
 							<?php
 
 								endwhile;

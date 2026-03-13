@@ -139,10 +139,6 @@ function wpctmz_color_palette( $wp_customize ){
 	//Setting
 	$wp_customize->add_setting( 'main-color', array( 'default' => '#1b9958' ) );
 	$wp_customize->add_setting( 'main-color-dark', array( 'default' => '#155f39' ) );
-	$wp_customize->add_setting( 'main-color-transp', array( 
-		'default' => '#1b9947',
-		'transport' => 'refresh',
-	) );
 	$wp_customize->add_setting( 'main-color-transp-opacity', array( 
 		'default' => '25',
 		'transport' => 'refresh',
@@ -161,6 +157,12 @@ function wpctmz_color_palette( $wp_customize ){
 	$wp_customize->add_setting( 'link-color', array( 'default' => '#00C68F' ) );
 	$wp_customize->add_setting( 'link-hover-color', array( 'default' => '#20896C' ) );
 	
+	$wp_customize->add_setting( 'sheet-color-class', array(
+		'default'           => 'grad-second',
+		'transport'         => 'refresh',
+		'sanitize_callback' => 'sanitize_html_class',
+	) );
+
 	$wp_customize->add_setting( 'menu-toggle-color', array( 'default' => '#141428' ) );
 	
 	$wp_customize->add_setting( 'theme-color', array( 'default' => '#1b9958' ) );
@@ -203,26 +205,14 @@ function wpctmz_color_palette( $wp_customize ){
 			)
 		)
 	);
-	//Main color transparent
-	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize, 'main-color-transp',
-			array(
-				'label' => __( 'Main color transparent', 'mini' ),
-				'section' => 'color-settings',
-				'settings' => 'main-color-transp',
-			)
-		)
-	);
-	
-	// Opacity for main color transparent
+	// Main color transparency
 	$wp_customize->add_control(
 		'main-color-transp-opacity',
 		array(
 			'type' => 'range',
 			'section' => 'color-settings',
-			'label' => __( 'Main color opacity (%)', 'mini' ),
-			'description' => __( 'Set transparency level (0-100%)', 'mini' ),
+			'label' => __( 'Main color transp', 'mini' ),
+			'description' => __( 'Transparency (0-100%)', 'mini' ),
 			'input_attrs' => array(
 				'min' => 0,
 				'max' => 100,
@@ -323,14 +313,40 @@ function wpctmz_color_palette( $wp_customize ){
 		)
 	);
 
-	//Sheet color
+	// Sheet color class
 	$wp_customize->add_control(
-		new WP_Customize_Color_Control(
-			$wp_customize, 'sheet-color',
+		new WP_Customize_Control(
+			$wp_customize, 'sheet-color-class',
 			array(
-				'label' => __( 'Sheet color', 'mini' ),
-				'section' => 'color-settings',
-				'settings' => 'sheet-color',
+				'label'       => __( 'Sheet color', 'mini' ),
+				'description' => __( 'Color of the sheet element', 'mini' ),
+				'section'     => 'color-settings',
+				'settings'    => 'sheet-color-class',
+				'type'        => 'select',
+				'choices'     => array(
+					'color-bg'            => __( 'Main color', 'mini' ),
+					'color-dark-bg'       => __( 'Main color dark', 'mini' ),
+					'second-color-bg'     => __( 'Second color', 'mini' ),
+					'second-color-dark-bg'=> __( 'Second color dark', 'mini' ),
+					'third-color-bg'      => __( 'Third color', 'mini' ),
+					'third-color-dark-bg' => __( 'Third color dark', 'mini' ),
+					'fourth-color-bg'      => __( 'Fourth color', 'mini' ),
+					'fourth-color-dark-bg' => __( 'Fourth color dark', 'mini' ),
+					'false-black-bg' 			  => __( 'False black', 'mini' ),
+					'black-bg' 			  => __( 'Black', 'mini' ),
+					'grad-main'           => __( 'Gradient main', 'mini' ),
+					'grad-second'         => __( 'Gradient second', 'mini' ),
+					'grad-third'          => __( 'Gradient third', 'mini' ),
+					'grad-fourth'         => __( 'Gradient fourth', 'mini' ),
+					'grad-1-to-2'         => __( 'Gradient 1/2', 'mini' ),
+					'grad-1-to-3'         => __( 'Gradient 1/3', 'mini' ),
+					'grad-1-to-4'         => __( 'Gradient 1/4', 'mini' ),
+					'grad-2-to-3'         => __( 'Gradient 2/3', 'mini' ),
+					'grad-2-to-3'         => __( 'Gradient 2/3', 'mini' ),
+					'grad-3-to-4'         => __( 'Gradient 3/4', 'mini' ),
+					'grad-grainy'         => __( 'Grainy gradient', 'mini' ),
+					'grad-grainy-second'  => __( 'Grainy gradient second', 'mini' ),
+				),
 			)
 		)
 	);
@@ -421,3 +437,16 @@ function wpctmz_color_palette( $wp_customize ){
 }
 add_action('customize_register', 'wpctmz_color_palette');
 
+
+/**
+ * Custom styles for the Customizer controls panel.
+ * Pairs of controls that should appear side by side are given width:50% + float.
+ */
+function mini_customize_controls_styles() {
+	?>
+	<style>
+
+	</style>
+	<?php
+}
+add_action( 'customize_controls_print_styles', 'mini_customize_controls_styles' );

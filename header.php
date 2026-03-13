@@ -69,23 +69,20 @@ $header_scroll_style = $header_styling['scroll'];
 		
 		mini_css_variable( 'mini_colors_options', 'mini_main_color', '--main-color' );
 		mini_css_variable( 'mini_colors_options', 'mini_main_color_dark', '--main-color-dark' );
-		mini_css_variable( 'mini_colors_options', 'mini_main_color_transp', '--main-color-transp' );
-		if ( get_theme_mod( 'main-color' ) ) { 
-			echo esc_html( '--main-color:' . get_theme_mod( 'main-color' ) . ';' ); 
+		if ( get_theme_mod( 'main-color' ) ) {
+			echo esc_html( '--main-color:' . get_theme_mod( 'main-color' ) . ';' );
+			// Derive --main-color-transp from main-color + opacity setting
+			$color   = get_theme_mod( 'main-color' );
+			$opacity = get_theme_mod( 'main-color-transp-opacity', 25 );
+			$hex     = str_replace( '#', '', $color );
+			$r       = hexdec( substr( $hex, 0, 2 ) );
+			$g       = hexdec( substr( $hex, 2, 2 ) );
+			$b       = hexdec( substr( $hex, 4, 2 ) );
+			$alpha   = $opacity / 100;
+			echo esc_html( '--main-color-transp:rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $alpha . ');' );
 		}
 		if ( get_theme_mod( 'main-color-dark' ) ) { 
 			echo esc_html( '--main-color-dark:' . get_theme_mod( 'main-color-dark' ) . ';' ); 
-		}
-		if ( get_theme_mod( 'main-color-transp' ) ) {
-			$color = get_theme_mod( 'main-color-transp' );
-			$opacity = get_theme_mod( 'main-color-transp-opacity', 25 );
-			// Convert hex to RGB and add opacity
-			$hex = str_replace('#', '', $color);
-			$r = hexdec(substr($hex, 0, 2));
-			$g = hexdec(substr($hex, 2, 2));
-			$b = hexdec(substr($hex, 4, 2));
-			$alpha = $opacity / 100;
-			echo esc_html( '--main-color-transp:rgba(' . $r . ', ' . $g . ', ' . $b . ', ' . $alpha . ');' );
 		}
 		
 		mini_css_variable( 'mini_colors_options', 'mini_second_color', '--second-color' );
@@ -171,7 +168,7 @@ if (
     <div id="top"></div>
     <a href="#top"><div class="top-link"><p class=""><i class="iconoir-dot-arrow-up"></i></p></div></a>
 
-	<div id="sheet" class="grad-second"><?php /* starting .sheet div */ ?>
+	<div id="sheet" class="<?php echo esc_attr( get_theme_mod( 'sheet-color-class', 'grad-second' ) ); ?>"><?php /* starting .sheet div */ ?>
 
 		<header id="header" class="header <?php echo esc_attr( $header_top_style ); ?> <?php echo esc_attr( $header_scroll_style ); ?>">
 			<div class="container">

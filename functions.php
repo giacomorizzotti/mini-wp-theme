@@ -367,7 +367,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_section',
-        __( '<i>mini</i> general settings', 'mini' ),
+        __( '<i>mini</i> credits settings', 'mini' ),
         'mini_section_callback',
         'mini'
     );
@@ -745,7 +745,7 @@ function mini_company_section_callback( $args ) {
     <div class="boxes">
         <div class="box-66 p-2 white-bg b-rad-5 box-shadow">
             <h3 class=""><?= esc_html__( 'Your data', 'mini' ) ?></h3>
-            <p class="m-0">These data will populate the footer of this web application.</p>
+            <p class="m-0">These data will populate the footer.</p>
             <p class="s m-0">They could also be used in the "About us" page, in "Cookie policy", in "Privacy policy" or in other sections.</p>
         </div>
         <div class="box-66 white-bg b-rad-5 box-shadow">
@@ -814,6 +814,30 @@ function mini_company_section_callback( $args ) {
                 </div>
             </div>
         </div>
+        <div class="box-33 white-bg b-rad-5 box-shadow">
+            <div class="boxes">
+                <div class="box-100">
+                    <h4 class="m-0">Messaging apps</h4>
+                    <p class="description m-0"><?= esc_html__( 'Enable messaging apps for direct customer contact', 'mini' ) ?></p>
+                </div>
+                <div class="box-100">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_whatsapp_enabled'); ?>
+                        <strong><?= esc_html__( 'WhatsApp', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_whatsapp','https://wa.me/1234567890'); ?>
+                    <p class="description"><?= esc_html__( 'Format: https://wa.me/1234567890', 'mini' ) ?></p>
+                </div>
+                <div class="box-100">
+                    <label style="display: block; margin-bottom: 8px;">
+                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_telegram_enabled'); ?>
+                        <strong><?= esc_html__( 'Telegram', 'mini' ) ?></strong>
+                    </label>
+                    <?= mini_theme_text_field_option('mini_company_options','mini_company_telegram','https://t.me/yourusername'); ?>
+                    <p class="description"><?= esc_html__( 'Format: https://t.me/yourusername', 'mini' ) ?></p>
+                </div>
+            </div>
+        </div>  
         <div class="box-100 white-bg b-rad-5 box-shadow">
             <div class="boxes">
                 <div class="box-100">
@@ -871,30 +895,6 @@ function mini_company_section_callback( $args ) {
                 </div>
             </div>
         </div>
-        <div class="box-66 white-bg b-rad-5 box-shadow">
-            <div class="boxes">
-                <div class="box-100">
-                    <h4 class="m-0">Messaging apps</h4>
-                    <p class="description m-0"><?= esc_html__( 'Enable messaging apps for direct customer contact', 'mini' ) ?></p>
-                </div>
-                <div class="box-50">
-                    <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_whatsapp_enabled'); ?>
-                        <strong><?= esc_html__( 'WhatsApp', 'mini' ) ?></strong>
-                    </label>
-                    <?= mini_theme_text_field_option('mini_company_options','mini_company_whatsapp','https://wa.me/1234567890'); ?>
-                    <p class="description"><?= esc_html__( 'Format: https://wa.me/1234567890', 'mini' ) ?></p>
-                </div>
-                <div class="box-50">
-                    <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_telegram_enabled'); ?>
-                        <strong><?= esc_html__( 'Telegram', 'mini' ) ?></strong>
-                    </label>
-                    <?= mini_theme_text_field_option('mini_company_options','mini_company_telegram','https://t.me/yourusername'); ?>
-                    <p class="description"><?= esc_html__( 'Format: https://t.me/yourusername', 'mini' ) ?></p>
-                </div>
-            </div>
-        </div>  
 <?php /*
         <div class="box-66 p-2 white-bg b-rad-5 box-shadow">
             <div class="boxes">
@@ -932,15 +932,15 @@ function mini_options_page() {
     }
     add_submenu_page(
         'mini',
-        'General options',
-        'General',
+        'mini theme - Credits options',
+        'Credits',
         'manage_options',
-        'mini-general',
+        'mini-credits',
         'mini_options_page_html'
     );
     add_submenu_page(
         'mini',
-        'CDN options',
+        'mini theme - CDN options',
         'CDN',
         'manage_options',
         'mini-cdn',
@@ -948,7 +948,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'Font options',
+        'mini theme - Font options',
         'Fonts',
         'manage_options',
         'mini-fonts',
@@ -966,7 +966,7 @@ function mini_options_page() {
     */
     add_submenu_page(
         'mini',
-        'External libraries options',
+        'mini theme - External libraries options',
         'External libraries',
         'manage_options',
         'mini-ext-lib',
@@ -974,7 +974,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'Analytics options',
+        'mini theme - Analytics options',
         'Analytics',
         'manage_options',
         'mini-analytics',
@@ -982,7 +982,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'Company options',
+        'mini theme - Company options',
         'Company',
         'manage_options',
         'mini-company',

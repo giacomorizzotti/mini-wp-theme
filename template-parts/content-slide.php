@@ -13,7 +13,6 @@ if ( ! isset( $layout ) ) {
 }
 // Default to true when meta has never been saved ('0' means explicitly disabled)
 $show_archive_image = get_post_meta( get_the_ID(), 'archive_featured_image', true ) !== '0';
-$is_shortcode = ! empty( $args['is_shortcode'] );
 $title_classes_if_thumbnail = '';
 if ( has_post_thumbnail() && $show_archive_image ) {
 	$title_classes_if_thumbnail = ' wh-box';
@@ -23,12 +22,12 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ( $is_shortcode || is_home() ): ?>
+	<?php if ( ! has_post_thumbnail() && $show_archive_image || is_home() || is_archive() ): ?>
 	<div class="container fw"
-			<?php if ( ( ! is_singular() || $is_shortcode ) && ( has_post_thumbnail() && $show_archive_image ) ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
+			<?php if ( has_post_thumbnail() && $show_archive_image ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
-			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( $is_shortcode || is_home() ): ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
+			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( is_singular() ): ?>hh<?php else: ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
 					<p class="entry-meta S m-0 fw-box px-1">
@@ -40,10 +39,10 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 					<div class="space"></div>
 				<?php endif; ?>
 				<?php
-					if ( is_singular() && ! $is_shortcode ) {
+					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title m-0'.$title_classes_if_thumbnail.'">', '</h1>' );
 					} else {
-						the_title( '<h3 class="entry-title m-0'.$title_classes_if_thumbnail.'"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h3>' );
+						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0'.$title_classes_if_thumbnail.' bk-text">', '</a></h2>' );
 					}
 					?>
 				</header><!-- .entry-header -->
@@ -58,7 +57,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 			<div class="box box-100 entry-content">
 				<?php
-				if ( !is_singular() || ! empty( $args['is_shortcode'] ) ) {
+				if ( !is_singular() ) {
 					// Show excerpt on archive pages, category pages, etc.
 					the_excerpt();
 				} else {
@@ -87,10 +86,10 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 				);
 				?>
 			</div><!-- .entry-content -->
+			<div class="sep-2 black-bg mx-1 mt-2" style="width: 60px;"></div>
 			<footer class="box box-100 my-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
-			<div class="sep-2 black-bg mx-1 mt-2" style="width: 60px;"></div>
 		</div>
 
 	</div>

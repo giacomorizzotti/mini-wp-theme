@@ -24,7 +24,7 @@ function add_inpage_elements_box() {
         'inpage-elements',
         'In-page elements',
         'inpage_elements_box_html',
-        ['page', 'post', 'course', 'lesson'],
+        ['page', 'post', 'slide', 'course', 'lesson'],
         'side'
     );
 }
@@ -32,6 +32,8 @@ function add_inpage_elements_box() {
 function inpage_elements_box_html( $post, $meta ) {
     // Add nonce field for security
     wp_nonce_field( 'inpage_elements_save', 'inpage_elements_nonce' );
+
+    $is_slide = ( get_post_type( $post ) === 'slide' );
 
     // Get field values
     $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
@@ -47,10 +49,20 @@ function inpage_elements_box_html( $post, $meta ) {
             . __("Show title", 'mini' ) . '
           </label>';
     
-    echo '<label for="sidebar_presence">
-            <input type="checkbox" id="sidebar_presence" name="sidebar_presence"' . $sidebarPresenceState . '>&nbsp;' 
-            . __("Show sidebar", 'mini' ) . '
-          </label>';
+        if ( ! $is_slide ) {
+                echo '<label for="sidebar_presence">
+                                <input type="checkbox" id="sidebar_presence" name="sidebar_presence"' . $sidebarPresenceState . '>&nbsp;' 
+                                . __("Show sidebar", 'mini' ) . '
+                            </label>';
+
+                $archiveFeaturedImage = get_post_meta( $post->ID, 'archive_featured_image', true);
+                $archiveFeaturedImageState = ( $archiveFeaturedImage !== '0' ) ? ' checked' : '';
+
+                echo '<label for="archive_featured_image">
+                                <input type="checkbox" id="archive_featured_image" name="archive_featured_image"' . $archiveFeaturedImageState . '>&nbsp;' 
+                                . __("Image in archive", 'mini' ) . '
+                            </label>';
+        }
     echo '</div>';
 }
 
@@ -77,6 +89,10 @@ function inpage_elements_save_postdata( $post_id ) {
     // Save sidebar presence
     $sidebarPresence = isset($_POST['sidebar_presence']) ? true : false;
     update_post_meta( $post_id, 'sidebar_presence', $sidebarPresence );
+
+    // Save archive featured image
+    $archiveFeaturedImage = isset($_POST['archive_featured_image']) ? '1' : '0';
+    update_post_meta( $post_id, 'archive_featured_image', $archiveFeaturedImage );
 }
 
 
@@ -95,6 +111,15 @@ function add_page_customization_box() {
         ['page', 'post', 'event', 'match', 'slide', 'course', 'lesson'],
         'side'
     );
+}
+
+/**
+ * Remove non-relevant meta boxes for slide post type.
+ */
+add_action( 'add_meta_boxes', 'mini_remove_slide_meta_boxes', 100 );
+
+function mini_remove_slide_meta_boxes() {
+    remove_meta_box( 'header-styling', 'slide', 'side' );
 }
 
 function page_customization_box_html( $post, $meta ) {

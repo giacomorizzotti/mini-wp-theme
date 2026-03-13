@@ -28,7 +28,7 @@ if ( ! function_exists( 'mini_posted_on' ) ) :
 		$posted_on = sprintf(
 			/* translators: %s: post date. */
 			esc_html_x( '%s', 'post date', 'mini' ),
-			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $time_string . '</a>'
+			'<a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">' . $time_string . '</a>'
 		);
 
 		echo '<span class="posted-on">' . $posted_on . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -41,16 +41,32 @@ if ( ! function_exists( 'mini_posted_by' ) ) :
 	 * Prints HTML with meta information for the current author.
 	 */
 	function mini_posted_by() {
+		$post_id = get_the_ID();
+		if ( ! $post_id ) {
+			$post_id = get_queried_object_id();
+		}
+
+		if ( ! $post_id ) {
+			return;
+		}
+
+		$author_id = (int) get_post_field( 'post_author', $post_id );
+		if ( ! $author_id ) {
+			return;
+		}
+
 		$byline = sprintf(
 			/* translators: %s: post author. */
 			'&nbsp;&nbsp;<span class="light-grey-text">|</span>&nbsp;&nbsp;'.esc_html_x( '%s', 'post author', 'mini' ),
-			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
+			'<span class="author vcard"><a class="url fn n black-text" href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . esc_html( get_the_author_meta( 'display_name', $author_id ) ) . '</a></span>'
 		);
 
 		echo '<span class="byline"> ' . $byline . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 endif;
+
+
 
 if ( ! function_exists( 'mini_entry_footer' ) ) :
 	/**
@@ -61,21 +77,22 @@ if ( ! function_exists( 'mini_entry_footer' ) ) :
 		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( esc_html__( ', ', 'mini' ) );
+			$categories_list = preg_replace( '/<a\b/i', '<a class="black-text"', $categories_list );
 			if ( $categories_list ) {
 				/* translators: 1: list of categories. */
-				printf( '<span class="cat-links px-1"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="cat-links"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/* translators: used between list items, there is a space after the comma */
 			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'mini' ) );
 			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
-				printf( '<span class="tags-links px-1"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="tags-links"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
-			echo '<span class="comments-link px-1">';
+			echo '<span class="comments-link ms-1">';
 			comments_popup_link(
 				sprintf(
 					wp_kses(
