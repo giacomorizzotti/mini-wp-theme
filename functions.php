@@ -450,6 +450,7 @@ add_action( 'admin_init', 'mini_settings_init' );
 function mini_section_callback( $args ) {
     $options = get_option('mini_options');
     $credits_enabled = isset($options['mini_credits']) && $options['mini_credits'];
+    $meta_author = isset($options['mini_author']) ? trim((string) $options['mini_author']) : '';
     ?>
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
@@ -460,9 +461,27 @@ function mini_section_callback( $args ) {
             </label>
             <p class="" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
         </div>
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_author"><?php esc_html_e( 'Author', 'mini' ); ?></h4>
+            <input type="text" id="mini_author" name="mini_options[mini_author]" value="<?php echo esc_attr($meta_author); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Company or author name', 'mini' ); ?>">
+            <p class="" for="mini_author"><?php esc_html_e( 'Adds a meta author tag in the page head.', 'mini' ); ?></p>
+        </div>
     </div>
     <?php
 }
+
+function mini_output_author_meta_tag() {
+    $options = get_option('mini_options');
+    $author = isset($options['mini_author']) ? trim((string) $options['mini_author']) : '';
+
+    if ($author === '') {
+        return;
+    }
+
+    echo '<meta name="author" content="' . esc_attr($author) . '">' . "\n";
+}
+add_action( 'wp_head', 'mini_output_author_meta_tag', 1 );
+
 function mini_cdn_section_callback( $args ) {
     $options = get_option('mini_cdn_options');
     $cdn_enabled = isset($options['cdn']) && $options['cdn'];
