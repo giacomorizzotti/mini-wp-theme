@@ -80,14 +80,14 @@ if ( ! function_exists( 'mini_entry_footer' ) ) :
 			$categories_list = preg_replace( '/<a\b/i', '<a class="black-text"', $categories_list );
 			if ( $categories_list ) {
 				/* translators: 1: list of categories. */
-				printf( '<span class="cat-links"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="cat-links pe-1"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			/* translators: used between list items, there is a space after the comma */
 			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'mini' ) );
 			if ( $tags_list ) {
 				/* translators: 1: list of tags. */
-				printf( '<span class="tags-links"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				printf( '<span class="tags-links pe-1"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -123,8 +123,8 @@ if ( ! function_exists( 'mini_entry_footer' ) ) :
 				),
 				wp_kses_post( get_the_title() )
 			),
-			'<span class="edit-link">',
-			'</span>'
+			'<div class="container"><span class="edit-link">',
+			'</span></div>'
 		);
 	}
 endif;

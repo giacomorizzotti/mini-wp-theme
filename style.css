@@ -33,11 +33,13 @@ body.wp-admin input, body.wp-admin select, body.wp-admin textarea {
 }
 
 footer .edit-link {
-  display: block;
+  display: inline-block;
+  min-width: 100px;
   background: var(--warning);
   padding: var(--padding);
   position: relative;
   margin-top: calc(var(--margin) * 3);
+  border-radius: 5px;
 }
 footer .edit-link ::before {
   content: "";

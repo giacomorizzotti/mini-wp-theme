@@ -23,7 +23,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
 
-	<?php if ( $is_shortcode || is_home() ): ?>
+	<?php if ( (is_singular() && $is_shortcode ) || is_home() || ( !$is_shortcode && !has_post_thumbnail() ) ): ?>
 	<div class="container fw"
 			<?php if ( ( ! is_singular() || $is_shortcode ) && ( has_post_thumbnail() && $show_archive_image ) ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>

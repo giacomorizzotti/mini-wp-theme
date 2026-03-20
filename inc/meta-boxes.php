@@ -55,13 +55,16 @@ function inpage_elements_box_html( $post, $meta ) {
                                 . __("Show sidebar", 'mini' ) . '
                             </label>';
 
-                $archiveFeaturedImage = get_post_meta( $post->ID, 'archive_featured_image', true);
-                $archiveFeaturedImageState = ( $archiveFeaturedImage !== '0' ) ? ' checked' : '';
+                $post_type = get_post_type( $post );
+                if ( in_array( $post_type, ['post', 'news'], true ) ) {
+                    $archiveFeaturedImage = get_post_meta( $post->ID, 'archive_featured_image', true);
+                    $archiveFeaturedImageState = ( $archiveFeaturedImage !== '0' ) ? ' checked' : '';
 
-                echo '<label for="archive_featured_image">
+                    echo '<label for="archive_featured_image">
                                 <input type="checkbox" id="archive_featured_image" name="archive_featured_image"' . $archiveFeaturedImageState . '>&nbsp;' 
                                 . __("Image in archive", 'mini' ) . '
                             </label>';
+                }
         }
     echo '</div>';
 }
