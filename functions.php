@@ -366,9 +366,17 @@ function mini_settings_init() {
 
     // Register a new section in the "mini" page.
     add_settings_section(
-        'mini_section',
-        __( '<i>mini</i> credits settings', 'mini' ),
-        'mini_section_callback',
+        'mini_author_section',
+        __( 'Author', 'mini' ),
+        'mini_author_section_callback',
+        'mini'
+    );
+
+    // Register a new section in the "mini" page.
+    add_settings_section(
+        'mini_credits_section',
+        __( 'Credits', 'mini' ),
+        'mini_credits_section_callback',
         'mini'
     );
 
@@ -378,7 +386,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_cdn_section',
-        __( '<i>mini</i> CDN settings', 'mini' ),
+        __( 'CDN settings', 'mini' ),
         'mini_cdn_section_callback',
         'mini-cdn'
     );
@@ -389,7 +397,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_font_section',
-        __( '<i>mini</i> font settings', 'mini' ),
+        __( 'Font settings', 'mini' ),
         'mini_font_section_callback',
         'mini-font'
     );
@@ -400,7 +408,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_ext_lib_section',
-        __( '<i>mini</i> external libraries settings', 'mini' ),
+        __( 'External libraries settings', 'mini' ),
         'mini_ext_lib_section_callback',
         'mini-ext-lib'
     );
@@ -411,7 +419,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_analytics_section',
-        __( 'Mini analytics settings', 'mini' ),
+        __( 'Analytics settings', 'mini' ),
         'mini_analytics_section_callback',
         'mini-analytics'
     );
@@ -422,7 +430,7 @@ function mini_settings_init() {
     // Register a new section in the "mini" page.
     add_settings_section(
         'mini_company_section',
-        __( 'Mini company settings', 'mini' ),
+        __( 'Company data', 'mini' ),
         'mini_company_section_callback',
         'mini-company'
     );
@@ -443,15 +451,35 @@ add_action( 'admin_init', 'mini_settings_init' );
  */
 
 /**
- * Developers section callback function.
+ * Author section callback function.
  *
  * @param array $args  The settings array, defining title, id, callback.
  */
-function mini_section_callback( $args ) {
+function mini_author_section_callback( $args ) {
     $options = get_option('mini_options');
-    $credits_enabled = isset($options['mini_credits']) && $options['mini_credits'];
     $meta_author = isset($options['mini_author']) ? trim((string) $options['mini_author']) : '';
     ?>
+    <h2><?php esc_html_e( 'Author', 'mini' ); ?></h2>
+    <div class="boxes">
+        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="" for="mini_author"><?php esc_html_e( 'Author', 'mini' ); ?></h4>
+            <input type="text" id="mini_author" name="mini_options[mini_author]" value="<?php echo esc_attr($meta_author); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Company or author name', 'mini' ); ?>">
+            <p class="" for="mini_author"><?php esc_html_e( 'Adds a meta author tag in the page head.', 'mini' ); ?></p>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Credits section callback function.
+ *
+ * @param array $args  The settings array, defining title, id, callback.
+ */
+function mini_credits_section_callback( $args ) {
+    $options = get_option('mini_options');
+    $credits_enabled = isset($options['mini_credits']) && $options['mini_credits'];
+    ?>
+    <h2><?php esc_html_e( 'Credits', 'mini' ); ?></h2>
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="" for="mini_match"><?php esc_html_e( 'Footer credit strip', 'mini' ); ?></h4>
@@ -460,11 +488,6 @@ function mini_section_callback( $args ) {
                 <?php esc_html_e( 'Enable footer credits', 'mini' ); ?>
             </label>
             <p class="" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
-        </div>
-        <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="" for="mini_author"><?php esc_html_e( 'Author', 'mini' ); ?></h4>
-            <input type="text" id="mini_author" name="mini_options[mini_author]" value="<?php echo esc_attr($meta_author); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Company or author name', 'mini' ); ?>">
-            <p class="" for="mini_author"><?php esc_html_e( 'Adds a meta author tag in the page head.', 'mini' ); ?></p>
         </div>
     </div>
     <?php
@@ -762,10 +785,10 @@ function mini_analytics_section_callback( $args ) {
 function mini_company_section_callback( $args ) {
     ?>
     <div class="boxes">
-        <div class="box-66 p-2 white-bg b-rad-5 box-shadow">
-            <h3 class=""><?= esc_html__( 'Your data', 'mini' ) ?></h3>
-            <p class="m-0">These data will populate the footer.</p>
-            <p class="s m-0">They could also be used in the "About us" page, in "Cookie policy", in "Privacy policy" or in other sections.</p>
+        <div class="box-66 p-2 white-bg b-rad-5 box-shadow info-bg">
+            <h3 class="white-text"><?= esc_html__( 'Your data', 'mini' ) ?></h3>
+            <p class="m-0 white-text">These data will populate the <b>footer</b>.</p>
+            <p class="S m-0 white-text">They could also be used in the <i>About us</i> page, in <i>Cookie policy</i>, in <i>Privacy policy</i> or in other sections.</p>
         </div>
         <div class="box-66 white-bg b-rad-5 box-shadow">
             <div class="boxes">
@@ -951,7 +974,7 @@ function mini_options_page() {
     }
     add_submenu_page(
         'mini',
-        'mini theme - Credits options',
+        'mini theme - Credits',
         'Credits',
         'manage_options',
         'mini-credits',
@@ -959,7 +982,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'mini theme - CDN options',
+        'mini theme - CDN',
         'CDN',
         'manage_options',
         'mini-cdn',
@@ -967,7 +990,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'mini theme - Font options',
+        'mini theme - Fonts',
         'Fonts',
         'manage_options',
         'mini-fonts',
@@ -985,7 +1008,7 @@ function mini_options_page() {
     */
     add_submenu_page(
         'mini',
-        'mini theme - External libraries options',
+        'mini theme - External libraries',
         'External libraries',
         'manage_options',
         'mini-ext-lib',
@@ -993,7 +1016,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'mini theme - Analytics options',
+        'mini theme - Analytics',
         'Analytics',
         'manage_options',
         'mini-analytics',
@@ -1001,7 +1024,7 @@ function mini_options_page() {
     );
     add_submenu_page(
         'mini',
-        'mini theme - Company options',
+        'mini theme - Owner',
         'Company',
         'manage_options',
         'mini-company',
@@ -1051,22 +1074,49 @@ function mini_options_page_html() {
 
     // show error/update messages
     settings_errors( 'mini_messages' );
+
+    $current_tab = 'credits'; // default tab
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+
+        <nav class="nav-tab-wrapper">
+            <a href="#" class="nav-tab <?php echo $current_tab === 'author' ? 'nav-tab-active' : ''; ?>" data-tab="author"><?php _e( 'Author', 'mini' ); ?></a>
+            <a href="#" class="nav-tab <?php echo $current_tab === 'credits' ? 'nav-tab-active' : ''; ?>" data-tab="credits"><?php _e( 'Credits', 'mini' ); ?></a>
+        </nav>
+
         <div class="space"></div>
+
         <form action="options.php" method="post">
             <?php
             // output security fields for the registered setting "mini"
             settings_fields( 'mini' );
-            // output setting sections and their fields
-            // (sections are registered for "mini", each field is registered to a specific section)
-            do_settings_sections( 'mini' );
+            ?>
+            <div id="tab-author" class="tab-content" style="display: <?php echo $current_tab === 'author' ? 'block' : 'none'; ?>;">
+                <?php mini_author_section_callback( [] ); ?>
+            </div>
+            <div id="tab-credits" class="tab-content" style="display: <?php echo $current_tab === 'credits' ? 'block' : 'none'; ?>;">
+                <?php mini_credits_section_callback( [] ); ?>
+            </div>
+            <?php
             // output save settings button
             submit_button( 'Save Settings' );
             ?>
         </form>
+
     </div>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.nav-tab').on('click', function(e) {
+            e.preventDefault();
+            var tab = $(this).data('tab');
+            $('.nav-tab').removeClass('nav-tab-active');
+            $(this).addClass('nav-tab-active');
+            $('.tab-content').hide();
+            $('#tab-' + tab).show();
+        });
+    });
+    </script>
     <?php
 }
 
