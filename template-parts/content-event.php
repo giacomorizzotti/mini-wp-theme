@@ -56,7 +56,7 @@ $it_date_year = new IntlDateFormatter(
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title big inline-block">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title inline-block"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">', '</a></h2>' );
 					}
 					?>
 				</header><!-- .entry-header -->
@@ -120,7 +120,6 @@ $it_date_year = new IntlDateFormatter(
 							</div>
 						</div>
 					</div>
-					<div class="space-2"></div>
 					<?php endif; ?>
 					<?php
 					if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
@@ -188,7 +187,7 @@ $it_date_year = new IntlDateFormatter(
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 
-			<div class="sep-1 light-grey-bg m-2"></div>
+			<div class="space-3"></div>
 			
 		</div>
 

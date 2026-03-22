@@ -56,7 +56,7 @@ $it_date_year = new IntlDateFormatter(
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title big inline-block">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title inline-block"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">', '</a></h2>' );
 					}
 					?>
 				</header><!-- .entry-header -->

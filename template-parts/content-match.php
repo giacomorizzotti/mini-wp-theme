@@ -51,12 +51,11 @@ $it_date_year = new IntlDateFormatter(
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
 				<header class="box box-100 entry-header">
-					<div class="space"></div>
 				<?php
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 wh-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">', '</a></h2>' );
 					}
 					?>
 					<div class="space"></div>

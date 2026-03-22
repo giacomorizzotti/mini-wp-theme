@@ -35,7 +35,7 @@ get_header();
 						</p><!-- .entry-meta -->
 						<div class="space"></div>
 					<?php endif; ?>
-					<?php the_title( '<h1 class="entry-title m-0 wh-bg p-1 inline-block">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title m-0 wh-box">', '</h1>' ); ?>
 						<div class="space-2"></div>
 					</header>
 					<?php else: ?>

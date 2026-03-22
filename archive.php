@@ -1,35 +1,54 @@
 <?php
 /**
- * The template for displaying archive pages
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * 
+ * The template for the blog of your website
  *
  * @package mini
  */
 
-// Get page layout settings
-$layout = mini_get_page_layout();
+// Get page layout settings for the blog page
+$pageID = get_option('page_for_posts');
+$layout = mini_get_page_layout( $pageID );
 
 get_header();
+
 ?>
 
-	<main id="primary" class="site-main" template="archive">
+	<main id="primary" class="site-main" template="home">
+
+		<?php if ( has_post_thumbnail($pageID) ): ?>
+		<div class="container fw" <?php if ( has_post_thumbnail($pageID) ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url($pageID) ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
+				<div class="boxes hh align-content-end">
+					<?php if ( $layout['title_presence'] ): ?>
+					<header class="box box-100 my-0 p-0 entry-header">
+					 	<h1 class="entry-title m-0 wh-box"><?php single_post_title(); ?></h1>
+						<div class="space-2"></div>
+					</header>
+					<?php else: ?>
+						<?php the_title( '<h1 class="visually-hidden">', '</h1>' ); ?>
+					<?php endif; ?>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="container fw">
-			<div class="container">
-				<div class="boxes space-top-bot">
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
+				<div class="boxes <?php echo esc_attr( $layout['spacing_class'] ); ?>">
 					<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 						<div class="boxes">
-
-							<?php if ( have_posts() ) : ?>
-
-								<header class="page-header box-100">
-									<?php
-									the_archive_title( '<h1 class="page-title inline-block m-0">', '</h1>' );
-									the_archive_description( '<div class="archive-description m-0">', '</div>' );
-									?>
-								</header><!-- .page-header -->
-
+							
+							<header class="page-header box-100 my-2">
 								<?php
+								the_archive_title( '<h1 class="page-title inline-block m-0">', '</h1>' );
+								the_archive_description( '<div class="archive-description m-0">', '</div>' );
+								?>
+							</header><!-- .page-header -->
+
+							<?php
+							if ( have_posts() ) :
+
 								/* Start the Loop */
 								while ( have_posts() ) :
 									the_post();
@@ -40,6 +59,11 @@ get_header();
 									* called content-___.php (where ___ is the Post Type name) and that will be used instead.
 									*/
 									get_template_part( 'template-parts/content', get_post_type() );
+
+							?>
+							<!--<div class="sep-1 light-grey-bg my-3"></div>-->
+							<div class="space-5"></div>
+							<?php
 
 								endwhile;
 
@@ -52,15 +76,12 @@ get_header();
 							endif;
 							?>
 
-						</div>
+						</div>						
 					</div>
-					
+
 					<?php
-						get_sidebar('post');
+					get_sidebar('post');
 					?>
-						
-				</div>
-			</div>
 		</div>
 
 	</main><!-- #main -->
