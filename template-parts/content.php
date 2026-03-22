@@ -34,7 +34,9 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 					<p class="entry-meta S m-0 fw-box px-1">
 						<?php
 						mini_posted_on();
-						mini_posted_by();
+						if ( $layout['display_author_info'] ) {
+							mini_posted_by();
+						}
 						?>
 					</p><!-- .entry-meta -->
 					<div class="space"></div>

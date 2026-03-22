@@ -84,7 +84,8 @@ function mini_get_page_layout( $post_id = null ) {
 			'space_top' => false,
 			'space_bottom' => false,
 			'spacing_class' => '',
-			'content_size' => 'box-100'
+			'content_size' => 'box-100',
+			'display_author_info' => true
 		);
 	}
 
@@ -93,6 +94,8 @@ function mini_get_page_layout( $post_id = null ) {
 	$container_width = get_post_meta( $post_id, 'page_container', true );
 	$space_top = get_post_meta( $post_id, 'space_top', true );
 	$space_bottom = get_post_meta( $post_id, 'space_bot', true );
+	$display_author_info = get_post_meta( $post_id, 'display_author_info', true );
+	$display_author_info = ( $display_author_info !== '0' ); // Default true, false only if explicitly '0'
 
 	// Calculate spacing class
 	$spacing_class = '';
@@ -117,7 +120,8 @@ function mini_get_page_layout( $post_id = null ) {
 		'space_top' => $space_top,
 		'space_bottom' => $space_bottom,
 		'spacing_class' => $spacing_class,
-		'content_size' => $content_size
+		'content_size' => $content_size,
+		'display_author_info' => $display_author_info
 	);
 }
 

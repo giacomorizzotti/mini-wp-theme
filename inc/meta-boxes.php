@@ -38,15 +38,22 @@ function inpage_elements_box_html( $post, $meta ) {
     // Get field values
     $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
     $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true);
+    $displayAuthorInfo = get_post_meta( $post->ID, 'display_author_info', true);
 
     $titlePresenceState = $titlePresence == true ? ' checked' : '';
     $sidebarPresenceState = $sidebarPresence == true ? ' checked' : '';
+    $displayAuthorInfoState = ( $displayAuthorInfo !== '0' ) ? ' checked' : '';
 
     // Form fields
     echo '<div class="my-1">';
     echo '<label for="title_presence">
             <input type="checkbox" id="title_presence" name="title_presence"' . $titlePresenceState . '>&nbsp;' 
             . __("Show title", 'mini' ) . '
+          </label>';
+    
+    echo '<label for="display_author_info">
+            <input type="checkbox" id="display_author_info" name="display_author_info"' . $displayAuthorInfoState . '>&nbsp;' 
+            . __("Display Author info", 'mini' ) . '
           </label>';
     
         if ( ! $is_slide ) {
@@ -92,6 +99,10 @@ function inpage_elements_save_postdata( $post_id ) {
     // Save sidebar presence
     $sidebarPresence = isset($_POST['sidebar_presence']) ? true : false;
     update_post_meta( $post_id, 'sidebar_presence', $sidebarPresence );
+
+    // Save display author info
+    $displayAuthorInfo = isset($_POST['display_author_info']) ? '1' : '0';
+    update_post_meta( $post_id, 'display_author_info', $displayAuthorInfo );
 
     // Save archive featured image
     $archiveFeaturedImage = isset($_POST['archive_featured_image']) ? '1' : '0';

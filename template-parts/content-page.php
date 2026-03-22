@@ -11,7 +11,6 @@
 if ( ! isset( $layout ) ) {
 	$layout = mini_get_page_layout();
 }
-
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
@@ -35,11 +34,16 @@ if ( ! isset( $layout ) ) {
 		</div>
 	</div>
 	<?php endif; ?>
+
+	<?php if ( !$layout['title_presence'] ): ?>
+		<?php the_title( '<h1 class="visually-hidden">', '</h1>' ); ?>
+	<?php endif; ?>
 	
 	<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 
 		<div class="entry-content">
 			<?php
+			
 			the_content();
 
 			wp_link_pages(
@@ -75,4 +79,22 @@ if ( ! isset( $layout ) ) {
 		<?php endif; ?>
 
 	</div>
+	<?php 
+		// Display author byline for E-E-A-T
+		if ( $layout['display_author_info'] ) {
+			$author_name = get_post_meta(get_the_ID(), '_mini_author_name', true);
+			if (empty($author_name)) {
+				$author_name = get_variable('mini_seo_settings', 'default_author_name');
+			}
+			$author_job_title = get_post_meta(get_the_ID(), '_mini_author_job_title', true) ?: get_variable('mini_seo_settings', 'default_author_job_title');
+			if (!empty($author_name)) {
+				echo '<div class="container fw fw-bg"><div class="container author-byline py-05"><p class="S m-0 px-1">';
+				echo 'By <strong>' . esc_html($author_name) . '</strong>';
+				if (!empty($author_job_title)) {
+					echo ', ' . esc_html($author_job_title);
+				}
+				echo '</p></div></div>';
+			}
+		}
+	?>
 </article><!-- #post-<?php the_ID(); ?> -->

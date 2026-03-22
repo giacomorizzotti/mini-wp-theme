@@ -94,12 +94,12 @@ $it_date_year = new IntlDateFormatter(
 							</p>
 							<div class="flex align-items-start flex-direction-column oh">
 								<div>
-									<p class="m-0 up-case <?php if ( is_singular() ): ?>XL<?php else: ?>L<?php endif; ?>">
+									<p class="m-0 up-case <?php if ( is_singular() ): ?>L<?php else: ?><?php endif; ?>">
 										<span class="fw-box m-0 py-1 px-15"><?= $date_day_name ?></span>
 									</p>
 								</div>
-								<div>
-									<span class="white-box bold XXL m-0 px-15 box-shadow"><?= ucfirst($date_month) ?></span><span class="fw-box L light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
+								<div class="flex align-items-start flex-direction-row">
+									<span class="white-box bold XL m-0 py-05 px-15 box-shadow"><?= ucfirst($date_month) ?></span><span class="fw-box light m-0" style="vertical-align: bottom;"><?= $date_year ?></span>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
@@ -107,7 +107,7 @@ $it_date_year = new IntlDateFormatter(
 									}
 								?>
 								<div class="time-box m-0">
-									<p class="m-0 wh-text up-case L bold" >
+									<p class="m-0 wh-text up-case bold" >
 										<?php 
 											if (get_post_meta($post->ID, 'event_end_time')[0] != null) {
 												$end_time = date('H:i', strtotime(get_post_meta($post->ID, 'event_end_time')[0]));

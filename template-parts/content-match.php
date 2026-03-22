@@ -152,10 +152,10 @@ $it_date_year = new IntlDateFormatter(
 									</p>
 								</div>
 								<div class="flex">
-									<p class="m-0 bold XL">
+									<p class="m-0 bold L">
 										<span class="white-box p-15 m-0 box-shadow"><?= ucfirst($date_month) ?></span>
 									</p>
-									<p class="m-0 XL light">
+									<p class="m-0 L light">
 										<span class="fw-box m-0 p-1"><?= $date_year ?></span>
 									</p>
 								</div>
@@ -167,7 +167,7 @@ $it_date_year = new IntlDateFormatter(
 								<div class="flex">
 									<div class="time-box">
 										<p class="m-0">
-											<span class="fw-box wh-text px-15 XL bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
+											<span class="fw-box px-15 py-05 L bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
 										</p>
 									</div>
 								</div>

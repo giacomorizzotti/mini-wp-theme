@@ -25,6 +25,8 @@ get_header();
 					 	<h1 class="entry-title m-0 wh-box"><?php single_post_title(); ?></h1>
 						<div class="space-2"></div>
 					</header>
+					<?php else: ?>
+						<?php the_title( '<h1 class="visually-hidden">', '</h1>' ); ?>
 					<?php endif; ?>
 				</div>
 			</div>
