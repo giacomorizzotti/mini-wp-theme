@@ -13,28 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Checkbox option helper
- */
-function mini_theme_checkbox_option(
-    string $option_group, 
-    string $option, 
-    string $status = '',
-) {
-    $options = get_option( $option_group );
-    if ( is_array( $options ) && isset( $options[$option] ) && $options[$option] ) {
-        $status = 'checked';
-    }
-    
-    return sprintf(
-        '<input type="checkbox" id="%s" name="%s[%s]" value="1" %s>',
-        esc_attr( $option ),
-        esc_attr( $option_group ),
-        esc_attr( $option ),
-        $status
-    );
-}
-
-/**
  * Text field option helper
  */
 function mini_theme_text_field_option(
@@ -135,7 +113,7 @@ function mini_theme_option_list_option(
     string $option, 
     array $select_options, 
     string $label,
-    string $style='width: 100%;',
+    string $style='width: 100%; max-width: 100%;',
 ) {
     /**
      * $options = [

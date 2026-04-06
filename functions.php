@@ -440,7 +440,7 @@ function mini_author_section_callback( $args ) {
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="" for="mini_author"><?php esc_html_e( 'Author', 'mini' ); ?></h4>
             <input type="text" id="mini_author" name="mini_options[mini_author]" value="<?php echo esc_attr($meta_author); ?>" class="regular-text" placeholder="<?php esc_attr_e( 'Company or author name', 'mini' ); ?>">
-            <p class="" for="mini_author"><?php esc_html_e( 'Adds a meta author tag in the page head.', 'mini' ); ?></p>
+            <p class="S label" for="mini_author"><?php esc_html_e( 'Adds a meta author tag in the page head.', 'mini' ); ?></p>
         </div>
     </div>
     <?php
@@ -463,7 +463,7 @@ function mini_credits_section_callback( $args ) {
                 <input type="checkbox" id="mini_credits" name="mini_options[mini_credits]" value="1" <?php checked($credits_enabled, true); ?>>
                 <?php esc_html_e( 'Enable footer credits', 'mini' ); ?>
             </label>
-            <p class="" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
+            <p class="S label" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
         </div>
     </div>
     <?php
@@ -489,12 +489,11 @@ function mini_cdn_section_callback( $args ) {
     ?>
     <div class="boxes">
         <div class="box-100 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'Use CDN', 'mini' ); ?></h4>
-            <label class="">
+            <label class="h5 bold black-text" for="cdn">
                 <input type="checkbox" id="cdn" name="mini_cdn_options[cdn]" value="1" <?php checked($cdn_enabled, true); ?>>
-                <?php esc_html_e( 'Enable CDN', 'mini' ); ?>
+                <?php esc_html_e( 'Use mini via CDN', 'mini' ); ?>
             </label>
-            <p class="" for="mini_news">Load mini CSS and JS from GitHub CDN instead of local files.</p>
+            <p class="S label" for="mini_news">Load mini CSS and JS from GitHub CDN instead of local files.</p>
         </div>
         <div id="mini_cdn_version_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php esc_html_e( 'GitHub Version', 'mini' ); ?></h4>
@@ -506,13 +505,15 @@ function mini_cdn_section_callback( $args ) {
                     <?php endforeach; ?>
                 <?php endif; ?>
             </select>
-            <p class="" for="mini_news">Select which version/tag from GitHub to use when CDN is enabled.</p>
+            <p class="S label" for="mini_news">Select which version/tag from GitHub to use when CDN is enabled.</p>
         </div>
         <div id="mini_cdn_dev_box" class="box-50 p-2 warning-bg b-rad-5 box-shadow <?php echo !$cdn_enabled ? 'hidden' : 'shown'; ?>">
-            <h4 class="white-text" for="mini_match"><?php esc_html_e( 'Use DEV CDN', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_cdn_options','cdn_dev'); ?>
-            <p class="white-text" for="mini_news">This option let you use the development version of the CDN, which is slower but contains the latest updates.</p>
-            <p class="white-text S" for="mini_news"><b>⚠️ Pay attention</b> when enabling this option in production environments, it can cause visualization problems.</p>
+            <label class="h5 bold white-text" for="cdn_dev">
+                <input type="checkbox" id="cdn_dev" name="mini_cdn_options[cdn_dev]" value="1" <?php $__o = get_option('mini_cdn_options'); echo (is_array($__o) && !empty($__o['cdn_dev'])) ? 'checked="checked"' : ''; ?>>
+                <?php esc_html_e( 'Use DEV CDN', 'mini' ); ?>
+            </label>
+            <p class="white-text mb-0" for="mini_news">This option let you use the development version of the CDN, which is slower but contains the latest updates.</p>
+            <p class="white-text S mt-0" for="mini_news"><b>❗ Pay attention</b> when enabling this option in production environments, it can cause visualization problems.</p>
         </div>
         <div id="mini_custom_css_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>mini.min.css</i> path', 'mini' ); ?></h4>
@@ -629,17 +630,17 @@ function mini_font_section_callback( $args ) {
     <div class="boxes">
         <!-- Font Usage Selection -->
         <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Font for titles', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Font for titles', 'mini' ); ?></h4>
             <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
         </div>
         <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Most used font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Most used font', 'mini' ); ?></h4>
             <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
         </div>
 
         <!-- Sans Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Sans Serif font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Sans Serif font', 'mini' ); ?></h4>
             <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_sans_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Barlow)</option>
@@ -654,7 +655,7 @@ function mini_font_section_callback( $args ) {
 
         <!-- Secondary Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Secondary font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Secondary font', 'mini' ); ?></h4>
             <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_secondary_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Oswald)</option>
@@ -669,9 +670,9 @@ function mini_font_section_callback( $args ) {
 
         <!-- Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Serif font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Serif font', 'mini' ); ?></h4>
             <label style="display: block; margin-bottom: 8px;">
-                <?= mini_theme_checkbox_option('mini_font_options','mini_serif_font_status'); ?>
+                <input type="checkbox" id="mini_serif_font_status" name="mini_font_options[mini_serif_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_serif_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable serif font', 'mini' ); ?>
             </label>
             <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
@@ -688,9 +689,9 @@ function mini_font_section_callback( $args ) {
 
         <!-- Mono Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Mono font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Mono font', 'mini' ); ?></h4>
             <label style="display: block; margin-bottom: 8px;">
-                <?= mini_theme_checkbox_option('mini_font_options','mini_mono_font_status'); ?>
+                <input type="checkbox" id="mini_mono_font_status" name="mini_font_options[mini_mono_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_mono_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable mono font', 'mini' ); ?>
             </label>
             <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
@@ -707,9 +708,9 @@ function mini_font_section_callback( $args ) {
 
         <!-- Handwriting Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Handwriting font', 'mini' ); ?></h4>
+            <h4 class="h5"><?php esc_html_e( 'Handwriting font', 'mini' ); ?></h4>
             <label style="display: block; margin-bottom: 8px;">
-                <?= mini_theme_checkbox_option('mini_font_options','mini_handwriting_font_status'); ?>
+                <input type="checkbox" id="mini_handwriting_font_status" name="mini_font_options[mini_handwriting_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_handwriting_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable handwriting font', 'mini' ); ?>
             </label>
             <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
@@ -729,15 +730,19 @@ function mini_font_section_callback( $args ) {
 function mini_ext_lib_section_callback( $args ) {
     ?>
     <div class="boxes">
-        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'AOS', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_aos'); ?>
-            <p class="" for="mini_news">This option enables the AOS (Animate On Scroll) library for animations on scroll events.</p>
+        <div class="box-25 p-2 white-bg b-rad-5 box-shadow">
+            <label class="h5 bold black-text" for="mini_aos">
+                <input type="checkbox" id="mini_aos" name="mini_ext_lib_options[mini_aos]" value="1" <?php $__o = get_option('mini_ext_lib_options'); echo (is_array($__o) && !empty($__o['mini_aos'])) ? 'checked="checked"' : ''; ?>>
+                <?php esc_html_e( 'AOS', 'mini' ); ?>
+            </label>
+            <p class="S label" for="mini_news">This option enables the AOS (Animate On Scroll) library for animations on scroll events.</p>
         </div>
-        <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="" for="mini_match"><?php esc_html_e( 'Iconoir', 'mini' ); ?></h4>
-            <?= mini_theme_checkbox_option('mini_ext_lib_options','mini_iconoir'); ?>
-            <p class="" for="mini_news">This option enables the Iconoir library for icons.</p>
+        <div class="box-25 p-2 white-bg b-rad-5 box-shadow">
+            <label class="h5 bold black-text" for="mini_iconoir">
+                <input type="checkbox" id="mini_iconoir" name="mini_ext_lib_options[mini_iconoir]" value="1" <?php $__o = get_option('mini_ext_lib_options'); echo (is_array($__o) && !empty($__o['mini_iconoir'])) ? 'checked="checked"' : ''; ?>>
+                <?php esc_html_e( 'Iconoir', 'mini' ); ?>
+            </label>
+            <p class="S label" for="mini_news">This option enables the Iconoir library for icons.</p>
         </div>
     </div>
     <?php
@@ -746,13 +751,14 @@ function mini_analytics_section_callback( $args ) {
     ?>
     <div class="boxes">
         <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
-            <h4><?php esc_html_e( 'Google Analytics', 'mini' ); ?></h4>
-            <label style="display: block; margin-bottom: 8px;">
-                <?= mini_theme_checkbox_option('mini_analytics_options','mini_google_analytics'); ?>
-                <?php esc_html_e( 'Enable Google Analytics', 'mini' ); ?>
+            <label class="h5 bold black-text" for="mini_google_analytics">
+                <input type="checkbox" id="mini_google_analytics" name="mini_analytics_options[mini_google_analytics]" value="1" <?php $__o = get_option('mini_analytics_options'); echo (is_array($__o) && !empty($__o['mini_google_analytics'])) ? 'checked="checked"' : ''; ?>>
+                <?php esc_html_e( 'Google Analytics', 'mini' ); ?>
             </label>
+            <div class="space"></div>
             <label><?php esc_html_e( 'Google Analytics Code', 'mini' ); ?></label>
             <?= mini_theme_text_field_option('mini_analytics_options','mini_google_analytics_code','G-XXXXXXXXXX', 'width: 100%; margin-top: 8px;'); ?>
+            <div class="space"></div>
             <p class="description"><?php esc_html_e( 'Enter your Google Analytics measurement ID (e.g., G-XXXXXXXXXX)', 'mini' ); ?></p>
         </div>
     </div>
@@ -840,7 +846,7 @@ function mini_company_section_callback( $args ) {
                 </div>
                 <div class="box-100">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_whatsapp_enabled'); ?>
+                        <input type="checkbox" id="mini_company_whatsapp_enabled" name="mini_company_options[mini_company_whatsapp_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_whatsapp_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'WhatsApp', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_whatsapp','https://wa.me/1234567890'); ?>
@@ -848,7 +854,7 @@ function mini_company_section_callback( $args ) {
                 </div>
                 <div class="box-100">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_telegram_enabled'); ?>
+                        <input type="checkbox" id="mini_company_telegram_enabled" name="mini_company_options[mini_company_telegram_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_telegram_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'Telegram', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_telegram','https://t.me/yourusername'); ?>
@@ -864,49 +870,49 @@ function mini_company_section_callback( $args ) {
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_instagram_enabled'); ?>
+                        <input type="checkbox" id="mini_company_instagram_enabled" name="mini_company_options[mini_company_instagram_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_instagram_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'Instagram', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_instagram','https://instagram.com/yourprofile'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_facebook_enabled'); ?>
+                        <input type="checkbox" id="mini_company_facebook_enabled" name="mini_company_options[mini_company_facebook_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_facebook_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'Facebook', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_facebook','https://facebook.com/yourpage'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_x_enabled'); ?>
+                        <input type="checkbox" id="mini_company_x_enabled" name="mini_company_options[mini_company_x_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_x_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'X (Twitter)', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_x','https://x.com/yourhandle'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_linkedin_enabled'); ?>
+                        <input type="checkbox" id="mini_company_linkedin_enabled" name="mini_company_options[mini_company_linkedin_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_linkedin_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'LinkedIn', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_linkedin','https://linkedin.com/company/yourcompany'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_youtube_enabled'); ?>
+                        <input type="checkbox" id="mini_company_youtube_enabled" name="mini_company_options[mini_company_youtube_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_youtube_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'YouTube', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_youtube','https://youtube.com/@yourchannel'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_tiktok_enabled'); ?>
+                        <input type="checkbox" id="mini_company_tiktok_enabled" name="mini_company_options[mini_company_tiktok_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_tiktok_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'TikTok', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_tiktok','https://tiktok.com/@yourhandle'); ?>
                 </div>
                 <div class="box-25">
                     <label style="display: block; margin-bottom: 8px;">
-                        <?= mini_theme_checkbox_option('mini_company_options','mini_company_threads_enabled'); ?>
+                        <input type="checkbox" id="mini_company_threads_enabled" name="mini_company_options[mini_company_threads_enabled]" value="1" <?php $__o = get_option('mini_company_options'); echo (is_array($__o) && !empty($__o['mini_company_threads_enabled'])) ? 'checked="checked"' : ''; ?>>
                         <strong><?= esc_html__( 'Threads', 'mini' ) ?></strong>
                     </label>
                     <?= mini_theme_text_field_option('mini_company_options','mini_company_threads','https://threads.net/@yourhandle'); ?>
@@ -1051,7 +1057,7 @@ function mini_options_page_html() {
     // show error/update messages
     settings_errors( 'mini_messages' );
 
-    $current_tab = 'credits'; // default tab
+    $current_tab = 'author'; // default tab
     ?>
     <div class="wrap">
         <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
