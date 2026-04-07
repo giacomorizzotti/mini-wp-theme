@@ -40,7 +40,7 @@ function inpage_elements_box_html( $post, $meta ) {
     $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true);
     $displayAuthorInfo = get_post_meta( $post->ID, 'display_author_info', true);
 
-    $titlePresenceState = $titlePresence == true ? ' checked' : '';
+    $titlePresenceState = ( $titlePresence !== '0' ) ? ' checked' : '';
     $sidebarPresenceState = $sidebarPresence == true ? ' checked' : '';
     $displayAuthorInfoState = ( $displayAuthorInfo !== '0' ) ? ' checked' : '';
 
@@ -93,7 +93,7 @@ function inpage_elements_save_postdata( $post_id ) {
     }
 
     // Save title presence
-    $titlePresence = isset($_POST['title_presence']) ? true : false;
+    $titlePresence = isset($_POST['title_presence']) ? '1' : '0';
     update_post_meta( $post_id, 'title_presence', $titlePresence );
 
     // Save sidebar presence
@@ -143,8 +143,8 @@ function page_customization_box_html( $post, $meta ) {
     // Get field values for spacing
     $spaceTop = get_post_meta( $post->ID, 'space_top', true);
     $spaceBot = get_post_meta( $post->ID, 'space_bot', true);
-    $spaceTopState = $spaceTop == true ? ' checked' : '';
-    $spaceBotState = $spaceBot == true ? ' checked' : '';
+    $spaceTopState = ( $spaceTop !== '0' ) ? ' checked' : '';
+    $spaceBotState = ( $spaceBot !== '0' ) ? ' checked' : '';
 
     // Get field value for container
     $pageContainerStyle = get_post_meta( $post->ID, 'page_container', true);
@@ -190,10 +190,10 @@ function page_customization_save_postdata( $post_id ) {
     }
 
     // Save spacing options
-    $spaceTop = isset($_POST['space_top']) ? true : false;
+    $spaceTop = isset($_POST['space_top']) ? '1' : '0';
     update_post_meta( $post_id, 'space_top', $spaceTop );
 
-    $spaceBot = isset($_POST['space_bot']) ? true : false;
+    $spaceBot = isset($_POST['space_bot']) ? '1' : '0';
     update_post_meta( $post_id, 'space_bot', $spaceBot );
 
     // Save container style
