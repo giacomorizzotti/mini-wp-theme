@@ -46,7 +46,9 @@ $the_query = new WP_Query( $args );
 					</div>
 					
 					<?php
+					if ( $layout['sidebar_presence'] ) :
 						get_sidebar('match');
+					endif;
 					?>
 
 				</div>

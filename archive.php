@@ -22,7 +22,7 @@ get_header();
 				<div class="boxes hh align-content-end">
 					<?php if ( $layout['title_presence'] ): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
-					 	<h1 class="entry-title m-0 wh-box"><?php single_post_title(); ?></h1>
+					 	<h1 class="entry-title m-0 wh-box"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
 						<div class="space-2"></div>
 					</header>
 					<?php else: ?>
@@ -80,7 +80,9 @@ get_header();
 					</div>
 
 					<?php
-					get_sidebar('post');
+					if ( $layout['sidebar_presence'] ) :
+						get_sidebar('post');
+					endif;
 					?>
 		</div>
 

@@ -52,7 +52,9 @@ get_header();
 					</div>
 					
 					<?php
+					if ( $layout['sidebar_presence'] ) :
 						get_sidebar('course');
+					endif;
 					?>
 						
 				</div>
