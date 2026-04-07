@@ -88,7 +88,7 @@ if ( ! isset( $layout ) ) {
 			}
 			$author_job_title = get_post_meta(get_the_ID(), '_mini_author_job_title', true) ?: get_variable('mini_seo_settings', 'default_author_job_title');
 			if (!empty($author_name)) {
-				echo '<div class="container fw fw-bg"><div class="container author-byline py-05"><p class="S m-0 px-1">';
+				echo '<div class="container fw fw-bg mt-2"><div class="container author-byline py-05"><p class="S m-0 px-1">';
 				echo 'By <strong>' . esc_html($author_name) . '</strong>';
 				if (!empty($author_job_title)) {
 					echo ', ' . esc_html($author_job_title);
