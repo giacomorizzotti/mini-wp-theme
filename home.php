@@ -22,7 +22,7 @@ get_header();
 				<div class="boxes hh align-content-end">
 					<?php if ( $layout['title_presence'] ): ?>
 					<header class="box box-100 my-0 p-0 entry-header">
-					 	<h1 class="entry-title m-0 wh-box"><?php single_post_title(); ?></h1>
+					 	<h1 class="entry-title m-0 wh-box"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
 						<div class="space-2"></div>
 					</header>
 					<?php else: ?>
@@ -42,7 +42,7 @@ get_header();
 							<?php if ( ! has_post_thumbnail($pageID) && $layout['title_presence'] ): ?>
 							<div class="box box-100 my-2">
 								<header class="entry-header">
-									<h1 class="page-title inline-block m-0"><?php single_post_title(); ?></h1>
+							<h1 class="page-title inline-block m-0"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
 								</header><!-- .entry-header -->
 							</div>
 							<?php endif; ?>
