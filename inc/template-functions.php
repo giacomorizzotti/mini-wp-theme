@@ -90,13 +90,10 @@ function mini_get_page_layout( $post_id = null ) {
 	}
 
 	$title_presence = get_post_meta( $post_id, 'title_presence', true );
-	$title_presence = ( $title_presence !== '0' ); // Default true, false only if explicitly '0'
 	$sidebar_presence = get_post_meta( $post_id, 'sidebar_presence', true );
 	$container_width = get_post_meta( $post_id, 'page_container', true );
 	$space_top = get_post_meta( $post_id, 'space_top', true );
-	$space_top = ( $space_top !== '0' ); // Default true, false only if explicitly '0'
 	$space_bottom = get_post_meta( $post_id, 'space_bot', true );
-	$space_bottom = ( $space_bottom !== '0' ); // Default true, false only if explicitly '0'
 	$display_author_info = get_post_meta( $post_id, 'display_author_info', true );
 	$display_author_info = ( $display_author_info !== '0' ); // Default true, false only if explicitly '0'
 

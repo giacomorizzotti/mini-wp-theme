@@ -42,7 +42,7 @@ get_header();
 							<?php if ( ! has_post_thumbnail($pageID) && $layout['title_presence'] ): ?>
 							<div class="box box-100 my-2">
 								<header class="entry-header">
-							<h1 class="page-title inline-block m-0"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
+									<h1 class="page-title inline-block m-0"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
 								</header><!-- .entry-header -->
 							</div>
 							<?php endif; ?>
@@ -81,7 +81,9 @@ get_header();
 					</div>
 
 					<?php
-					get_sidebar('post');
+					if ( $layout['sidebar_presence'] ) :
+						get_sidebar('post');
+					endif;
 					?>
 		</div>
 
