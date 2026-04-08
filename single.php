@@ -9,6 +9,7 @@
 
 // Get page layout settings
 $layout = mini_get_page_layout();
+$layout['content_size'] = 'box-100';
 
 get_header();
 ?>
