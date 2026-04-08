@@ -10,6 +10,9 @@
 // Get page layout settings
 $layout = mini_get_page_layout();
 $layout['content_size'] = 'box-100';
+if ( is_active_sidebar( 'sidebar-1' ) ) {
+	$layout['content_size'] = 'box-75';
+}
 
 get_header();
 ?>
@@ -81,7 +84,9 @@ get_header();
 					</div>
 
 					<?php
-					get_sidebar('post');
+					if ( $layout['sidebar_presence'] ) {
+						get_sidebar('post');
+					}
 					?>
 		</div>
 
