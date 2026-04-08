@@ -21,7 +21,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?>>
 
 	<?php if ( (is_singular() && $is_shortcode ) || is_home() || is_archive() || ( !$is_shortcode && !has_post_thumbnail() ) ): ?>
 	<div class="container fw"
@@ -29,9 +29,9 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 			>
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( $is_shortcode || is_home() || is_archive() ): ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
-				<header class="box box-100 my-0 entry-header">
+				<header class="box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
-					<p class="entry-meta S m-0 fw-box px-1">
+					<p class="entry-meta S m-0 fw-px-1">
 						<?php
 						mini_posted_on();
 						if ( $layout['display_author_info'] ) {
@@ -58,7 +58,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 		<div class="boxes">
 
-			<div class="box box-100 entry-content">
+			<div class="<?php echo esc_attr( $layout['content_size'] ); ?> entry-content">
 				<?php
 				if ( !is_singular() || ! empty( $args['is_shortcode'] ) ) {
 					// Show excerpt on archive pages, category pages, etc.
@@ -89,7 +89,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 				);
 				?>
 			</div><!-- .entry-content -->
-			<footer class="box box-100 my-0 entry-footer">
+			<footer class="box-100 my-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 		</div>

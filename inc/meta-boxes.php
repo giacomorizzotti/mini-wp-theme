@@ -171,6 +171,16 @@ function page_customization_box_html( $post, $meta ) {
         <option value="wide"' . ($pageContainerStyle == 'wide' ? ' selected' : '') . '>Wide</option>
     </select>';
     echo '</div>';
+
+    // Output content width dropdown
+    $contentWidth = get_post_meta( $post->ID, 'content_width', true );
+    echo '<div style="margin-top: 8px;">';
+    echo '<label for="content_width" style="display: block; margin-bottom: 5px; font-weight: 600;">' . __( 'Content width', 'mini' ) . '</label>';
+    echo '<select name="content_width" style="width: 100%;">
+        <option value="box-100"' . ( $contentWidth !== 'box-66' ? ' selected' : '' ) . '>Full</option>
+        <option value="box-66"' . ( $contentWidth === 'box-66' ? ' selected' : '' ) . '>2/3</option>
+    </select>';
+    echo '</div>';
 }
 
 function page_customization_save_postdata( $post_id ) {
@@ -204,6 +214,15 @@ function page_customization_save_postdata( $post_id ) {
         // Only save if it's a valid value
         if ( in_array( $container_value, $allowed_values, true ) ) {
             update_post_meta( $post_id, 'page_container', $container_value );
+        }
+    }
+
+    // Save content width
+    if ( isset( $_POST['content_width'] ) ) {
+        $allowed_widths = array( 'box-100', 'box-66' );
+        $width_value = sanitize_text_field( $_POST['content_width'] );
+        if ( in_array( $width_value, $allowed_widths, true ) ) {
+            update_post_meta( $post_id, 'content_width', $width_value );
         }
     }
 }

@@ -108,7 +108,8 @@ function mini_get_page_layout( $post_id = null ) {
 	}
 
 	// Calculate content size
-	$content_size = 'box-100';
+	$content_width_meta = get_post_meta( $post_id, 'content_width', true );
+	$content_size = ( $content_width_meta === 'box-66' ) ? 'box-66' : 'box-100';
 	if ( is_active_sidebar( 'sidebar-1' ) && $sidebar_presence ) {
 		$content_size = 'box-75';
 	}
