@@ -31,7 +31,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( $is_shortcode || is_home() || is_archive() ): ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
-					<p class="entry-meta S m-0 fw-px-1">
+					<p class="entry-meta S m-0 fw-px-1 white-bg inline-block px-05">
 						<?php
 						mini_posted_on();
 						if ( $layout['display_author_info'] ) {
