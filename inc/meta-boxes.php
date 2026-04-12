@@ -127,15 +127,6 @@ function add_page_customization_box() {
     );
 }
 
-/**
- * Remove non-relevant meta boxes for slide post type.
- */
-add_action( 'add_meta_boxes', 'mini_remove_slide_meta_boxes', 100 );
-
-function mini_remove_slide_meta_boxes() {
-    remove_meta_box( 'header-styling', 'slide', 'side' );
-}
-
 function page_customization_box_html( $post, $meta ) {
     // Add nonce field for security
     wp_nonce_field( 'page_customization_save', 'page_customization_nonce' );
@@ -242,6 +233,13 @@ function add_header_styling_box() {
         ['page', 'post', 'match', 'course', 'lesson'],
         'side'
     );
+    add_meta_box(
+        'slide-header-styling',
+        'Header styling',
+        'slide_header_styling_box_html',
+        'slide',
+        'side'
+    );
 }
 
 function header_styling_box_html( $post, $meta ){
@@ -284,7 +282,7 @@ function header_styling_box_html( $post, $meta ){
 		<option value="top-col"<?=$header_styling_state_top_color?>>Top main color background</option>
 		<option value="top-inv"<?=$header_styling_state_top_negative?>>Top inverted colors</option>
 	</select>
-    <br/><br/>
+    <br/>
     <label for="header_styling_scroll" style="display: block; margin-bottom: 5px;"><?=__("Header scroll styling", 'header_styling_scroll_box_textdomain' )?></label>
     <select name="header_styling_scroll">
 		<option value=""<?=$header_styling_state_scroll_standard?>>Default</option>
@@ -294,6 +292,26 @@ function header_styling_box_html( $post, $meta ){
 		<option value="scroll-inv"<?=$header_styling_state_scroll_negative?>>Scroll inverted colors</option>
 	</select>
 <?php
+}
+
+/**
+ * Header styling meta box for slides only.
+ * Top styling only — empty value means "Inherit" (do not override the page setting).
+ */
+function slide_header_styling_box_html( $post, $meta ) {
+    wp_nonce_field( 'header_styling_save', 'header_styling_nonce' );
+
+    $top = get_post_meta( $post->ID, 'header_styling_top', true );
+    ?>
+    <label for="slide_header_styling_top" style="display: block; margin-bottom: 5px;"><?= esc_html__( 'Header top styling', 'mini' ) ?></label>
+    <select name="header_styling_top" id="slide_header_styling_top" style="width:100%;">
+        <option value=""<?= selected( $top, '', false ) ?>><?= esc_html__( 'Inherit (page default)', 'mini' ) ?></option>
+        <option value="top-wh"<?= selected( $top, 'top-wh', false ) ?>><?= esc_html__( 'Top white background', 'mini' ) ?></option>
+        <option value="top-bk"<?= selected( $top, 'top-bk', false ) ?>><?= esc_html__( 'Top black background', 'mini' ) ?></option>
+        <option value="top-col"<?= selected( $top, 'top-col', false ) ?>><?= esc_html__( 'Top main color background', 'mini' ) ?></option>
+        <option value="top-inv"<?= selected( $top, 'top-inv', false ) ?>><?= esc_html__( 'Top inverted colors', 'mini' ) ?></option>
+    </select>
+    <?php
 }
 
 function header_styling_save_postdata( $post_id ) {
