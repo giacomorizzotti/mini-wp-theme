@@ -219,32 +219,6 @@ function page_customization_save_postdata( $post_id ) {
 }
 
 /**
- * Header top styling only — for slides
- */
-add_action( 'add_meta_boxes', function() {
-    add_meta_box(
-        'header-styling',
-        'Header styling',
-        function( $post ) {
-            wp_nonce_field( 'header_styling_save', 'header_styling_nonce' );
-            $top = get_post_meta( $post->ID, 'header_styling_top', true );
-            ?>
-            <label for="header_styling_top" style="display:block;margin-bottom:5px;"><?php esc_html_e( 'Header top styling', 'mini' ); ?></label>
-            <select name="header_styling_top" id="header_styling_top" style="width:100%;">
-                <option value=""<?php selected( $top, '' ); ?>><?php esc_html_e( 'Default', 'mini' ); ?></option>
-                <option value="top-wh"<?php selected( $top, 'top-wh' ); ?>><?php esc_html_e( 'Top white background', 'mini' ); ?></option>
-                <option value="top-bk"<?php selected( $top, 'top-bk' ); ?>><?php esc_html_e( 'Top black background', 'mini' ); ?></option>
-                <option value="top-col"<?php selected( $top, 'top-col' ); ?>><?php esc_html_e( 'Top main color background', 'mini' ); ?></option>
-                <option value="top-inv"<?php selected( $top, 'top-inv' ); ?>><?php esc_html_e( 'Top inverted colors', 'mini' ); ?></option>
-            </select>
-            <?php
-        },
-        'slide',
-        'side'
-    );
-} );
-
-/**
  * ADD header styling meta box to page edit
  */
 
@@ -260,7 +234,7 @@ function add_header_styling_box() {
         'side'
     );
     add_meta_box(
-        'slide-header-styling',
+        'header-styling',
         'Header styling',
         'slide_header_styling_box_html',
         'slide',
