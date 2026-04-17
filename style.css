@@ -274,5 +274,8 @@ body.wp-admin .welcome-panel {
 body.wp-admin .welcome-panel-content {
   min-height: auto;
 }
+body.wp-admin .edit-post-fullscreen-mode-close__view-mode-toggle .edit-post-fullscreen-mode-close__view-mode-toggle-icon img, body.wp-admin .edit-post-fullscreen-mode-close__view-mode-toggle .edit-post-fullscreen-mode-close__view-mode-toggle-icon svg {
+  padding: var(--padding);
+}
 
 /*# sourceMappingURL=style.css.map */
