@@ -15,11 +15,22 @@
 // Get page layout settings
 $layout = mini_get_page_layout();
 
+$slideshow_id = get_post_meta( get_the_ID(), '_mini_page_slideshow', true );
+
 get_header();
 ?>
 
 	<main id="primary" class="site-main" template="page">
 
+		<?php
+		if ( $slideshow_id ) {
+			// temporarily set the global post to the slideshow
+			$slideshow_post = get_post( $slideshow_id );
+			setup_postdata( $GLOBALS['post'] = $slideshow_post );
+			get_template_part( 'template-parts/content', 'slideshow' );
+			wp_reset_postdata();
+		}
+		?>
 		<?php if ( has_post_thumbnail() ): ?>
 		<div class="container fw" style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;">
 			<div class="container">
@@ -45,7 +56,6 @@ get_header();
 			</div>
 		</div>
 		<?php endif; ?>
-
 		<div class="container fw">
 			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				<div class="boxes <?php echo esc_attr( $layout['spacing_class'] ); ?>">
