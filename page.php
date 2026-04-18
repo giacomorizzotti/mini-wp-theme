@@ -90,6 +90,24 @@ get_header();
 		</div>
 
 	</main><!-- #main -->
+	<?php 
+		// Display author byline for E-E-A-T
+		if ( $layout['display_author_info'] ) {
+			$author_name = get_post_meta(get_the_ID(), '_mini_author_name', true);
+			if (empty($author_name)) {
+				$author_name = get_variable('mini_seo_settings', 'default_author_name');
+			}
+			$author_job_title = get_post_meta(get_the_ID(), '_mini_author_job_title', true) ?: get_variable('mini_seo_settings', 'default_author_job_title');
+			if (!empty($author_name)) {
+				echo '<div class="container fw fw-bg order-9"><div class="container author-byline py-05"><p class="S m-0 px-1">';
+				echo 'By <strong>' . esc_html($author_name) . '</strong>';
+				if (!empty($author_job_title)) {
+					echo ', ' . esc_html($author_job_title);
+				}
+				echo '</p></div></div>';
+			}
+		}
+	?>
 
 <?php
 get_footer();
