@@ -630,13 +630,15 @@ function mini_font_section_callback( $args ) {
     <div class="boxes">
         <!-- Font Usage Selection -->
         <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="h5"><?php esc_html_e( 'Font for titles', 'mini' ); ?></h4>
-            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
-        </div>
-        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="h5"><?php esc_html_e( 'Most used font', 'mini' ); ?></h4>
+            <h4 class="h5"><i class="iconoir-text-square third-color-text"></i>&nbsp;<?php esc_html_e( 'Most used font', 'mini' ); ?></h4>
             <?= mini_theme_option_list_option('mini_font_options','mini_most_used_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Most used font (paragraphs, links, menus, ...)'); ?>
         </div>
+        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
+            <h4 class="h5"><i class="iconoir-text-square-solid third-color-text"></i>&nbsp;<?php esc_html_e( 'Font for titles', 'mini' ); ?></h4>
+            <?= mini_theme_option_list_option('mini_font_options','mini_title_font', ['Sans Serif font' => '--font-sans', 'Secondary font' => '--font-second', 'Font serif' => '--font-serif', 'Font mono' => '--font-mono', 'Font handwriting' => '--font-handwriting'], 'Font used for titles'); ?>
+        </div>
+
+        <div class="sep"></div>
 
         <!-- Sans Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
@@ -667,6 +669,8 @@ function mini_font_section_callback( $args ) {
             </select>
             <p class="description"><?php esc_html_e( 'Alternative font, used for titles and in CSS class ".font-two".', 'mini' ); ?> <b><?php esc_html_e( 'Always enabled.', 'mini' ); ?></b></p>
         </div>
+
+        <div class="sep"></div>
 
         <!-- Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
@@ -767,7 +771,7 @@ function mini_analytics_section_callback( $args ) {
 function mini_company_section_callback( $args ) {
     ?>
     <div class="boxes">
-        <div class="box-66 p-2 white-bg b-rad-5 box-shadow info-bg">
+        <div class="box-66 p-2 white-bg b-rad-5 box-shadow grad-3-to-4">
             <h3 class="white-text"><?= esc_html__( 'Your data', 'mini' ) ?></h3>
             <p class="m-0 white-text">These data will populate the <b>footer</b>.</p>
             <p class="S m-0 white-text">They could also be used in the <i>About us</i> page, in <i>Cookie policy</i>, in <i>Privacy policy</i> or in other sections.</p>
