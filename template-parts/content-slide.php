@@ -8,7 +8,7 @@
 $slideshow_id = $args['slideshow_id'] ?? get_post_field( 'post_parent', get_the_ID() );
 $layout = mini_get_page_layout( $slideshow_id );
 ?>
-<li class="slide" data-header-top="<?php echo esc_attr( get_post_meta( get_the_ID(), 'header_styling_top', true ) ); ?>">
+<li class="slide" data-header-top="<?php echo esc_attr( get_post_meta( get_the_ID(), 'header_styling_top', true ) ); ?>" template="content-slide">
 	<?php if ( has_post_thumbnail() ) : ?>
 	<div class="img">
 		<?php the_post_thumbnail( 'full' ); ?>

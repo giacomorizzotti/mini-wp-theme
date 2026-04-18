@@ -18,11 +18,21 @@ if ( is_front_page() && is_home() ) {
 	}
 }
 
+$slideshow_id = get_post_meta( $pageID, '_mini_page_slideshow', true );
+
 get_header();
 
 ?>
 
 	<main id="primary" class="site-main" template="front-page">
+		<?php
+		if ( $slideshow_id ) {
+			$slideshow_post = get_post( $slideshow_id );
+			setup_postdata( $GLOBALS['post'] = $slideshow_post );
+			get_template_part( 'template-parts/content', 'slideshow' );
+			wp_reset_postdata();
+		}
+		?>
 		<?php if (is_front_page() and is_home()): ?>
 		<div class="container fw color-bg">
 			<div class="container">

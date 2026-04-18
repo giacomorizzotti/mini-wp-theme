@@ -14,7 +14,7 @@ if ( ! isset( $layout ) ) {
 
 ?>
 
-<div class="box box-100 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
+<div class="box box-100 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>" template="content-none">
 	<section class="no-results not-found">
 		
 		<header class="page-header">

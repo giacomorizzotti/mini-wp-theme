@@ -23,7 +23,7 @@ $slides = get_posts([
 
 if ( empty( $slides ) ) return;
 ?>
-<div class="<?php echo $container_class; ?>">
+<div class="<?php echo $container_class; ?>" template="content-slideshow">
     <div class="slider-wrapper">
         <i class="iconoir-arrow-left-circle slider-controls" id="slider-prev-<?php echo esc_attr( $slideshow_id ); ?>"></i>
 

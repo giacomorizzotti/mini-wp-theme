@@ -21,7 +21,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="base-content-<?php echo esc_attr( get_post_type() ); ?>">
 
 	<?php if ( (is_singular() && $is_shortcode ) || is_home() || is_archive() || ( !$is_shortcode && !has_post_thumbnail() ) ): ?>
 	<div class="container fw"

@@ -13,14 +13,14 @@ if ( ! isset( $layout ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-page">
 
 	<?php if ( $layout['title_presence'] && ! has_post_thumbnail() ): ?>
 	<div class="container fw forced"
 		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 		>
 		<div class="container<?php if ( $layout['container_width'] != 'fw' ): ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
-			<div class="boxes space-top<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
+			<div class="boxes<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
 				<div class="box box-100 my-2">
 					<header class="entry-header">
 						<?php if ( has_post_thumbnail() ): ?>
