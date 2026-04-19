@@ -181,21 +181,36 @@ function get_enabled_social_networks() {
  */
 function get_enabled_messaging_apps() {
     $messaging = [
-        'whatsapp' => ['icon' => 'iconoir-whatsapp', 'name' => 'WhatsApp'],
-        'telegram' => ['icon' => 'iconoir-telegram', 'name' => 'Telegram'],
+        'whatsapp' => [
+            'icon' => 'iconoir-whatsapp',
+            'name' => 'WhatsApp',
+            'url'  => function( $number ) {
+                if ( strpos( $number, 'http' ) === 0 ) { return $number; }
+                return 'https://wa.me/' . preg_replace( '/[^0-9+]/', '', $number );
+            },
+        ],
+        'telegram' => [
+            'icon' => 'iconoir-telegram',
+            'name' => 'Telegram',
+            'url'  => function( $number ) {
+                if ( strpos( $number, 'http' ) === 0 ) { return $number; }
+                return 'https://t.me/' . ltrim( $number, '@' );
+            },
+        ],
     ];
-    
+
     $enabled = [];
     foreach ($messaging as $key => $data) {
         $enabled_key = 'mini_company_' . $key . '_enabled';
-        $number_key = 'mini_company_' . $key;
-        
-        if (get_variable('mini_company_options', $enabled_key) && 
-            get_variable('mini_company_options', $number_key)) {
+        $number_key  = 'mini_company_' . $key;
+        $number      = get_variable( 'mini_company_options', $number_key );
+
+        if ( get_variable( 'mini_company_options', $enabled_key ) && $number ) {
             $enabled[$key] = [
-                'number' => get_variable('mini_company_options', $number_key),
-                'icon' => $data['icon'],
-                'name' => $data['name']
+                'number' => $number,
+                'url'    => $data['url']( $number ),
+                'icon'   => $data['icon'],
+                'name'   => $data['name'],
             ];
         }
     }

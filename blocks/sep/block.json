@@ -1,0 +1,17 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/sep",
+    "title": "Sep",
+    "category": "mini",
+    "description": "A horizontal separator using mini .sep classes, with optional border color.",
+    "keywords": ["sep", "separator", "divider", "hr", "mini"],
+    "textdomain": "mini",
+    "attributes": {
+        "size":        { "type": "string", "default": ""              },
+        "colorClass":  { "type": "string", "default": ""              }
+    },
+    "supports": { "html": false },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

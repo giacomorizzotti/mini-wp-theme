@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/boxes",
+    "title": "Boxes",
+    "category": "mini",
+    "description": "A mini flex-grid row. Add Box blocks inside to create columns.",
+    "keywords": ["boxes", "grid", "flex", "row", "mini", "layout"],
+    "textdomain": "mini",
+    "attributes": {
+        "flexDirection":  { "type": "string", "default": "" },
+        "flexWrap":       { "type": "string", "default": "" },
+        "justifyContent": { "type": "string", "default": "" },
+        "alignContent":   { "type": "string", "default": "" },
+        "alignItems":     { "type": "string", "default": "" },
+        "heightClass":    { "type": "string", "default": "" },
+        "gapClass":       { "type": "string", "default": "" },
+        "spaceTop":       { "type": "boolean", "default": false },
+        "spaceBot":       { "type": "boolean", "default": false }
+    },
+    "supports": {
+        "html": false
+    },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

@@ -113,8 +113,9 @@ $it_date_year = new IntlDateFormatter(
 												$end_time = date('H:i', strtotime(get_post_meta($post->ID, 'event_end_time')[0]));
 											}
 										?>
+										<?php if ( get_post_meta($post->ID, 'event_time')[0] != null ): ?>
 										<span class="fw-box m-0 py-1 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
-										
+										<?php endif; ?>
 									</p>
 								</div>
 							</div>

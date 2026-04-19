@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/button",
+    "title": "Button",
+    "category": "mini",
+    "description": "A mini-styled button link with color, size and target options.",
+    "keywords": ["button", "link", "cta", "mini"],
+    "textdomain": "mini",
+    "attributes": {
+        "label": {
+            "type": "string",
+            "default": "Click here"
+        },
+        "url": {
+            "type": "string",
+            "default": ""
+        },
+        "color": {
+            "type": "string",
+            "default": "main-color"
+        },
+        "size": {
+            "type": "string",
+            "default": ""
+        },
+        "openInNewTab": {
+            "type": "boolean",
+            "default": false
+        },
+        "invert": {
+            "type": "boolean",
+            "default": false
+        },
+        "transpBg": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

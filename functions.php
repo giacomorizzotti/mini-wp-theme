@@ -321,8 +321,10 @@ require get_template_directory() . '/inc/shortcodes.php';
  */
 require get_template_directory() . '/inc/override.php';
 
-// Patterns
-add_filter( 'should_load_remote_block_patterns', '__return_false' );
+/**
+ * Blocks settings
+ */
+require get_template_directory() . '/inc/blocks-settings.php';
 
 // Contact form 7 BUG FIX
 add_filter('wpcf7_autop_or_not', '__return_false');
@@ -958,6 +960,14 @@ function mini_options_page() {
             'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini/img/brand/mini_emblem_wh.svg'
         );
     }
+    add_submenu_page(
+        'mini',
+        'mini theme - Editor blocks',
+        'Editor blocks',
+        'manage_options',
+        'mini-blocks',
+        'mini_blocks_page_html'
+    );
     add_submenu_page(
         'mini',
         'mini theme - Credits',

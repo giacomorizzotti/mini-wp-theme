@@ -256,6 +256,9 @@ body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox], body.wp-admin :not(
   width: 16px !important;
   height: 16px !important;
 }
+body.wp-admin .components-form-toggle__input {
+  position: absolute !important;
+}
 body.wp-admin :not(#iubenda-cs-banner) input[type=checkbox]::before, body.wp-admin :not(#iubenda-iframe) input[type=checkbox]::before {
   width: 20px;
   height: 20px;
@@ -276,6 +279,10 @@ body.wp-admin .welcome-panel-content {
 }
 body.wp-admin .edit-post-fullscreen-mode-close__view-mode-toggle .edit-post-fullscreen-mode-close__view-mode-toggle-icon img, body.wp-admin .edit-post-fullscreen-mode-close__view-mode-toggle .edit-post-fullscreen-mode-close__view-mode-toggle-icon svg {
   padding: var(--padding);
+}
+body.wp-admin .wp-block-mini-section, body.wp-admin .wp-block-mini-container, body.wp-admin .wp-block-mini-boxes {
+  margin-top: var(--margin);
+  margin-bottom: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

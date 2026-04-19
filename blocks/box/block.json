@@ -1,0 +1,26 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/box",
+    "title": "Box",
+    "category": "mini",
+    "parent": ["mini/boxes"],
+    "description": "A mini grid column. Must be placed inside a Boxes block.",
+    "keywords": ["box", "column", "grid", "mini", "layout"],
+    "textdomain": "mini",
+    "attributes": {
+        "width": {
+            "type": "string",
+            "default": "50"
+        },
+        "padding": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "supports": {
+        "html": false
+    },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

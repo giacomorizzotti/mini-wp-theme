@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/courses",
+    "title": "Courses",
+    "category": "mini",
+    "description": "Display a grid of courses from the Course post type.",
+    "keywords": ["courses", "lessons", "mini", "education"],
+    "textdomain": "mini",
+    "attributes": {
+        "count":        { "type": "number",  "default": 6     },
+        "columns":      { "type": "string",  "default": "33"  },
+        "categoryId":   { "type": "number",  "default": 0     },
+        "order":        { "type": "string",  "default": "ASC" },
+        "showLocation": { "type": "boolean", "default": true  },
+        "showLessons":  { "type": "boolean", "default": false }
+    },
+    "supports": { "html": false },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

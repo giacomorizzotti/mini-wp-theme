@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/section",
+    "title": "Section",
+    "category": "layout",
+    "description": "A mini page section with id, background class and menu name support.",
+    "keywords": ["section", "mini", "page-menu", "layout"],
+    "textdomain": "mini",
+    "attributes": {
+        "sectionId": {
+            "type": "string",
+            "default": ""
+        },
+        "extraClasses": {
+            "type": "string",
+            "default": ""
+        },
+        "menuItemName": {
+            "type": "string",
+            "default": ""
+        },
+        "isPageMenu": {
+            "type": "boolean",
+            "default": false
+        },
+        "size": {
+            "type": "string",
+            "default": ""
+        },
+        "spaceTop": {
+            "type": "boolean",
+            "default": false
+        },
+        "spaceBot": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": ["full"],
+        "color": {
+            "background": false
+        }
+    },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

@@ -37,6 +37,20 @@ function mini_pingback_header() {
 add_action( 'wp_head', 'mini_pingback_header' );
 
 /**
+ * Serve 403.php template when WordPress sets a 403 status.
+ */
+add_action( 'template_redirect', function() {
+    if ( http_response_code() === 403 ) {
+        status_header( 403 );
+        $template = locate_template( '403.php' );
+        if ( $template ) {
+            include $template;
+            exit;
+        }
+    }
+} );
+
+/**
  * Get header styling for current page
  *
  * @return array Array with 'top' and 'scroll' style values

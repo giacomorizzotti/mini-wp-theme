@@ -252,3 +252,37 @@ function mini_gwf_font(){
     
     wp_add_inline_style('mini-google-fonts', $css_vars);
 }
+
+/**
+ * Register mini Gutenberg blocks (only those enabled in mini > Blocks)
+ */
+add_action( 'init', 'mini_register_blocks' );
+function mini_register_blocks() {
+    $opts      = get_option( 'mini_blocks_settings', [] );
+    $blocks_dir = get_template_directory() . '/blocks/';
+
+    $block_map = [
+        // Layout
+        'mini_section'   => 'section',
+        'mini_container' => 'container',
+        'mini_boxes'     => 'boxes',
+        'mini_box'       => 'box',
+        // Content
+        'mini_news'      => 'news',
+        'mini_events'    => 'events',
+        'mini_courses'   => 'courses',
+        'mini_matches'   => 'matches',
+        // UI
+        'mini_button'    => 'button',
+        'mini_image'     => 'image',
+        // Utilities
+        'mini_sep'       => 'sep',
+        'mini_space'     => 'space',
+    ];
+
+    foreach ( $block_map as $option_key => $dir ) {
+        if ( ! empty( $opts[ $option_key ] ) ) {
+            register_block_type( $blocks_dir . $dir );
+        }
+    }
+}

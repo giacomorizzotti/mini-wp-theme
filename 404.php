@@ -10,51 +10,21 @@
 get_header();
 ?>
 
-	<main id="primary" class="site-main">
-
-		<section class="error-404 not-found">
-			<header class="page-header">
-				<h1 class="page-title inline-block"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'mini' ); ?></h1>
-			</header><!-- .page-header -->
-
-			<div class="page-content">
-				<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try one of the links below or a search?', 'mini' ); ?></p>
-
-					<?php
-					get_search_form();
-
-					the_widget( 'WP_Widget_Recent_Posts' );
-					?>
-
-					<div class="widget widget_categories">
-						<h2 class="widget-title"><?php esc_html_e( 'Most Used Categories', 'mini' ); ?></h2>
-						<ul>
-							<?php
-							wp_list_categories(
-								array(
-									'orderby'    => 'count',
-									'order'      => 'DESC',
-									'show_count' => 1,
-									'title_li'   => '',
-									'number'     => 10,
-								)
-							);
-							?>
-						</ul>
-					</div><!-- .widget -->
-
-					<?php
-					/* translators: %1$s: smiley */
-					$mini_archive_content = '<p>' . sprintf( esc_html__( 'Try looking in the monthly archives. %1$s', 'mini' ), convert_smilies( ':)' ) ) . '</p>';
-					the_widget( 'WP_Widget_Archives', 'dropdown=1', "after_title=</h2>$mini_archive_content" );
-
-					the_widget( 'WP_Widget_Tag_Cloud' );
-					?>
-
-			</div><!-- .page-content -->
-		</section><!-- .error-404 -->
-
-	</main><!-- #main -->
+<main id="primary" class="site-main" template="404">
+    <div class="container">
+        <div class="boxes fh align-items-center">
+            <div class="box-100">
+                <p class="max black m-0">404</p>
+                <h1 class="m-0 danger-text"><?php esc_html_e( 'Page not found', 'mini' ); ?></h1>
+                <p class="L"><?php esc_html_e( "The page you're looking for doesn't exist or has been moved.", 'mini' ); ?></p>
+                <div class="space-4"></div>
+                <p class="m-0">
+                    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn L"><?php esc_html_e( 'Back to homepage', 'mini' ); ?></a>
+                </p>
+            </div>
+        </div>
+    </div>
+</main><!-- #primary -->
 
 <?php
 get_footer();

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/image",
+    "title": "Image",
+    "category": "mini",
+    "description": "A plain <img> tag with the mini img class. No wrapper, no captions.",
+    "keywords": ["image", "img", "photo", "mini"],
+    "textdomain": "mini",
+    "attributes": {
+        "id":           { "type": "number",  "default": 0  },
+        "url":          { "type": "string",  "default": "" },
+        "alt":          { "type": "string",  "default": "" },
+        "linkUrl":      { "type": "string",  "default": "" },
+        "openInNewTab": { "type": "boolean", "default": false },
+        "width":        { "type": "string",  "default": "" },
+        "height":       { "type": "string",  "default": "" }
+    },
+    "supports": { "html": false },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

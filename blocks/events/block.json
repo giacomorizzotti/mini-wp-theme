@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/events",
+    "title": "Events",
+    "category": "mini",
+    "description": "Display a list of events from the Event post type.",
+    "keywords": ["events", "mini", "calendar"],
+    "textdomain": "mini",
+    "attributes": {
+        "count":        { "type": "number",  "default": 6     },
+        "columns":      { "type": "string",  "default": "33"  },
+        "categoryId":   { "type": "number",  "default": 0     },
+        "upcomingOnly": { "type": "boolean", "default": true   },
+        "showLocation": { "type": "boolean", "default": true   },
+        "order":        { "type": "string",  "default": "ASC"  }
+    },
+    "supports": { "html": false },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

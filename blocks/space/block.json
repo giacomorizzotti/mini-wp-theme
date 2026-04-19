@@ -1,0 +1,16 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/space",
+    "title": "Space",
+    "category": "mini",
+    "description": "A blank vertical spacer using mini .space classes.",
+    "keywords": ["space", "spacer", "gap", "mini"],
+    "textdomain": "mini",
+    "attributes": {
+        "size": { "type": "string", "default": "1" }
+    },
+    "supports": { "html": false, "inserter": true },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}
