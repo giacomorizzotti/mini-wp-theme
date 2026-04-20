@@ -23,9 +23,12 @@ $slides = get_posts([
 
 if ( empty( $slides ) ) return;
 ?>
+<?php $has_multiple_slides = count( $slides ) > 1; ?>
 <div class="<?php echo $container_class; ?>" template="content-slideshow">
     <div class="slider-wrapper">
+        <?php if ( $has_multiple_slides ) : ?>
         <i class="iconoir-arrow-left-circle slider-controls" id="slider-prev-<?php echo esc_attr( $slideshow_id ); ?>"></i>
+        <?php endif; ?>
 
         <ul class="slider fh" id="slider-<?php echo esc_attr( $slideshow_id ); ?>">
             <?php foreach ( $slides as $slide ) :
@@ -36,7 +39,9 @@ if ( empty( $slides ) ) return;
             ?>
         </ul>
 
+        <?php if ( $has_multiple_slides ) : ?>
         <i class="iconoir-arrow-right-circle slider-controls" id="slider-next-<?php echo esc_attr( $slideshow_id ); ?>"></i>
+        <?php endif; ?>
     </div>
 </div>
 <script>

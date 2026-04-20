@@ -15,12 +15,15 @@ $layout = mini_get_page_layout( $slideshow_id );
 	</div>
 	<?php endif; ?>
 
-	<?php if ( get_the_title() || get_the_content() ) : ?>
+	<?php
+	$slide_show_title = get_post_meta( get_the_ID(), 'title_presence', true );
+	?>
+	<?php if ( ( $slide_show_title && get_the_title() ) || get_the_content() ) : ?>
 	<div class="caption">
 		<div class="container<?php if ( $layout['container_width'] && $layout['container_width'] !== 'fw' ) : ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
 			<div class="boxes fh space-top-bot align-content-end">
 				<div class="<?php echo esc_attr( $layout['content_size'] ); ?>"><?php // box-100 or box-66 ?>
-					<?php if ( get_the_title() ) : ?>
+					<?php if ( $slide_show_title && get_the_title() ) : ?>
 					<h2 class="wh-text"><?php the_title(); ?></h2>
 					<?php endif; ?>
 					<?php if ( get_the_content() ) : ?>
