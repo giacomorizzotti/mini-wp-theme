@@ -645,7 +645,7 @@ function mini_font_section_callback( $args ) {
         <!-- Sans Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="h5"><?php esc_html_e( 'Sans Serif font', 'mini' ); ?></h4>
-            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <label class="S"><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_sans_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Barlow)</option>
                 <?php foreach ($fonts['sans'] as $name => $data): 
@@ -660,7 +660,7 @@ function mini_font_section_callback( $args ) {
         <!-- Secondary Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
             <h4 class="h5"><?php esc_html_e( 'Secondary font', 'mini' ); ?></h4>
-            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <label class="S"><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_secondary_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Oswald)</option>
                 <?php foreach ($fonts['secondary'] as $name => $data): 
@@ -676,12 +676,12 @@ function mini_font_section_callback( $args ) {
 
         <!-- Serif Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="h5"><?php esc_html_e( 'Serif font', 'mini' ); ?></h4>
-            <label style="display: block; margin-bottom: 8px;">
+            <h4 class="h6"><?php esc_html_e( 'Serif font', 'mini' ); ?></h4>
+            <label class="S">
                 <input type="checkbox" id="mini_serif_font_status" name="mini_font_options[mini_serif_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_serif_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable serif font', 'mini' ); ?>
             </label>
-            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <label class="S"><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_serif_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Playfair Display)</option>
                 <?php foreach ($fonts['serif'] as $name => $data): 
@@ -695,12 +695,12 @@ function mini_font_section_callback( $args ) {
 
         <!-- Mono Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="h5"><?php esc_html_e( 'Mono font', 'mini' ); ?></h4>
-            <label style="display: block; margin-bottom: 8px;">
+            <h4 class="h6"><?php esc_html_e( 'Mono font', 'mini' ); ?></h4>
+            <label class="S">
                 <input type="checkbox" id="mini_mono_font_status" name="mini_font_options[mini_mono_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_mono_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable mono font', 'mini' ); ?>
             </label>
-            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <label class="S"><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_mono_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Roboto Mono)</option>
                 <?php foreach ($fonts['mono'] as $name => $data): 
@@ -714,12 +714,12 @@ function mini_font_section_callback( $args ) {
 
         <!-- Handwriting Font -->
         <div class="box-33 p-2 white-bg b-rad-5 box-shadow">
-            <h4 class="h5"><?php esc_html_e( 'Handwriting font', 'mini' ); ?></h4>
-            <label style="display: block; margin-bottom: 8px;">
+            <h4 class="h6"><?php esc_html_e( 'Handwriting font', 'mini' ); ?></h4>
+            <label class="S">
                 <input type="checkbox" id="mini_handwriting_font_status" name="mini_font_options[mini_handwriting_font_status]" value="1" <?php $__o = get_option('mini_font_options'); echo (is_array($__o) && !empty($__o['mini_handwriting_font_status'])) ? 'checked="checked"' : ''; ?>>
                 <?php esc_html_e( 'Enable handwriting font', 'mini' ); ?>
             </label>
-            <label><?php esc_html_e( 'Select font', 'mini' ); ?></label>
+            <label class="S"><?php esc_html_e( 'Select font', 'mini' ); ?></label>
             <select name="mini_font_options[mini_handwriting_font]" style="width: 100%; margin-top: 8px;">
                 <option value="">Default (Edu VIC WA NT Beginner)</option>
                 <?php foreach ($fonts['handwriting'] as $name => $data): 
@@ -962,14 +962,6 @@ function mini_options_page() {
     }
     add_submenu_page(
         'mini',
-        'mini theme - Editor blocks',
-        'Editor blocks',
-        'manage_options',
-        'mini-blocks',
-        'mini_blocks_page_html'
-    );
-    add_submenu_page(
-        'mini',
         'mini theme - Credits',
         'Credits',
         'manage_options',
@@ -1002,14 +994,6 @@ function mini_options_page() {
         'mini_size_options_page_html'
     );
     */
-    add_submenu_page(
-        'mini',
-        'mini theme - External libraries',
-        'External libraries',
-        'manage_options',
-        'mini-ext-lib',
-        'mini_ext_lib_options_page_html'
-    );
     add_submenu_page(
         'mini',
         'mini theme - Analytics',
