@@ -12,6 +12,10 @@
             "type": "string",
             "default": ""
         },
+        "bgColor": {
+            "type": "string",
+            "default": ""
+        },
         "spaceTop": {
             "type": "boolean",
             "default": false

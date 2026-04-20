@@ -286,3 +286,16 @@ function mini_register_blocks() {
         }
     }
 }
+
+/**
+ * Inject miniBlocksData into the block editor so editor.js scripts can read PHP settings.
+ */
+add_action( 'enqueue_block_editor_assets', 'mini_inject_block_editor_data' );
+function mini_inject_block_editor_data() {
+    $aos_enabled = function_exists( 'mini_check_option' ) && mini_check_option( 'mini_ext_lib_options', 'mini_aos' );
+    wp_add_inline_script(
+        'wp-blocks',
+        'window.miniBlocksData = window.miniBlocksData || {}; window.miniBlocksData.aosEnabled = ' . ( $aos_enabled ? 'true' : 'false' ) . ';',
+        'before'
+    );
+}

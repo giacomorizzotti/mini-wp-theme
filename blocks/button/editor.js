@@ -10,6 +10,7 @@
     var __             = i18n.__;
 
     var COLOR_OPTIONS = [
+        { label: 'None (link color)',  value: ''             },
         { label: 'Main color',        value: 'main-color'    },
         { label: 'Second color',      value: 'second-color'  },
         { label: 'Third color',       value: 'third-color'   },
@@ -27,7 +28,7 @@
         edit: function (props) {
             var label        = props.attributes.label        || 'Click here';
             var url          = props.attributes.url          || '';
-            var color        = props.attributes.color        || 'main-color';
+            var color        = props.attributes.color !== undefined ? props.attributes.color : '';
             var size         = props.attributes.size         || '';
             var openInNewTab = props.attributes.openInNewTab || false;
             var invert       = props.attributes.invert       || false;
@@ -36,7 +37,7 @@
 
             var blockProps = useBlockProps({ style: { display: 'inline-block' } });
 
-            var colorClass = color + '-btn' + (invert ? '-invert' : '');
+            var colorClass = color ? color + '-btn' + (invert ? '-invert' : '') : '';
             var btnClass = ['btn', size, colorClass, transpBg ? 'transp-bg' : ''].filter(Boolean).join(' ');
 
             return el(

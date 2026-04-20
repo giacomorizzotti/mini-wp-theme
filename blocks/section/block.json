@@ -12,10 +12,6 @@
             "type": "string",
             "default": ""
         },
-        "extraClasses": {
-            "type": "string",
-            "default": ""
-        },
         "menuItemName": {
             "type": "string",
             "default": ""
@@ -25,6 +21,10 @@
             "default": false
         },
         "size": {
+            "type": "string",
+            "default": "fw"
+        },
+        "bgColor": {
             "type": "string",
             "default": ""
         },

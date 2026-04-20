@@ -12,6 +12,7 @@
     blocks.registerBlockType('mini/container', {
         edit: function (props) {
             var size         = props.attributes.size || '';
+            var bgColor      = props.attributes.bgColor || '';
             var spaceTop     = props.attributes.spaceTop || false;
             var spaceBot     = props.attributes.spaceBot || false;
             var setAttributes = props.setAttributes;
@@ -44,6 +45,37 @@
                                 { label: __('Thin',            'mini'), value: 'thin' },
                             ],
                             onChange: function (val) { setAttributes({ size: val }); }
+                        }),
+                        el(SelectControl, {
+                            label: __('Background color', 'mini'),
+                            value: bgColor,
+                            options: [
+                                { label: __('None',              'mini'), value: ''                    },
+                                { label: __('White',             'mini'), value: 'white-bg'            },
+                                { label: __('False white',       'mini'), value: 'false-white-bg'       },
+                                { label: __('Light grey',        'mini'), value: 'light-grey-bg'        },
+                                { label: __('Grey',              'mini'), value: 'grey-bg'              },
+                                { label: __('Dark grey',         'mini'), value: 'dark-grey-bg'         },
+                                { label: __('False black',       'mini'), value: 'false-black-bg'       },
+                                { label: __('Black',             'mini'), value: 'black-bg'             },
+                                { label: __('Main color',        'mini'), value: 'main-color-bg'        },
+                                { label: __('Second color',      'mini'), value: 'second-color-bg'      },
+                                { label: __('Third color',       'mini'), value: 'third-color-bg'       },
+                                { label: __('Fourth color',      'mini'), value: 'fourth-color-bg'      },
+                                { label: __('— Gradients —',     'mini'), value: '',                    disabled: true },
+                                { label: __('1 → 2',             'mini'), value: 'grad-1-to-2'          },
+                                { label: __('1 → 3',             'mini'), value: 'grad-1-to-3'          },
+                                { label: __('1 → 4',             'mini'), value: 'grad-1-to-4'          },
+                                { label: __('2 → 3',             'mini'), value: 'grad-2-to-3'          },
+                                { label: __('3 → 4',             'mini'), value: 'grad-3-to-4'          },
+                                { label: __('Main',              'mini'), value: 'grad-main'            },
+                                { label: __('Second',            'mini'), value: 'grad-second'          },
+                                { label: __('Third',             'mini'), value: 'grad-third'           },
+                                { label: __('Fourth',            'mini'), value: 'grad-fourth'          },
+                                { label: __('False white ↓',     'mini'), value: 'grad-fw-down-w'       },
+                                { label: __('False white ↑',     'mini'), value: 'grad-fw-up-w'         },
+                            ],
+                            onChange: function (val) { setAttributes({ bgColor: val }); }
                         }),
                         el(ToggleControl, {
                             label: __('Space top', 'mini'),

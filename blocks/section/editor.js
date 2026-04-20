@@ -15,16 +15,15 @@
             var setAttributes = props.setAttributes;
 
             var sectionId     = attributes.sectionId     || '';
-            var extraClasses  = attributes.extraClasses  || '';
             var menuItemName  = attributes.menuItemName  || '';
             var isPageMenu    = attributes.isPageMenu    || false;
-            var size          = attributes.size          || '';
-            var spaceTop      = attributes.spaceTop      || false;
-            var spaceBot      = attributes.spaceBot      || false;
+            var size          = attributes.size          || 'fw';
+            var bgColor       = attributes.bgColor        || '';
+            var spaceTop      = attributes.spaceTop       || false;
+            var spaceBot      = attributes.spaceBot       || false;
 
             var className = ['mini-section-wrap'];
             if (isPageMenu) className.push('page-menu');
-            if (extraClasses) className.push(extraClasses);
 
             var blockProps = useBlockProps({
                 className: className.join(' '),
@@ -63,24 +62,49 @@
                             value: menuItemName,
                             onChange: function (val) { setAttributes({ menuItemName: val }); }
                         }),
-                        el(TextControl, {
-                            label: __('Extra classes', 'mini'),
-                            help: __('Additional CSS classes (e.g. fw-bg, color-bg).', 'mini'),
-                            value: extraClasses,
-                            onChange: function (val) { setAttributes({ extraClasses: val }); }
-                        }),
                         el(SelectControl, {
-                            label: __('Inner size', 'mini'),
-                            help: __('Wraps content in a .container inside the section.', 'mini'),
+                            label: __('Container size', 'mini'),
+                            help: __('Controls the inner .container class and its size variant.', 'mini'),
                             value: size,
                             options: [
-                                { label: __('None (no container)',  'mini'), value: ''     },
-                                { label: __('Default container',    'mini'), value: 'default' },
-                                { label: __('Full width (fw)',      'mini'), value: 'fw'   },
-                                { label: __('Wide',                 'mini'), value: 'wide' },
-                                { label: __('Thin',                 'mini'), value: 'thin' },
+                                { label: __('Default',        'mini'), value: ''     },
+                                { label: __('Full width',     'mini'), value: 'fw'   },
+                                { label: __('Wide',           'mini'), value: 'wide' },
+                                { label: __('Thin',           'mini'), value: 'thin' },
+                                { label: __('No container',   'mini'), value: 'none' },
                             ],
                             onChange: function (val) { setAttributes({ size: val }); }
+                        }),
+                        el(SelectControl, {
+                            label: __('Background color', 'mini'),
+                            value: bgColor,
+                            options: [
+                                { label: __('None',              'mini'), value: ''                    },
+                                { label: __('White',             'mini'), value: 'white-bg'            },
+                                { label: __('False white',       'mini'), value: 'false-white-bg'       },
+                                { label: __('Light grey',        'mini'), value: 'light-grey-bg'        },
+                                { label: __('Grey',              'mini'), value: 'grey-bg'              },
+                                { label: __('Dark grey',         'mini'), value: 'dark-grey-bg'         },
+                                { label: __('False black',       'mini'), value: 'false-black-bg'       },
+                                { label: __('Black',             'mini'), value: 'black-bg'             },
+                                { label: __('Main color',        'mini'), value: 'main-color-bg'        },
+                                { label: __('Second color',      'mini'), value: 'second-color-bg'      },
+                                { label: __('Third color',       'mini'), value: 'third-color-bg'       },
+                                { label: __('Fourth color',      'mini'), value: 'fourth-color-bg'      },
+                                { label: __('— Gradients —',     'mini'), value: '',                    disabled: true },
+                                { label: __('1 → 2',             'mini'), value: 'grad-1-to-2'          },
+                                { label: __('1 → 3',             'mini'), value: 'grad-1-to-3'          },
+                                { label: __('1 → 4',             'mini'), value: 'grad-1-to-4'          },
+                                { label: __('2 → 3',             'mini'), value: 'grad-2-to-3'          },
+                                { label: __('3 → 4',             'mini'), value: 'grad-3-to-4'          },
+                                { label: __('Main',              'mini'), value: 'grad-main'            },
+                                { label: __('Second',            'mini'), value: 'grad-second'          },
+                                { label: __('Third',             'mini'), value: 'grad-third'           },
+                                { label: __('Fourth',            'mini'), value: 'grad-fourth'          },
+                                { label: __('False white ↓',     'mini'), value: 'grad-fw-down-w'       },
+                                { label: __('False white ↑',     'mini'), value: 'grad-fw-up-w'         },
+                            ],
+                            onChange: function (val) { setAttributes({ bgColor: val }); }
                         }),
                         el(ToggleControl, {
                             label: __('Space top', 'mini'),

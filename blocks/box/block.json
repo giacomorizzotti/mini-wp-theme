@@ -16,6 +16,22 @@
         "padding": {
             "type": "string",
             "default": ""
+        },
+        "aosAnimation": {
+            "type": "string",
+            "default": ""
+        },
+        "aosDelay": {
+            "type": "string",
+            "default": ""
+        },
+        "aosDuration": {
+            "type": "string",
+            "default": ""
+        },
+        "aosOffset": {
+            "type": "string",
+            "default": ""
         }
     },
     "supports": {
