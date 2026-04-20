@@ -26,7 +26,7 @@ get_header();
 
 	<main id="primary" class="site-main" template="front-page">
 		<?php
-		if ( $slideshow_id ) {
+		if ( $slideshow_id && is_mini_option_enabled('mini_content_settings', 'mini_slide') ) {
 			$slideshow_post = get_post( $slideshow_id );
 			setup_postdata( $GLOBALS['post'] = $slideshow_post );
 			get_template_part( 'template-parts/content', 'slideshow' );
