@@ -45,12 +45,12 @@ $it_date_year = new IntlDateFormatter(
 );
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-match">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-match">
 
 	<div class="container fw">
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
-				<header class="box box-100 entry-header">
+				<header class="box-100 entry-header">
 				<?php
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title">', '</h1>' );
@@ -195,7 +195,7 @@ $it_date_year = new IntlDateFormatter(
 		<?php endif; ?>
 
 		<?php if ( has_excerpt() || get_post()->post_content != '' ): ?>
-			<div class="box box-66 entry-content">
+			<div class="box-66 entry-content">
 				<?php
 				if ( !is_singular() && has_excerpt() ) {
 					the_excerpt();
@@ -234,7 +234,7 @@ $it_date_year = new IntlDateFormatter(
 			</div>
 			<?php endif; ?>
 
-			<footer class="box box-100 my-0 py-0 entry-footer">
+			<footer class="box-100 my-0 py-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 			

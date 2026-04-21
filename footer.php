@@ -16,7 +16,7 @@
 	<footer id="footer" class="footer">
         <div class="container space-top-bot">
             <div class="boxes">
-                <div class="box box-33 footer-info px-2">
+                <div class="box-33 footer-info px-2">
                     <p class="m-0 L"><?php echo esc_html( date( 'Y' ) ); ?>&nbsp;©&nbsp;<span class="bold"><?php echo do_shortcode( '[get_company_name]' ); ?></span></p>
                     <div class="space-1"></div>
                     <?php if ( do_shortcode( '[get_company_address_line_1]' ) ): ?>
@@ -44,7 +44,7 @@
                         <p class="m-0"><span class="label">C.F.</span>&nbsp;&nbsp;<?php echo do_shortcode( '[get_company_id_code]' ); ?></p>
                     <?php endif; ?>
                 </div>
-                <div class="box box-33 footer-logo px-2">
+                <div class="box-33 footer-logo px-2">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="">
 						<?php if ( has_custom_logo() ): ?>
 							<img src="<?php echo esc_url( wp_get_attachment_url( get_theme_mod( 'custom_logo' ) ) ); ?>" class="logo emblem" alt="emblem"/>
@@ -53,7 +53,7 @@
 						<?php endif; ?>
                     </a>
                 </div>
-                <div class="box box-33 footer-menu px-2">
+                <div class="box-33 footer-menu px-2">
                     <nav class="menu footer-menu">
 				<?php
 				wp_nav_menu(

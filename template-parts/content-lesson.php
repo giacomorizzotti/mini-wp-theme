@@ -46,12 +46,12 @@ $it_date_year = new IntlDateFormatter(
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-lesson">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-lesson">
 
 	<div class="container fw">
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
-				<header class="box box-100 entry-header">
+				<header class="box-100 entry-header">
 				<?php
 					// Show parent course breadcrumb for singular lesson view
 					if ( is_singular() && $post->post_parent ) {

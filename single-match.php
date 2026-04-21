@@ -70,7 +70,7 @@ get_header();
 		<?php endif; ?>
 
 		<div class="container fw">
-			<div class="container <?=$container_width?>">
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				
 				<div class="boxes<?php if ( !has_post_thumbnail() ): ?> space-top-bot<?php else: ?> pt-2<?php endif; ?>">
 					

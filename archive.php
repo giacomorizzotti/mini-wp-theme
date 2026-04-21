@@ -21,7 +21,7 @@ get_header();
 			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				<div class="boxes hh align-content-end">
 					<?php if ( $layout['title_presence'] ): ?>
-					<header class="box box-100 my-0 p-0 entry-header">
+					<header class="box-100 my-0 p-0 entry-header">
 					 	<h1 class="entry-title m-0 wh-box"><?php echo esc_html( get_the_title( $pageID ) ); ?></h1>
 						<div class="space-2"></div>
 					</header>

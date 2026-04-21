@@ -14,7 +14,7 @@ if ( ! isset( $layout ) ) {
 
 ?>
 
-<div class="box box-100 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>" template="content-search">
+<div class="box-100 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>" template="content-search">
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 <?php if( $layout['container_width'] == 'fw' ): ?>

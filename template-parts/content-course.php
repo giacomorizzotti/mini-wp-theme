@@ -46,12 +46,12 @@ $it_date_year = new IntlDateFormatter(
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-course">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-course">
 
 	<div class="container fw">
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 			<div class="boxes">
-				<header class="box box-100 entry-header">
+				<header class="box-100 entry-header">
 				<?php
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title big inline-block">', '</h1>' );
@@ -187,7 +187,7 @@ $it_date_year = new IntlDateFormatter(
 				]);
 				
 				if ( $lessons->have_posts() ): ?>
-				<div class="box box-100 my-2">
+				<div class="box-100 my-2">
 					<h3 class="label regular"><?php echo esc_html__( 'Lessons in this course', 'mini' ); ?></h3>
 					<div class="space"></div>
 					<div class="boxes">
@@ -215,7 +215,7 @@ $it_date_year = new IntlDateFormatter(
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<footer class="box box-100 my-0 py-0 entry-footer">
+			<footer class="box-100 my-0 py-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 			

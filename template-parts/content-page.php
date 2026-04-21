@@ -13,7 +13,7 @@ if ( ! isset( $layout ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-page">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-page">
 
 	<?php if ( $layout['title_presence'] && ! has_post_thumbnail() ): ?>
 	<div class="container fw forced"
@@ -21,7 +21,7 @@ if ( ! isset( $layout ) ) {
 		>
 		<div class="container<?php if ( $layout['container_width'] != 'fw' ): ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
 			<div class="boxes<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
-				<div class="box box-100 my-2">
+				<div class="box-100 my-2">
 					<header class="entry-header">
 						<?php if ( has_post_thumbnail() ): ?>
 						<?php the_title( '<h1 class="entry-title wh-box m-0">', '</h1>' ); ?>

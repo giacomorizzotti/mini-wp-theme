@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-news">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-news">
 
 	<div class="container fw">
 		<div class="container">
@@ -31,7 +31,7 @@
 				?>
 				</div>
 				<?php endif; ?>
-				<header class="box box-100 my-0 entry-header">
+				<header class="box-100 my-0 entry-header">
 					<p class="grey-text">
 						<?= get_the_date() ?>
 					</p>
@@ -51,7 +51,7 @@
 
 		<div class="boxes">
 
-			<div class="box box-100 entry-content">
+			<div class="box-100 entry-content">
 				<?php
 				if ( !is_singular() && has_excerpt() ) {
 					the_excerpt();
@@ -87,7 +87,7 @@
 				?>
 			</div><!-- .entry-content -->
 			<div class="sep-10 bk-bg mx-1" style="width: 10px;"></div>
-			<footer class="box box-100 my-0 entry-footer">
+			<footer class="box-100 my-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 		</div>

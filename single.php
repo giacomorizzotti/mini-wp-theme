@@ -23,7 +23,7 @@ get_header();
 			<div class="container">
 				<div class="boxes hh align-content-end">
 					<?php if ( $layout['title_presence'] ): ?>
-					<header class="box box-100 my-0 p-0 entry-header">
+					<header class="box-100 my-0 p-0 entry-header">
 					<?php if ( 'post' === get_post_type() ) :?>
 						<p class="entry-meta S m-0 fw-box px-1">
 							<?php
