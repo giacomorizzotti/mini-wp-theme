@@ -85,9 +85,9 @@
                             onChange: function (val) { setAttributes({ showDate: val }); }
                         }),
                         el(ToggleControl, {
-                            label: __('Show excerpt', 'mini'),
-                            checked: attrs.showExcerpt,
-                            onChange: function (val) { setAttributes({ showExcerpt: val }); }
+                            label: __('Highlight first item (full width)', 'mini'),
+                            checked: attrs.highlightFirst,
+                            onChange: function (val) { setAttributes({ highlightFirst: val }); }
                         })
                     )
                 ),

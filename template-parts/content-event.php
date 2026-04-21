@@ -150,7 +150,7 @@ $it_date_year = new IntlDateFormatter(
 				</div>
 				<?php endif; ?>
 				<?php
-				if ( !is_singular() && has_excerpt() ) {
+				if ( !is_singular() || !empty( $args['is_shortcode'] ) ) {
 					the_excerpt();
 				} else {
 					the_content(

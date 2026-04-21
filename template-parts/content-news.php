@@ -46,14 +46,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="container">
-
 		<div class="boxes">
-
 			<div class="box-100 entry-content">
 				<?php
-				if ( !is_singular() && has_excerpt() ) {
+				if ( !is_singular() || !empty( $args['is_shortcode'] ) ) {
 					the_excerpt();
 				} else {
 					the_content(
