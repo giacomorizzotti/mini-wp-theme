@@ -74,7 +74,7 @@ get_header();
 				
 				<div class="boxes<?php if ( !has_post_thumbnail() ): ?> space-top-bot<?php else: ?> pt-2<?php endif; ?>">
 					
-					<div class="box my-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
+					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :

@@ -29,7 +29,7 @@ $the_query = new WP_Query( $args );
 						<div class="boxes">
 							<?php if ( $the_query->have_posts() ) : ?>
 								<header class="page-header box-100">
-									<h1 class="m-0"> <span class="under-bg"><?= esc_html__( 'Matches', 'mini') ?></span></h1>
+									<h1 class=""> <span class="under-bg"><?= esc_html__( 'Matches', 'mini') ?></span></h1>
 								</header>
 							<?php
 								/* Start the Loop */

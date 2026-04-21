@@ -19,7 +19,7 @@ get_header();
 				
 				<div class="boxes space-top-bot">
 					
-					<div class="box my-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
+					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :

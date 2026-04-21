@@ -21,7 +21,7 @@ get_header();
 				<div class="boxes hh align-items-end">
 					<header class="box-100 entry-header mb-1">
 					<?php
-						the_title( '<h1 class="entry-title big inline-block black-box">', '</h1>' )
+						the_title( '<h1 class="entry-title big inline-block white-box">', '</h1>' )
 					?>
 					</header><!-- .entry-header -->
 				</div>
@@ -34,7 +34,7 @@ get_header();
 				
 				<div class="boxes space-top-bot">
 					
-					<div class="box my-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
+					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :

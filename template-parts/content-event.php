@@ -57,7 +57,7 @@ $it_date_year = new IntlDateFormatter(
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title big inline-block">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="' . ( has_post_thumbnail() && !is_singular() ? 'black-box' : 'black-text' ) . '">', '</a></h2>' );
+						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="' . ( has_post_thumbnail() && !is_singular() ? 'white-box' : 'black-text' ) . '">', '</a></h2>' );
 						if ( has_post_thumbnail() && !is_singular()) { echo '<div class="space" style="height:calc( var(--margin) * 4 );"></div>';}
 					}
 					?>

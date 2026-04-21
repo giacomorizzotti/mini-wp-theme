@@ -23,7 +23,7 @@ get_header();
 							<?php if ( have_posts() ) : ?>
 
 								<header class="page-header box-100">
-									<h1 class="m-0"> <span class="under-bg"><?= esc_html__( 'News', 'mini') ?></span></h1>
+									<h1 class=""> <span class="under-bg"><?= esc_html__( 'News', 'mini') ?></span></h1>
 									<?php /*
 									the_archive_title( '<h1 class="page-title m-0">', '</h1>' );
 									the_archive_description( '<div class="archive-description m-0">', '</div>' );
