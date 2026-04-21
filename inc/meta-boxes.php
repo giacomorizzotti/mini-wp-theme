@@ -230,7 +230,7 @@ function add_header_styling_box() {
         'header-styling',
         'Header styling',
         'header_styling_box_html',
-        ['page', 'post', 'match', 'course', 'lesson'],
+        ['page', 'post', 'match', 'course', 'lesson', 'event'],
         'side'
     );
     add_meta_box(
