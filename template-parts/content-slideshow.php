@@ -30,7 +30,7 @@ if ( empty( $slides ) ) return;
         <i class="iconoir-arrow-left-circle slider-controls" id="slider-prev-<?php echo esc_attr( $slideshow_id ); ?>"></i>
         <?php endif; ?>
 
-        <ul class="slider fh" id="slider-<?php echo esc_attr( $slideshow_id ); ?>">
+        <ul class="slider fh<?php if ( ! $has_multiple_slides ) echo ' single'; ?>" id="slider-<?php echo esc_attr( $slideshow_id ); ?>">
             <?php foreach ( $slides as $slide ) :
                 setup_postdata( $GLOBALS['post'] = $slide );
                 get_template_part( 'template-parts/content', 'slide', [ 'slideshow_id' => $slideshow_id ] );
