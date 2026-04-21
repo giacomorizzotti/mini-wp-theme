@@ -14,6 +14,21 @@ get_header();
 ?>
 	<main id="primary" class="site-main" template="single">
 
+		<?php if ( has_post_thumbnail() ): ?>
+		<div class="container fw">
+			<div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center;"></div>
+			<div class="container<?php echo ' ' . esc_attr( $layout['container_width'] ); ?>">
+				<div class="boxes hh align-items-end">
+					<header class="box-100 entry-header mb-1">
+					<?php
+						the_title( '<h1 class="entry-title big inline-block black-box">', '</h1>' )
+					?>
+					</header><!-- .entry-header -->
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+
 		<div class="container fw">
 			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				

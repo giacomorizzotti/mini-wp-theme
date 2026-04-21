@@ -43,30 +43,38 @@ $it_date_year = new IntlDateFormatter(
     IntlDateFormatter::GREGORIAN,
 	'yyyy'
 );
-
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box box-100 my-0 p-0"); ?> template="content-event">
+<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-event">
 
-	<div class="container fw">
+	<?php if (!is_singular() || is_singular() && !has_post_thumbnail()): ?>
+	<div class="container fw mb-2">
+		<?php if ( has_post_thumbnail() && !is_singular()): ?><div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center; border-top-left-radius: 20px; border-top-right-radius: 20px;"></div><?php endif; ?>
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
-			<div class="boxes">
-				<header class="box box-100 entry-header">
+			<div class="boxes<?php if ( has_post_thumbnail() && !is_singular()): ?> h25 align-items-end<?php endif; ?>">
+				<header class="box-100 entry-header<?php if ( has_post_thumbnail() && !is_singular()): ?> p-2<?php endif; ?>">
 				<?php
 					if ( is_singular() ) {
 						the_title( '<h1 class="entry-title big inline-block">', '</h1>' );
 					} else {
-						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">', '</a></h2>' );
+						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="' . ( has_post_thumbnail() && !is_singular() ? 'black-box' : 'black-text' ) . '">', '</a></h2>' );
+						if ( has_post_thumbnail() && !is_singular()) { echo '<div class="space" style="height:calc( var(--margin) * 4 );"></div>';}
 					}
 					?>
 				</header><!-- .entry-header -->
 			</div>
 		</div>
 	</div>
+	<?php endif; ?>
 	
 	<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
 
 		<div class="boxes">
+			<?php if ( get_post_meta(get_the_ID(), 'event_poster_id', true) ): ?>
+			<div class="box-33 entry-content"<?php if ( has_post_thumbnail() && !is_singular()): ?> style="margin-top: calc( var(--margin) * 7 * -1 );"<?php endif; ?>>
+				<img src="<?= wp_get_attachment_image_url(get_post_meta(get_the_ID(), 'event_poster_id', true), 'large') ?>" class="img p-15 fw-bg b-rad-10" style="max-width: 420px;" />
+			</div>
+			<?php endif; ?>
 			<?php 
 			if (
 				get_post_meta($post->ID, 'event_date')[0] != null ||
@@ -75,7 +83,7 @@ $it_date_year = new IntlDateFormatter(
 				get_post_meta($post->ID, 'location_address')[0] != null
 			):
 			?>
-			<div class="box-50">
+			<div class="box-66 entry-content">
                 <div class="flex flex-flow-column-wrap justify-content-start align-items-start">
 					<?php 
 						if ( get_post_meta($post->ID, 'event_date')[0] != null ) {
@@ -140,16 +148,7 @@ $it_date_year = new IntlDateFormatter(
 					</div>
 					<?php endif; ?>
 				</div>
-			</div>
-			<?php endif; ?>
-
-			<?php if ( has_post_thumbnail() ): ?>
-				<div class="box box-50 entry-content">
-					<img src="<?=get_the_post_thumbnail_url(); ?>" class="img" />
-				</div>
-			<?php endif; ?>
-
-			<div class="box box-66 entry-content">
+				<?php endif; ?>
 				<?php
 				if ( !is_singular() && has_excerpt() ) {
 					the_excerpt();
@@ -184,7 +183,7 @@ $it_date_year = new IntlDateFormatter(
 				<?php endif; ?>
 			</div><!-- .entry-content -->
 
-			<footer class="box box-100 my-0 py-0 entry-footer">
+			<footer class="box-100 my-0 py-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
 
