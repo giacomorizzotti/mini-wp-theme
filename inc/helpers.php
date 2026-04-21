@@ -137,7 +137,7 @@ function mini_theme_option_list_option(
     ';
     $default_selected = empty($stored_choice) ? ' selected' : '';
     $select_field .= '
-        <option value=""' . $default_selected . '>Default</option>
+        <option value=""' . $default_selected . '>' . esc_html__( 'Default', 'mini' ) . '</option>
     ';
     $o = 1;
     foreach($select_options as $select_option => $value ) {

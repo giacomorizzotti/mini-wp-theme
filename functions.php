@@ -465,7 +465,7 @@ function mini_credits_section_callback( $args ) {
                 <input type="checkbox" id="mini_credits" name="mini_options[mini_credits]" value="1" <?php checked($credits_enabled, true); ?>>
                 <?php esc_html_e( 'Enable footer credits', 'mini' ); ?>
             </label>
-            <p class="S label" for="mini_news">This option put a small banner at the bottom of the page with the credits to <a href="https://www.uwa.agency/" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="https://mini.uwa.agency/" target="_blank" rel="noopener noreferrer">mini</a> project.</p>
+            <p class="S label" for="mini_news"><?php printf( __( 'This option put a small banner at the bottom of the page with the credits to <a href="%1$s" target="_blank" rel="noopener noreferrer">UWA Agency</a> and <a href="%2$s" target="_blank" rel="noopener noreferrer">mini</a> project.', 'mini' ), 'https://www.uwa.agency/', 'https://mini.uwa.agency/' ); ?></p>
         </div>
     </div>
     <?php
@@ -775,13 +775,13 @@ function mini_company_section_callback( $args ) {
     <div class="boxes">
         <div class="box-66 p-2 white-bg b-rad-5 box-shadow grad-3-to-4">
             <h3 class="white-text"><?= esc_html__( 'Your data', 'mini' ) ?></h3>
-            <p class="m-0 white-text">These data will populate the <b>footer</b>.</p>
-            <p class="S m-0 white-text">They could also be used in the <i>About us</i> page, in <i>Cookie policy</i>, in <i>Privacy policy</i> or in other sections.</p>
+            <p class="m-0 white-text"><?php printf( esc_html__( 'These data will populate the %sfooter%s.', 'mini' ), '<b>', '</b>' ); ?></p>
+            <p class="S m-0 white-text"><?php printf( esc_html__( 'They could also be used in the %1$sAbout us%2$s page, in %3$sCookie policy%4$s, in %5$sPrivacy policy%6$s or in other sections.', 'mini' ), '<i>', '</i>', '<i>', '</i>', '<i>', '</i>' ); ?></p>
         </div>
         <div class="box-66 white-bg b-rad-5 box-shadow">
             <div class="boxes">
                 <div class="box-100">
-                    <h4 class="m-0">Company details</h4>
+                    <h4 class="m-0"><?php esc_html_e( 'Company details', 'mini' ); ?></h4>
                 </div>
                 <div class="box-75">
                     <p class="label"><?php esc_html_e( 'Company / Owner', 'mini' ); ?></p>
@@ -847,7 +847,7 @@ function mini_company_section_callback( $args ) {
         <div class="box-33 white-bg b-rad-5 box-shadow">
             <div class="boxes">
                 <div class="box-100">
-                    <h4 class="m-0">Messaging apps</h4>
+                    <h4 class="m-0"><?php esc_html_e( 'Messaging apps', 'mini' ); ?></h4>
                     <p class="description m-0"><?= esc_html__( 'Enable messaging apps for direct customer contact', 'mini' ) ?></p>
                 </div>
                 <div class="box-100">
@@ -871,7 +871,7 @@ function mini_company_section_callback( $args ) {
         <div class="box-100 white-bg b-rad-5 box-shadow">
             <div class="boxes">
                 <div class="box-100">
-                    <h4 class="m-0">Social networks</h4>
+                    <h4 class="m-0"><?php esc_html_e( 'Social networks', 'mini' ); ?></h4>
                     <p class="description m-0"><?= esc_html__( 'Enable the social networks you want to use and add your profile URLs', 'mini' ) ?></p>
                 </div>
                 <div class="box-25">

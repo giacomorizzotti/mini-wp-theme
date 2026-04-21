@@ -1,787 +1,914 @@
-# Copyright (C) 2025 Giacomo Rizzotti
-# This file is distributed under the GNU General Public License v2 or later.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: mini 1.1.5\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/mini\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-21 17:18+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-14T20:34:20+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: mini\n"
 
-#. Theme Name of the theme
-#: style.css
-msgid "mini"
+#: inc/template-tags.php:79
+msgid ", "
 msgstr ""
 
-#. Theme URI of the theme
-#: style.css
-msgid "http://underscores.me/"
+#: inc/meta-boxes.php:172
+msgid "2/3"
 msgstr ""
 
-#. Description of the theme
-#: style.css
-msgid "a minimal theme based on mini framework."
+#: inc/blocks-settings.php:173
+msgid ""
+"A blank vertical spacer using .space classes sized in baseline multiples."
 msgstr ""
 
-#. Author of the theme
-#: style.css
-msgid "Giacomo Rizzotti"
+#: inc/blocks-settings.php:165
+msgid ""
+"A horizontal separator using .sep classes with optional height and border "
+"color."
 msgstr ""
 
-#. Author URI of the theme
-#: style.css
-msgid "https://www.giacomorizzotti.com"
+#: inc/blocks-settings.php:138
+msgid "A mini-styled button link with color, size and target options."
 msgstr ""
 
-#: 404.php:17
-msgid "Oops! That page can&rsquo;t be found."
+#: inc/blocks-settings.php:146
+msgid ""
+"A plain &lt;img&gt; with the mini img class. No wrapper divs, optional link "
+"and extra classes."
 msgstr ""
 
-#: 404.php:21
-msgid "It looks like nothing was found at this location. Maybe try one of the links below or a search?"
+#: functions.php:742
+msgid "AOS"
 msgstr ""
 
-#: 404.php:30
-msgid "Most Used Categories"
+#: functions.php:526
+msgid "Absolute (or relative) <i>mini.js</i> path"
 msgstr ""
 
-#. translators: %1$s: smiley
-#: 404.php:48
-#, php-format
-msgid "Try looking in the monthly archives. %1$s"
+#: functions.php:521
+msgid "Absolute (or relative) <i>mini.min.css</i> path"
 msgstr ""
 
-#: archive-event.php:25
-msgid "Events"
+#: functions.php:531
+msgid "Absolute (or relative) <i>slider.js</i> path"
 msgstr ""
 
-#: archive-event.php:52
-#: archive-match.php:52
-#: archive-news.php:65
-#: single-event.php:54
-#: single-news.php:50
-msgid "Monthly archive"
+#: 403.php:16
+msgid "Access denied"
 msgstr ""
 
-#: archive-match.php:25
-msgid "Matches"
+#: functions.php:133
+msgid "Add widgets here."
 msgstr ""
 
-#: archive-news.php:31
-msgid "News"
+#: functions.php:791
+msgid "Address"
 msgstr ""
 
-#. translators: 1: title.
-#: comments.php:37
-#, php-format
-msgid "One thought on &ldquo;%1$s&rdquo;"
+#: functions.php:445
+msgid "Adds a meta author tag in the page head."
 msgstr ""
 
-#. translators: 1: comment count number, 2: title.
-#: comments.php:43
-#, php-format
-msgctxt "comments title"
-msgid "%1$s thought on &ldquo;%2$s&rdquo;"
-msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
-msgstr[0] ""
-msgstr[1] ""
+#: functions.php:838
+msgid "Also known as Fiscal Code (Codice Fiscale)."
+msgstr ""
+
+#: functions.php:833
+msgid "Also known as VAT number (Partita IVA)."
+msgstr ""
+
+#: functions.php:672
+msgid "Alternative font, used for titles and in CSS class \".font-two\"."
+msgstr ""
+
+#: functions.php:657 functions.php:672
+msgid "Always enabled."
+msgstr ""
+
+#: functions.php:400
+msgid "Analytics settings"
+msgstr ""
+
+#: functions.php:348 functions.php:440 functions.php:443 functions.php:1064
+msgid "Author"
+msgstr ""
+
+#: template-parts/content-lesson.php:62
+msgid "Back to"
+msgstr ""
+
+#: 403.php:20 404.php:22
+msgid "Back to homepage"
+msgstr ""
+
+#: inc/customizer.php:336
+msgid "Black"
+msgstr ""
+
+#: inc/blocks-settings.php:136
+msgid "Button"
+msgstr ""
+
+#: functions.php:367
+msgid "CDN settings"
+msgstr ""
+
+#: functions.php:801
+msgid "City"
+msgstr ""
+
+#: functions.php:805
+msgid "City code"
+msgstr ""
+
+#: inc/customizer.php:322
+msgid "Color of the sheet element"
+msgstr ""
+
+#: inc/customizer.php:179
+msgid "Color settings"
+msgstr ""
 
 #: comments.php:70
 msgid "Comments are closed."
 msgstr ""
 
-#: functions.php:52
-msgid "Main menu"
+#: functions.php:787
+msgid "Company / Owner"
 msgstr ""
 
-#: functions.php:53
-msgid "User"
+#: functions.php:411
+msgid "Company data"
+msgstr ""
+
+#: functions.php:784
+msgid "Company details"
+msgstr ""
+
+#: functions.php:444
+msgid "Company or author name"
+msgstr ""
+
+#: inc/meta-boxes.php:157
+msgid "Container"
+msgstr ""
+
+#: inc/blocks-settings.php:99
+msgid "Content"
+msgstr ""
+
+#: inc/meta-boxes.php:169
+msgid "Content width"
+msgstr ""
+
+#: template-parts/content-course.php:143 template-parts/content-event.php:160
+#: template-parts/content-lesson.php:164 template-parts/content-match.php:207
+#: template-parts/content-news.php:63 template-parts/content.php:72
+#, php-format
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr ""
+
+#: functions.php:813
+msgid "Country"
+msgstr ""
+
+#: functions.php:144
+msgid "Course Sidebar"
+msgstr ""
+
+#: archive-course.php:27
+msgid "Courses"
+msgstr ""
+
+#: functions.php:356 functions.php:460 functions.php:1065
+msgid "Credits"
+msgstr ""
+
+#: template-parts/content-course.php:97 template-parts/content-lesson.php:102
+msgid "Date"
+msgstr ""
+
+#: inc/helpers.php:140 inc/meta-boxes.php:279 inc/meta-boxes.php:288
+msgid "Default"
+msgstr ""
+
+#: functions.php:131
+msgid "Default Sidebar"
+msgstr ""
+
+#: inc/meta-boxes.php:56
+msgid "Display Author info"
+msgstr ""
+
+#: inc/template-tags.php:117 template-parts/content-page.php:65
+#, php-format
+msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgstr ""
+
+#: functions.php:819
+msgid "Email"
+msgstr ""
+
+#: functions.php:466
+msgid "Enable footer credits"
+msgstr ""
+
+#: functions.php:720
+msgid "Enable handwriting font"
+msgstr ""
+
+#: functions.php:851
+msgid "Enable messaging apps for direct customer contact"
+msgstr ""
+
+#: functions.php:701
+msgid "Enable mono font"
+msgstr ""
+
+#: inc/blocks-settings.php:63
+msgid ""
+"Enable or disable individual mini Gutenberg blocks. Disabled blocks will not "
+"be registered and will not appear in the block inserter."
+msgstr ""
+
+#: functions.php:682
+msgid "Enable serif font"
+msgstr ""
+
+#: functions.php:875
+msgid "Enable the social networks you want to use and add your profile URLs"
+msgstr ""
+
+#: template-parts/content-course.php:106
+msgid "End date"
+msgstr ""
+
+#: inc/customizer.php:181
+msgid "Enter the custom colors"
+msgstr ""
+
+#: inc/customizer.php:94
+msgid "Enter the logo and menu toggle height for top or scrolled screen"
+msgstr ""
+
+#: functions.php:768
+msgid "Enter your Google Analytics measurement ID (e.g., G-XXXXXXXXXX)"
+msgstr ""
+
+#: functions.php:157
+msgid "Event Sidebar"
+msgstr ""
+
+#: archive-event.php:27
+msgid "Events"
+msgstr ""
+
+#: functions.php:389
+msgid "External libraries settings"
+msgstr ""
+
+#: functions.php:887
+msgid "Facebook"
+msgstr ""
+
+#: inc/customizer.php:335
+msgid "False black"
+msgstr ""
+
+#: functions.php:639
+msgid "Font for titles"
+msgstr ""
+
+#: functions.php:378
+msgid "Font settings"
 msgstr ""
 
 #: functions.php:54
 msgid "Footer"
 msgstr ""
 
-#: functions.php:130
-msgid "Sidebar"
+#: functions.php:463
+msgid "Footer credit strip"
 msgstr ""
 
-#: functions.php:132
-msgid "Add widgets here."
+#: functions.php:867
+msgid "Format: https://t.me/yourusername"
 msgstr ""
 
-#: functions.php:691
-msgid "Mini general settings"
+#: functions.php:859
+msgid "Format: https://wa.me/1234567890"
 msgstr ""
 
-#: functions.php:699
-msgid "General options"
-msgstr ""
-
-#: functions.php:716
-msgid "Mini CDN settings"
-msgstr ""
-
-#: functions.php:724
-msgid "CDN"
-msgstr ""
-
-#: functions.php:741
-msgid "Mini Colors settings"
-msgstr ""
-
-#: functions.php:750
-msgid "Colors"
-msgstr ""
-
-#: functions.php:791
-msgid "Mini font settings"
-msgstr ""
-
-#: functions.php:799
-msgid "Fonts"
-msgstr ""
-
-#: functions.php:816
-msgid "Mini external libraries settings"
-msgstr ""
-
-#: functions.php:824
-msgid "External libraries"
-msgstr ""
-
-#: functions.php:841
-msgid "Mini analytics settings"
-msgstr ""
-
-#: functions.php:849
-msgid "Analytics"
-msgstr ""
-
-#: functions.php:866
-msgid "Mini company settings"
-msgstr ""
-
-#: functions.php:874
-msgid "Company / Ownership"
-msgstr ""
-
-#: functions.php:929
-msgid "This is the General options section"
-msgstr ""
-
-#: functions.php:934
-msgid "This is the CDN section"
-msgstr ""
-
-#: functions.php:939
-msgid "This is the colors section"
-msgstr ""
-
-#: functions.php:951
-msgid "This is the font section"
-msgstr ""
-
-#: functions.php:956
-msgid "This is the external libraries section"
-msgstr ""
-
-#: functions.php:961
-msgid "This is the analytics section"
-msgstr ""
-
-#: functions.php:966
-msgid "This is the company/ownership section"
-msgstr ""
-
-#: functions.php:1120
-msgid "Footer credits strip"
-msgstr ""
-
-#: functions.php:1125
-msgid "Use mini slider"
-msgstr ""
-
-#: functions.php:1133
-msgid "Use mini from CDN"
-msgstr ""
-
-#: functions.php:1138
-msgid "Use development CDN (slower but latest)"
-msgstr ""
-
-#: functions.php:1143
-msgid "Absolute or relative CSS path"
-msgstr ""
-
-#: functions.php:1147
-msgid "Absolute or relative JS path"
-msgstr ""
-
-#: functions.php:1152
-msgid "Use external (CDN) files for this website"
-msgstr ""
-
-#: functions.php:1156
-msgid "If you want to avoid the CDN due to performance reasons, please ensure to get .css .js files locally!"
-msgstr ""
-
-#: functions.php:1170
-msgid "Main color, dark version and transparent version"
-msgstr ""
-
-#: functions.php:1170
-#: functions.php:1180
-#: functions.php:1190
-#: functions.php:1200
-#: functions.php:1210
-#: functions.php:1220
-#: functions.php:1229
-#: functions.php:1244
-#: functions.php:1264
-#: functions.php:1310
-#: functions.php:1319
-#: functions.php:1330
-#: functions.php:1342
-#: functions.php:1353
-msgid "Leave blank to reset."
-msgstr ""
-
-#: functions.php:1180
-msgid "Second color and dark version"
-msgstr ""
-
-#: functions.php:1190
-msgid "Third color and dark version"
-msgstr ""
-
-#: functions.php:1200
-msgid "Fourth color and dark version"
-msgstr ""
-
-#: functions.php:1210
-msgid "Link and buttons color"
-msgstr ""
-
-#: functions.php:1220
-msgid "Page second level background and menu icon color"
-msgstr ""
-
-#: functions.php:1229
-msgid "Android browser bar"
-msgstr ""
-
-#: functions.php:1244
-msgid "Color used for semaphore logic"
-msgstr ""
-
-#: functions.php:1264
-msgid "Greyscale"
-msgstr ""
-
-#: functions.php:1293
-msgid "Font for titles"
-msgstr ""
-
-#: functions.php:1304
-msgid "Main font"
-msgstr ""
-
-#: functions.php:1310
-msgid "Used for paragraphs and most of the website's content. Sans Serif."
-msgstr ""
-
-#: functions.php:1310
-#: functions.php:1319
-msgid "Enabled by default."
-msgstr ""
-
-#: functions.php:1313
-msgid "Secondary font"
-msgstr ""
-
-#: functions.php:1319
-msgid "Alternative font, used for titles and in CSS class \".font-two\""
-msgstr ""
-
-#: functions.php:1322
-msgid "Serif font"
-msgstr ""
-
-#: functions.php:1330
-msgid "Serif font, used in CSS class \".serif\""
-msgstr ""
-
-#: functions.php:1334
-msgid "Mono font"
-msgstr ""
-
-#: functions.php:1342
-msgid "Monospace font, used in CSS class \".mono\""
-msgstr ""
-
-#: functions.php:1345
-msgid "Handwriting font"
-msgstr ""
-
-#: functions.php:1353
-msgid "Handwriting font, used in CSS class \".handwriting\""
-msgstr ""
-
-#: functions.php:1404
-msgid "Istitutional data"
-msgstr ""
-
-#: functions.php:1408
-msgid "Company name"
-msgstr ""
-
-#: functions.php:1415
-msgid "Address"
-msgstr ""
-
-#: functions.php:1419
-msgid "House number"
-msgstr ""
-
-#: functions.php:1426
-msgid "City"
-msgstr ""
-
-#: functions.php:1431
-msgid "City code"
-msgstr ""
-
-#: functions.php:1436
-msgid "Province"
-msgstr ""
-
-#: functions.php:1441
-msgid "Country"
-msgstr ""
-
-#: functions.php:1449
-#: functions.php:1482
-msgid "Email"
-msgstr ""
-
-#: functions.php:1453
-#: functions.php:1486
-msgid "Phone"
-msgstr ""
-
-#: functions.php:1460
-msgid "Tax number"
-msgstr ""
-
-#: functions.php:1464
-msgid "ID code"
-msgstr ""
-
-#: functions.php:1471
-msgid "PEC"
-msgstr ""
-
-#: functions.php:1478
-msgid "Technical addresses"
-msgstr ""
-
-#: functions.php:1734
-#: functions.php:1765
-#: functions.php:1788
-#: functions.php:1836
-#: functions.php:1860
-#: functions.php:1883
-#: functions.php:1906
-msgid "Settings Saved"
-msgstr ""
-
-#: header.php:183
-msgid "Skip to content"
-msgstr ""
-
-#: inc/customizer.php:77
-msgid "Enter the logo height for top or scrolled screen"
-msgstr ""
-
-#: inc/customizer.php:87
-msgid "Logo height"
-msgstr ""
-
-#: inc/customizer.php:98
-msgid "Logo height (scrolled)"
-msgstr ""
-
-#: inc/customizer.php:146
-msgid "Color settings"
-msgstr ""
-
-#: inc/customizer.php:148
-msgid "Enter the custom colors"
-msgstr ""
-
-#: inc/customizer.php:158
-msgid "Main color"
-msgstr ""
-
-#: inc/customizer.php:169
-msgid "Main color dark"
-msgstr ""
-
-#: inc/customizer.php:180
-msgid "Main color transparent"
-msgstr ""
-
-#: inc/customizer.php:192
-msgid "Second color"
-msgstr ""
-
-#: inc/customizer.php:203
-msgid "Second color dark"
-msgstr ""
-
-#: inc/customizer.php:215
-msgid "Third color"
-msgstr ""
-
-#: inc/customizer.php:226
-msgid "Third color dark"
-msgstr ""
-
-#: inc/customizer.php:238
+#: inc/customizer.php:275 inc/customizer.php:333
 msgid "Fourth color"
 msgstr ""
 
-#: inc/customizer.php:249
+#: inc/customizer.php:286 inc/customizer.php:334
 msgid "Fourth color dark"
 msgstr ""
 
-#: inc/customizer.php:261
-msgid "Link color"
+#: inc/meta-boxes.php:171
+msgid "Full"
 msgstr ""
 
-#: inc/customizer.php:272
-msgid "Link hover color"
+#: inc/meta-boxes.php:159
+msgid "Full width"
 msgstr ""
 
-#: inc/customizer.php:284
-msgid "Sheet color"
+#: functions.php:501
+msgid "GitHub Version"
 msgstr ""
 
-#: inc/customizer.php:295
-msgid "Menu toggle color"
+#: functions.php:762
+msgid "Google Analytics"
 msgstr ""
 
-#: inc/customizer.php:307
-msgid "Theme color"
+#: functions.php:765
+msgid "Google Analytics Code"
 msgstr ""
 
-#. translators: %s: post date.
-#: inc/template-tags.php:30
-#, php-format
-msgctxt "post date"
-msgid "Posted on %s"
+#: inc/customizer.php:341
+msgid "Gradient 1/2"
 msgstr ""
 
-#. translators: %s: post author.
-#: inc/template-tags.php:46
-#, php-format
-msgctxt "post author"
-msgid "by %s"
+#: inc/customizer.php:342
+msgid "Gradient 1/3"
 msgstr ""
 
-#. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:63
-msgid ", "
+#: inc/customizer.php:343
+msgid "Gradient 1/4"
 msgstr ""
 
-#. translators: 1: list of categories.
-#: inc/template-tags.php:66
-#, php-format
-msgid "Posted in %1$s"
+#: inc/customizer.php:344 inc/customizer.php:345
+msgid "Gradient 2/3"
 msgstr ""
 
-#. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:70
-msgctxt "list item separator"
-msgid ", "
+#: inc/customizer.php:346
+msgid "Gradient 3/4"
 msgstr ""
 
-#. translators: 1: list of tags.
-#: inc/template-tags.php:73
-#, php-format
-msgid "Tagged %1$s"
+#: inc/customizer.php:340
+msgid "Gradient fourth"
 msgstr ""
 
-#. translators: %s: post title
-#: inc/template-tags.php:83
+#: inc/customizer.php:337
+msgid "Gradient main"
+msgstr ""
+
+#: inc/customizer.php:338
+msgid "Gradient second"
+msgstr ""
+
+#: inc/customizer.php:339
+msgid "Gradient third"
+msgstr ""
+
+#: inc/customizer.php:347
+msgid "Grainy gradient"
+msgstr ""
+
+#: inc/customizer.php:348
+msgid "Grainy gradient second"
+msgstr ""
+
+#: functions.php:717
+msgid "Handwriting font"
+msgstr ""
+
+#: functions.php:731
+msgid "Handwriting font, used in CSS class \".handwriting\""
+msgstr ""
+
+#: inc/meta-boxes.php:286
+msgid "Header scroll styling"
+msgstr ""
+
+#: inc/meta-boxes.php:277 inc/meta-boxes.php:306
+msgid "Header top styling"
+msgstr ""
+
+#: functions.php:795
+msgid "House number"
+msgstr ""
+
+#: functions.php:836
+msgid "ID code"
+msgstr ""
+
+#: functions.php:749
+msgid "Iconoir"
+msgstr ""
+
+#: inc/blocks-settings.php:144
+msgid "Image"
+msgstr ""
+
+#: inc/meta-boxes.php:72
+msgid "Image in archive"
+msgstr ""
+
+#: inc/meta-boxes.php:308
+msgid "Inherit (page default)"
+msgstr ""
+
+#: functions.php:880
+msgid "Instagram"
+msgstr ""
+
+#: inc/blocks-settings.php:130
+msgid "Interface elements styled with mini CSS."
+msgstr ""
+
+#: template-parts/content-none.php:51
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: inc/blocks-settings.php:69
+msgid "Layout"
+msgstr ""
+
+#: inc/template-tags.php:100
 #, php-format
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#. translators: %s: Name of current post. Only visible to screen readers
-#: inc/template-tags.php:100
-#: template-parts/content-page.php:59
+#: functions.php:170
+msgid "Lesson Sidebar"
+msgstr ""
+
+#: archive-lesson.php:27
+msgid "Lessons"
+msgstr ""
+
+#: template-parts/content-course.php:191
+msgid "Lessons in this course"
+msgstr ""
+
+#: inc/customizer.php:298
+msgid "Link color"
+msgstr ""
+
+#: inc/customizer.php:309
+msgid "Link hover color"
+msgstr ""
+
+#: functions.php:901
+msgid "LinkedIn"
+msgstr ""
+
+#: template-parts/content-course.php:120 template-parts/content-lesson.php:141
+msgid "Location"
+msgstr ""
+
+#: 403.php:23
+msgid "Log in"
+msgstr ""
+
+#: inc/customizer.php:91
+msgid "Logo height"
+msgstr ""
+
+#: inc/customizer.php:103
+msgid "Logo height (scrolled)"
+msgstr ""
+
+#: inc/customizer.php:191 inc/customizer.php:327
+msgid "Main color"
+msgstr ""
+
+#: inc/customizer.php:202 inc/customizer.php:328
+msgid "Main color dark"
+msgstr ""
+
+#: inc/customizer.php:214
+msgid "Main color transp"
+msgstr ""
+
+#: functions.php:52
+msgid "Main menu"
+msgstr ""
+
+#: functions.php:196
+msgid "Match Sidebar"
+msgstr ""
+
+#: archive-match.php:32
+msgid "Matches"
+msgstr ""
+
+#: inc/customizer.php:358
+msgid "Menu toggle color"
+msgstr ""
+
+#: inc/customizer.php:114
+msgid "Menu toggle height"
+msgstr ""
+
+#: inc/customizer.php:125
+msgid "Menu toggle height (scrolled)"
+msgstr ""
+
+#: functions.php:850
+msgid "Messaging apps"
+msgstr ""
+
+#: functions.php:698
+msgid "Mono font"
+msgstr ""
+
+#: functions.php:712
+msgid "Monospace font, used in CSS class \".mono\""
+msgstr ""
+
+#: single-news.php:44
+msgid "Monthly archive"
+msgstr ""
+
+#: functions.php:635
+msgid "Most used font"
+msgstr ""
+
+#: archive-news.php:26
+msgid "News"
+msgstr ""
+
+#: functions.php:183
+msgid "News Sidebar"
+msgstr ""
+
+#: single.php:70
+msgid "Next"
+msgstr ""
+
+#: template-parts/content-none.php:21
+msgid "Nothing Found"
+msgstr ""
+
+#: comments.php:37
 #, php-format
-msgid "Edit <span class=\"screen-reader-text\">%s</span>"
+msgid "One thought on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: patterns/auto_latest_3_news.php
-msgctxt "Pattern title"
-msgid "Autaomation - Latest 3 news"
+#: functions.php:843
+msgid ""
+"Only for Italian companies: Certified Email (Posta Elettronica Certificata)."
 msgstr ""
 
-#: patterns/content_1-col.php
-msgctxt "Pattern title"
-msgid "Content - 1 col"
+#: functions.php:841
+msgid "PEC"
 msgstr ""
 
-#: patterns/content_1-col_2-3.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - 2/3"
+#: 404.php:18
+msgid "Page not found"
 msgstr ""
 
-#: patterns/content_1-col_background-fixed-image.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Background fixed image"
-msgstr ""
-
-#: patterns/content_1-col_black-box_CTA.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Black box - CTA"
-msgstr ""
-
-#: patterns/content_1-col_black-box_keep-me-updated.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Black box - Keep me updated"
-msgstr ""
-
-#: patterns/content_1-col_contact-form.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Contact form"
-msgstr ""
-
-#: patterns/content_1-col_full-page-image.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Full page image"
-msgstr ""
-
-#: patterns/content_1-col_hero.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Hero"
-msgstr ""
-
-#: patterns/content_1-col_map.php
-msgctxt "Pattern title"
-msgid "Content - 1 col - Map"
-msgstr ""
-
-#: patterns/content_2-col_image-DX.php
-msgctxt "Pattern title"
-msgid "Content - 2 col - Image DX"
-msgstr ""
-
-#: patterns/content_2-col_image-SX.php
-msgctxt "Pattern title"
-msgid "Content - 2 col - Image SX"
-msgstr ""
-
-#: patterns/content_2-col_quick-contact.php
-msgctxt "Pattern title"
-msgid "Content - 2 col - Quick contact"
-msgstr ""
-
-#: patterns/content_3-col_quick-contact.php
-msgctxt "Pattern title"
-msgid "Content - 3 col - Quick contact"
-msgstr ""
-
-#: patterns/content_4-col.php
-msgctxt "Pattern title"
-msgid "Content - 4 col"
-msgstr ""
-
-#: patterns/structure_box-8.php
-msgctxt "Pattern title"
-msgid "Structure - Box 8"
-msgstr ""
-
-#: patterns/structure_box-10.php
-msgctxt "Pattern title"
-msgid "Structure - Box 10"
-msgstr ""
-
-#: patterns/structure_box-12.php
-msgctxt "Pattern title"
-msgid "Structure - Box 12"
-msgstr ""
-
-#: patterns/structure_box-16.php
-msgctxt "Pattern title"
-msgid "Structure - Box 16"
-msgstr ""
-
-#: patterns/structure_box-20.php
-msgctxt "Pattern title"
-msgid "Structure - Box 20"
-msgstr ""
-
-#: patterns/structure_box-25.php
-msgctxt "Pattern title"
-msgid "Structure - Box 25"
-msgstr ""
-
-#: patterns/structure_box-30.php
-msgctxt "Pattern title"
-msgid "Structure - Box 30"
-msgstr ""
-
-#: patterns/structure_box-33.php
-msgctxt "Pattern title"
-msgid "Structure - Box 33"
-msgstr ""
-
-#: patterns/structure_box-40.php
-msgctxt "Pattern title"
-msgid "Structure - Box 40"
-msgstr ""
-
-#: patterns/structure_box-50.php
-msgctxt "Pattern title"
-msgid "Structure - Box 50"
-msgstr ""
-
-#: patterns/structure_box-60.php
-msgctxt "Pattern title"
-msgid "Structure - Box 60"
-msgstr ""
-
-#: patterns/structure_box-66.php
-msgctxt "Pattern title"
-msgid "Structure - Box 66"
-msgstr ""
-
-#: patterns/structure_box-70.php
-msgctxt "Pattern title"
-msgid "Structure - Box 70"
-msgstr ""
-
-#: patterns/structure_box-75.php
-msgctxt "Pattern title"
-msgid "Structure - Box 75"
-msgstr ""
-
-#: patterns/structure_box-80.php
-msgctxt "Pattern title"
-msgid "Structure - Box 80"
-msgstr ""
-
-#: patterns/structure_box-88.php
-msgctxt "Pattern title"
-msgid "Structure - Box 88"
-msgstr ""
-
-#: patterns/structure_box-90.php
-msgctxt "Pattern title"
-msgid "Structure - Box 90"
-msgstr ""
-
-#: patterns/structure_box-100.php
-msgctxt "Pattern title"
-msgid "Structure - Box 100"
-msgstr ""
-
-#: patterns/structure_boxes.php
-msgctxt "Pattern title"
-msgid "Structure - Boxes"
-msgstr ""
-
-#: patterns/structure_container.php
-msgctxt "Pattern title"
-msgid "Structure - Container"
-msgstr ""
-
-#: patterns/structure_div_closing.php
-msgctxt "Pattern title"
-msgid "Structure - Div closing"
-msgstr ""
-
-#: patterns/structure_section.php
-msgctxt "Pattern title"
-msgid "Structure - Structure"
-msgstr ""
-
-#. translators: %s: search query.
-#: search.php:40
-#, php-format
-msgid "Search Results for: %s"
-msgstr ""
-
-#: single-event.php:36
-#: single-match.php:85
-#: single-news.php:32
-#: single.php:76
-msgid "Previous:"
-msgstr ""
-
-#: single-event.php:37
-#: single-match.php:86
-#: single-news.php:33
-#: single.php:77
-msgid "Next:"
-msgstr ""
-
-#: template-parts/content-event.php:103
-msgid "Time"
-msgstr ""
-
-#: template-parts/content-event.php:114
-msgid "End"
-msgstr ""
-
-#. translators: %s: Name of current post. Only visible to screen readers
-#: template-parts/content-event.php:152
-#: template-parts/content-match.php:162
-#: template-parts/content-news.php:63
-#: template-parts/content.php:63
-#, php-format
-msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
-msgstr ""
-
-#: template-parts/content-event.php:166
-#: template-parts/content-match.php:176
-#: template-parts/content-news.php:83
-#: template-parts/content-page.php:45
-#: template-parts/content.php:79
+#: overrides/templates/single.example.php:61
+#: template-parts/content-course.php:157 template-parts/content-event.php:174
+#: template-parts/content-lesson.php:178 template-parts/content-match.php:221
+#: template-parts/content-news.php:83 template-parts/content-page.php:51
+#: template-parts/content.php:86
 msgid "Pages:"
 msgstr ""
 
-#: template-parts/content-event.php:173
-#: template-parts/content-match.php:185
+#: functions.php:824
+msgid "Phone"
+msgstr ""
+
+#: functions.php:209
+msgid "Post Sidebar"
+msgstr ""
+
+#: single.php:69
+msgid "Previous"
+msgstr ""
+
+#: functions.php:809
+msgid "Province"
+msgstr ""
+
+#: inc/blocks-settings.php:100
+msgid ""
+"Query blocks that display custom post types. Requires the corresponding "
+"content type to be enabled."
+msgstr ""
+
+#: overrides/parts/content.example.php:67
+msgid "Read More"
+msgstr ""
+
+#: template-parts/content-course.php:164 template-parts/content-event.php:181
+#: template-parts/content-lesson.php:185 template-parts/content-match.php:232
 #: template-parts/content-news.php:77
 msgid "Read more"
 msgstr ""
 
-#: template-parts/content-none.php:18
-msgid "Nothing Found"
-msgstr ""
-
-#. translators: 1: link to WP admin new post page.
-#: template-parts/content-none.php:28
+#: template-parts/content-none.php:31
 #, php-format
-msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr ""
 
-#: template-parts/content-none.php:41
-msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+#: functions.php:647
+msgid "Sans Serif font"
 msgstr ""
 
-#: template-parts/content-none.php:48
-msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+#: inc/meta-boxes.php:290
+msgid "Scroll black background"
+msgstr ""
+
+#: inc/meta-boxes.php:292
+msgid "Scroll inverted colors"
+msgstr ""
+
+#: inc/meta-boxes.php:291
+msgid "Scroll main color background"
+msgstr ""
+
+#: inc/meta-boxes.php:289
+msgid "Scroll white background"
+msgstr ""
+
+#: search.php:29
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: inc/customizer.php:229 inc/customizer.php:329
+msgid "Second color"
+msgstr ""
+
+#: inc/customizer.php:240 inc/customizer.php:330
+msgid "Second color dark"
+msgstr ""
+
+#: functions.php:662
+msgid "Secondary font"
+msgstr ""
+
+#: functions.php:648 functions.php:663 functions.php:684 functions.php:703
+#: functions.php:722
+msgid "Select font"
+msgstr ""
+
+#: inc/blocks-settings.php:163
+msgid "Sep"
+msgstr ""
+
+#: functions.php:679
+msgid "Serif font"
+msgstr ""
+
+#: functions.php:693
+msgid "Serif font, used in CSS class \".serif\""
+msgstr ""
+
+#: functions.php:1052 functions.php:1109 functions.php:1158 functions.php:1183
+#: functions.php:1207 functions.php:1231 inc/blocks-settings.php:192
+msgid "Settings Saved"
+msgstr ""
+
+#: overrides/parts/content.example.php:83
+msgid "Share:"
+msgstr ""
+
+#: inc/customizer.php:321
+msgid "Sheet color"
+msgstr ""
+
+#: inc/meta-boxes.php:62
+msgid "Show sidebar"
+msgstr ""
+
+#: inc/customizer.php:79
+msgid "Show tagline"
+msgstr ""
+
+#: inc/meta-boxes.php:51
+msgid "Show title"
+msgstr ""
+
+#: functions.php:146
+msgid "Sidebar for courses."
+msgstr ""
+
+#: functions.php:159
+msgid "Sidebar for events."
+msgstr ""
+
+#: functions.php:172
+msgid "Sidebar for lessons."
+msgstr ""
+
+#: functions.php:198
+msgid "Sidebar for matches."
+msgstr ""
+
+#: functions.php:185
+msgid "Sidebar for news."
+msgstr ""
+
+#: functions.php:211
+msgid "Sidebar for posts."
+msgstr ""
+
+#: header.php:166
+msgid "Skip to content"
+msgstr ""
+
+#: functions.php:874
+msgid "Social networks"
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: inc/blocks-settings.php:171
+msgid "Space"
+msgstr ""
+
+#: inc/meta-boxes.php:147
+msgid "Space bottom"
+msgstr ""
+
+#: inc/meta-boxes.php:151
+msgid "Space top"
+msgstr ""
+
+#: inc/blocks-settings.php:157
+msgid "Spacing and divider helpers."
+msgstr ""
+
+#: inc/meta-boxes.php:160
+msgid "Standard"
+msgstr ""
+
+#: inc/blocks-settings.php:70
+msgid "Structural blocks for building page layouts with the mini grid system."
+msgstr ""
+
+#: overrides/parts/content.example.php:77
+msgid "Tags:"
+msgstr ""
+
+#: functions.php:831
+msgid "Tax number"
+msgstr ""
+
+#: functions.php:864
+msgid "Telegram"
+msgstr ""
+
+#: 404.php:19
+msgid "The page you're looking for doesn't exist or has been moved."
+msgstr ""
+
+#: inc/customizer.php:370
+msgid "Theme color"
+msgstr ""
+
+#: functions.php:778
+#, php-format
+msgid "These data will populate the %sfooter%s."
+msgstr ""
+
+#: functions.php:779
+#, php-format
+msgid ""
+"They could also be used in the %1$sAbout us%2$s page, in %3$sCookie "
+"policy%4$s, in %5$sPrivacy policy%6$s or in other sections."
+msgstr ""
+
+#: inc/meta-boxes.php:161
+msgid "Thin"
+msgstr ""
+
+#: inc/customizer.php:252 inc/customizer.php:331
+msgid "Third color"
+msgstr ""
+
+#: inc/customizer.php:263 inc/customizer.php:332
+msgid "Third color dark"
+msgstr ""
+
+#: functions.php:821
+msgid "This email could be used by users."
+msgstr ""
+
+#: functions.php:618
+msgid "This is the colors section"
+msgstr ""
+
+#: functions.php:468
+#, php-format
+msgid ""
+"This option put a small banner at the bottom of the page with the credits to "
+"<a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">UWA Agency</"
+"a> and <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">mini</"
+"a> project."
+msgstr ""
+
+#: functions.php:826
+msgid "This phone number could be used by users."
+msgstr ""
+
+#: functions.php:922
+msgid "Threads"
+msgstr ""
+
+#: functions.php:915
+msgid "TikTok"
+msgstr ""
+
+#: template-parts/content-lesson.php:126
+msgid "Time"
+msgstr ""
+
+#: inc/meta-boxes.php:281 inc/meta-boxes.php:310
+msgid "Top black background"
+msgstr ""
+
+#: inc/meta-boxes.php:283 inc/meta-boxes.php:312
+msgid "Top inverted colors"
+msgstr ""
+
+#: inc/meta-boxes.php:282 inc/meta-boxes.php:311
+msgid "Top main color background"
+msgstr ""
+
+#: inc/meta-boxes.php:280 inc/meta-boxes.php:309
+msgid "Top white background"
+msgstr ""
+
+#: inc/customizer.php:215
+msgid "Transparency (0-100%)"
+msgstr ""
+
+#: inc/blocks-settings.php:129
+msgid "UI"
+msgstr ""
+
+#: functions.php:515
+msgid "Use DEV CDN"
+msgstr ""
+
+#: functions.php:496
+msgid "Use mini via CDN"
+msgstr ""
+
+#: functions.php:657
+msgid "Used for paragraphs and most of the website's content."
+msgstr ""
+
+#: functions.php:53
+msgid "User"
+msgstr ""
+
+#: inc/blocks-settings.php:156
+msgid "Utilities"
+msgstr ""
+
+#: functions.php:856
+msgid "WhatsApp"
+msgstr ""
+
+#: inc/meta-boxes.php:162
+msgid "Wide"
+msgstr ""
+
+#: functions.php:894
+msgid "X (Twitter)"
+msgstr ""
+
+#: 403.php:17
+msgid "You don't have permission to view this page."
+msgstr ""
+
+#: functions.php:908
+msgid "YouTube"
+msgstr ""
+
+#: functions.php:777
+msgid "Your data"
+msgstr ""
+
+#: overrides/templates/single.example.php:45
+msgid "by"
+msgstr ""
+
+#: inc/blocks-settings.php:35
+msgid "mini Gutenberg blocks"
 msgstr ""

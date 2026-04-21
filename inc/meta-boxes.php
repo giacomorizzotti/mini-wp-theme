@@ -156,10 +156,10 @@ function page_customization_box_html( $post, $meta ) {
     echo '<div>';
     echo '<label for="page_container" style="display: block; margin-bottom: 5px; font-weight: 600;">' . __("Container", 'mini' ) . '</label>';
     echo '<select name="page_container" style="width: 100%;">
-        <option value="fw"' . ($pageContainerStyle == 'fw' ? ' selected' : '') . '>Full width</option>
-        <option value=""' . ($pageContainerStyle == '' ? ' selected' : '') . '>Standard</option>
-        <option value="thin"' . ($pageContainerStyle == 'thin' ? ' selected' : '') . '>Thin</option>
-        <option value="wide"' . ($pageContainerStyle == 'wide' ? ' selected' : '') . '>Wide</option>
+        <option value="fw"' . ($pageContainerStyle == 'fw' ? ' selected' : '') . '>' . esc_html__( 'Full width', 'mini' ) . '</option>
+        <option value=""' . ($pageContainerStyle == '' ? ' selected' : '') . '>' . esc_html__( 'Standard', 'mini' ) . '</option>
+        <option value="thin"' . ($pageContainerStyle == 'thin' ? ' selected' : '') . '>' . esc_html__( 'Thin', 'mini' ) . '</option>
+        <option value="wide"' . ($pageContainerStyle == 'wide' ? ' selected' : '') . '>' . esc_html__( 'Wide', 'mini' ) . '</option>
     </select>';
     echo '</div>';
 
@@ -168,8 +168,8 @@ function page_customization_box_html( $post, $meta ) {
     echo '<div style="margin-top: 8px;">';
     echo '<label for="content_width" style="display: block; margin-bottom: 5px; font-weight: 600;">' . __( 'Content width', 'mini' ) . '</label>';
     echo '<select name="content_width" style="width: 100%;">
-        <option value="box-100"' . ( $contentWidth !== 'box-66' ? ' selected' : '' ) . '>Full</option>
-        <option value="box-66"' . ( $contentWidth === 'box-66' ? ' selected' : '' ) . '>2/3</option>
+        <option value="box-100"' . ( $contentWidth !== 'box-66' ? ' selected' : '' ) . '>' . esc_html__( 'Full', 'mini' ) . '</option>
+        <option value="box-66"' . ( $contentWidth === 'box-66' ? ' selected' : '' ) . '>' . esc_html__( '2/3', 'mini' ) . '</option>
     </select>';
     echo '</div>';
 }
@@ -274,22 +274,22 @@ function header_styling_box_html( $post, $meta ){
 
     // Form fields for entering data
     ?>
-    <label for="header_styling_top" style="display: block; margin-bottom: 5px;"><?=__("Header top styling", 'header_styling_top_box_textdomain' )?></label>
+    <label for="header_styling_top" style="display: block; margin-bottom: 5px;"><?php esc_html_e( 'Header top styling', 'mini' ); ?></label>
     <select name="header_styling_top">
-		<option value=""<?=$header_styling_state_top_standard?>>Default</option>
-		<option value="top-wh"<?=$header_styling_state_top_white?>>Top white background</option>
-		<option value="top-bk"<?=$header_styling_state_top_black?>>Top black background</option>
-		<option value="top-col"<?=$header_styling_state_top_color?>>Top main color background</option>
-		<option value="top-inv"<?=$header_styling_state_top_negative?>>Top inverted colors</option>
+		<option value=""<?=$header_styling_state_top_standard?>><?php esc_html_e( 'Default', 'mini' ); ?></option>
+		<option value="top-wh"<?=$header_styling_state_top_white?>><?php esc_html_e( 'Top white background', 'mini' ); ?></option>
+		<option value="top-bk"<?=$header_styling_state_top_black?>><?php esc_html_e( 'Top black background', 'mini' ); ?></option>
+		<option value="top-col"<?=$header_styling_state_top_color?>><?php esc_html_e( 'Top main color background', 'mini' ); ?></option>
+		<option value="top-inv"<?=$header_styling_state_top_negative?>><?php esc_html_e( 'Top inverted colors', 'mini' ); ?></option>
 	</select>
     <br/>
-    <label for="header_styling_scroll" style="display: block; margin-bottom: 5px;"><?=__("Header scroll styling", 'header_styling_scroll_box_textdomain' )?></label>
+    <label for="header_styling_scroll" style="display: block; margin-bottom: 5px;"><?php esc_html_e( 'Header scroll styling', 'mini' ); ?></label>
     <select name="header_styling_scroll">
-		<option value=""<?=$header_styling_state_scroll_standard?>>Default</option>
-		<option value="scroll-wh"<?=$header_styling_state_scroll_white?>>Scroll white background</option>
-		<option value="scroll-bk"<?=$header_styling_state_scroll_black?>>Scroll black background</option>
-		<option value="scroll-col"<?=$header_styling_state_scroll_color?>>Scroll main color background</option>
-		<option value="scroll-inv"<?=$header_styling_state_scroll_negative?>>Scroll inverted colors</option>
+		<option value=""<?=$header_styling_state_scroll_standard?>><?php esc_html_e( 'Default', 'mini' ); ?></option>
+		<option value="scroll-wh"<?=$header_styling_state_scroll_white?>><?php esc_html_e( 'Scroll white background', 'mini' ); ?></option>
+		<option value="scroll-bk"<?=$header_styling_state_scroll_black?>><?php esc_html_e( 'Scroll black background', 'mini' ); ?></option>
+		<option value="scroll-col"<?=$header_styling_state_scroll_color?>><?php esc_html_e( 'Scroll main color background', 'mini' ); ?></option>
+		<option value="scroll-inv"<?=$header_styling_state_scroll_negative?>><?php esc_html_e( 'Scroll inverted colors', 'mini' ); ?></option>
 	</select>
 <?php
 }
