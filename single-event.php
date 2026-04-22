@@ -19,9 +19,10 @@ get_header();
 			<div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center;"></div>
 			<div class="container<?php echo ' ' . esc_attr( $layout['container_width'] ); ?>">
 				<div class="boxes hh align-items-end">
-					<header class="box-100 entry-header mb-1">
+					<header class="box-100 entry-header p-2">
 					<?php
-						the_title( '<h1 class="entry-title big inline-block white-box">', '</h1>' )
+						the_title( '<h1 class="entry-title big inline-block white-box">', '</h1>' );
+						if ( has_post_thumbnail() && get_post_meta(get_the_ID(), 'event_poster_id', true)) { echo '<div class="space" style="height:calc( var(--margin) *  6);"></div>';}
 					?>
 					</header><!-- .entry-header -->
 				</div>
@@ -32,7 +33,7 @@ get_header();
 		<div class="container fw">
 			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				
-				<div class="boxes space-top-bot">
+				<div class="boxes <?php if ( has_post_thumbnail() && get_post_meta(get_the_ID(), 'event_poster_id', true)) { echo "py-4"; } else { echo esc_attr( $layout['spacing_class'] ); } ?>">
 					
 					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">

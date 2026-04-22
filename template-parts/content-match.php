@@ -52,7 +52,7 @@ $it_date_year = new IntlDateFormatter(
 			<div class="boxes">
 				<header class="box-100 entry-header">
 				<?php
-					if ( is_singular() ) {
+					if ( is_singular() && empty( $args['is_shortcode'] ) ) {
 						the_title( '<h1 class="entry-title">', '</h1>' );
 					} else {
 						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="black-text">', '</a></h2>' );
@@ -72,7 +72,7 @@ $it_date_year = new IntlDateFormatter(
 			get_post_meta($post->ID, 'team_2') != null
 		):
 		if (
-			!has_post_thumbnail() || is_archive()
+			is_singular() && !empty( $args['is_shortcode'] ) || is_archive() || is_home()
 		):
 		?>
 		<div class="boxes">
@@ -127,77 +127,75 @@ $it_date_year = new IntlDateFormatter(
 		):
 		?>
 		<div class="boxes align-items-start align-content-start">
-			<div class="box-100 my-0">
-				<div class="date-time-box flex flex-wrap">
-					<div class="block flex w-100 flex-direction-row flex-wrap">
+			<div class="box-66 entry-content px-2">
+                <div class="flex flex-flow-column-wrap justify-content-start align-items-start relative">
+					<?php 
+						if ( get_post_meta($post->ID, 'event_date')[0] != null ) {
+							$date = strtotime(get_post_meta($post->ID, 'event_date')[0]);
+							$date_day_name = $it_date_day_name->format($date);
+							$date_day_number = $it_date_day_number->format($date);
+							$date_month = $it_date_month->format($date);
+							$date_year = $it_date_year->format($date);
+						}
+					?>
+					<?php if ( get_post_meta($post->ID, 'event_date')[0] != null ): ?>
+					<div class="date-box w-100" style="max-width: 100%;">
 						<div class="flex">
-						<?php 
-							if ( get_post_meta($post->ID, 'event_date')[0] != null ) {
-								$date = strtotime(get_post_meta($post->ID, 'event_date')[0]);
-								$date_day_name = $it_date_day_name->format($date);
-								$date_day_number = $it_date_day_number->format($date);
-								$date_month = $it_date_month->format($date);
-								$date_year = $it_date_year->format($date);
-							}
-						?>
-						<?php if ( get_post_meta($post->ID, 'event_date')[0] != null ): ?>
-							<p class="m-0" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center white-box box-shadow huge black py-1 px-2 m-0" style="min-width: 140px;"><?= $date_day_number ?></span>
+							<p class="m-0 huge black center relative z-1" style="line-height: 1!important;">
+								<span class="square flex align-items-center justify-content-center box-shadow white-box p-15 m-0 b-rad-10" style="min-width: <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>120px<?php else: ?>100px<?php endif; ?>;"><?= $date_day_number ?></span>
 							</p>
-							<div class="flex flex-direction-column oh">
-								<div class="flex">
-									<p class="m-0 up-case <?php if ( is_singular() ): ?>L<?php else: ?><?php endif; ?>">
-										<span class="fw-box py-1 px-15 m-0"><?= ucfirst($date_day_name) ?></span>
+							<div class="flex align-items-start flex-direction-column" style="flex-grow: 1;">
+								<div>
+									<p class="m-0 up-case <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>L<?php else: ?><?php endif; ?>">
+										<span class="inline-block py-05 px-15"><?= $date_day_name ?></span>
 									</p>
 								</div>
-								<div class="flex">
-									<p class="m-0 bold L">
-										<span class="white-box p-15 m-0 box-shadow"><?= ucfirst($date_month) ?></span>
-									</p>
-									<p class="m-0 L light">
-										<span class="fw-box m-0 p-1"><?= $date_year ?></span>
-									</p>
+								<div class="flex align-items-start flex-direction-row relative">
+									<span class="white-box bold <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>XXL py-05<?php else: ?>XL<?php endif; ?> m-0 py-0 px-15 box-shadow"><?= ucfirst($date_month) ?></span>
+									<span class="absolute light flag black-box b-rad-5 px-05" style="right: 0; transform: translate(75%, -50%);"><?= $date_year ?></span>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
 										$time = date('H:i', strtotime(get_post_meta($post->ID, 'event_time')[0]));
 									}
 								?>
-								<div class="flex">
-									<div class="time-box">
-										<p class="m-0">
-											<span class="fw-box px-15 py-05 L bold"><i class="iconoir-clock S"></i> <?= $time ?></span>
-										</p>
-									</div>
+								<div class="time-box m-0">
+									<p class="m-0 up-case bold" >
+										<?php 
+											if (get_post_meta($post->ID, 'event_end_time')[0] != null) {
+												$end_time = date('H:i', strtotime(get_post_meta($post->ID, 'event_end_time')[0]));
+											}
+										?>
+										<?php if ( get_post_meta($post->ID, 'event_time')[0] != null ): ?>
+										<span class="inline-block py-05 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
+										<?php endif; ?>
+									</p>
 								</div>
 							</div>
 						</div>
+					</div>
+					<?php endif; ?>
+					<?php
+					if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
+					?>
+					<div class="location-box">
 						<div class="space-2"></div>
+						<h4 class="m-0 bold XL">
+							<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
+						</h4>
 						<?php endif; ?>
 						<?php
-						if ( get_post_meta(get_the_ID(), 'location_name')[0] != null ):
+						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 						?>
-							<div class="space-2"></div>
-							<h4 class="m-0 bold XL">
-								<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
-							</h4>
-							<?php endif; ?>
-							<?php
-							if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
-							?>
-							<p class="mt-05">
-								<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
-							</p>
-						<?php endif; ?>
+						<p class="mt-05">
+							<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+						</p>
 					</div>
+					<?php endif; ?>
 				</div>
-			</div>
-		<?php endif; ?>
-
-		<?php if ( has_excerpt() || get_post()->post_content != '' ): ?>
-			<div class="box-66 entry-content">
+				<?php endif; ?>
 				<?php
-				if ( !is_singular() && has_excerpt() ) {
+				if ( !is_singular() || !empty( $args['is_shortcode'] ) ) {
 					the_excerpt();
 				} else {
 					the_content(
@@ -223,17 +221,13 @@ $it_date_year = new IntlDateFormatter(
 					)
 				);
 				?>
-			</div><!-- .entry-content -->
-			<?php endif; ?>
-
-			<?php if ( !is_singular() ): ?>
-			<div class="box-100">
-				<p class="m-0">
-					<a href="<?=get_the_permalink()?>" class="btn my-0"><?=esc_html__( 'Read more', 'mini' )?></a>
+				<?php if ( !is_singular() ): ?>
+				<p class="">
+					<a href="<?=get_the_permalink()?>" class="btn btn-bg"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
-			</div>
-			<?php endif; ?>
-
+				<?php endif; ?>
+			</div><!-- .entry-content -->
+			
 			<footer class="box-100 my-0 py-0 entry-footer">
 				<p class="S"><?php mini_entry_footer(); ?></p>
 			</footer><!-- .entry-footer -->
