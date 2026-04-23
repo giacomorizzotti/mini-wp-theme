@@ -193,7 +193,7 @@ if (
 						<?php endif; ?>
 						
 						<?php if ( ( $mini_description && get_theme_mod( 'header_text' ) == 1 && get_theme_mod( 'show-tagline', true ) ) || is_customize_preview() ): ?>
-							<div class="sep"></div>
+							<div class="sep-0"></div>
 							<div class="space-05"></div>
 							<p class="site-description m-0"><?php echo esc_html( $mini_description ); ?></p>
 						<?php endif; ?>
