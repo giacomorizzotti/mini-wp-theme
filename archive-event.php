@@ -13,16 +13,13 @@ $layout = mini_get_page_layout();
 get_header();
 
 ?>
-
 	<main id="primary" class="site-main" template="archive">
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
 					<div class="box-75 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
 						<div class="boxes">
-
 							<?php if ( have_posts() ) : ?>
-
 								<header class="page-header box-100">
 									<h1 class=""> <span class="under-bg"><?= esc_html__( 'Events', 'mini' ) ?></span></h1>
 									<?php /*
@@ -30,37 +27,30 @@ get_header();
 									the_archive_description( '<div class="archive-description m-0">', '</div>' );
 									*/ ?>
 								</header><!-- .page-header -->
-
 								<?php
 								/* Start the Loop */
 								while ( have_posts() ) :
 									the_post();
 									get_template_part( 'template-parts/content', get_post_type() );
+								?>
+								<div class="sep my-2"></div>
+								<?php
 								endwhile;
-
 								the_posts_navigation();
-
 							else :
-
 								get_template_part( 'template-parts/content', 'none' );
-
 							endif;
 							?>
-
 						</div>
 					</div>
-
 					<?php
 					if ( $layout['sidebar_presence'] ) :
 						get_sidebar('event');
 					endif;
 					?>
-						
 				</div>
 			</div>
 		</div>
-
 	</main><!-- #main -->
-
 <?php
 get_footer();

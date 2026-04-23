@@ -53,7 +53,7 @@ $it_date_year = new IntlDateFormatter(
 		<?php if ( has_post_thumbnail() ): ?><div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center; border-top-left-radius: 20px; border-top-right-radius: 20px;"></div><?php endif; ?>
 		<div class="container<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
 			<div class="boxes <?php if ( has_post_thumbnail() ): ?><?php if ( is_singular() ): ?>h25<?php else: ?>h33<?php endif; ?><?php endif; ?> align-items-end">
-				<header class="box-100 p-2 entry-header">
+				<header class="box-100 <?php if ( has_post_thumbnail() ): ?>p-2<?php else: ?>px-2<?php endif; ?> entry-header">
 				<?php
 					if ( is_singular() && empty( $args['is_shortcode'] ) ) {
 						the_title( '<h1 class="entry-title inline-block m-0 white-box">', '</h1>' );
