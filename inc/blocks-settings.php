@@ -80,7 +80,7 @@ function mini_blocks_section_callback( $args ) {
                 foreach ( $layout_blocks as $key => $block ) :
                     list( $title, $slug, $desc ) = $block;
                 ?>
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_<?php echo esc_attr( $key ); ?>" class="bold bk-text">
                         <input type="checkbox" id="mini_block_<?php echo esc_attr( $key ); ?>" name="mini_blocks_settings[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( ! empty( $opts[ $key ] ) ); ?> class="me-1">
                         <?php echo esc_html( $title ); ?>
@@ -110,7 +110,7 @@ function mini_blocks_section_callback( $args ) {
                 foreach ( $content_blocks as $key => $block ) :
                     list( $title, $slug, $desc ) = $block;
                 ?>
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_<?php echo esc_attr( $key ); ?>" class="bold bk-text">
                         <input type="checkbox" id="mini_block_<?php echo esc_attr( $key ); ?>" name="mini_blocks_settings[<?php echo esc_attr( $key ); ?>]" value="1" <?php checked( ! empty( $opts[ $key ] ) ); ?> class="me-1">
                         <?php echo esc_html( $title ); ?>
@@ -130,7 +130,7 @@ function mini_blocks_section_callback( $args ) {
             <p class="m-0 grey-text S"><?php esc_html_e( 'Interface elements styled with mini CSS.', 'mini' ); ?></p>
             <div class="space-2"></div>
             <div class="boxes">
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_mini_button" class="bold bk-text">
                         <input type="checkbox" id="mini_block_mini_button" name="mini_blocks_settings[mini_button]" value="1" <?php checked( ! empty( $opts['mini_button'] ) ); ?> class="me-1">
                         <?php esc_html_e( 'Button', 'mini' ); ?>
@@ -138,7 +138,7 @@ function mini_blocks_section_callback( $args ) {
                     <p class="S grey-text mt-0 mb-0"><?php esc_html_e( 'A mini-styled button link with color, size and target options.', 'mini' ); ?></p>
                     <p class="S mt-05 mb-0"><code class="XS">mini/button</code></p>
                 </div>
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_mini_image" class="bold bk-text">
                         <input type="checkbox" id="mini_block_mini_image" name="mini_blocks_settings[mini_image]" value="1" <?php checked( ! empty( $opts['mini_image'] ) ); ?> class="me-1">
                         <?php esc_html_e( 'Image', 'mini' ); ?>
@@ -157,7 +157,7 @@ function mini_blocks_section_callback( $args ) {
             <p class="m-0 grey-text S"><?php esc_html_e( 'Spacing and divider helpers.', 'mini' ); ?></p>
             <div class="space-2"></div>
             <div class="boxes">
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_mini_sep" class="bold bk-text">
                         <input type="checkbox" id="mini_block_mini_sep" name="mini_blocks_settings[mini_sep]" value="1" <?php checked( ! empty( $opts['mini_sep'] ) ); ?> class="me-1">
                         <?php esc_html_e( 'Sep', 'mini' ); ?>
@@ -165,7 +165,7 @@ function mini_blocks_section_callback( $args ) {
                     <p class="S grey-text mt-0 mb-0"><?php esc_html_e( 'A horizontal separator using .sep classes with optional height and border color.', 'mini' ); ?></p>
                     <p class="S mt-05 mb-0"><code class="XS">mini/sep</code></p>
                 </div>
-                <div class="box-25 p-2 light-grey-border b-rad-5">
+                <div class="box-25 p-2 border light-grey-border b-rad-5">
                     <label for="mini_block_mini_space" class="bold bk-text">
                         <input type="checkbox" id="mini_block_mini_space" name="mini_blocks_settings[mini_space]" value="1" <?php checked( ! empty( $opts['mini_space'] ) ); ?> class="me-1">
                         <?php esc_html_e( 'Space', 'mini' ); ?>

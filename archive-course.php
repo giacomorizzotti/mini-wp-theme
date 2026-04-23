@@ -36,7 +36,7 @@ get_header();
 								while ( have_posts() ) :
 									the_post();
 									get_template_part( 'template-parts/content', get_post_type() );
-									echo '<div class="sep-1 light-grey-border my-2"></div>';	
+									echo '<div class="sep light-grey-border my-2"></div>';	
 								endwhile;
 
 								the_posts_navigation();
