@@ -326,6 +326,11 @@ require get_template_directory() . '/inc/override.php';
  */
 require get_template_directory() . '/inc/blocks-settings.php';
 
+/**
+ * CPT archive pages (Settings > Reading dropdowns)
+ */
+require get_template_directory() . '/inc/cpt-archive-pages.php';
+
 // Contact form 7 BUG FIX
 add_filter('wpcf7_autop_or_not', '__return_false');
 

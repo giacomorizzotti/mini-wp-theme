@@ -31,6 +31,9 @@ $the_query = new WP_Query( $args );
 								<header class="page-header box-100">
 									<h1 class=""> <span class="under-bg"><?= esc_html__( 'Matches', 'mini') ?></span></h1>
 								</header>
+
+							<?php mini_cpt_archive_page_header( 'match' ); ?>
+
 							<?php
 								/* Start the Loop */
 								while ( $the_query->have_posts() ) :

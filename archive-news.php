@@ -29,7 +29,7 @@ get_header();
 									the_archive_description( '<div class="archive-description m-0">', '</div>' );
 									*/ ?>
 								</header><!-- .page-header -->
-
+							<?php mini_cpt_archive_page_header( 'news' ); ?>
 								<?php
 								/* Start the Loop */
 								while ( have_posts() ) :
