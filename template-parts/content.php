@@ -14,14 +14,10 @@ if ( ! isset( $layout ) ) {
 // Default to true when meta has never been saved ('0' means explicitly disabled)
 $show_archive_image = get_post_meta( get_the_ID(), 'archive_featured_image', true ) !== '0';
 $is_shortcode = ! empty( $args['is_shortcode'] );
-$title_classes_if_thumbnail = '';
-if ( has_post_thumbnail() && $show_archive_image ) {
-	$title_classes_if_thumbnail = ' wh-box';
-}
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="base-content-<?php echo esc_attr( get_post_type() ); ?>">
+<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() . ' my-0 p-0' ); ?> template="base-content-<?php echo esc_attr( get_post_type() ); ?>">
 
 	<?php if ( (is_singular() && $is_shortcode ) || is_home() || is_archive() || ( !$is_shortcode && !has_post_thumbnail() ) ): ?>
 	<div class="container fw"
@@ -43,9 +39,9 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 				<?php endif; ?>
 				<?php
 					if ( is_singular() && ! $is_shortcode ) {
-						the_title( '<h1 class="entry-title m-0'.$title_classes_if_thumbnail.'">', '</h1>' );
+						the_title( '<h1 class="entry-title m-0">', '</h1>' );
 					} else {
-						the_title( '<h3 class="entry-title m-0'.$title_classes_if_thumbnail.'"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h3>' );
+						the_title( '<h3 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 white-box lh-12">', '</a></h3>' );
 					}
 					?>
 				</header><!-- .entry-header -->
@@ -58,7 +54,7 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 
 		<div class="boxes">
 
-			<div class="<?php echo esc_attr( $layout['content_size'] ); ?> entry-content">
+			<div class="<?php if ( is_singular() && empty( $args['is_shortcode'] ) ) { echo esc_attr( $layout['content_size'] ); } else { echo 'box-100'; } ?> entry-content">
 				<?php
 				if ( !is_singular() || ! empty( $args['is_shortcode'] ) ) {
 					// Show excerpt on archive pages, category pages, etc.
@@ -80,7 +76,13 @@ if ( has_post_thumbnail() && $show_archive_image ) {
 						)
 					);
 				}
-				
+				?>
+				<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ): ?>
+				<p class="">
+					<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
+				</p>
+				<?php endif; ?>
+				<?php 
 				wp_link_pages(
 					array(
 						'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'mini' ),

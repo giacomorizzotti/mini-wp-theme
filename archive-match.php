@@ -21,7 +21,7 @@ $the_query = new WP_Query( $args );
 
 ?>
 
-	<main id="primary" class="site-main" template="archive">
+	<main id="primary" class="site-main" template="archive-match">
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">

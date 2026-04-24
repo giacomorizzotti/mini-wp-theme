@@ -46,10 +46,10 @@ $it_date_year = new IntlDateFormatter(
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0 white-bg"); ?> template="content-event">
+<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() ); ?> template="content-event">
 
 	<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) || ( is_singular() && empty( $args['is_shortcode'] ) && !has_post_thumbnail() ) ): ?>
-	<div class="container fw mb-2">
+	<div class="container fw">
 		<?php if ( has_post_thumbnail() ): ?><div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center; border-top-left-radius: 20px; border-top-right-radius: 20px;"></div><?php endif; ?>
 		<div class="container<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
 			<div class="boxes <?php if ( has_post_thumbnail() ): ?><?php if ( is_singular() ): ?>h25<?php else: ?>h33<?php endif; ?><?php endif; ?> align-items-end">
@@ -68,7 +68,7 @@ $it_date_year = new IntlDateFormatter(
 	</div>
 	<?php endif; ?>
 	
-	<div class="container<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
+	<div class="container pt-2<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
 		<div class="boxes">
 			<?php if ( get_post_meta(get_the_ID(), 'event_poster_id', true) ): ?>
 			<div class="box-33 entry-content ps-2 pe-0"<?php if ( has_post_thumbnail()): ?> style="margin-top: calc( var(--margin) * <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>10<?php else: ?>7<?php endif; ?> * -1 );"<?php endif; ?>>
@@ -177,7 +177,7 @@ $it_date_year = new IntlDateFormatter(
 					)
 				);
 				?>
-				<?php if ( !is_singular() ): ?>
+				<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ): ?>
 				<p class="">
 					<a href="<?=get_the_permalink()?>" class="btn btn-bg"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>

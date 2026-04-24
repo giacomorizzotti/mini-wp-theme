@@ -87,7 +87,7 @@ function add_inpage_elements_box() {
         return;
     }
     add_meta_box(
-        'inpage-elements',
+        'mini_inpage_elements',
         'In-page elements',
         'inpage_elements_box_html',
         ['page', 'post', 'slide', 'course', 'lesson'],
@@ -189,7 +189,7 @@ function add_page_customization_box() {
         return;
     }
     add_meta_box(
-        'page-customization',
+        'mini_page_customization',
         'Page customization',
         'page_customization_box_html',
         ['page', 'post', 'event', 'match', 'slide', 'course', 'lesson'],
@@ -303,14 +303,14 @@ function add_header_styling_box() {
         return;
     }
     add_meta_box(
-        'header-styling',
+        'mini_header_styling',
         'Header styling',
         'header_styling_box_html',
         ['page', 'post', 'match', 'course', 'lesson', 'event'],
         'side'
     );
     add_meta_box(
-        'header-styling',
+        'mini_header_styling',
         'Header styling',
         'slide_header_styling_box_html',
         'slide',
@@ -420,5 +420,96 @@ function header_styling_save_postdata( $post_id ) {
     
     if ( isset( $_POST['header_styling_scroll'] ) ) {
         update_post_meta( $post_id, 'header_styling_scroll', sanitize_text_field( $_POST['header_styling_scroll'] ) );
+    }
+}
+
+
+/**
+ * ADD Archive layout meta box
+ *
+ * Shown only on pages that are assigned as a CPT archive page or as the
+ * "Posts page" (blog). Lets the editor choose how many columns of articles
+ * to display in the archive loop.
+ */
+
+add_action( 'add_meta_boxes_page', 'mini_archive_layout_maybe_add_meta_box' );
+
+function mini_archive_layout_maybe_add_meta_box( $post ) {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
+
+    // Check if this page is assigned as the blog page or as any CPT archive page
+    $is_archive_page = ( (int) get_option( 'page_for_posts', 0 ) === $post->ID );
+
+    if ( ! $is_archive_page && function_exists( 'mini_cpt_archive_page_types' ) ) {
+        foreach ( array_keys( mini_cpt_archive_page_types() ) as $cpt ) {
+            if ( mini_get_cpt_archive_page_id( $cpt ) === $post->ID ) {
+                $is_archive_page = true;
+                break;
+            }
+        }
+    }
+
+    if ( ! $is_archive_page ) {
+        return;
+    }
+
+    add_meta_box(
+        'mini_archive_layout',
+        __( 'Archive layout', 'mini' ),
+        'mini_archive_layout_box_html',
+        'page',
+        'side'
+    );
+}
+
+function mini_archive_layout_box_html( $post ) {
+    wp_nonce_field( 'mini_archive_layout_save', 'mini_archive_layout_nonce' );
+
+    $current = get_post_meta( $post->ID, 'mini_archive_cols', true );
+    if ( ! $current ) {
+        $current = 'box-100';
+    }
+
+    $options = [
+        'box-100' => __( '1 column', 'mini' ),
+        'box-50'  => __( '2 columns', 'mini' ),
+        'box-33'  => __( '3 columns', 'mini' ),
+    ];
+    ?>
+    <div class="my-1">
+        <select name="mini_archive_cols" style="width: 100%;">
+            <?php foreach ( $options as $value => $label ) : ?>
+            <option value="<?php echo esc_attr( $value ); ?>"<?php selected( $current, $value ); ?>>
+                <?php echo esc_html( $label ); ?>
+            </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <?php
+}
+
+add_action( 'save_post_page', 'mini_archive_layout_save_postdata' );
+
+function mini_archive_layout_save_postdata( $post_id ) {
+    if ( ! isset( $_POST['mini_archive_layout_nonce'] ) ||
+         ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mini_archive_layout_nonce'] ) ), 'mini_archive_layout_save' ) ) {
+        return;
+    }
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $allowed = [ 'box-100', 'box-50', 'box-33' ];
+    $value   = sanitize_text_field( wp_unslash( $_POST['mini_archive_cols'] ?? 'box-100' ) );
+    if ( in_array( $value, $allowed, true ) ) {
+        update_post_meta( $post_id, 'mini_archive_cols', $value );
     }
 }

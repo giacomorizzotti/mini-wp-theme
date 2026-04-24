@@ -13,7 +13,7 @@ $layout = mini_get_page_layout();
 get_header();
 
 ?>
-	<main id="primary" class="site-main" template="archive">
+	<main id="primary" class="site-main" template="archive-event">
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">
@@ -34,7 +34,6 @@ get_header();
 									the_post();
 									get_template_part( 'template-parts/content', get_post_type() );
 								?>
-								<div class="sep my-2"></div>
 								<?php
 								endwhile;
 								the_posts_navigation();

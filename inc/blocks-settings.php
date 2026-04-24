@@ -44,7 +44,7 @@ function mini_blocks_sanitize_settings( $input ) {
         // Layout
         'mini_section', 'mini_container', 'mini_boxes', 'mini_box',
         // Content
-        'mini_news', 'mini_events', 'mini_courses', 'mini_matches',
+        'mini_posts', 'mini_news', 'mini_events', 'mini_courses', 'mini_matches',
         // UI
         'mini_button', 'mini_image',
         // Utilities
@@ -102,6 +102,7 @@ function mini_blocks_section_callback( $args ) {
             <div class="boxes">
                 <?php
                 $content_blocks = [
+                    'mini_posts'   => [ 'Posts',   'mini/posts',   'Display a grid of standard WordPress blog posts.' ],
                     'mini_news'    => [ 'News',    'mini/news',    'Display a grid of news articles. Requires the News content type.' ],
                     'mini_events'  => [ 'Events',  'mini/events',  'Display a list of events with date and location. Requires the Event content type.' ],
                     'mini_courses' => [ 'Courses', 'mini/courses', 'Display a grid of courses. Requires the Course content type.' ],

@@ -268,6 +268,7 @@ function mini_register_blocks() {
         'mini_boxes'     => 'boxes',
         'mini_box'       => 'box',
         // Content
+        'mini_posts'     => 'posts',
         'mini_news'      => 'news',
         'mini_events'    => 'events',
         'mini_courses'   => 'courses',

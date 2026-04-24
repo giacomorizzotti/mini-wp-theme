@@ -36,6 +36,14 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php mini_render_contact_form_gdpr( $uid, $opts ); ?>
             <?php endif; ?>
 
+            <div class="box-30 mini-cf-field mini-cf-altcha">
+                <altcha-widget
+                    challengeurl="<?php echo esc_url( admin_url( 'admin-ajax.php' ) . '?action=mini_altcha_challenge' ); ?>"
+                    auto="onload"
+                    hidefooter
+                ></altcha-widget>
+            </div>
+
             <div class="box-100 mini-cf-field mini-cf-submit">
                 <button type="submit" class="btn"><?php esc_html_e( 'Send message', 'mini' ); ?></button>
             </div>

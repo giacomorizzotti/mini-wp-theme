@@ -13,7 +13,7 @@ $layout = mini_get_page_layout();
 get_header();
 
 ?>
-	<main id="primary" class="site-main" template="single">
+	<main id="primary" class="site-main" template="single-match">
 
 		<?php if ( has_post_thumbnail() ): ?>
 			<div class="container fw" style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-position: center; background-size: cover; background-repeat: no-repeat;">

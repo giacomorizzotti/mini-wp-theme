@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-news">
+<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() . ' my-0 p-0' ); ?> template="content-news">
 
 	<div class="container fw">
 		<div class="container">
@@ -17,7 +17,7 @@
 				<?php if (has_post_thumbnail()): ?>
 				<div class="box-66">
 				<?php
-					if ( !is_singular() ):
+					if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ):
 				?>
 					<a href="<?=get_the_permalink()?>">
 						<img src="<?=get_the_post_thumbnail_url(); ?>" class="img"/>
@@ -36,10 +36,10 @@
 						<?= get_the_date() ?>
 					</p>
 				<?php
-					if ( is_singular() ) {
-						the_title( '<h1 class="entry-title m-0">', '</h1>' );
-					} else {
+					if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ) {
 						the_title( '<h2 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 bk-text">', '</a></h2>' );
+					} else {
+						the_title( '<h1 class="entry-title m-0">', '</h1>' );
 					}
 					?>
 				</header><!-- .entry-header -->
@@ -69,13 +69,13 @@
 						)
 					);
 				}
-				if ( !is_singular() ):
 				?>
+				<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ): ?>
 				<p class="">
 					<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>
+				<?php endif; ?>
 				<?php
-				endif;
 				wp_link_pages(
 					array(
 						'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'mini' ),

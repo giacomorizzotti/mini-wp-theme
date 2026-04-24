@@ -14,7 +14,7 @@ get_header();
 
 ?>
 
-	<main id="primary" class="site-main" template="home">
+	<main id="primary" class="site-main" template="archive">
 
 		<?php if ( has_post_thumbnail($pageID) ): ?>
 		<div class="container fw" <?php if ( has_post_thumbnail($pageID) ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url($pageID) ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>>

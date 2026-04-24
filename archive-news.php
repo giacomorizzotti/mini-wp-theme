@@ -13,7 +13,7 @@ $layout = mini_get_page_layout();
 get_header();
 ?>
 
-	<main id="primary" class="site-main" template="archive">
+	<main id="primary" class="site-main" template="archive-news">
 		<div class="container fw">
 			<div class="container">
 				<div class="boxes space-top-bot">

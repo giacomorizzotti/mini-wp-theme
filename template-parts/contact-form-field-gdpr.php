@@ -26,7 +26,7 @@ $privacy_url = $gdpr_page_id
     ? esc_url( get_permalink( $gdpr_page_id ) )
     : esc_url( get_privacy_policy_url() );
 ?>
-<div class="box-100 mini-cf-field mini-cf-consent">
+<div class="box-70 mini-cf-field mini-cf-consent">
     <label>
         <input type="checkbox" name="mini_cf_consent" value="1"
                class="inline-block" style="vertical-align: middle;" required>

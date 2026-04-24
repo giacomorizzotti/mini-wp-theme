@@ -38,7 +38,6 @@ get_header();
 				<div class="boxes <?php echo esc_attr( $layout['spacing_class'] ); ?>">
 					<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 						<div class="boxes">
-							
 							<?php if ( ! has_post_thumbnail($pageID) && $layout['title_presence'] ): ?>
 							<div class="box-100 my-2">
 								<header class="entry-header">
@@ -49,7 +48,10 @@ get_header();
 
 							<?php
 							if ( have_posts() ) :
-
+							?>
+							<div class="box-100 p-0">
+								<div class="boxes">
+							<?php
 								/* Start the Loop */
 								while ( have_posts() ) :
 									the_post();
@@ -61,32 +63,26 @@ get_header();
 									*/
 									get_template_part( 'template-parts/content', get_post_type() );
 
-							?>
-							<!--<div class="sep-1 light-grey-bg my-3"></div>-->
-							<div class="space-5"></div>
-							<?php
 
 								endwhile;
 
+							?>
+								</div>
+							</div>
+							<?php
 								the_posts_navigation();
-
 							else :
-
 								get_template_part( 'template-parts/content', 'none' );
-
 							endif;
 							?>
-
 						</div>						
 					</div>
-
 					<?php
 					if ( $layout['sidebar_presence'] ) :
 						get_sidebar('post');
 					endif;
 					?>
 		</div>
-
 	</main><!-- #main -->
 	<?php 
 		// Display author byline for E-E-A-T

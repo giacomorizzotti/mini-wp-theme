@@ -45,7 +45,7 @@ $it_date_year = new IntlDateFormatter(
 );
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-match">
+<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() . ' my-0 p-0' ); ?> template="content-match">
 
 	<div class="container fw">
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
@@ -72,7 +72,7 @@ $it_date_year = new IntlDateFormatter(
 			get_post_meta($post->ID, 'team_2') != null
 		):
 		if (
-			is_singular() && !empty( $args['is_shortcode'] ) || is_archive() || is_home()
+			(is_singular() && !empty( $args['is_shortcode'] )) || (is_singular() && empty( $args['is_shortcode'] ) && !has_post_thumbnail()) || is_archive() || is_home()
 		):
 		?>
 		<div class="boxes">
@@ -221,7 +221,7 @@ $it_date_year = new IntlDateFormatter(
 					)
 				);
 				?>
-				<?php if ( !is_singular() ): ?>
+				<?php if ( !is_singular() || (is_singular() && !empty( $args['is_shortcode'] )) ): ?>
 				<p class="">
 					<a href="<?=get_the_permalink()?>" class="btn btn-bg"><?=esc_html__( 'Read more', 'mini' )?></a>
 				</p>

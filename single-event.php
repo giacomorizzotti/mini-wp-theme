@@ -12,7 +12,7 @@ $layout = mini_get_page_layout();
 
 get_header();
 ?>
-	<main id="primary" class="site-main" template="single">
+	<main id="primary" class="site-main" template="single-event">
 
 		<?php if ( has_post_thumbnail() ): ?>
 		<div class="container fw">
@@ -33,7 +33,7 @@ get_header();
 		<div class="container fw">
 			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				
-				<div class="boxes <?php if ( has_post_thumbnail() && get_post_meta(get_the_ID(), 'event_poster_id', true)) { echo "py-4"; } else { echo esc_attr( $layout['spacing_class'] ); } ?>">
+				<div class="boxes <?php if ( has_post_thumbnail() ) { echo "py-4"; } else { echo esc_attr( $layout['spacing_class'] ); } ?>">
 					
 					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">

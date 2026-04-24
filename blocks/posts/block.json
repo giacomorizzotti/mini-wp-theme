@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "mini/posts",
+    "title": "Posts",
+    "category": "mini",
+    "description": "Display a grid of standard WordPress blog posts.",
+    "keywords": ["posts", "blog", "articles", "mini", "grid"],
+    "textdomain": "mini",
+    "attributes": {
+        "count":          { "type": "number",  "default": 6     },
+        "columns":        { "type": "string",  "default": "33"  },
+        "categoryId":     { "type": "number",  "default": 0     },
+        "order":          { "type": "string",  "default": "DESC" },
+        "highlightFirst": { "type": "boolean", "default": false  }
+    },
+    "supports": { "html": false },
+    "editorScript": "file:./editor.js",
+    "render": "file:./render.php"
+}

@@ -25,7 +25,7 @@ get_header();
 					<?php if ( $layout['title_presence'] ): ?>
 					<header class="box-100 my-0 p-0 entry-header">
 					<?php if ( 'post' === get_post_type() ) :?>
-						<p class="entry-meta S m-0 fw-box px-1">
+						<p class="entry-meta S m-0 inline-block fw-bg px-1">
 							<?php
 							mini_posted_on();
 							mini_posted_by();
@@ -33,7 +33,7 @@ get_header();
 						</p><!-- .entry-meta -->
 						<div class="space"></div>
 					<?php endif; ?>
-					<?php the_title( '<h1 class="entry-title m-0 wh-box">', '</h1>' ); ?>
+					<?php the_title( '<h1 class="entry-title m-0 white-box lh-12">', '</h1>' ); ?>
 						<div class="space-2"></div>
 					</header>
 					<?php else: ?>
