@@ -297,6 +297,11 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 require get_template_directory() . '/inc/helpers.php';
 
 /**
+ * Contact form field configuration and template helpers
+ */
+require get_template_directory() . '/inc/contact-form-fields.php';
+
+/**
  * Enqueue scripts and styles
  */
 require get_template_directory() . '/inc/enqueue.php';

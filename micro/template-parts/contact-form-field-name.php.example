@@ -1,0 +1,42 @@
+<?php
+/**
+ * Contact Form – "name" field template – micro subtheme example
+ *
+ * Rename to contact-form-field-name.php (remove .example) to activate.
+ * This file will override the inline rendering of the "name" field.
+ *
+ * You can create similar files for any field slug:
+ *   contact-form-field-surname.php
+ *   contact-form-field-email.php
+ *   contact-form-field-phone.php
+ *   contact-form-field-message.php   (replaces the textarea partial too)
+ *   contact-form-field-gdpr.php
+ *
+ * Variables in scope:
+ *   $field_key  string   'name'
+ *   $field      array    Field config (label, name, required, box_class …)
+ *   $uid        string   Unique form-instance ID
+ *
+ * @package mini
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+?>
+<div class="<?php echo esc_attr( $field['box_class'] ?? 'box-50' ); ?> mini-cf-field">
+    <label for="<?php echo esc_attr( $uid . '-' . $field_key ); ?>">
+        <?php echo esc_html( $field['label'] ); ?>
+        <?php if ( ! empty( $field['required'] ) ) : ?>
+            <span class="color-text" aria-hidden="true">*</span>
+        <?php endif; ?>
+    </label>
+    <input
+        type="<?php echo esc_attr( $field['type'] ?? 'text' ); ?>"
+        id="<?php echo esc_attr( $uid . '-' . $field_key ); ?>"
+        name="<?php echo esc_attr( $field['name'] ); ?>"
+        placeholder="<?php esc_attr_e( 'e.g. John', 'mini' ); ?>"
+        <?php if ( ! empty( $field['required'] ) ) : ?>required<?php endif; ?>
+        <?php if ( ! empty( $field['autocomplete'] ) ) : ?>autocomplete="<?php echo esc_attr( $field['autocomplete'] ); ?>"<?php endif; ?>
+    >
+</div>

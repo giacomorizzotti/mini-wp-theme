@@ -330,7 +330,62 @@ Before deploying to production:
 
 ---
 
-## 🎉 Quick Reference
+## 📬 Contact Form
+
+The mini plugin includes a built-in contact form. Use the shortcode anywhere:
+
+```
+[mini_contact_form]
+```
+
+Default fields: **Name**, **Surname**, **Email**, **Phone**, **Message** + optional GDPR consent (enabled in *WP Admin → Mini → Contact Form*).
+
+### Customize fields (add / remove / reorder)
+
+In `custom-functions.php`:
+
+```php
+add_filter( 'mini_contact_form_fields', function ( $fields ) {
+    unset( $fields['phone'] );        // remove a field
+    $fields['company'] = [            // add a field
+        'type'         => 'text',
+        'label'        => __( 'Company', 'mini' ),
+        'name'         => 'mini_cf_company',
+        'required'     => false,
+        'box_class'    => 'box-100',
+        'autocomplete' => 'organization',
+    ];
+    return $fields;
+} );
+```
+
+### Override a field's template
+
+Copy the example and remove `.example` to activate:
+
+```bash
+cp template-parts/contact-form-field-name.php.example \
+   template-parts/contact-form-field-name.php
+```
+
+You can create similar overrides for any field slug (`surname`, `email`, `phone`, `message`, `gdpr`).
+
+### Override the entire form
+
+```bash
+cp template-parts/contact-form.php.example \
+   template-parts/contact-form.php
+```
+
+### Override hierarchy
+
+The theme checks for templates in this order (first match wins):
+
+1. `overrides/parts/contact-form.php` — instance-specific
+2. `micro/template-parts/contact-form.php` — this child theme ← you are here
+3. `template-parts/contact-form.php` — mini-theme default
+
+
 
 ```bash
 # Deploy new instance

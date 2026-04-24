@@ -71,6 +71,9 @@ function mini_get_header_styling() {
 	if ( $post_id ) {
 		$header_top_style = get_post_meta( $post_id, 'header_styling_top', true );
 		$header_scroll_style = get_post_meta( $post_id, 'header_styling_scroll', true );
+		// Default to white backgrounds if empty
+		$header_top_style = ( $header_top_style === '' ) ? 'top-wh' : $header_top_style;
+		$header_scroll_style = ( $header_scroll_style === '' ) ? 'scroll-wh' : $header_scroll_style;
 	}
 
 	return array(
@@ -105,9 +108,14 @@ function mini_get_page_layout( $post_id = null ) {
 
 	$title_presence = get_post_meta( $post_id, 'title_presence', true );
 	$sidebar_presence = get_post_meta( $post_id, 'sidebar_presence', true );
+	// Default sidebar_presence to false if empty (only true when explicitly set)
+	$sidebar_presence = ( $sidebar_presence === '1' || $sidebar_presence === true ) ? true : false;
 	$container_width = get_post_meta( $post_id, 'page_container', true );
 	$space_top = get_post_meta( $post_id, 'space_top', true );
 	$space_bottom = get_post_meta( $post_id, 'space_bot', true );
+	// Default space_top and space_bottom to true (checked) if empty
+	$space_top = ( $space_top === '' ) ? '1' : $space_top;
+	$space_bottom = ( $space_bottom === '' ) ? '1' : $space_bottom;
 	$display_author_info = get_post_meta( $post_id, 'display_author_info', true );
 	$display_author_info = ( $display_author_info !== '0' ); // Default true, false only if explicitly '0'
 

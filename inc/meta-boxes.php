@@ -13,6 +13,68 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Hide taxonomy panels in the block editor for authors when no categories exist.
+ * In Gutenberg, taxonomy panels must be removed via JS (removeEditorPanel).
+ */
+add_action( 'enqueue_block_editor_assets', 'mini_hide_empty_taxonomy_panels' );
+function mini_hide_empty_taxonomy_panels() {
+    // Apply to authors AND SEO experts (users who can't edit_others_posts, or can but only via mini_manage_seo)
+    $is_seo_expert = current_user_can( 'mini_manage_seo' );
+    if ( current_user_can( 'edit_others_posts' ) && ! $is_seo_expert ) {
+        return;
+    }
+
+    $screen = get_current_screen();
+    if ( ! $screen ) {
+        return;
+    }
+
+    $current_post_type = $screen->post_type;
+
+    // Taxonomy slugs and their corresponding post types
+    // Tags are excluded: any user (author, SEO expert) can create new tags, so never hide them
+    $taxonomies_to_check = array(
+        'category'        => array( 'post' ),
+        'news_category'   => array( 'news' ),
+        'event_category'  => array( 'event' ),
+        'match_category'  => array( 'match' ),
+        'course_category' => array( 'course', 'lesson' ),
+    );
+
+    $panels_to_remove = array();
+
+    foreach ( $taxonomies_to_check as $taxonomy => $post_types ) {
+        if ( ! in_array( $current_post_type, $post_types, true ) ) {
+            continue;
+        }
+
+        $terms = get_terms( array(
+            'taxonomy'   => $taxonomy,
+            'hide_empty' => false,
+            'number'     => 1,
+        ) );
+
+        if ( empty( $terms ) || is_wp_error( $terms ) ) {
+            $panels_to_remove[] = 'taxonomy-panel-' . $taxonomy;
+        }
+    }
+
+    if ( empty( $panels_to_remove ) ) {
+        return;
+    }
+
+    $panels_json = wp_json_encode( $panels_to_remove );
+    $script = "wp.domReady( function() {
+        var panels = {$panels_json};
+        panels.forEach( function( panel ) {
+            wp.data.dispatch( 'core/editor' ).removeEditorPanel( panel );
+        } );
+    } );";
+
+    wp_add_inline_script( 'wp-editor', $script );
+}
+
+/**
  * ADD In-page elements meta box (title and sidebar visibility)
  */
 
@@ -20,6 +82,10 @@ add_action( 'add_meta_boxes', 'add_inpage_elements_box' );
 add_action( 'save_post', 'inpage_elements_save_postdata' );
 
 function add_inpage_elements_box() {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
     add_meta_box(
         'inpage-elements',
         'In-page elements',
@@ -40,9 +106,9 @@ function inpage_elements_box_html( $post, $meta ) {
     $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true);
     $displayAuthorInfo = get_post_meta( $post->ID, 'display_author_info', true);
 
-    $titlePresenceState = ( $titlePresence !== '0' ) ? ' checked' : '';
-    $sidebarPresenceState = $sidebarPresence == true ? ' checked' : '';
-    $displayAuthorInfoState = ( $displayAuthorInfo !== '0' ) ? ' checked' : '';
+    $titlePresenceState = ( $titlePresence !== '0' ) ? ' checked' : '';  // Default true
+    $sidebarPresenceState = ( $sidebarPresence === '1' || $sidebarPresence === true ) ? ' checked' : '';  // Default false
+    $displayAuthorInfoState = ( $displayAuthorInfo !== '0' ) ? ' checked' : '';  // Default true
 
     // Form fields
     echo '<div class="my-1">';
@@ -118,6 +184,10 @@ add_action( 'add_meta_boxes', 'add_page_customization_box' );
 add_action( 'save_post', 'page_customization_save_postdata' );
 
 function add_page_customization_box() {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
     add_meta_box(
         'page-customization',
         'Page customization',
@@ -131,9 +201,11 @@ function page_customization_box_html( $post, $meta ) {
     // Add nonce field for security
     wp_nonce_field( 'page_customization_save', 'page_customization_nonce' );
 
-    // Get field values for spacing
+    // Get field values for spacing (default to '1' if empty)
     $spaceTop = get_post_meta( $post->ID, 'space_top', true);
     $spaceBot = get_post_meta( $post->ID, 'space_bot', true);
+    $spaceTop = ( $spaceTop === '' ) ? '1' : $spaceTop;  // Default to '1'
+    $spaceBot = ( $spaceBot === '' ) ? '1' : $spaceBot;  // Default to '1'
     $spaceTopState = ( $spaceTop !== '0' ) ? ' checked' : '';
     $spaceBotState = ( $spaceBot !== '0' ) ? ' checked' : '';
 
@@ -226,6 +298,10 @@ add_action( 'add_meta_boxes', 'add_header_styling_box' );
 add_action( 'save_post', 'header_styling_save_postdata' );
 
 function add_header_styling_box() {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
     add_meta_box(
         'header-styling',
         'Header styling',
@@ -246,9 +322,11 @@ function header_styling_box_html( $post, $meta ){
     // Add nonce field for security
     wp_nonce_field( 'header_styling_save', 'header_styling_nonce' );
 
-    // field value
+    // field value (default to 'top-wh' and 'scroll-wh' if empty)
     $header_styling_top_style = get_post_meta( $post->ID, 'header_styling_top', true);
     $header_styling_scroll_style = get_post_meta( $post->ID, 'header_styling_scroll', true);
+    $header_styling_top_style = ( $header_styling_top_style === '' ) ? 'top-wh' : $header_styling_top_style;  // Default to white background
+    $header_styling_scroll_style = ( $header_styling_scroll_style === '' ) ? 'scroll-wh' : $header_styling_scroll_style;  // Default to white background
 
     $header_styling_state_top_standard = null;
     if ( $header_styling_top_style == '') { $header_styling_state_top_standard = ' selected'; }
