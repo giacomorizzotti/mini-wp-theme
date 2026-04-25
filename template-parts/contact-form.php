@@ -60,8 +60,41 @@ if ( ! defined( 'ABSPATH' ) ) {
     var response     = wrap.querySelector( '.mini-cf-response' );
     var submitBtn    = wrap.querySelector( 'button[type="submit"]' );
 
+    function clearFieldErrors() {
+        wrap.querySelectorAll( '.mini-cf-field-error' ).forEach( function ( el ) { el.remove(); } );
+        wrap.querySelectorAll( '.danger-border' ).forEach( function ( el ) {
+            el.classList.remove( 'danger-border' );
+        } );
+    }
+
+    function showFieldErrors( fields ) {
+        clearFieldErrors();
+        Object.keys( fields ).forEach( function ( name ) {
+            var input = form.querySelector( '[name="' + name + '"]' );
+            if ( ! input ) return;
+            input.classList.add( 'danger-border' );
+            var msg = document.createElement( 'span' );
+            msg.className = 'mini-cf-field-error danger-text S';
+            msg.textContent = fields[ name ];
+            var fieldWrap = input.closest( '.mini-cf-field' );
+            if ( fieldWrap ) {
+                fieldWrap.appendChild( msg );
+            } else {
+                input.insertAdjacentElement( 'afterend', msg );
+            }
+            // Clear error on next user interaction
+            input.addEventListener( 'input', function onInput() {
+                input.classList.remove( 'danger-border' );
+                var err = fieldWrap ? fieldWrap.querySelector( '.mini-cf-field-error' ) : msg;
+                if ( err ) err.remove();
+                input.removeEventListener( 'input', onInput );
+            } );
+        } );
+    }
+
     form.addEventListener( 'submit', function ( e ) {
         e.preventDefault();
+        clearFieldErrors();
         var data = new FormData( form );
         data.append( 'action', 'mini_contact_form_submit' );
 
@@ -80,17 +113,23 @@ if ( ! defined( 'ABSPATH' ) ) {
             responseWrap.style.display = '';
             if ( res.success ) {
                 responseWrap.classList.add( 'success-bg' );
+                response.classList.add( 'white-text' );
                 response.textContent = res.data.message;
                 form.reset();
             } else {
                 responseWrap.classList.add( 'danger-bg' );
+                response.classList.add( 'white-text' );
                 response.textContent = res.data.message;
+                if ( res.data.fields ) {
+                    showFieldErrors( res.data.fields );
+                }
                 submitBtn.disabled = false;
             }
         } )
         .catch( function () {
             responseWrap.style.display = '';
             responseWrap.classList.add( 'danger-bg' );
+            response.classList.add( 'white-text' );
             response.textContent = '<?php echo esc_js( __( 'An error occurred. Please try again.', 'mini' ) ); ?>';
             submitBtn.disabled = false;
         } );
