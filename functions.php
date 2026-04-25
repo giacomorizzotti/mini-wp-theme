@@ -1015,7 +1015,7 @@ function mini_options_page() {
     add_submenu_page(
         'mini',
         'mini theme - Owner',
-        'Company',
+        'Owner',
         'manage_options',
         'mini-company',
         'mini_company_options_page_html'
