@@ -85,6 +85,14 @@
                 'flex: 0 1 calc(' + width + '% - 10px) !important;' +
                 'min-width: 0 !important;' +
                 'box-sizing: border-box !important;' +
+            '}' +
+            '#block-' + clientId + ' .block-editor-block-list__layout {' +
+                'display: block !important;' +
+                'flex-direction: unset !important;' +
+                'flex-wrap: unset !important;' +
+                'justify-content: unset !important;' +
+                'align-items: unset !important;' +
+                'gap: unset !important;' +
             '}';
 
             var blockProps = useBlockProps({
