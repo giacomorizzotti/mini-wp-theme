@@ -19,17 +19,13 @@ get_header();
 				<div class="boxes space-top-bot">
 					<div class="box-75 my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?>">
 						<div class="boxes">
-
 							<?php if ( have_posts() ) : ?>
-
 								<header class="page-header box-100">
-									<h1 class=""> <span class="under-bg"><?= esc_html__( 'News', 'mini') ?></span></h1>
-									<?php /*
-									the_archive_title( '<h1 class="page-title m-0">', '</h1>' );
-									the_archive_description( '<div class="archive-description m-0">', '</div>' );
-									*/ ?>
+									<h1 class="">
+										<span class="under-bg"><?= esc_html__( 'News', 'mini') ?></span>
+									</h1>
 								</header><!-- .page-header -->
-							<?php mini_cpt_archive_page_header( 'news' ); ?>
+								<?php mini_cpt_archive_page_header( 'news' ); ?>
 								<?php
 								/* Start the Loop */
 								while ( have_posts() ) :

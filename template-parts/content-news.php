@@ -9,13 +9,13 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() . ' my-0 p-0' ); ?> template="content-news">
+<article id="post-<?php the_ID(); ?>" <?php post_class( mini_get_archive_col_class() . ' my-0' ); ?> template="content-news">
 
 	<div class="container fw">
 		<div class="container">
 			<div class="boxes">
 				<?php if (has_post_thumbnail()): ?>
-				<div class="box-66">
+				<div class="box-66 p-0">
 				<?php
 					if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ):
 				?>
@@ -31,7 +31,7 @@
 				?>
 				</div>
 				<?php endif; ?>
-				<header class="box-100 my-0 entry-header">
+				<header class="box-100 my-0 p-0 entry-header">
 					<p class="grey-text">
 						<?= get_the_date() ?>
 					</p>
@@ -43,51 +43,46 @@
 					}
 					?>
 				</header><!-- .entry-header -->
-			</div>
-		</div>
-	</div>
-
-	<div class="container">
-		<div class="boxes">
-			<div class="box-100 entry-content">
-				<?php
-				if ( !is_singular() || !empty( $args['is_shortcode'] ) ) {
-					the_excerpt();
-				} else {
-					the_content(
-						sprintf(
-							wp_kses(
-								/* translators: %s: Name of current post. Only visible to screen readers */
-								__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'mini' ),
-								array(
-									'span' => array(
-										'class' => array(),
-									),
-								)
-							),
-							wp_kses_post( get_the_title() )
+				<div class="box-100 p-0 entry-content">
+					<?php
+					if ( !is_singular() || !empty( $args['is_shortcode'] ) ) {
+						the_excerpt();
+					} else {
+						the_content(
+							sprintf(
+								wp_kses(
+									/* translators: %s: Name of current post. Only visible to screen readers */
+									__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'mini' ),
+									array(
+										'span' => array(
+											'class' => array(),
+										),
+									)
+								),
+								wp_kses_post( get_the_title() )
+							)
+						);
+					}
+					?>
+					<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ): ?>
+					<p class="">
+						<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
+					</p>
+					<?php endif; ?>
+					<?php
+					wp_link_pages(
+						array(
+							'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'mini' ),
+							'after'  => '</div>',
 						)
 					);
-				}
-				?>
-				<?php if ( !is_singular() || ( is_singular() && !empty( $args['is_shortcode'] ) ) ): ?>
-				<p class="">
-					<a href="<?=get_the_permalink()?>" class="btn"><?=esc_html__( 'Read more', 'mini' )?></a>
-				</p>
-				<?php endif; ?>
-				<?php
-				wp_link_pages(
-					array(
-						'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'mini' ),
-						'after'  => '</div>',
-					)
-				);
-				?>
-			</div><!-- .entry-content -->
-			<div class="sep-10 bk-bg mx-1" style="width: 10px;"></div>
-			<footer class="box-100 my-0 entry-footer">
-				<p class="S"><?php mini_entry_footer(); ?></p>
-			</footer><!-- .entry-footer -->
+					?>
+				</div><!-- .entry-content -->
+				<div class="sep-10 bk-bg my-1" style="width: 10px;"></div>
+				<footer class="box-100 p-0 my-0 entry-footer">
+					<p class="S"><?php mini_entry_footer(); ?></p>
+				</footer><!-- .entry-footer -->
+			</div>
 		</div>
 
 	</div>

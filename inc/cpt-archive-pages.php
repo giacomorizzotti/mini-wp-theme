@@ -63,11 +63,13 @@ function mini_cpt_archive_page_header( $cpt ) {
 	$post = $page;          // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 	setup_postdata( $post );
 	?>
+	<?php if ( get_the_content() ) : ?>
 	<div class="archive-page-content box-100">
 		<div class="boxes">
 		<?php the_content(); ?>
 		</div>
 	</div>
+	<?php endif; ?>
 	<?php
 	$post = $original_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride
 	wp_reset_postdata();

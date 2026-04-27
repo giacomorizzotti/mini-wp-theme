@@ -23,11 +23,11 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 	<div class="container fw"
 			<?php if ( ( ! is_singular() || $is_shortcode ) && ( has_post_thumbnail() && $show_archive_image ) ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
 			>
-		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?>">
+		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?> mb-1">
 			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( $is_shortcode || is_home() || is_archive() ): ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box-100 my-0 entry-header">
 				<?php if ( 'post' === get_post_type() ) :?>
-					<p class="entry-meta S m-0 fw-px-1 white-bg inline-block px-05">
+					<p class="entry-meta S m-0 fw-px-1 white-bg inline-block px-05 mb-1">
 						<?php
 						mini_posted_on();
 						if ( $layout['display_author_info'] ) {
@@ -35,7 +35,6 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 						}
 						?>
 					</p><!-- .entry-meta -->
-					<div class="space"></div>
 				<?php endif; ?>
 				<?php
 					if ( is_singular() && ! $is_shortcode ) {

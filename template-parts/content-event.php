@@ -53,7 +53,7 @@ $it_date_year = new IntlDateFormatter(
 		<?php if ( has_post_thumbnail() ): ?><div class="fit" style="background-image: url('<?= get_the_post_thumbnail_url(get_the_ID(), 'full') ?>'); background-size: cover; background-position: center; border-top-left-radius: 20px; border-top-right-radius: 20px;"></div><?php endif; ?>
 		<div class="container<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
 			<div class="boxes <?php if ( has_post_thumbnail() ): ?><?php if ( is_singular() ): ?>h25<?php else: ?>h33<?php endif; ?><?php endif; ?> align-items-end">
-				<header class="box-100 <?php if ( has_post_thumbnail() ): ?>p-2<?php else: ?>px-2<?php endif; ?> entry-header">
+				<header class="box-100 <?php if ( has_post_thumbnail() ): ?>p-2<?php else: ?>p-0<?php endif; ?> entry-header">
 				<?php
 					if ( is_singular() && empty( $args['is_shortcode'] ) ) {
 						the_title( '<h1 class="entry-title inline-block m-0 white-box">', '</h1>' );
@@ -71,7 +71,7 @@ $it_date_year = new IntlDateFormatter(
 	<div class="container pt-2<?= ' ' . esc_attr( $layout['container_width'] ) ?>">
 		<div class="boxes">
 			<?php if ( get_post_meta(get_the_ID(), 'event_poster_id', true) ): ?>
-			<div class="box-33 entry-content ps-2 pe-0"<?php if ( has_post_thumbnail()): ?> style="margin-top: calc( var(--margin) * <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>10<?php else: ?>7<?php endif; ?> * -1 );"<?php endif; ?>>
+			<div class="box-33 entry-content <?php if ( has_post_thumbnail()): ?>ps-2<?php else: ?>ps-0<?php endif; ?> pe-0"<?php if ( has_post_thumbnail()): ?> style="margin-top: calc( var(--margin) * <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>10<?php else: ?>7<?php endif; ?> * -1 );"<?php endif; ?>>
 				<img src="<?= wp_get_attachment_image_url(get_post_meta(get_the_ID(), 'event_poster_id', true), 'large') ?>" class="img p-1 white-bg b-rad-5 box-shadow" style="max-width: 420px;" />
 			</div>
 			<?php endif; ?>
