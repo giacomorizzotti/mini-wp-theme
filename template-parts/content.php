@@ -40,7 +40,7 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 					if ( is_singular() && ! $is_shortcode ) {
 						the_title( '<h1 class="entry-title m-0">', '</h1>' );
 					} else {
-						the_title( '<h3 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 white-box lh-12">', '</a></h3>' );
+						the_title( '<h3 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 lh-12'. (has_post_thumbnail() ? ' white-box' : ' black-text').'">', '</a></h3>' );
 					}
 					?>
 				</header><!-- .entry-header -->
