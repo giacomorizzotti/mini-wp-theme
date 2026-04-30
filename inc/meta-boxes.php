@@ -90,7 +90,7 @@ function add_inpage_elements_box() {
         'mini_inpage_elements',
         'In-page elements',
         'inpage_elements_box_html',
-        ['page', 'post', 'slide', 'course', 'lesson'],
+        ['page', 'post', 'course', 'lesson'],
         'side'
     );
 }
@@ -420,6 +420,174 @@ function header_styling_save_postdata( $post_id ) {
     
     if ( isset( $_POST['header_styling_scroll'] ) ) {
         update_post_meta( $post_id, 'header_styling_scroll', sanitize_text_field( $_POST['header_styling_scroll'] ) );
+    }
+}
+
+
+/**
+ * ADD Slide visual effects meta box (for slides only)
+ */
+
+add_action( 'add_meta_boxes', 'add_slide_visual_effects_box' );
+add_action( 'save_post', 'slide_visual_effects_save_postdata' );
+
+function add_slide_visual_effects_box() {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
+    add_meta_box(
+        'mini_slide_visual_effects',
+        'Visual effects',
+        'slide_visual_effects_box_html',
+        'slide',
+        'side'
+    );
+}
+
+function slide_visual_effects_box_html( $post, $meta ) {
+    // Add nonce field for security
+    wp_nonce_field( 'slide_visual_effects_save', 'slide_visual_effects_nonce' );
+
+    // Get field value
+    $dot_mask = get_post_meta( $post->ID, 'dot_mask', true );
+    $dot_mask_state = ( $dot_mask === '1' ) ? ' checked' : '';
+
+    ?>
+    <div>
+        <label for="dot_mask" style="display: block;">
+            <input type="checkbox" id="dot_mask" name="dot_mask"<?php echo $dot_mask_state; ?>>
+            <?php esc_html_e( 'Dot mask over img/video', 'mini' ); ?>
+        </label>
+    </div>
+    <?php
+}
+
+function slide_visual_effects_save_postdata( $post_id ) {
+    // Verify nonce
+    if ( ! isset( $_POST['slide_visual_effects_nonce'] ) || ! wp_verify_nonce( $_POST['slide_visual_effects_nonce'], 'slide_visual_effects_save' ) ) {
+        return;
+    }
+
+    // If this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // Check user permission
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Only process for slides
+    if ( get_post_type( $post_id ) !== 'slide' ) {
+        return;
+    }
+
+    // Save dot mask option
+    $dot_mask = isset( $_POST['dot_mask'] ) ? '1' : '0';
+    update_post_meta( $post_id, 'dot_mask', $dot_mask );
+}
+
+
+/**
+ * ADD Slide background color meta box (for slides only)
+ */
+
+add_action( 'add_meta_boxes', 'add_slide_background_color_box' );
+add_action( 'save_post', 'slide_background_color_save_postdata' );
+
+function add_slide_background_color_box() {
+    // Only show to editors and higher (not SEO experts)
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
+    add_meta_box(
+        'mini_slide_background_color',
+        'Background color',
+        'slide_background_color_box_html',
+        'slide',
+        'side'
+    );
+}
+
+function slide_background_color_box_html( $post, $meta ) {
+    // Add nonce field for security
+    wp_nonce_field( 'slide_background_color_save', 'slide_background_color_nonce' );
+
+    // Get field value
+    $bg_color = get_post_meta( $post->ID, 'slide_bg_color', true );
+
+    ?>
+    <div>
+        <label for="slide_bg_color" style="display: block; margin-bottom: 5px; font-weight: 600;">
+            <?php esc_html_e( 'Background color', 'mini' ); ?>
+        </label>
+        <select name="slide_bg_color" id="slide_bg_color" style="width: 100%;">
+            <option value=""<?php selected( $bg_color, '' ); ?>><?php esc_html_e( 'None', 'mini' ); ?></option>
+            <option value="white-bg"<?php selected( $bg_color, 'white-bg' ); ?>><?php esc_html_e( 'White', 'mini' ); ?></option>
+            <option value="false-white-bg"<?php selected( $bg_color, 'false-white-bg' ); ?>><?php esc_html_e( 'False white', 'mini' ); ?></option>
+            <option value="light-grey-bg"<?php selected( $bg_color, 'light-grey-bg' ); ?>><?php esc_html_e( 'Light grey', 'mini' ); ?></option>
+            <option value="grey-bg"<?php selected( $bg_color, 'grey-bg' ); ?>><?php esc_html_e( 'Grey', 'mini' ); ?></option>
+            <option value="dark-grey-bg"<?php selected( $bg_color, 'dark-grey-bg' ); ?>><?php esc_html_e( 'Dark grey', 'mini' ); ?></option>
+            <option value="false-black-bg"<?php selected( $bg_color, 'false-black-bg' ); ?>><?php esc_html_e( 'False black', 'mini' ); ?></option>
+            <option value="black-bg"<?php selected( $bg_color, 'black-bg' ); ?>><?php esc_html_e( 'Black', 'mini' ); ?></option>
+            <option value="main-color-bg"<?php selected( $bg_color, 'main-color-bg' ); ?>><?php esc_html_e( 'Main color', 'mini' ); ?></option>
+            <option value="second-color-bg"<?php selected( $bg_color, 'second-color-bg' ); ?>><?php esc_html_e( 'Second color', 'mini' ); ?></option>
+            <option value="third-color-bg"<?php selected( $bg_color, 'third-color-bg' ); ?>><?php esc_html_e( 'Third color', 'mini' ); ?></option>
+            <option value="fourth-color-bg"<?php selected( $bg_color, 'fourth-color-bg' ); ?>><?php esc_html_e( 'Fourth color', 'mini' ); ?></option>
+            <option disabled>— <?php esc_html_e( 'Gradients', 'mini' ); ?> —</option>
+            <option value="grad-1-to-2"<?php selected( $bg_color, 'grad-1-to-2' ); ?>><?php esc_html_e( '1 → 2', 'mini' ); ?></option>
+            <option value="grad-1-to-3"<?php selected( $bg_color, 'grad-1-to-3' ); ?>><?php esc_html_e( '1 → 3', 'mini' ); ?></option>
+            <option value="grad-1-to-4"<?php selected( $bg_color, 'grad-1-to-4' ); ?>><?php esc_html_e( '1 → 4', 'mini' ); ?></option>
+            <option value="grad-2-to-3"<?php selected( $bg_color, 'grad-2-to-3' ); ?>><?php esc_html_e( '2 → 3', 'mini' ); ?></option>
+            <option value="grad-3-to-4"<?php selected( $bg_color, 'grad-3-to-4' ); ?>><?php esc_html_e( '3 → 4', 'mini' ); ?></option>
+            <option value="grad-main"<?php selected( $bg_color, 'grad-main' ); ?>><?php esc_html_e( 'Main', 'mini' ); ?></option>
+            <option value="grad-second"<?php selected( $bg_color, 'grad-second' ); ?>><?php esc_html_e( 'Second', 'mini' ); ?></option>
+            <option value="grad-third"<?php selected( $bg_color, 'grad-third' ); ?>><?php esc_html_e( 'Third', 'mini' ); ?></option>
+            <option value="grad-fourth"<?php selected( $bg_color, 'grad-fourth' ); ?>><?php esc_html_e( 'Fourth', 'mini' ); ?></option>
+            <option value="grad-fw-down-w"<?php selected( $bg_color, 'grad-fw-down-w' ); ?>><?php esc_html_e( 'False white ↓', 'mini' ); ?></option>
+            <option value="grad-fw-up-w"<?php selected( $bg_color, 'grad-fw-up-w' ); ?>><?php esc_html_e( 'False white ↑', 'mini' ); ?></option>
+        </select>
+    </div>
+    <?php
+}
+
+function slide_background_color_save_postdata( $post_id ) {
+    // Verify nonce
+    if ( ! isset( $_POST['slide_background_color_nonce'] ) || ! wp_verify_nonce( $_POST['slide_background_color_nonce'], 'slide_background_color_save' ) ) {
+        return;
+    }
+
+    // If this is autosave do nothing
+    if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    // Check user permission
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    // Only process for slides
+    if ( get_post_type( $post_id ) !== 'slide' ) {
+        return;
+    }
+
+    // Save background color - validate against allowed values
+    if ( isset( $_POST['slide_bg_color'] ) ) {
+        $allowed_values = array(
+            '', 'white-bg', 'false-white-bg', 'light-grey-bg', 'grey-bg', 'dark-grey-bg',
+            'false-black-bg', 'black-bg', 'main-color-bg', 'second-color-bg', 'third-color-bg',
+            'fourth-color-bg', 'grad-1-to-2', 'grad-1-to-3', 'grad-1-to-4', 'grad-2-to-3',
+            'grad-3-to-4', 'grad-main', 'grad-second', 'grad-third', 'grad-fourth',
+            'grad-fw-down-w', 'grad-fw-up-w'
+        );
+        $bg_color = sanitize_text_field( $_POST['slide_bg_color'] );
+        
+        if ( in_array( $bg_color, $allowed_values, true ) ) {
+            update_post_meta( $post_id, 'slide_bg_color', $bg_color );
+        }
     }
 }
 
