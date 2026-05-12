@@ -14,7 +14,7 @@ if ( $slideshow_layout['container_width'] ) {
 
 $slides = get_posts([
 	'post_type'      => 'slide',
-	'posts_per_page' => -1,
+	'posts_per_page' => isset( $args['number'] ) && $args['number'] > 0 ? (int) $args['number'] : -1,
 	'post_parent'    => $slideshow_id,
 	'post_status'    => 'publish',
 	'orderby'        => 'menu_order',
