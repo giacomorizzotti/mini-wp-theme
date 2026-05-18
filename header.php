@@ -168,7 +168,7 @@ if (
 
 		<header id="header" class="header <?php echo esc_attr( $header_top_style ); ?> <?php echo esc_attr( $header_scroll_style ); ?>">
 			<div class="container">
-				<div class="boxes p-1 flex-flow-row-nowrap align-items-center justify-content-between">
+				<div class="boxes p-1 flex-flow-row flex-nowrap align-items-center justify-content-between">
 					<div class="box brand px-1">
 						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="" rel="home">
 							<?php if ( has_custom_logo() ): ?>
@@ -194,13 +194,39 @@ if (
 							<p class="site-description m-0"><?php echo esc_html( $mini_description ); ?></p>
 						<?php endif; ?>
 					</div>
-					<div class="box menus px-2">
+					<div class="box menus px-2 flex-noshrink">
 						<div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
-						<div id="head-menu" class="head-menu">
+						<div id="head-menu" class="head-menu flex align-items-center">
 							<nav id="page-menu" class="menu page-menu">
 								<ul class="menu page-menu m-0">
 								</ul>
 							</nav>
+							<?php
+							if (
+							function_exists( 'mini_translations_get_languages' ) &&
+							is_mini_option_enabled( 'mini_translations_settings', 'mini_enable_translations' )
+						) :
+							$_mini_all_langs    = mini_translations_get_languages();
+							$_mini_lang_post_id = get_queried_object_id();
+							$_mini_lang_urls    = $_mini_lang_post_id ? mini_get_all_translation_urls( $_mini_lang_post_id ) : [];
+							$_mini_current_lang = $_mini_lang_post_id ? mini_get_post_lang( $_mini_lang_post_id ) : '';
+							if ( $_mini_current_lang === '' ) {
+								$_mini_current_lang = mini_get_lang_preference();
+							}						// Fallback: stay on the current page (archives, home, untagged pages).
+						$_mini_current_url = home_url( wp_unslash( $_SERVER['REQUEST_URI'] ) );							if ( ! empty( $_mini_all_langs ) ) :
+						?>
+						<nav id="lang-menu" class="menu lang-menu">
+							<ul class="menu lang-menu m-0">
+								<?php foreach ( $_mini_all_langs as $_mini_lang_item ) :
+									$lang = $_mini_lang_item['code'];
+									$url  = ! empty( $_mini_lang_urls[ $lang ] ) ? $_mini_lang_urls[ $lang ] : $_mini_current_url;								$url  = add_query_arg( 'set_lang', $lang, $url );								?>
+									<li class="item menu-item<?php echo $lang === $_mini_current_lang ? ' active' : ''; ?>">
+										<a href="<?php echo esc_url( $url ); ?>" hreflang="<?php echo esc_attr( $lang ); ?>"><?php echo esc_html( strtoupper( $lang ) ); ?></a>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</nav>
+							<?php endif; endif; ?>
 						</div>
 					</div>
 				</div>
