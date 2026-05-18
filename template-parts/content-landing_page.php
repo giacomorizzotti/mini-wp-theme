@@ -1,8 +1,6 @@
 <?php
 /**
- * Template part for displaying page content in page.php
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+ * Template part for displaying landing page content in single-landing_page.php
  *
  * @package mini
  */
@@ -13,21 +11,15 @@ if ( ! isset( $layout ) ) {
 }
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class("box-100 my-0 p-0"); ?> template="content-page">
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'box-100 my-0 p-0' ); ?> template="content-landing_page">
 
-	<?php if ( $layout['title_presence'] && ! has_post_thumbnail() ): ?>
-	<div class="container fw"
-		<?php if ( has_post_thumbnail() ): ?>style="background-image: url('<?php echo esc_url( get_the_post_thumbnail_url() ); ?>'); background-size: cover; background-position: center center;"<?php endif; ?>
-		>
-		<div class="container<?php if ( $layout['container_width'] != 'fw' ): ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
-			<div class="boxes<?php if ( has_post_thumbnail() ): ?> hh align-content-end<?php endif; ?>">
+	<?php if ( $layout['title_presence'] && ! has_post_thumbnail() ) : ?>
+	<div class="container fw">
+		<div class="container<?php if ( $layout['container_width'] !== 'fw' ) : ?> <?php echo esc_attr( $layout['container_width'] ); ?><?php endif; ?>">
+			<div class="boxes">
 				<div class="box-100 my-2">
 					<header class="entry-header">
-						<?php if ( has_post_thumbnail() ): ?>
-						<?php the_title( '<h1 class="entry-title wh-box m-0">', '</h1>' ); ?>
-						<?php else: ?>
 						<?php the_title( '<h1 class="entry-title m-0">', '</h1>' ); ?>
-						<?php endif; ?>
 					</header><!-- .entry-header -->
 				</div>
 			</div>
@@ -35,15 +27,14 @@ if ( ! isset( $layout ) ) {
 	</div>
 	<?php endif; ?>
 
-	<?php if ( !$layout['title_presence'] ): ?>
+	<?php if ( ! $layout['title_presence'] ) : ?>
 		<?php the_title( '<h1 class="visually-hidden">', '</h1>' ); ?>
 	<?php endif; ?>
-	
+
 	<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 
 		<div class="entry-content">
 			<?php
-			
 			the_content();
 
 			wp_link_pages(
@@ -54,7 +45,7 @@ if ( ! isset( $layout ) ) {
 			);
 			?>
 		</div><!-- .entry-content -->
-		
+
 		<?php if ( get_edit_post_link() ) : ?>
 		<footer class="entry-footer">
 			<?php

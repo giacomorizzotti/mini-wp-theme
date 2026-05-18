@@ -72,8 +72,8 @@ function mini_get_header_styling() {
 		$header_top_style = get_post_meta( $post_id, 'header_styling_top', true );
 		$header_scroll_style = get_post_meta( $post_id, 'header_styling_scroll', true );
 		// Default to white backgrounds if empty
-		$header_top_style = ( $header_top_style === '' ) ? 'top-wh' : $header_top_style;
-		$header_scroll_style = ( $header_scroll_style === '' ) ? 'scroll-wh' : $header_scroll_style;
+		$header_top_style = ( $header_top_style === '' ) ? '' : $header_top_style;
+		$header_scroll_style = ( $header_scroll_style === '' ) ? '' : $header_scroll_style;
 	}
 
 	return array(
@@ -107,6 +107,7 @@ function mini_get_page_layout( $post_id = null ) {
 	}
 
 	$title_presence = get_post_meta( $post_id, 'title_presence', true );
+	$title_presence = ( $title_presence !== '0' ); // Default true, false only if explicitly '0'
 	$sidebar_presence = get_post_meta( $post_id, 'sidebar_presence', true );
 	// Default sidebar_presence to false if empty (only true when explicitly set)
 	$sidebar_presence = ( $sidebar_presence === '1' || $sidebar_presence === true ) ? true : false;

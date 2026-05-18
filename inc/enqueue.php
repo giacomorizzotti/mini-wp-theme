@@ -289,6 +289,30 @@ function mini_register_blocks() {
 }
 
 /**
+ * Enqueue AOS library on the frontend when enabled.
+ */
+add_action( 'wp_enqueue_scripts', 'mini_enqueue_aos' );
+function mini_enqueue_aos() {
+    if ( ! mini_check_option( 'mini_ext_lib_options', 'mini_aos' ) ) {
+        return;
+    }
+    wp_enqueue_style(
+        'aos-css',
+        'https://unpkg.com/aos@2.3.1/dist/aos.css',
+        [],
+        null
+    );
+    wp_enqueue_script(
+        'aos-js',
+        'https://unpkg.com/aos@2.3.1/dist/aos.js',
+        [],
+        null,
+        true
+    );
+    wp_add_inline_script( 'aos-js', 'AOS.init();' );
+}
+
+/**
  * Inject miniBlocksData into the block editor so editor.js scripts can read PHP settings.
  */
 add_action( 'enqueue_block_editor_assets', 'mini_inject_block_editor_data' );

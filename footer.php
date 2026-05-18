@@ -132,17 +132,7 @@ if (
 
 <?php wp_footer(); ?>
 
-<?php
-	if ( 
-		is_array(get_option( 'mini_ext_lib_options' )) && 
-		array_key_exists('mini_aos', get_option( 'mini_ext_lib_options' ) ) && 
-		get_option( 'mini_ext_lib_options' )['mini_aos'] != null 
-	) {
-?>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script>AOS.init();</script>
-<?php
-	}
-?>
+
 
 </body>
 </html>

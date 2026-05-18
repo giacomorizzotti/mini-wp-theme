@@ -215,6 +215,19 @@ function mini_widgets_init() {
             'after_title'   => '</h2>',
         )
     );
+
+    // Landing Page sidebar
+    register_sidebar(
+        array(
+            'name'          => esc_html__( 'Landing Page Sidebar', 'mini' ),
+            'id'            => 'landing-page-sidebar',
+            'description'   => esc_html__( 'Sidebar for landing pages.', 'mini' ),
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h2 class="widget-title">',
+            'after_title'   => '</h2>',
+        )
+    );
 }
 add_action( 'widgets_init', 'mini_widgets_init' );
 

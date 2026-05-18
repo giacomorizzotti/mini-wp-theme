@@ -90,7 +90,7 @@ function add_inpage_elements_box() {
         'mini_inpage_elements',
         'In-page elements',
         'inpage_elements_box_html',
-        ['page', 'post', 'course', 'lesson'],
+        ['page', 'post', 'course', 'lesson', 'slide', 'landing_page'],
         'side'
     );
 }
@@ -103,11 +103,9 @@ function inpage_elements_box_html( $post, $meta ) {
 
     // Get field values
     $titlePresence = get_post_meta( $post->ID, 'title_presence', true);
-    $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true);
     $displayAuthorInfo = get_post_meta( $post->ID, 'display_author_info', true);
 
     $titlePresenceState = ( $titlePresence !== '0' ) ? ' checked' : '';  // Default true
-    $sidebarPresenceState = ( $sidebarPresence === '1' || $sidebarPresence === true ) ? ' checked' : '';  // Default false
     $displayAuthorInfoState = ( $displayAuthorInfo !== '0' ) ? ' checked' : '';  // Default true
 
     // Form fields
@@ -116,29 +114,24 @@ function inpage_elements_box_html( $post, $meta ) {
             <input type="checkbox" id="title_presence" name="title_presence"' . $titlePresenceState . '>&nbsp;' 
             . __("Show title", 'mini' ) . '
           </label>';
-    
+
     echo '<label for="display_author_info">
             <input type="checkbox" id="display_author_info" name="display_author_info"' . $displayAuthorInfoState . '>&nbsp;' 
             . __("Display Author info", 'mini' ) . '
           </label>';
-    
-        if ( ! $is_slide ) {
-                echo '<label for="sidebar_presence">
-                                <input type="checkbox" id="sidebar_presence" name="sidebar_presence"' . $sidebarPresenceState . '>&nbsp;' 
-                                . __("Show sidebar", 'mini' ) . '
-                            </label>';
 
-                $post_type = get_post_type( $post );
-                if ( in_array( $post_type, ['post', 'news'], true ) ) {
-                    $archiveFeaturedImage = get_post_meta( $post->ID, 'archive_featured_image', true);
-                    $archiveFeaturedImageState = ( $archiveFeaturedImage !== '0' ) ? ' checked' : '';
+    if ( ! $is_slide ) {
+        $post_type = get_post_type( $post );
+        if ( in_array( $post_type, ['post', 'news'], true ) ) {
+            $archiveFeaturedImage = get_post_meta( $post->ID, 'archive_featured_image', true);
+            $archiveFeaturedImageState = ( $archiveFeaturedImage !== '0' ) ? ' checked' : '';
 
-                    echo '<label for="archive_featured_image">
-                                <input type="checkbox" id="archive_featured_image" name="archive_featured_image"' . $archiveFeaturedImageState . '>&nbsp;' 
-                                . __("Image in archive", 'mini' ) . '
-                            </label>';
-                }
+            echo '<label for="archive_featured_image">
+                        <input type="checkbox" id="archive_featured_image" name="archive_featured_image"' . $archiveFeaturedImageState . '>&nbsp;' 
+                        . __("Image in archive", 'mini' ) . '
+                    </label>';
         }
+    }
     echo '</div>';
 }
 
@@ -161,10 +154,6 @@ function inpage_elements_save_postdata( $post_id ) {
     // Save title presence
     $titlePresence = isset($_POST['title_presence']) ? '1' : '0';
     update_post_meta( $post_id, 'title_presence', $titlePresence );
-
-    // Save sidebar presence
-    $sidebarPresence = isset($_POST['sidebar_presence']) ? true : false;
-    update_post_meta( $post_id, 'sidebar_presence', $sidebarPresence );
 
     // Save display author info
     $displayAuthorInfo = isset($_POST['display_author_info']) ? '1' : '0';
@@ -192,7 +181,7 @@ function add_page_customization_box() {
         'mini_page_customization',
         'Page customization',
         'page_customization_box_html',
-        ['page', 'post', 'event', 'match', 'slide', 'course', 'lesson'],
+        ['page', 'post', 'event', 'match', 'slide', 'course', 'lesson', 'landing_page'],
         'side'
     );
 }
@@ -222,6 +211,16 @@ function page_customization_box_html( $post, $meta ) {
             <input type="checkbox" id="space_top" name="space_top"' . $spaceTopState . '>&nbsp;' 
             . __("Space top", 'mini' ) . '
           </label>';
+
+    // Sidebar presence (not shown for slides)
+    if ( get_post_type( $post ) !== 'slide' ) {
+        $sidebarPresence = get_post_meta( $post->ID, 'sidebar_presence', true );
+        $sidebarPresenceState = ( $sidebarPresence === '1' || $sidebarPresence === true ) ? ' checked' : '';  // Default false
+        echo '<label for="sidebar_presence" style="display: block; margin-bottom: 5px;">
+                <input type="checkbox" id="sidebar_presence" name="sidebar_presence"' . $sidebarPresenceState . '>&nbsp;'
+                . __( 'Show sidebar', 'mini' ) . '
+              </label>';
+    }
     echo '</div>';
 
     // Output container dropdown
@@ -269,6 +268,10 @@ function page_customization_save_postdata( $post_id ) {
     $spaceBot = isset($_POST['space_bot']) ? '1' : '0';
     update_post_meta( $post_id, 'space_bot', $spaceBot );
 
+    // Save sidebar presence
+    $sidebarPresence = isset($_POST['sidebar_presence']) ? '1' : '0';
+    update_post_meta( $post_id, 'sidebar_presence', $sidebarPresence );
+
     // Save container style
     if ( isset( $_POST['page_container'] ) ) {
         $allowed_values = array( 'fw', '', 'thin', 'wide' );
@@ -306,7 +309,7 @@ function add_header_styling_box() {
         'mini_header_styling',
         'Header styling',
         'header_styling_box_html',
-        ['page', 'post', 'match', 'course', 'lesson', 'event'],
+        ['page', 'post', 'match', 'course', 'lesson', 'event', 'landing_page'],
         'side'
     );
     add_meta_box(
@@ -680,4 +683,62 @@ function mini_archive_layout_save_postdata( $post_id ) {
     if ( in_array( $value, $allowed, true ) ) {
         update_post_meta( $post_id, 'mini_archive_cols', $value );
     }
+}
+
+/**
+ * ADD Landing branding meta box (header and footer visibility)
+ */
+
+add_action( 'add_meta_boxes', 'add_landing_branding_box' );
+add_action( 'save_post_landing_page', 'landing_branding_save_postdata' );
+
+function add_landing_branding_box() {
+    if ( ! current_user_can( 'edit_others_posts' ) || current_user_can( 'mini_manage_seo' ) ) {
+        return;
+    }
+    add_meta_box(
+        'mini_landing_branding',
+        'Landing branding',
+        'landing_branding_box_html',
+        'landing_page',
+        'side'
+    );
+}
+
+function landing_branding_box_html( $post, $meta ) {
+    wp_nonce_field( 'landing_branding_save', 'landing_branding_nonce' );
+
+    $show_header = get_post_meta( $post->ID, 'landing_show_header', true );
+    $show_footer = get_post_meta( $post->ID, 'landing_show_footer', true );
+
+    $show_header_state = ( $show_header !== '0' ) ? ' checked' : '';  // Default true
+    $show_footer_state = ( $show_footer !== '0' ) ? ' checked' : '';  // Default true
+
+    echo '<div class="my-1">';
+    echo '<label for="landing_show_header">
+            <input type="checkbox" id="landing_show_header" name="landing_show_header"' . $show_header_state . '>&nbsp;'
+            . __( 'Show header', 'mini' ) . '
+          </label>';
+    echo '<label for="landing_show_footer">
+            <input type="checkbox" id="landing_show_footer" name="landing_show_footer"' . $show_footer_state . '>&nbsp;'
+            . __( 'Show footer', 'mini' ) . '
+          </label>';
+    echo '</div>';
+}
+
+function landing_branding_save_postdata( $post_id ) {
+    if ( ! isset( $_POST['landing_branding_nonce'] ) || ! wp_verify_nonce( $_POST['landing_branding_nonce'], 'landing_branding_save' ) ) {
+        return;
+    }
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    update_post_meta( $post_id, 'landing_show_header', isset( $_POST['landing_show_header'] ) ? '1' : '0' );
+    update_post_meta( $post_id, 'landing_show_footer', isset( $_POST['landing_show_footer'] ) ? '1' : '0' );
 }

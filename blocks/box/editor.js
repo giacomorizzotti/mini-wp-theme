@@ -1,8 +1,9 @@
 (function (blocks, element, blockEditor, components, i18n) {
-    var el             = element.createElement;
-    var Fragment       = element.Fragment;
-    var useBlockProps  = blockEditor.useBlockProps;
-    var InnerBlocks    = blockEditor.InnerBlocks;
+    var el                  = element.createElement;
+    var Fragment            = element.Fragment;
+    var useBlockProps       = blockEditor.useBlockProps;
+    var useInnerBlocksProps = blockEditor.useInnerBlocksProps;
+    var InnerBlocks         = blockEditor.InnerBlocks;
     var InspectorControls = blockEditor.InspectorControls;
     var PanelBody      = components.PanelBody;
     var SelectControl  = components.SelectControl;
@@ -106,6 +107,8 @@
                 }
             });
 
+            var innerBlocksProps = useInnerBlocksProps({}, {});
+
             return el(
                 Fragment, null,
                 el(InspectorControls, null,
@@ -187,7 +190,7 @@
                             textTransform: 'uppercase',
                         }
                     }, el('i', { className: 'iconoir-box-iso' }), ' box-' + width + (padding !== '' ? '  p-' + padding : '') + (aosAnimation ? '  ✦ ' + aosAnimation : '')),
-                    el(InnerBlocks, null)
+                    el('div', innerBlocksProps)
                 )
             );
         },

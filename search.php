@@ -17,7 +17,7 @@ get_header();
 	<div class="container fw">
 		<div class="container">
 			<div class="boxes">
-				<div class="box my-0<?php if($container_width=='fw'): ?> p-0<?php endif; ?> <?= $content_size ?>">
+				<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 					<div class="boxes">
 
 						<?php if ( have_posts() ) : ?>

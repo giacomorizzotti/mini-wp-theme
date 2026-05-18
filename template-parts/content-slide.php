@@ -27,7 +27,7 @@ $show_title     = ! empty( $layout['title_presence'] );
 	<div class="dot-bg fit"></div>
 	<?php endif; ?>
 
-	<?php if ( get_the_content() ) : ?>
+	<?php if ( get_the_content() || $show_title ) : ?>
 	<div class="caption fit">
 		<div class="container fw">
 			<div class="container <?php echo esc_attr( $container_cls ); ?>">

@@ -16,11 +16,11 @@ get_header();
 	<main id="primary" class="site-main" template="single-news">
 
 		<div class="container fw">
-			<div class="container <?=$container_width?>">
+			<div class="container <?php echo esc_attr( $layout['container_width'] ); ?>">
 				
 				<div class="boxes space-top-bot">
 					
-					<div class="box my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
+					<div class="my-0 py-0 <?php if ($layout['sidebar_presence']) echo 'box-75'; else echo 'box-100'; ?>">
 						<div class="boxes">
 							<?php
 							while ( have_posts() ) :
