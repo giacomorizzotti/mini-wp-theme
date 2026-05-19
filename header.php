@@ -142,8 +142,8 @@ if (
 	$ga_code = mini_get_option( 'mini_analytics_options', 'mini_google_analytics_code' );
 ?>
 	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $ga_code ); ?>"></script>
-	<script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $ga_code ); ?>"<?php if ( function_exists( 'mini_gdpr_script_attrs' ) ) mini_gdpr_script_attrs( 'analytics' ); ?>></script>
+	<script<?php if ( function_exists( 'mini_gdpr_script_attrs' ) ) mini_gdpr_script_attrs( 'analytics' ); ?>>
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
