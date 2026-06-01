@@ -5,28 +5,11 @@
  * @package mini
  */
 
-$layout      = mini_get_page_layout();
-$show_header = get_post_meta( get_the_ID(), 'landing_show_header', true );
-$show_footer = get_post_meta( get_the_ID(), 'landing_show_footer', true );
-$show_header = ( $show_header !== '0' ); // Default true
-$show_footer = ( $show_footer !== '0' ); // Default true
+$layout = mini_get_page_layout();
 
 $slideshow_id = get_post_meta( get_the_ID(), '_mini_page_slideshow', true );
 
-if ( $show_header ) {
-	get_header();
-} else {
-	?><!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<?php wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-	<?php
-}
+get_header();
 ?>
 
 	<main id="primary" class="site-main" template="landing_page">
@@ -46,7 +29,7 @@ if ( $show_header ) {
 				<div class="boxes hh align-content-end">
 					<?php if ( $layout['title_presence'] ) : ?>
 					<header class="box-100 my-0 p-0 entry-header">
-						<?php the_title( '<h1 class="entry-title m-0 wh-box">', '</h1>' ); ?>
+						<?php the_title( '<h1 class="entry-title m-0"><span class="wh-box lh-12">', '</span></h1>' ); ?>
 						<div class="space-2"></div>
 					</header>
 					<?php else : ?>
@@ -102,31 +85,4 @@ if ( $show_header ) {
 	?>
 
 <?php
-if ( $show_footer ) {
-	get_footer();
-} else {
-	// Credits line
-	if ( get_variable( 'mini_options', 'mini_credits' ) ) {
-		?>
-	<div id="credits" class="fw-bg">
-		<p class="S m-0 center grey-text p-1 pt-05">
-			<i class="fa fa-heart mini-text heart" aria-hidden="true"></i>&nbsp;
-			Proudly <i>fully custom</i> designed & developed by&nbsp;
-			<a href="https://www.uwa.agency/" target="_blank" class="fb-text hover-col">
-				<img src="https://mini.uwa.agency/img/uwa/brand/uwa_logo.svg" class="img" alt="UWA logo" style="display: inline-block; width: 26px; transform: translate(0, 25%);"/>
-			</a>&nbsp;
-			using&nbsp;
-			<a href="https://mini.uwa.agency/" target="_blank" class="fb-text link-hover-text">
-				<img src="https://mini.uwa.agency/img/brand/mini_emblem.svg" class="img" alt="mini logo" style="display: inline-block; width: 16px;"/>&nbsp;
-				mini
-			</a>
-		</p>
-	</div>
-		<?php
-	}
-	wp_footer();
-	?>
-</body>
-</html>
-	<?php
-}
+get_footer();

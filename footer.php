@@ -13,6 +13,8 @@
 
 	</div><?php /* closing .sheet div */ ?>
 
+	<?php $hide_footer = is_singular( 'landing_page' ) && get_post_meta( get_the_ID(), 'landing_show_footer', true ) === '0'; ?>
+	<?php if ( ! $hide_footer ) : ?>
 	<footer id="footer" class="footer">
         <div class="container space-top-bot">
             <div class="boxes">
@@ -105,6 +107,7 @@
             </div>
         </div>
     </footer>
+	<?php endif; ?>
 <?php
 if ( 
     get_variable('mini_options','mini_credits') != false

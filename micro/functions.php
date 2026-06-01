@@ -87,6 +87,24 @@ function mini_child_admin_enqueue_styles() {
 add_action('admin_enqueue_scripts', 'mini_child_admin_enqueue_styles', 20);
 
 /**
+ * Load theme styles inside the block editor iframe.
+ * admin_enqueue_scripts does not reach the editor content iframe in WP 6.x+.
+ * enqueue_block_assets fires both on the frontend and inside the editor iframe.
+ */
+function mini_child_block_editor_styles() {
+    wp_enqueue_style( 'mini-parent-block-style', get_template_directory_uri() . '/style.css', [], wp_get_theme()->parent()->get('Version') );
+    wp_enqueue_style( 'mini-child-block-style', get_stylesheet_uri(), [ 'mini-parent-block-style' ], wp_get_theme()->get('Version') );
+    if ( file_exists( get_stylesheet_directory() . '/assets/css/custom.css' ) ) {
+        wp_enqueue_style( 'mini-child-custom-block-style', get_stylesheet_directory_uri() . '/assets/css/custom.css', [ 'mini-child-block-style' ], filemtime( get_stylesheet_directory() . '/assets/css/custom.css' ) );
+    }
+}
+add_action( 'enqueue_block_assets', 'mini_child_block_editor_styles' );
+
+// Load mini framework CSS and Google Fonts (with font CSS variables) inside the editor iframe.
+add_action( 'enqueue_block_assets', 'mini_css' );
+add_action( 'enqueue_block_assets', 'mini_gwf_font' );
+
+/**
  * ========================================================================
  * CUSTOM FUNCTIONALITY
  * Add your custom functions below

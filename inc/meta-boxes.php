@@ -710,20 +710,37 @@ function landing_branding_box_html( $post, $meta ) {
 
     $show_header = get_post_meta( $post->ID, 'landing_show_header', true );
     $show_footer = get_post_meta( $post->ID, 'landing_show_footer', true );
+    $show_nav    = get_post_meta( $post->ID, 'landing_show_nav', true );
 
     $show_header_state = ( $show_header !== '0' ) ? ' checked' : '';  // Default true
     $show_footer_state = ( $show_footer !== '0' ) ? ' checked' : '';  // Default true
+    $show_nav_state    = ( $show_nav    !== '0' ) ? ' checked' : '';  // Default true
 
     echo '<div class="my-1">';
     echo '<label for="landing_show_header">
             <input type="checkbox" id="landing_show_header" name="landing_show_header"' . $show_header_state . '>&nbsp;'
             . __( 'Show header', 'mini' ) . '
           </label>';
+    echo '<div id="landing_show_nav_wrap" style="margin-left:20px;' . ( $show_header !== '0' ? '' : 'display:none;' ) . '">';
+    echo '<label for="landing_show_nav">
+            <input type="checkbox" id="landing_show_nav" name="landing_show_nav"' . $show_nav_state . '>&nbsp;'
+            . __( 'Show navigation', 'mini' ) . '
+          </label>';
+    echo '</div>';
     echo '<label for="landing_show_footer">
             <input type="checkbox" id="landing_show_footer" name="landing_show_footer"' . $show_footer_state . '>&nbsp;'
             . __( 'Show footer', 'mini' ) . '
           </label>';
     echo '</div>';
+    ?>
+    <script>
+    (function(){
+        var hdr = document.getElementById('landing_show_header');
+        var wrap = document.getElementById('landing_show_nav_wrap');
+        hdr.addEventListener('change', function(){ wrap.style.display = this.checked ? '' : 'none'; });
+    })();
+    </script>
+    <?php
 }
 
 function landing_branding_save_postdata( $post_id ) {
@@ -740,5 +757,6 @@ function landing_branding_save_postdata( $post_id ) {
     }
 
     update_post_meta( $post_id, 'landing_show_header', isset( $_POST['landing_show_header'] ) ? '1' : '0' );
+    update_post_meta( $post_id, 'landing_show_nav',    isset( $_POST['landing_show_nav'] )    ? '1' : '0' );
     update_post_meta( $post_id, 'landing_show_footer', isset( $_POST['landing_show_footer'] ) ? '1' : '0' );
 }

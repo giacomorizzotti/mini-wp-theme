@@ -166,6 +166,11 @@ if (
 
 	<div id="sheet" class="<?php echo esc_attr( get_theme_mod( 'sheet-color-class', 'grad-second' ) ); ?>"><?php /* starting .sheet div */ ?>
 
+		<?php
+		$hide_header = is_singular( 'landing_page' ) && get_post_meta( get_the_ID(), 'landing_show_header', true ) === '0';
+		$hide_nav    = $hide_header || ( is_singular( 'landing_page' ) && get_post_meta( get_the_ID(), 'landing_show_nav', true ) === '0' );
+		?>
+		<?php if ( ! $hide_header ) : ?>
 		<header id="header" class="header <?php echo esc_attr( $header_top_style ); ?> <?php echo esc_attr( $header_scroll_style ); ?>">
 			<div class="container">
 				<div class="boxes p-1 flex-flow-row flex-nowrap align-items-center justify-content-between">
@@ -194,6 +199,7 @@ if (
 							<p class="site-description m-0"><?php echo esc_html( $mini_description ); ?></p>
 						<?php endif; ?>
 					</div>
+					<?php if ( ! $hide_nav ) : ?>
 					<div class="box menus px-2 flex-noshrink">
 						<div id="menu-toggle"><div class="line"></div><div class="line"></div><div class="line"></div></div>
 						<div id="head-menu" class="head-menu flex align-items-center">
@@ -229,10 +235,13 @@ if (
 							<?php endif; endif; ?>
 						</div>
 					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		</header>
-		
+		<?php endif; ?>
+
+		<?php if ( ! $hide_nav ) : ?>
 		<aside id="side-right" class="">
 			<nav class="menu main-menu">
 				<?php
@@ -261,3 +270,4 @@ if (
 				?>
 			</nav>
 		</aside>
+		<?php endif; ?>
