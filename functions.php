@@ -26,7 +26,8 @@ function mini_setup() {
         * If you're building a theme based on mini, use a find and replace
         * to change 'mini' to the name of your theme in all the template files.
         */
-    load_theme_textdomain( 'mini', get_template_directory() . '/languages' );
+    $locale = determine_locale();
+    load_textdomain( 'mini', get_template_directory() . '/languages/mini-' . $locale . '.mo', $locale );
 
     // Add default posts and comments RSS feed links to head.
     add_theme_support( 'automatic-feed-links' );
