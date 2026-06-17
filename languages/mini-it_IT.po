@@ -60,36 +60,32 @@ msgid "Footer"
 msgstr "Footer"
 
 #: functions.php:131
-#, fuzzy
 msgid "Default Sidebar"
-msgstr "Sidebar"
+msgstr "Sidebar predefinita"
 
 #: functions.php:133
 msgid "Add widgets here."
 msgstr "Aggiungi un widget qui."
 
 #: functions.php:144
-#, fuzzy
 msgid "Course Sidebar"
-msgstr "Sidebar"
+msgstr "Sidebar dei corsi"
 
 #: functions.php:146
 msgid "Sidebar for courses."
 msgstr "Sidebar per i corsi."
 
 #: functions.php:157
-#, fuzzy
 msgid "Event Sidebar"
-msgstr "Sidebar"
+msgstr "Sidebar degli eventi"
 
 #: functions.php:159
 msgid "Sidebar for events."
 msgstr "Sidebar per gli eventi."
 
 #: functions.php:170
-#, fuzzy
 msgid "Lesson Sidebar"
-msgstr "Sidebar"
+msgstr "Sidebar delle lezioni"
 
 #: functions.php:172
 msgid "Sidebar for lessons."
@@ -113,7 +109,7 @@ msgstr "Sidebar per le partite."
 
 #: functions.php:209
 msgid "Post Sidebar"
-msgstr "Sidepar dei blog"
+msgstr "Sidebar del blog"
 
 #: functions.php:211
 msgid "Sidebar for posts."
@@ -128,28 +124,24 @@ msgid "Credits"
 msgstr "Crediti"
 
 #: functions.php:377
-#, fuzzy
 msgid "CDN settings"
-msgstr "Usa mini via CDN"
+msgstr "Impostazioni CDN"
 
 #: functions.php:388
-#, fuzzy
 msgid "Font settings"
-msgstr "Impostazioni relative all'utente"
+msgstr "Impostazioni font"
 
 #: functions.php:399
-#, fuzzy
 msgid "External libraries settings"
-msgstr "Gestisci le %s impostazioni relative all'utente."
+msgstr "Impostazioni librerie esterne"
 
 #: functions.php:410
 msgid "Analytics settings"
 msgstr "Impostazioni del tracking (Analytics)"
 
 #: functions.php:421
-#, fuzzy
 msgid "Company data"
-msgstr "Impostazioni delle informazioni del titolare"
+msgstr "Dati aziendali"
 
 #: functions.php:478
 #, php-format
@@ -165,19 +157,16 @@ msgstr ""
 "noreferrer\">mini</a>."
 
 #: functions.php:531
-#, fuzzy
 msgid "Absolute (or relative) <i>mini.min.css</i> path"
-msgstr "Percorso JS assoluto o relativo"
+msgstr "Percorso assoluto (o relativo) del file <i>mini.min.css</i>"
 
 #: functions.php:536
-#, fuzzy
 msgid "Absolute (or relative) <i>mini.js</i> path"
-msgstr "Percorso JS assoluto o relativo"
+msgstr "Percorso assoluto (o relativo) del file <i>mini.js</i>"
 
 #: functions.php:541
-#, fuzzy
 msgid "Absolute (or relative) <i>slider.js</i> path"
-msgstr "Percorso JS assoluto o relativo"
+msgstr "Percorso assoluto (o relativo) del file <i>slider.js</i>"
 
 #: functions.php:787
 msgid "Your data"
@@ -351,9 +340,8 @@ msgstr ""
 "a>."
 
 #: template-parts/contact-form.php:133
-#, fuzzy
 msgid "An error occurred. Please try again."
-msgstr "Security check fallito. Per favore, riprova."
+msgstr "Si è verificato un errore. Riprova."
 
 #: template-parts/content-lesson.php:62
 msgid "Back to"
@@ -403,9 +391,8 @@ msgid "Logo height"
 msgstr "Altezza logo"
 
 #: inc/customizer.php:94
-#, fuzzy
 msgid "Enter the logo and menu toggle height for top or scrolled screen"
-msgstr "Inserisci l'altezza del logo per la schermata in cima o scrollata"
+msgstr "Inserisci l'altezza del logo e del pulsante menu per la schermata in cima o dopo lo scroll"
 
 #: inc/customizer.php:103
 msgid "Logo height (scrolled)"
@@ -572,14 +559,12 @@ msgid "Events Archive Page"
 msgstr "Pagina archivio eventi"
 
 #: inc/cpt-archive-pages.php:27
-#, fuzzy
 msgid "Courses Archive Page"
-msgstr "per inserire il form contatti in qualsiasi pagina o post."
+msgstr "Pagina archivio corsi"
 
 #: inc/cpt-archive-pages.php:28
-#, fuzzy
 msgid "Lessons Archive Page"
-msgstr "per inserire il form contatti in qualsiasi pagina o post."
+msgstr "Pagina archivio lezioni"
 
 #: inc/cpt-archive-pages.php:29
 msgid "Matches Archive Page"
