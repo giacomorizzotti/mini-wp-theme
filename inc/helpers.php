@@ -93,16 +93,17 @@ function mini_theme_text_field_color_option(
     if ( $value != '' ) {
         $color = $value;
     }
-    return '
-    <input
-        type="text"
-        id="'.$option.'"
-        name="'.$option_group.'['.$option.']"
-        value="'.$value.'"
-        placeholder="'.$placeholder.'"
-        style="border: 2px solid '.$color.'; border-right: 30px solid '.$color.';'.$style.'";
-    >
-    ';
+    return sprintf(
+        '<input type="text" id="%s" name="%s[%s]" value="%s" placeholder="%s" style="border: 2px solid %s; border-right: 30px solid %s; %s">',
+        esc_attr( $option ),
+        esc_attr( $option_group ),
+        esc_attr( $option ),
+        esc_attr( $value ),
+        esc_attr( (string) $placeholder ),
+        esc_attr( (string) $color ),
+        esc_attr( (string) $color ),
+        esc_attr( $style )
+    );
 }
 
 /**
@@ -129,30 +130,29 @@ function mini_theme_option_list_option(
         $stored_choice = $options[$option];
     }
 
-    $select_field = '
-    <label for="'.$option.'">' . __($label, 'mini' ) . '</label>
-    ';
-    $select_field .= '
-    <select name="'.$option_group.'['.$option.']" style="'.$style.'">
-    ';
-    $default_selected = empty($stored_choice) ? ' selected' : '';
-    $select_field .= '
-        <option value=""' . $default_selected . '>' . esc_html__( 'Default', 'mini' ) . '</option>
-    ';
-    $o = 1;
-    foreach($select_options as $select_option => $value ) {
-        $state = null;
-        if($value == $stored_choice) {
-            $state = ' selected';
-        }
-        $select_field .= '
-        <option value="'.$value.'"'.$state.'>'.$select_option.'</option>
-        ';
-        $o++;
+    $select_field = sprintf(
+        '<label for="%s">%s</label>',
+        esc_attr( $option ),
+        esc_html__( $label, 'mini' )
+    );
+    $select_field .= sprintf(
+        '<select name="%s[%s]" style="%s">',
+        esc_attr( $option_group ),
+        esc_attr( $option ),
+        esc_attr( $style )
+    );
+    $default_selected = empty( $stored_choice ) ? ' selected' : '';
+    $select_field .= '<option value=""' . $default_selected . '>' . esc_html__( 'Default', 'mini' ) . '</option>';
+    foreach ( $select_options as $select_option => $value ) {
+        $state = ( $value == $stored_choice ) ? ' selected' : '';
+        $select_field .= sprintf(
+            '<option value="%s"%s>%s</option>',
+            esc_attr( $value ),
+            $state,
+            esc_html( $select_option )
+        );
     }
-    $select_field .= '
-    </select>
-    ';
+    $select_field .= '</select>';
 
     return $select_field;
 }

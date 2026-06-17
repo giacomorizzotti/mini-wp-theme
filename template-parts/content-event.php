@@ -98,17 +98,17 @@ $it_date_year = new IntlDateFormatter(
 					<div class="date-box w-100" style="max-width: 100%;">
 						<div class="flex">
 							<p class="m-0 huge black center relative z-1" style="line-height: 1!important;">
-								<span class="square flex align-items-center justify-content-center box-shadow white-box p-15 m-0 b-rad-10" style="min-width: <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>120px<?php else: ?>100px<?php endif; ?>;"><?= $date_day_number ?></span>
+								<span class="square flex align-items-center justify-content-center box-shadow white-box p-15 m-0 b-rad-10" style="min-width: <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>120px<?php else: ?>100px<?php endif; ?>;"><?= esc_html( $date_day_number ) ?></span>
 							</p>
 							<div class="flex align-items-start flex-direction-column" style="flex-grow: 1;">
 								<div>
 									<p class="m-0 up-case <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>L<?php else: ?><?php endif; ?>">
-										<span class="inline-block py-05 px-15"><?= $date_day_name ?></span>
+										<span class="inline-block py-05 px-15"><?= esc_html( $date_day_name ) ?></span>
 									</p>
 								</div>
 								<div class="flex align-items-start flex-direction-row relative">
-									<span class="white-box bold <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>XXL py-05<?php else: ?>XL<?php endif; ?> m-0 py-0 px-15 box-shadow"><?= ucfirst($date_month) ?></span>
-									<span class="absolute light flag black-box b-rad-5 px-05" style="right: 0; transform: translate(75%, -50%);"><?= $date_year ?></span>
+									<span class="white-box bold <?php if ( is_singular() && empty( $args['is_shortcode'] ) ): ?>XXL py-05<?php else: ?>XL<?php endif; ?> m-0 py-0 px-15 box-shadow"><?= esc_html( ucfirst( $date_month ) ) ?></span>
+									<span class="absolute light flag black-box b-rad-5 px-05" style="right: 0; transform: translate(75%, -50%);"><?= esc_html( $date_year ) ?></span>
 								</div>
 								<?php 
 									if (get_post_meta($post->ID, 'event_time')[0] != null) {
@@ -123,7 +123,7 @@ $it_date_year = new IntlDateFormatter(
 											}
 										?>
 										<?php if ( get_post_meta($post->ID, 'event_time')[0] != null ): ?>
-										<span class="inline-block py-05 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?=$time?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?=$end_time?><?php endif; ?></span>
+										<span class="inline-block py-05 px-15"><i class="iconoir-clock"></i>&nbsp;&nbsp;<?= esc_html( $time ) ?><?php if ( get_post_meta($post->ID, 'event_end_time')[0] != null ): ?> <span class="light">-</span> <?= esc_html( $end_time ) ?><?php endif; ?></span>
 										<?php endif; ?>
 									</p>
 								</div>
@@ -137,14 +137,14 @@ $it_date_year = new IntlDateFormatter(
 					<div class="location-box">
 						<div class="space-2"></div>
 						<h4 class="m-0 bold XL">
-							<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
+							<?= esc_html( get_post_meta(get_the_ID(), 'location_name')[0] ) ?>
 						</h4>
 						<?php endif; ?>
 						<?php
 						if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 						?>
 						<p class="mt-05">
-							<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+							<i class="iconoir-map-pin" style="vertical-align: text-top;"></i>&nbsp;&nbsp;<?= esc_html( get_post_meta(get_the_ID(), 'location_address')[0] ) ?>
 						</p>
 					</div>
 					<?php endif; ?>

@@ -64,7 +64,7 @@ function mini_css(){
         }
     } else {
         if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
-            $mini_CSS = $options['css_cdn_url'];
+            $mini_CSS = esc_url( $options['css_cdn_url'] );
         } else {
             // Check if mini.min.css exists in child theme, otherwise use parent theme
             $child_css = get_stylesheet_directory() . '/css/mini.min.css';
@@ -93,7 +93,7 @@ function mini_js(){
         }
     } else {
         if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
-            $mini_JS = $options['js_cdn_url'];
+            $mini_JS = esc_url( $options['js_cdn_url'] );
         } else {
             // Check if mini.js exists in child theme, otherwise use parent theme
             $child_js = get_stylesheet_directory() . '/js/mini.js';
@@ -124,7 +124,7 @@ function mini_slider(){
             }
         } else {
             if (is_array($cdn_options) && array_key_exists('slider_cdn_url', $cdn_options) && $cdn_options['slider_cdn_url'] != null) {
-                $mini_slider_JS = $cdn_options['slider_cdn_url'];
+                $mini_slider_JS = esc_url( $cdn_options['slider_cdn_url'] );
             } else {
                 // Use parent theme path if child theme is active, otherwise use current theme
                 if (is_child_theme()) {
@@ -236,10 +236,11 @@ function mini_gwf_font(){
         $css_vars .= '--handwriting-font:"' . $handwriting_font . '", cursive;'; // Legacy support
     }
     
-    // Get user's font usage preferences
-    $title_font_var = isset($options['mini_title_font']) && !empty($options['mini_title_font']) 
+    // Get user's font usage preferences (validated against known CSS variable names)
+    $allowed_font_vars  = [ '--font-sans', '--font-second', '--font-serif', '--font-mono', '--font-handwriting' ];
+    $title_font_var     = isset( $options['mini_title_font'] ) && in_array( $options['mini_title_font'], $allowed_font_vars, true )
         ? $options['mini_title_font'] : '--font-second';
-    $most_used_font_var = isset($options['mini_most_used_font']) && !empty($options['mini_most_used_font']) 
+    $most_used_font_var = isset( $options['mini_most_used_font'] ) && in_array( $options['mini_most_used_font'], $allowed_font_vars, true )
         ? $options['mini_most_used_font'] : '--font-sans';
     
     // Apply font usage preferences

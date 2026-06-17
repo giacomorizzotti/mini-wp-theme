@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function get_company_name() {
     if ( get_variable('mini_company_options', 'mini_company_name') != false ) {
-        return get_variable('mini_company_options', 'mini_company_name');
+        return esc_html( get_variable('mini_company_options', 'mini_company_name') );
     } else {
         return false;
     }
@@ -28,11 +28,11 @@ add_shortcode('get_company_name', 'get_company_name');
  * Company address line 1 shortcode
  */
 function get_company_address_line_1() {
-    if ( 
+    if (
         get_variable('mini_company_options', 'mini_company_address') != false &&
         get_variable('mini_company_options', 'mini_company_house_number')
     ) {
-        return get_variable('mini_company_options', 'mini_company_address').' '.get_variable('mini_company_options', 'mini_company_house_number');
+        return esc_html( get_variable('mini_company_options', 'mini_company_address') . ' ' . get_variable('mini_company_options', 'mini_company_house_number') );
     } else {
         return false;
     }
@@ -43,13 +43,18 @@ add_shortcode('get_company_address_line_1', 'get_company_address_line_1');
  * Company address line 2 shortcode
  */
 function get_company_address_line_2() {
-    if ( 
+    if (
         get_variable('mini_company_options', 'mini_company_city') != false &&
         get_variable('mini_company_options', 'mini_company_province') != false &&
         get_variable('mini_company_options', 'mini_company_country') &&
         get_variable('mini_company_options', 'mini_company_city_code')
     ) {
-        return get_variable('mini_company_options', 'mini_company_city_code').', '.get_variable('mini_company_options', 'mini_company_city').' ['.get_variable('mini_company_options', 'mini_company_province').'], '.get_variable('mini_company_options', 'mini_company_country');
+        return esc_html(
+            get_variable('mini_company_options', 'mini_company_city_code') . ', ' .
+            get_variable('mini_company_options', 'mini_company_city') . ' [' .
+            get_variable('mini_company_options', 'mini_company_province') . '], ' .
+            get_variable('mini_company_options', 'mini_company_country')
+        );
     } else {
         return false;
     }
@@ -61,7 +66,7 @@ add_shortcode('get_company_address_line_2', 'get_company_address_line_2');
  */
 function get_company_email() {
     if ( get_variable('mini_company_options', 'mini_company_email') != false ) {
-        return get_variable('mini_company_options', 'mini_company_email');
+        return esc_html( get_variable('mini_company_options', 'mini_company_email') );
     } else {
         return false;
     }
@@ -73,7 +78,7 @@ add_shortcode('get_company_email', 'get_company_email');
  */
 function get_company_phone() {
     if ( get_variable('mini_company_options', 'mini_company_phone') != false ) {
-        return get_variable('mini_company_options', 'mini_company_phone');
+        return esc_html( get_variable('mini_company_options', 'mini_company_phone') );
     } else {
         return false;
     }
@@ -85,10 +90,10 @@ add_shortcode('get_company_phone', 'get_company_phone');
  */
 function get_company_pec() {
     if ( get_variable('mini_company_options', 'mini_company_pec') != false ) {
-        return get_variable('mini_company_options', 'mini_company_pec');
+        return esc_html( get_variable('mini_company_options', 'mini_company_pec') );
     } else {
         if ( get_variable('mini_company_options', 'mini_company_email') != false ) {
-            return get_variable('mini_company_options', 'mini_company_email');
+            return esc_html( get_variable('mini_company_options', 'mini_company_email') );
         } else {
             return false;
         }
@@ -101,7 +106,7 @@ add_shortcode('get_company_pec', 'get_company_pec');
  */
 function get_company_service_email() {
     if ( get_variable('mini_company_options', 'mini_company_service_email') != false ) {
-        return get_variable('mini_company_options', 'mini_company_service_email');
+        return esc_html( get_variable('mini_company_options', 'mini_company_service_email') );
     } else {
         return false;
     }
@@ -113,7 +118,7 @@ add_shortcode('get_company_service_email', 'get_company_service_email');
  */
 function get_company_service_phone() {
     if ( get_variable('mini_company_options', 'mini_company_service_phone') != false ) {
-        return get_variable('mini_company_options', 'mini_company_service_phone');
+        return esc_html( get_variable('mini_company_options', 'mini_company_service_phone') );
     } else {
         return false;
     }
@@ -125,7 +130,7 @@ add_shortcode('get_company_service_phone', 'get_company_service_phone');
  */
 function get_company_tax_number() {
     if ( get_variable('mini_company_options', 'mini_company_tax_number') != false ) {
-        return get_variable('mini_company_options', 'mini_company_tax_number');
+        return esc_html( get_variable('mini_company_options', 'mini_company_tax_number') );
     } else {
         return false;
     }
@@ -137,7 +142,7 @@ add_shortcode('get_company_tax_number', 'get_company_tax_number');
  */
 function get_company_id_code() {
     if ( get_variable('mini_company_options', 'mini_company_id_code') != false ) {
-        return get_variable('mini_company_options', 'mini_company_id_code');
+        return esc_html( get_variable('mini_company_options', 'mini_company_id_code') );
     } else {
         return false;
     }

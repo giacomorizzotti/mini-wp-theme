@@ -24,7 +24,7 @@ $slides = get_posts([
 if ( empty( $slides ) ) return;
 ?>
 <?php $has_multiple_slides = count( $slides ) > 1; ?>
-<div class="<?php echo $container_class; ?>" template="content-slideshow">
+<div class="<?php echo esc_attr( $container_class ); ?>" template="content-slideshow">
     <div class="slider-wrapper">
         <?php if ( $has_multiple_slides ) : ?>
         <i class="iconoir-arrow-left-circle slider-controls" id="slider-prev-<?php echo esc_attr( $slideshow_id ); ?>"></i>

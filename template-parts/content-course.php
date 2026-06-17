@@ -97,20 +97,20 @@ $it_date_year = new IntlDateFormatter(
 					<h3 class="m-0 label light h5"><?= __( 'Date', 'mini' ) ?></h3>
 					<div class="space"></div>
 					<p class="m-0 bold third-color-text">
-						<?= ucfirst($date_day_name) ?>
+						<?= esc_html( ucfirst( $date_day_name ) ) ?>
 					</p>
 					<p class="m-0 XL bold third-color-text">
-						<?= $date_day_number ?>&nbsp;<?= ucfirst($date_month) ?>&nbsp;<span class="h5 light false-white-text"><?= $date_year ?></span>
+						<?= esc_html( $date_day_number ) ?>&nbsp;<?= esc_html( ucfirst( $date_month ) ) ?>&nbsp;<span class="h5 light false-white-text"><?= esc_html( $date_year ) ?></span>
 					</p>
 					<?php if ( get_post_meta($post->ID, 'event_end_date') != null ): ?>
 					<div class="space-2"></div>
 					<h3 class="m-0 label light h5"><?= __( 'End date', 'mini' ) ?></h3>
 					<div class="space"></div>
 					<p class="m-0 bold third-color-text">
-						<?= ucfirst($end_date_day_name) ?>
+						<?= esc_html( ucfirst( $end_date_day_name ) ) ?>
 					</p>
 					<p class="m-0 XL bold third-color-text">
-						<?= $end_date_day_number ?>&nbsp;<?= ucfirst($end_date_month) ?>&nbsp;<span class="h5 light false-white-text"><?= $end_date_year ?></span>
+						<?= esc_html( $end_date_day_number ) ?>&nbsp;<?= esc_html( ucfirst( $end_date_month ) ) ?>&nbsp;<span class="h5 light false-white-text"><?= esc_html( $end_date_year ) ?></span>
 					</p>
 					<?php endif; ?>
 				</div>
@@ -123,13 +123,13 @@ $it_date_year = new IntlDateFormatter(
 					<h3 class="m-0 label light h5"><?= __( 'Location', 'mini' ) ?></h3>
 					<div class="space"></div>
 					<p class="m-0 bold XL">
-						<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
+						<?= esc_html( get_post_meta(get_the_ID(), 'location_name')[0] ) ?>
 					</p>
 					<?php
 					if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 					?>
 					<p class="m-0">
-						<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+						<?= esc_html( get_post_meta(get_the_ID(), 'location_address')[0] ) ?>
 					</p>
 					<?php endif; ?>
 				</div>

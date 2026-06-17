@@ -102,9 +102,9 @@ $it_date_year = new IntlDateFormatter(
 					<h3 class="m-0 label regular"><?= __( 'Date', 'mini' ) ?></h3>
 					<div class="space"></div>
 					<p class="XL m-0">
-						<span class=""><?= ucfirst($date_day_name) ?></span><br/>
-						<span class="bold third-color-box b-rad-5"><?= $date_day_number ?>&nbsp;<?= ucfirst($date_month) ?>&nbsp;<span class="false-white-text h5 light"><?= $date_year ?></span></span>
-						
+						<span class=""><?= esc_html( ucfirst( $date_day_name ) ) ?></span><br/>
+						<span class="bold third-color-box b-rad-5"><?= esc_html( $date_day_number ) ?>&nbsp;<?= esc_html( ucfirst( $date_month ) ) ?>&nbsp;<span class="false-white-text h5 light"><?= esc_html( $date_year ) ?></span></span>
+
 					</p>
 				</div>
 				<div class="space-2"></div>
@@ -127,8 +127,8 @@ $it_date_year = new IntlDateFormatter(
 					<div class="space"></div>
 					<p class="XL m-0">
 						<span class="bold third-color-box b-rad-5">
-							<?= $time_hour ?>:<?= $time_minute ?>
-						</span><?php if ( get_post_meta($post->ID, 'event_end_time') != null ): ?>&nbsp;-&nbsp;<span class="bold third-color-box b-rad-5"><?= $end_time_hour ?>:<?= $end_time_minute ?></span>
+							<?= esc_html( $time_hour ) ?>:<?= esc_html( $time_minute ) ?>
+						</span><?php if ( get_post_meta($post->ID, 'event_end_time') != null ): ?>&nbsp;-&nbsp;<span class="bold third-color-box b-rad-5"><?= esc_html( $end_time_hour ) ?>:<?= esc_html( $end_time_minute ) ?></span>
 						<?php endif; ?>	
 					</p>
 				</div>
@@ -141,13 +141,13 @@ $it_date_year = new IntlDateFormatter(
 					<h3 class="m-0 label regular"><?= __( 'Location', 'mini' ) ?></h3>
 					<div class="space"></div>
 					<p class="m-0 bold XL">
-						<?= get_post_meta(get_the_ID(), 'location_name')[0] ?>
+						<?= esc_html( get_post_meta(get_the_ID(), 'location_name')[0] ) ?>
 					</p>
 					<?php
 					if ( get_post_meta(get_the_ID(), 'location_address')[0] != null ):
 					?>
 					<p class="m-0">
-						<?= get_post_meta(get_the_ID(), 'location_address')[0] ?>
+						<?= esc_html( get_post_meta(get_the_ID(), 'location_address')[0] ) ?>
 					</p>
 					<?php endif; ?>
 				</div>
