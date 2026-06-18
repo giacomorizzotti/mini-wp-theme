@@ -142,6 +142,7 @@ function mini_slider(){
  * Enqueue Google Web Fonts
  */
 add_action( 'wp_enqueue_scripts', 'mini_gwf_font' );
+add_action( 'enqueue_block_editor_assets', 'mini_gwf_font' );
 function mini_gwf_font(){
     $options = get_option('mini_font_options');
     $fonts_data = mini_get_google_fonts();
