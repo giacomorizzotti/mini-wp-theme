@@ -19,7 +19,7 @@ function mini_theme_text_field_option(
     string $option_group, 
     string $option, 
     string $default_value = '', 
-    string $style='width: 100%;',
+    string $style='width: 100%;'
 ) {
     $options = get_option( $option_group );
     $value = '';
@@ -77,7 +77,7 @@ function mini_theme_text_field_color_option(
     string $option_group, 
     string $option, 
     string $default_value = '', 
-    string $style='',
+    string $style=''
 ) {
     $options = get_option( $option_group );
     if ( 
@@ -114,7 +114,7 @@ function mini_theme_option_list_option(
     string $option, 
     array $select_options, 
     string $label,
-    string $style='width: 100%; max-width: 100%;',
+    string $style='width: 100%; max-width: 100%;'
 ) {
     /**
      * $options = [
