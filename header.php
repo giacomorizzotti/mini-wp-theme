@@ -218,8 +218,12 @@ if (
 							$_mini_current_lang = $_mini_lang_post_id ? mini_get_post_lang( $_mini_lang_post_id ) : '';
 							if ( $_mini_current_lang === '' ) {
 								$_mini_current_lang = mini_get_lang_preference();
-							}						// Fallback: stay on the current page (archives, home, untagged pages).
-						$_mini_current_url = home_url( wp_unslash( $_SERVER['REQUEST_URI'] ) );							if ( ! empty( $_mini_all_langs ) ) :
+							}
+							// Fallback: stay on the current page (archives, home, untagged pages).
+							// Build from scheme+host+REQUEST_URI to avoid home_url() doubling the
+							// subdirectory path when WordPress is installed in a subfolder.
+							$_mini_current_url = set_url_scheme( 'http://' . wp_unslash( $_SERVER['HTTP_HOST'] ) . wp_unslash( $_SERVER['REQUEST_URI'] ) );
+							if ( ! empty( $_mini_all_langs ) ) :
 						?>
 						<nav id="lang-menu" class="menu lang-menu">
 							<ul class="menu lang-menu m-0">
