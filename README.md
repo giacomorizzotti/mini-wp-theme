@@ -218,20 +218,21 @@ add_action( 'wp_enqueue_scripts', 'micro_enqueue_styles' );
 ## 🔌 Plugin Integration
 
 ### Mini Plugin Compatibility
-This theme is designed to work seamlessly with the [Mini WordPress Plugin](https://github.com/giacomorizzotti/mini-plugin), which provides:
-- Custom content type management
-- SEO meta boxes
+This theme is designed to work seamlessly with the [Mini WordPress Plugin](https://mini.uwa.agency/), which provides:
+- Custom content type management (slideshows, news, events, matches, courses, landing pages)
+- Multilingual support with language-prefixed URLs, hreflang, and language switcher
+- SEO meta boxes (title, description, Open Graph, Twitter Cards)
 - Shortcode system
-- Enhanced media upload support
+- SMTP, GDPR, login, and security utilities
 
 ### Required Plugins
-- None required, but enhanced functionality with Mini Plugin
+- None required, but full functionality depends on the Mini Plugin
 
 ## 🌍 Internationalization
 
-- Translation-ready with `.pot` file generation
-- RTL language support
-- Italian date formatting utilities (when used with Mini Plugin)
+- Translation-ready with `.pot` file generation (`composer make-pot`)
+- RTL language support (`style-rtl.css`)
+- **Language switcher** — when the mini plugin's Translations module is enabled, the theme header automatically renders a language switcher (`<nav id="lang-menu">`) that lets visitors switch between available languages
 
 ## 📱 Browser Support
 
