@@ -55,6 +55,17 @@ cp -r micro ../mini-yoursite
 - **WP-CLI** integration for translations
 - Automated build process with npm scripts
 
+### 📊 Analytics
+
+Built-in analytics integrations, configurable under **mini → Analytics**:
+
+| Provider | How it loads |
+|----------|-------------|
+| **Google Analytics** | `gtag.js` via Google Tag Manager CDN; enter your `G-XXXXXXXXXX` Measurement ID |
+| **Umami** | Self-hosted, privacy-first; enter your script URL and Website ID |
+
+Both providers are injected in `<head>` only when enabled and call `mini_gdpr_script_attrs('analytics')` (from mini-plugin) if available, so a consent plugin can gate them automatically.
+
 ### 🌐 CDN Integration
 Flexible asset loading with CDN support:
 - Load mini framework CSS/JS from CDN or locally
@@ -82,7 +93,7 @@ Dedicated sidebars for different content types:
 
 ### Requirements
 - WordPress 5.0+
-- PHP 5.6+
+- PHP 7.4+
 - Node.js (for development)
 - Composer (for development)
 

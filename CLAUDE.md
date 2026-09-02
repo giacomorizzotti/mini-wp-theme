@@ -43,10 +43,26 @@ CSS source of truth is `sass/` — compiled output (`style.css`, `style.css.map`
 
 ## Structure
 
-- `functions.php` + `inc/` — theme setup split by concern: `enqueue.php` (asset loading, including the CDN-vs-local mini.css/mini.js toggle — see `mini_cdn_options` in `functions.php`), `customizer.php`, `custom-header.php`, `custom-logo.php`, `cpt-archive-pages.php`, `shortcodes.php`, `template-functions.php`, `template-tags.php`, `meta-boxes.php`, `jetpack.php`, `admin-customization.php`, `blocks-settings.php`, `contact-form-fields.php`, `override.php` (loads the `overrides/` system above).
-- `header.php`/`footer.php`/`sidebar*.php` — global chrome. `header.php` is also where mini.css custom-property overrides get injected per WordPress Customizer settings (`mini_css_variable()` calls for `--info`/`--success`/`--warning`/`--danger`/`--bad`/etc.) — that's how site admins recolor the mini palette without touching CSS. `header.php` also renders the language switcher (`<nav id="lang-menu">`) when mini-plugin's Translations module is enabled; it reads `mini_translations_get_languages()`, `mini_get_all_translation_urls()`, and `mini_get_post_lang()` from the plugin.
+- `functions.php` — two distinct halves in one file:
+  1. **Theme bootstrap** (top ~360 lines): `mini_setup()`, widget registration, button-block renderer, `require` chain loading all `inc/` files.
+  2. **Admin settings UI** (rest of file): settings registration, section callbacks, and page-render functions for all mini admin sub-pages (Author, Credits, CDN, Fonts, Ext Libs, **Analytics**, Owner/Company). These live in `functions.php` rather than `inc/` because they are tightly coupled to each other via shared option-group names. When adding a new admin setting, add it here; follow the existing `register_setting` / `add_settings_section` / callback / page-render pattern.
+- `inc/` — concern-specific includes loaded by `functions.php`:
+  - `enqueue.php` — all asset loading: `mini.css`/`mini.js`/`slider.js` (CDN-vs-local toggle, reads `mini_cdn_options`), Google Fonts, AOS, Gutenberg block registration
+  - `helpers.php` — admin UI helpers: `mini_theme_text_field_option()`, `mini_theme_textarea_option()`, `mini_theme_text_field_color_option()`, `mini_theme_option_list_option()`, `mini_get_google_fonts()` (font catalogue)
+  - `template-functions.php` — frontend utilities including **`mini_check_option($group, $key)`** and **`mini_get_option($group, $key, $default)`** — the canonical way to read any theme or plugin option; used throughout `header.php` to gate analytics, libraries, and feature blocks
+  - `customizer.php`, `custom-header.php`, `custom-logo.php`, `cpt-archive-pages.php`, `shortcodes.php`, `template-tags.php`, `meta-boxes.php`, `jetpack.php`, `admin-customization.php`, `blocks-settings.php`, `contact-form-fields.php`, `override.php` (loads the `overrides/` system)
+- `header.php`/`footer.php`/`sidebar*.php` — global chrome.
+  - `header.php` injects mini.css custom-property overrides from WordPress Customizer settings (`mini_css_variable()` for `--info`/`--success`/`--warning`/`--danger` etc.) — site admins recolor the mini palette without touching CSS.
+  - `header.php` renders the language switcher (`<nav id="lang-menu">`) when mini-plugin's Translations module is enabled; reads `mini_translations_get_languages()`, `mini_get_all_translation_urls()`, `mini_get_post_lang()` from the plugin.
+  - `header.php` injects analytics scripts — currently **Google Analytics** (`gtag.js`) and **Umami** (`<script defer data-website-id="...">`) — gated on `mini_check_option('mini_analytics_options', ...)`. Both call `mini_gdpr_script_attrs('analytics')` (defined in mini-plugin's `inc/gdpr.php`) when available, which outputs consent-mode attributes so a cookie-consent plugin can gate them.
 - `single-*.php`/`archive-*.php`/`sidebar-*.php` per custom post type (course, event, lesson, match, news, landing_page) — template + archive + sidebar variant for each.
 - `template-parts/` — reusable partials (`content-*.php` per post type, `contact-form*.php`).
 - `blocks/` — custom Gutenberg block patterns.
 - `micro/` — child-theme starter kit, see topology note above.
 - `overrides/` — per-site override system, see customization note above.
+
+## Adding a new analytics provider
+
+Follow the established pattern (see GA and Umami in `functions.php` and `header.php`):
+1. In `functions.php` → `mini_analytics_section_callback()`: add a new card with enable checkbox + config fields, all under the existing `mini_analytics_options` option group (no new `register_setting` needed).
+2. In `header.php`: add a conditional block that calls `mini_check_option()` / `mini_get_option()`, outputs the script tag, and calls `mini_gdpr_script_attrs('analytics')` if available.
