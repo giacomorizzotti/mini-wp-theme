@@ -152,6 +152,19 @@ if (
 	</script>
 <?php
 }
+
+if (
+	mini_check_option( 'mini_analytics_options', 'mini_umami' ) &&
+	mini_check_option( 'mini_analytics_options', 'mini_umami_src' ) &&
+	mini_check_option( 'mini_analytics_options', 'mini_umami_website_id' )
+) {
+	$umami_src        = mini_get_option( 'mini_analytics_options', 'mini_umami_src' );
+	$umami_website_id = mini_get_option( 'mini_analytics_options', 'mini_umami_website_id' );
+?>
+	<!-- Umami Analytics -->
+	<script defer src="<?php echo esc_url( $umami_src ); ?>" data-website-id="<?php echo esc_attr( $umami_website_id ); ?>"<?php if ( function_exists( 'mini_gdpr_script_attrs' ) ) mini_gdpr_script_attrs( 'analytics' ); ?>></script>
+<?php
+}
 ?>
 
 </head>

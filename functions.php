@@ -780,6 +780,7 @@ function mini_ext_lib_section_callback( $args ) {
 function mini_analytics_section_callback( $args ) {
     ?>
     <div class="boxes">
+        <!-- Google Analytics -->
         <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
             <label class="h5 bold black-text" for="mini_google_analytics">
                 <input type="checkbox" id="mini_google_analytics" name="mini_analytics_options[mini_google_analytics]" value="1" <?php $__o = get_option('mini_analytics_options'); echo (is_array($__o) && !empty($__o['mini_google_analytics'])) ? 'checked="checked"' : ''; ?>>
@@ -790,6 +791,22 @@ function mini_analytics_section_callback( $args ) {
             <?= mini_theme_text_field_option('mini_analytics_options','mini_google_analytics_code','G-XXXXXXXXXX', 'width: 100%; margin-top: 8px;'); ?>
             <div class="space"></div>
             <p class="description"><?php esc_html_e( 'Enter your Google Analytics measurement ID (e.g., G-XXXXXXXXXX)', 'mini' ); ?></p>
+        </div>
+
+        <!-- Umami -->
+        <div class="box-50 p-2 white-bg b-rad-5 box-shadow">
+            <label class="h5 bold black-text" for="mini_umami">
+                <input type="checkbox" id="mini_umami" name="mini_analytics_options[mini_umami]" value="1" <?php $__o = get_option('mini_analytics_options'); echo (is_array($__o) && !empty($__o['mini_umami'])) ? 'checked="checked"' : ''; ?>>
+                <?php esc_html_e( 'Umami Analytics', 'mini' ); ?>
+            </label>
+            <div class="space"></div>
+            <label><?php esc_html_e( 'Script URL', 'mini' ); ?></label>
+            <?= mini_theme_text_field_option('mini_analytics_options','mini_umami_src','https://analytics.example.com/script.js', 'width: 100%; margin-top: 8px;'); ?>
+            <div class="space"></div>
+            <label><?php esc_html_e( 'Website ID', 'mini' ); ?></label>
+            <?= mini_theme_text_field_option('mini_analytics_options','mini_umami_website_id','xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'width: 100%; margin-top: 8px;'); ?>
+            <div class="space"></div>
+            <p class="description"><?php esc_html_e( 'Self-hosted, privacy-first analytics. Enter the URL of your Umami script and the Website ID from your Umami dashboard.', 'mini' ); ?></p>
         </div>
     </div>
     <?php
