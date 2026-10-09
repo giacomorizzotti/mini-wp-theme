@@ -251,6 +251,28 @@ function mini_gwf_font_editor() {
     if ( ! is_admin() ) {
         return;
     }
+
+    // Load mini.css inside the block editor iframe using the same CDN/local
+    // resolution as mini_css() on the frontend, so base typography (font-family,
+    // sizes, CSS variables) matches the published page instead of the browser's
+    // default serif fallback.
+    $options = get_option( 'mini_cdn_options' );
+    if ( is_array( $options ) && ! empty( $options['cdn'] ) ) {
+        if ( ! empty( $options['cdn_dev'] ) ) {
+            $mini_css_url = 'https://serversaur.doingthings.space/mini/css/mini.min.css';
+        } else {
+            $version      = isset( $options['cdn_version'] ) ? $options['cdn_version'] : 'main';
+            $mini_css_url = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/css/mini.min.css';
+        }
+    } elseif ( is_array( $options ) && ! empty( $options['css_cdn_url'] ) ) {
+        $mini_css_url = esc_url( $options['css_cdn_url'] );
+    } elseif ( is_child_theme() && ! file_exists( get_stylesheet_directory() . '/css/mini.min.css' ) ) {
+        $mini_css_url = get_template_directory_uri() . '/css/mini.min.css';
+    } else {
+        $mini_css_url = get_stylesheet_directory_uri() . '/css/mini.min.css';
+    }
+    add_editor_style( $mini_css_url );
+
     $font_data = mini_compute_font_data();
     if ( $font_data['url'] ) {
         add_editor_style( $font_data['url'] );

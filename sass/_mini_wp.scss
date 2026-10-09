@@ -190,6 +190,14 @@ body.wp-admin {
     margin-top: var(--margin);
     margin-bottom: 0;
   }
+  #the-list {
+    .row-actions {
+      left: 0;
+    }
+    .page-title, .pagetitle {
+      background: none;
+    }
+  }
   /*
   input, select, textarea {
     display: inline-block;

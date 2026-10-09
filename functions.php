@@ -90,6 +90,11 @@ function mini_setup() {
     // Add theme support for selective refresh for widgets.
     add_theme_support( 'customize-selective-refresh-widgets' );
 
+    // Opt in to editor styles so add_editor_style() calls are applied inside
+    // the block editor iframe (makes font-family and base typography match the
+    // frontend instead of the browser's default serif fallback).
+    add_theme_support( 'editor-styles' );
+
     /**
      * Add support for core custom logo.
      *

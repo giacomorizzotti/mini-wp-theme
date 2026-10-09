@@ -12,7 +12,10 @@
         "columns":        { "type": "string",  "default": "33"  },
         "categoryId":     { "type": "number",  "default": 0     },
         "order":          { "type": "string",  "default": "DESC" },
-        "highlightFirst": { "type": "boolean", "default": false  }
+        "highlightFirst": { "type": "boolean", "default": false  },
+        "showDate":       { "type": "boolean", "default": true   },
+        "showCategories": { "type": "boolean", "default": true   },
+        "showTags":       { "type": "boolean", "default": true   }
     },
     "supports": { "html": false },
     "editorScript": "file:./editor.js",

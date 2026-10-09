@@ -74,8 +74,9 @@
                             label: __('Order', 'mini'),
                             value: attrs.order,
                             options: [
-                                { label: __('Newest first', 'mini'), value: 'DESC' },
-                                { label: __('Oldest first', 'mini'), value: 'ASC'  },
+                                { label: __('Newest first', 'mini'),   value: 'DESC'  },
+                                { label: __('Oldest first', 'mini'),   value: 'ASC'   },
+                                { label: __('A → Z (title)', 'mini'),  value: 'ALPHA' },
                             ],
                             onChange: function (val) { setAttributes({ order: val }); }
                         }),
@@ -83,6 +84,25 @@
                             label: __('Highlight first item (full width)', 'mini'),
                             checked: attrs.highlightFirst,
                             onChange: function (val) { setAttributes({ highlightFirst: val }); }
+                        })
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __('Content display', 'mini'), initialOpen: true },
+                        el(ToggleControl, {
+                            label: __('Show date', 'mini'),
+                            checked: attrs.showDate,
+                            onChange: function (val) { setAttributes({ showDate: val }); }
+                        }),
+                        el(ToggleControl, {
+                            label: __('Show categories', 'mini'),
+                            checked: attrs.showCategories,
+                            onChange: function (val) { setAttributes({ showCategories: val }); }
+                        }),
+                        el(ToggleControl, {
+                            label: __('Show tags', 'mini'),
+                            checked: attrs.showTags,
+                            onChange: function (val) { setAttributes({ showTags: val }); }
                         })
                     )
                 ),

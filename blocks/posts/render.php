@@ -5,8 +5,11 @@ if ( function_exists( 'mini_post_grid_callback' ) ) {
     $cols_str = isset( $attributes['columns'] ) ? (string) $attributes['columns']  : '33';
     $cols     = isset( $cols_map[ $cols_str ] ) ? $cols_map[ $cols_str ]            : 3;
     echo mini_post_grid_callback( $count, $cols, [
-        'categoryId'     => isset( $attributes['categoryId'] )     ? absint( $attributes['categoryId'] )   : 0,
-        'order'          => isset( $attributes['order'] )          ? $attributes['order']                  : 'DESC',
-        'highlightFirst' => isset( $attributes['highlightFirst'] ) ? (bool) $attributes['highlightFirst'] : false,
+        'categoryId'     => isset( $attributes['categoryId'] )     ? absint( $attributes['categoryId'] )        : 0,
+        'order'          => isset( $attributes['order'] )          ? $attributes['order']                       : 'DESC',
+        'highlightFirst' => isset( $attributes['highlightFirst'] ) ? (bool) $attributes['highlightFirst']       : false,
+        'showDate'       => isset( $attributes['showDate'] )       ? (bool) $attributes['showDate']             : true,
+        'showCategories' => isset( $attributes['showCategories'] ) ? (bool) $attributes['showCategories']       : true,
+        'showTags'       => isset( $attributes['showTags'] )       ? (bool) $attributes['showTags']             : true,
     ] );
 }

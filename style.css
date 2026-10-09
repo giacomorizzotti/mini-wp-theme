@@ -284,5 +284,11 @@ body.wp-admin .wp-block-mini-section, body.wp-admin .wp-block-mini-container, bo
   margin-top: var(--margin);
   margin-bottom: 0;
 }
+body.wp-admin #the-list .row-actions {
+  left: 0;
+}
+body.wp-admin #the-list .page-title, body.wp-admin #the-list .pagetitle {
+  background: none;
+}
 
 /*# sourceMappingURL=style.css.map */

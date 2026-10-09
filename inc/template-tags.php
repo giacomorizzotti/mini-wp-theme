@@ -72,22 +72,26 @@ if ( ! function_exists( 'mini_entry_footer' ) ) :
 	/**
 	 * Prints HTML with meta information for the categories, tags and comments.
 	 */
-	function mini_entry_footer() {
+	function mini_entry_footer( $show_categories = true, $show_tags = true ) {
 		// Hide category and tag text for pages.
 		if ( 'post' === get_post_type() ) {
-			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list( esc_html__( ', ', 'mini' ) );
-			$categories_list = preg_replace( '/<a\b/i', '<a class="black-text"', $categories_list );
-			if ( $categories_list ) {
-				/* translators: 1: list of categories. */
-				printf( '<span class="cat-links pe-1"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $show_categories ) {
+				/* translators: used between list items, there is a space after the comma */
+				$categories_list = get_the_category_list( esc_html__( ', ', 'mini' ) );
+				$categories_list = preg_replace( '/<a\b/i', '<a class="black-text"', $categories_list );
+				if ( $categories_list ) {
+					/* translators: 1: list of categories. */
+					printf( '<span class="cat-links pe-1"><span class="XS light-grey-text">CAT&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $categories_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
 			}
 
-			/* translators: used between list items, there is a space after the comma */
-			$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'mini' ) );
-			if ( $tags_list ) {
-				/* translators: 1: list of tags. */
-				printf( '<span class="tags-links pe-1"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $show_tags ) {
+				/* translators: used between list items, there is a space after the comma */
+				$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'mini' ) );
+				if ( $tags_list ) {
+					/* translators: 1: list of tags. */
+					printf( '<span class="tags-links pe-1"><span class="XS light-grey-text">TAG&nbsp;//&nbsp;&nbsp;</span>%1$s</span><br/>', $tags_list ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
 			}
 		}
 

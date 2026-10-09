@@ -26,7 +26,7 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 		<div class="container<?php if ( ! is_home() && ! is_archive() ) { echo ' ' . esc_attr( $layout['container_width'] ); } ?> mb-1">
 			<div class="boxes <?php if ( has_post_thumbnail() && $show_archive_image ): ?> <?php if ( $is_shortcode || is_home() || is_archive() ): ?>h33<?php endif; ?> align-content-end<?php endif; ?>">
 				<header class="box-100 my-0 entry-header">
-				<?php if ( 'post' === get_post_type() ) :?>
+				<?php if ( 'post' === get_post_type() && ( $args['showDate'] ?? true ) ) :?>
 					<p class="entry-meta S m-0 fw-px-1 white-bg inline-block px-05 mb-1">
 						<?php
 						mini_posted_on();
@@ -38,7 +38,11 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 				<?php endif; ?>
 				<?php
 					if ( is_singular() && ! $is_shortcode ) {
-						the_title( '<h1 class="entry-title m-0">', '</h1>' );
+						if ( $layout['title_presence'] ) {
+							the_title( '<h1 class="entry-title m-0">', '</h1>' );
+						} else {
+							the_title( '<h1 class="visually-hidden">', '</h1>' );
+						}
 					} else {
 						the_title( '<h3 class="entry-title m-0"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark" class="m-0 lh-12'. (has_post_thumbnail() ? ' white-box' : ' black-text').'">', '</a></h3>' );
 					}
@@ -91,7 +95,7 @@ $is_shortcode = ! empty( $args['is_shortcode'] );
 				?>
 			</div><!-- .entry-content -->
 			<footer class="box-100 my-0 entry-footer">
-				<p class="S"><?php mini_entry_footer(); ?></p>
+				<p class="S"><?php mini_entry_footer( $args['showCategories'] ?? true, $args['showTags'] ?? true ); ?></p>
 			</footer><!-- .entry-footer -->
 		</div>
 
