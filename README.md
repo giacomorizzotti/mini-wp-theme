@@ -13,15 +13,11 @@ Full template support for custom content types:
 - **News** - News article publishing
 - **Slides** - Slideshow content management
 
-### 🎨 Block Patterns
-Pre-built layout patterns for rapid development:
-- **Content Layouts**: 1-column, 2-column, 3-column, 4-column variations
-- **Hero Sections**: Full-page images, background-fixed images
-- **Contact Forms**: Quick contact, full contact forms
-- **CTAs**: Black box CTAs, "Keep me updated" sections
-- **Maps**: Integrated map displays
-- **Sliders**: Dynamic slideshow patterns
-- **Structure Elements**: Flexible box layouts (10%, 12%, 16%, 20%, 25%, 30%, 33%, 40%, 50%, 60%, 66%, 70%, 75%, 80%, 88%, 90%, 100%)
+### 🧱 Gutenberg Blocks
+Custom blocks, in the "mini" category of the block editor (Section is under "Design"):
+- **Layout**: Container, Section, Boxes, Box, Sep, Space
+- **Content**: Button, Image
+- **Content lists**: Posts, News, Events, Courses, Matches
 
 ### 🎭 Customization System
 Two flexible approaches for theme customization:
@@ -71,7 +67,7 @@ Flexible asset loading with CDN support:
 - Load mini framework CSS/JS from CDN or locally
 - Configurable CDN versions
 - Development and production CDN environments
-- Automatic fallback to local assets
+- No automatic fallback: with the CDN off, the site needs local copies of the files (see Installation)
 
 ### 🎛️ Theme Customizer
 Built-in customization options:
@@ -101,6 +97,7 @@ Dedicated sidebars for different content types:
 1. Download the theme files
 2. Upload the `mini-theme` folder to `/wp-content/themes/`
 3. Activate the theme through the WordPress admin dashboard
+4. Turn on the CDN under **mini → CDN**. Without it the theme looks for local `css/mini.min.css` and `js/mini.js`, which aren't in this repo, so copy them from the [mini repo](https://github.com/giacomorizzotti/mini) if you'd rather host them yourself. The slider also needs `js/slider.js` from there when the CDN is off
 
 ### Development Setup
 ```bash
@@ -181,15 +178,15 @@ mini-theme/
 │   ├── content-event.php   # Event content
 │   ├── content-course.php  # Course content
 │   └── ...
-├── patterns/               # Block patterns
-│   ├── content_1-col.php  # Layout patterns
-│   ├── slider.php         # Slider pattern
+├── blocks/                 # Custom Gutenberg blocks
+│   ├── boxes/             # block.json, editor.js, render.php
+│   ├── button/
 │   └── ...
 ├── sass/                   # SASS source files
 │   ├── style.scss         # Main SASS file
 │   └── _mini_wp.scss      # Framework imports
 ├── js/                     # JavaScript files
-├── css/                    # Compiled CSS
+├── css/                    # Optional local mini.min.css (gitignored)
 ├── languages/              # Translation files
 ├── micro/                  # Child theme starter
 ├── overrides/              # Override system
@@ -201,8 +198,8 @@ mini-theme/
 
 ## 🎨 Customization Examples
 
-### Using Block Patterns
-Block patterns are available in the WordPress block editor under "Patterns" → "Mini Theme".
+### Using the Blocks
+The theme's blocks are in the WordPress block editor's inserter, in the "mini" category (Section is under "Design").
 
 ### Custom CSS Overrides
 Add custom styles using the override system:
@@ -279,8 +276,13 @@ This theme is licensed under the GPL v2 or later.
 
 ## 📊 Changelog
 
+### Version 1.1.6
+- Posts block display options
+- Show title fix and editor styles
+- Umami analytics support
+
 ### Version 1.1.5
-- Enhanced block patterns system
+- Custom Gutenberg blocks, replacing the block patterns
 - Improved CDN integration
 - Added micro child theme starter kit
 - RTL language support

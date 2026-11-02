@@ -1,5 +1,20 @@
 # Mini Theme Code Review & Improvements
 
+This is an old review, kept for its reasoning. Its line numbers no longer match the code. Status of each recommendation, checked 2026-11-02:
+
+| # | Recommendation | Status |
+|---|---|---|
+| 1 | Nonce field in `header_styling_box_html()` | Done |
+| 2 | Validate `page_container` | Done |
+| 3 | Use `selected()` for the header styling options | Partly done: the "top white" option in `inc/meta-boxes.php` still builds it by hand |
+| 4 | Consistent text domain | Done |
+| 5 | Safer `mini_theme_checkbox_option()` | No longer applies: the function is gone |
+| 6 | Remove excessive whitespace | Done |
+| 7 | Remove commented-out code | Partly done: some remains in `functions.php` |
+| 8 | Remove duplicate textdomain loader | Done |
+
+Newer open work is in the mini repo's `PLAN.md`.
+
 ## ✅ Fixed Issues
 
 ### Security Improvements
@@ -124,16 +139,9 @@ add_action( 'after_setup_theme', 'mini_load_theme_textdomain' );
 - Nonce verification in header styling save
 - Input sanitization in header styling save
 
-### Should Fix Next 🔴
-1. Add nonce field to header_styling_box_html
-2. Validate page_container values
-3. Fix text domains (use 'mini' consistently)
-
-### Nice to Have 🟡
-1. Simplify select option generation with `selected()`
-2. Improve helper functions with proper escaping
-3. Remove dead/commented code
-4. Clean up excessive whitespace
+### Still Open 🟡
+1. Finish simplifying select option generation with `selected()`
+2. Remove the remaining commented-out code
 
 ## 🎯 Performance Notes
 

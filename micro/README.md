@@ -16,7 +16,7 @@ micro/
 │       └── custom.js           # Custom JavaScript
 ├── template-parts/
 │   └── content-custom.php.example  # Custom template parts
-├── patterns/                   # Override parent patterns
+├── patterns/                   # Block patterns for this site
 ├── *.php.example              # Example template overrides
 └── README.md                  # This file
 ```

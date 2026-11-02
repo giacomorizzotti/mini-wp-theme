@@ -8,7 +8,7 @@ This directory allows you to customize your WordPress theme for each specific in
 overrides/
 ├── templates/          # Override main template files
 ├── parts/             # Override template-parts/
-├── patterns/          # Override patterns/
+├── patterns/          # Extra partials for mini_get_template_part_override()
 ├── styles/            # Instance-specific CSS
 ├── custom-functions.php  # Instance-specific PHP functions
 └── README.md          # This file
@@ -50,9 +50,7 @@ Or use standard WordPress function - the filter will handle it automatically.
 
 ### 3. **Override Patterns** (patterns/)
 
-Override files from the `patterns/` directory:
-
-**Example:** `overrides/patterns/content_1-col_hero.php` will override `patterns/content_1-col_hero.php`
+The theme no longer ships a `patterns/` directory: its layouts are now blocks in `blocks/`. `mini_get_template_part_override()` still looks in `overrides/patterns/`, after `overrides/parts/`, so you can keep extra partials here for templates that call it.
 
 ### 4. **Custom Styles** (styles/)
 

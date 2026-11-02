@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-The canonical "mini" WordPress parent theme — a minimal theme built on the mini framework's vanilla CSS/JS (`/home/projects/mini/css/`, `/home/projects/mini/js/`), with template support for several custom post types (events, courses, lessons, matches, news, slides) and a block-pattern library.
+The canonical "mini" WordPress parent theme — a minimal theme built on the mini framework's vanilla CSS/JS (`/home/projects/mini/css/`, `/home/projects/mini/js/`), with template support for several custom post types (events, courses, lessons, matches, news, slides) and 13 custom Gutenberg blocks.
 
 ## Deployment topology — check this before editing anything
 
@@ -57,9 +57,15 @@ CSS source of truth is `sass/` — compiled output (`style.css`, `style.css.map`
   - `header.php` injects analytics scripts — currently **Google Analytics** (`gtag.js`) and **Umami** (`<script defer data-website-id="...">`) — gated on `mini_check_option('mini_analytics_options', ...)`. Both call `mini_gdpr_script_attrs('analytics')` (defined in mini-plugin's `inc/gdpr.php`) when available, which outputs consent-mode attributes so a cookie-consent plugin can gate them.
 - `single-*.php`/`archive-*.php`/`sidebar-*.php` per custom post type (course, event, lesson, match, news, landing_page) — template + archive + sidebar variant for each.
 - `template-parts/` — reusable partials (`content-*.php` per post type, `contact-form*.php`).
-- `blocks/` — custom Gutenberg block patterns.
+- `blocks/` — 13 custom Gutenberg blocks (box, boxes, button, container, courses, events, image, matches, news, posts, section, sep, space), each a `block.json`, `editor.js` and `render.php`. The theme has had no `patterns/` folder since April 2026.
 - `micro/` — child-theme starter kit, see topology note above.
 - `overrides/` — per-site override system, see customization note above.
+
+## Local assets and versions
+
+`css/mini.min.css` and `js/mini.js` are gitignored copies of the mini repo's files, and the theme has no `js/slider.js` at all. With the CDN option off these are what a site loads, so on a fresh clone they 404 until the CDN is turned on (**mini → CDN**) or the files are copied in. They don't update themselves, so a copy can be months behind the mini repo.
+
+Every asset's `?ver=` comes from `MINI_VERSION` in `functions.php`, not from `Version` in `style.css` (which comes from `sass/style.scss`). Bump both, or browsers keep their cached files. Both problems are tracked in the mini repo's `PLAN.md`.
 
 ## Adding a new analytics provider
 
