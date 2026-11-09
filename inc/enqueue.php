@@ -50,32 +50,52 @@ function mini_login_styles() {
 add_action( 'login_enqueue_scripts', 'mini_login_styles' );
 
 /**
+ * Whether a mini_cdn_options value is set, the way these options have always
+ * been read: present and not empty.
+ */
+function mini_cdn_option_on( $options, $key ) {
+    return is_array( $options ) && isset( $options[ $key ] ) && $options[ $key ] != null;
+}
+
+/**
+ * URL of one of the mini repo's own files: css/mini.min.css, js/mini.js or
+ * js/slider.js.
+ *
+ * With the CDN on (mini > CDN): the dev CDN, or jsDelivr at the chosen version.
+ * With it off: the custom path saved under $custom_url_key, then the child
+ * theme's copy, then the parent theme's. Those copies are gitignored, so a
+ * fresh clone has none, and the theme never had js/slider.js. When neither
+ * exists the file comes from jsDelivr instead of a 404.
+ */
+function mini_asset_url( $file, $custom_url_key ) {
+    $options  = get_option( 'mini_cdn_options' );
+    $version  = ( is_array( $options ) && ! empty( $options['cdn_version'] ) ) ? $options['cdn_version'] : 'main';
+    $jsdelivr = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/' . $file;
+
+    if ( mini_cdn_option_on( $options, 'cdn' ) ) {
+        if ( mini_cdn_option_on( $options, 'cdn_dev' ) ) {
+            return 'https://serversaur.doingthings.space/mini/' . $file;
+        }
+        return $jsdelivr;
+    }
+    if ( mini_cdn_option_on( $options, $custom_url_key ) ) {
+        return esc_url( $options[ $custom_url_key ] );
+    }
+    if ( file_exists( get_stylesheet_directory() . '/' . $file ) ) {
+        return get_stylesheet_directory_uri() . '/' . $file;
+    }
+    if ( file_exists( get_template_directory() . '/' . $file ) ) {
+        return get_template_directory_uri() . '/' . $file;
+    }
+    return $jsdelivr;
+}
+
+/**
  * Enqueue mini CSS from CDN or local
  */
 add_action( 'wp_enqueue_scripts', 'mini_css' );
 function mini_css(){
-    $options = get_option( 'mini_cdn_options' );
-    if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
-            $mini_CSS = 'https://serversaur.doingthings.space/mini/css/mini.min.css';
-        } else {
-            $version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
-            $mini_CSS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/css/mini.min.css';
-        }
-    } else {
-        if (is_array($options) && array_key_exists('css_cdn_url', $options) && $options['css_cdn_url'] != null) {
-            $mini_CSS = esc_url( $options['css_cdn_url'] );
-        } else {
-            // Check if mini.min.css exists in child theme, otherwise use parent theme
-            $child_css = get_stylesheet_directory() . '/css/mini.min.css';
-            if (is_child_theme() && !file_exists($child_css)) {
-                $mini_CSS = get_template_directory_uri() . '/css/mini.min.css';
-            } else {
-                $mini_CSS = get_stylesheet_directory_uri() . '/css/mini.min.css';
-            }
-        }
-    }
-    wp_enqueue_style( 'mini_header_css', $mini_CSS, array(), MINI_VERSION);
+    wp_enqueue_style( 'mini_header_css', mini_asset_url( 'css/mini.min.css', 'css_cdn_url' ), array(), MINI_VERSION);
 }
 
 /**
@@ -83,28 +103,7 @@ function mini_css(){
  */
 add_action( 'wp_enqueue_scripts', 'mini_js' );
 function mini_js(){
-    $options = get_option( 'mini_cdn_options' );
-    if (is_array($options) && array_key_exists('cdn', $options) && $options['cdn'] != null) {
-        if (is_array($options) && array_key_exists('cdn_dev', $options) && $options['cdn_dev'] != null) {
-            $mini_JS = 'https://serversaur.doingthings.space/mini/js/mini.js';
-        } else {
-            $version = isset($options['cdn_version']) ? $options['cdn_version'] : 'main';
-            $mini_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/js/mini.js';
-        }
-    } else {
-        if (is_array($options) && array_key_exists('js_cdn_url', $options) && $options['js_cdn_url'] != null) {
-            $mini_JS = esc_url( $options['js_cdn_url'] );
-        } else {
-            // Check if mini.js exists in child theme, otherwise use parent theme
-            $child_js = get_stylesheet_directory() . '/js/mini.js';
-            if (is_child_theme() && !file_exists($child_js)) {
-                $mini_JS = get_template_directory_uri() . '/js/mini.js';
-            } else {
-                $mini_JS = get_stylesheet_directory_uri() . '/js/mini.js';
-            }
-        }
-    }
-    wp_enqueue_script( 'mini_footer_js', $mini_JS, array(), MINI_VERSION, true);
+    wp_enqueue_script( 'mini_footer_js', mini_asset_url( 'js/mini.js', 'js_cdn_url' ), array(), MINI_VERSION, true);
 }
 
 /**
@@ -112,29 +111,9 @@ function mini_js(){
  */
 add_action( 'wp_enqueue_scripts', 'mini_slider' );
 function mini_slider(){
-    $cdn_options = get_option( 'mini_cdn_options' );
     // Load slider only if 'slide' post type is registered (enabled in mini plugin)
     if ( post_type_exists( 'slide' ) ) {
-        if (is_array($cdn_options) && array_key_exists('cdn', $cdn_options) && $cdn_options['cdn'] != null) {
-            if (is_array($cdn_options) && array_key_exists('cdn_dev', $cdn_options) && $cdn_options['cdn_dev'] != null) {
-                $mini_slider_JS = 'https://serversaur.doingthings.space/mini/js/slider.js';
-            } else {
-                $version = isset($cdn_options['cdn_version']) ? $cdn_options['cdn_version'] : 'main';
-                $mini_slider_JS = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/js/slider.js';
-            }
-        } else {
-            if (is_array($cdn_options) && array_key_exists('slider_cdn_url', $cdn_options) && $cdn_options['slider_cdn_url'] != null) {
-                $mini_slider_JS = esc_url( $cdn_options['slider_cdn_url'] );
-            } else {
-                // Use parent theme path if child theme is active, otherwise use current theme
-                if (is_child_theme()) {
-                    $mini_slider_JS = get_template_directory_uri() . '/js/slider.js';
-                } else {
-                    $mini_slider_JS = get_stylesheet_directory_uri() . '/js/slider.js';
-                }
-            }
-        }
-        wp_enqueue_script( 'mini_slider_footer_js', $mini_slider_JS, array(), MINI_VERSION, true);
+        wp_enqueue_script( 'mini_slider_footer_js', mini_asset_url( 'js/slider.js', 'slider_cdn_url' ), array(), MINI_VERSION, true);
     }
 }
 
@@ -252,25 +231,11 @@ function mini_gwf_font_editor() {
         return;
     }
 
-    // Load mini.css inside the block editor iframe using the same CDN/local
-    // resolution as mini_css() on the frontend, so base typography (font-family,
-    // sizes, CSS variables) matches the published page instead of the browser's
-    // default serif fallback.
-    $options = get_option( 'mini_cdn_options' );
-    if ( is_array( $options ) && ! empty( $options['cdn'] ) ) {
-        if ( ! empty( $options['cdn_dev'] ) ) {
-            $mini_css_url = 'https://serversaur.doingthings.space/mini/css/mini.min.css';
-        } else {
-            $version      = isset( $options['cdn_version'] ) ? $options['cdn_version'] : 'main';
-            $mini_css_url = 'https://cdn.jsdelivr.net/gh/giacomorizzotti/mini@' . $version . '/css/mini.min.css';
-        }
-    } elseif ( is_array( $options ) && ! empty( $options['css_cdn_url'] ) ) {
-        $mini_css_url = esc_url( $options['css_cdn_url'] );
-    } elseif ( is_child_theme() && ! file_exists( get_stylesheet_directory() . '/css/mini.min.css' ) ) {
-        $mini_css_url = get_template_directory_uri() . '/css/mini.min.css';
-    } else {
-        $mini_css_url = get_stylesheet_directory_uri() . '/css/mini.min.css';
-    }
+    // Load mini.css inside the block editor iframe from the same place as
+    // mini_css() on the frontend, so base typography (font-family, sizes, CSS
+    // variables) matches the published page instead of the browser's default
+    // serif fallback.
+    $mini_css_url = mini_asset_url( 'css/mini.min.css', 'css_cdn_url' );
     add_editor_style( $mini_css_url );
 
     $font_data = mini_compute_font_data();

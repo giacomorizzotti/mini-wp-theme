@@ -8,8 +8,10 @@
  */
 
 if ( ! defined( 'MINI_VERSION' ) ) {
-    // Replace the version number of the theme on each release.
-    define( 'MINI_VERSION', '1.1.5' );
+    // The ?ver= on every asset: the parent theme's Version from style.css
+    // (written from sass/style.scss), so bumping that one line on a release
+    // also makes browsers fetch the new files.
+    define( 'MINI_VERSION', wp_get_theme( get_template() )->get( 'Version' ) ?: '1.1.6' );
 }
 
 /**
@@ -549,17 +551,17 @@ function mini_cdn_section_callback( $args ) {
         <div id="mini_custom_css_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>mini.min.css</i> path', 'mini' ); ?></h4>
             <?= mini_theme_text_field_option('mini_cdn_options','css_cdn_url', '/css/mini.min.css'); ?>
-            <p class="" for="mini_news">Specify a custom path to mini.min.css (default: theme's /css/mini.min.css).</p>
+            <p class="" for="mini_news">Specify a custom path to mini.min.css. Default: the theme's /css/mini.min.css, or jsDelivr when the theme has no copy.</p>
         </div>
         <div id="mini_custom_js_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>mini.js</i> path', 'mini' ); ?></h4>
             <?= mini_theme_text_field_option('mini_cdn_options','js_cdn_url', '/js/mini.js'); ?>
-            <p class="" for="mini_news">Specify a custom path to mini.js (default: theme's /js/mini.js).</p>
+            <p class="" for="mini_news">Specify a custom path to mini.js. Default: the theme's /js/mini.js, or jsDelivr when the theme has no copy.</p>
         </div>
         <div id="mini_custom_slider_box" class="box-50 p-2 white-bg b-rad-5 box-shadow <?php echo $cdn_enabled ? 'hidden' : 'shown'; ?>">
             <h4 class="" for="mini_match"><?php echo __( 'Absolute (or relative) <i>slider.js</i> path', 'mini' ); ?></h4>
             <?= mini_theme_text_field_option('mini_cdn_options','slider_cdn_url', '/js/slider.js'); ?>
-            <p class="" for="mini_news">Specify a custom path to slider.js (default: theme's /js/slider.js).</p>
+            <p class="" for="mini_news">Specify a custom path to slider.js. Default: the theme's /js/slider.js, or jsDelivr when the theme has no copy.</p>
         </div>
     </div>
     <script>

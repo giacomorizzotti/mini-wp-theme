@@ -63,9 +63,9 @@ CSS source of truth is `sass/` — compiled output (`style.css`, `style.css.map`
 
 ## Local assets and versions
 
-`css/mini.min.css` and `js/mini.js` are gitignored copies of the mini repo's files, and the theme has no `js/slider.js` at all. With the CDN option off these are what a site loads, so on a fresh clone they 404 until the CDN is turned on (**mini → CDN**) or the files are copied in. They don't update themselves, so a copy can be months behind the mini repo.
+`mini_asset_url()` in `inc/enqueue.php` decides where `css/mini.min.css`, `js/mini.js` and `js/slider.js` come from, for the frontend and the block editor alike. With the CDN on (**mini → CDN**): the dev CDN, or jsDelivr at the chosen version. With it off: the custom path saved for that file, then the child theme's copy, then the parent theme's, then jsDelivr. The local copies are gitignored and the theme has no `js/slider.js`, so a fresh clone loads all three from jsDelivr until copies are added. A copy that exists doesn't update itself and can be months behind the mini repo.
 
-Every asset's `?ver=` comes from `MINI_VERSION` in `functions.php`, not from `Version` in `style.css` (which comes from `sass/style.scss`). Bump both, or browsers keep their cached files. Both problems are tracked in the mini repo's `PLAN.md`.
+Every asset's `?ver=` is `MINI_VERSION`, which `functions.php` reads from the parent theme's `Version` in `style.css` (written from `sass/style.scss`). Bump that one line on a release and browsers fetch the new files. A child theme can still define `MINI_VERSION` itself, since its `functions.php` loads first.
 
 ## Adding a new analytics provider
 
