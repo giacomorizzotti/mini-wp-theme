@@ -1,0 +1,153 @@
+/**
+ * Instance-Specific Custom Styles
+ * 
+ * Add your custom CSS here to override or extend the theme styles.
+ * This file is loaded automatically if it exists.
+ * 
+ * IMPORTANT: Remove the .example extension to activate this file.
+ * Rename: custom.example.css → custom.css
+ */
+
+/* ==========================================================================
+   Example: Custom Color Scheme
+   ========================================================================== */
+/*
+:root {
+    --instance-primary: #3498db;
+    --instance-secondary: #2ecc71;
+    --instance-accent: #e74c3c;
+}
+
+.site-header {
+    background-color: var(--instance-primary);
+}
+
+.site-title a {
+    color: white;
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Typography
+   ========================================================================== */
+/*
+body {
+    font-family: 'Your Custom Font', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Your Heading Font', serif;
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Layout Adjustments
+   ========================================================================== */
+/*
+.site-content {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.entry-content {
+    padding: 2rem;
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Navigation Styles
+   ========================================================================== */
+/*
+.main-navigation a {
+    padding: 1rem 1.5rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.main-navigation a:hover {
+    background-color: var(--instance-accent);
+    color: white;
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Button Styles
+   ========================================================================== */
+/*
+.wp-block-button__link,
+.button,
+button[type="submit"] {
+    background-color: var(--instance-primary);
+    border-radius: 4px;
+    padding: 12px 24px;
+    transition: all 0.3s ease;
+}
+
+.wp-block-button__link:hover,
+.button:hover,
+button[type="submit"]:hover {
+    background-color: var(--instance-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Footer Styles
+   ========================================================================== */
+/*
+.site-footer {
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 3rem 0;
+}
+
+.site-footer a {
+    color: var(--instance-primary);
+}
+
+.site-footer a:hover {
+    color: var(--instance-secondary);
+}
+*/
+
+/* ==========================================================================
+   Example: Responsive Adjustments
+   ========================================================================== */
+/*
+@media screen and (max-width: 768px) {
+    .site-content {
+        padding: 1rem;
+    }
+    
+    .main-navigation {
+        font-size: 14px;
+    }
+}
+*/
+
+/* ==========================================================================
+   Example: Custom Widget Styles
+   ========================================================================== */
+/*
+.widget {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.widget-title {
+    border-bottom: 2px solid var(--instance-primary);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+*/
+
+/* ==========================================================================
+   Your Custom Styles Below
+   ========================================================================== */
+
+/* Add your custom CSS here */

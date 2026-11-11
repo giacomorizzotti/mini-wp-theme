@@ -2,6 +2,10 @@
 *
 !.gitignore
 !README.md
+!QUICKSTART.md
+
+# Folders aren't ignored, so the example files inside them can be matched
+!*/
 
 # But allow example files
 !*.example.php
