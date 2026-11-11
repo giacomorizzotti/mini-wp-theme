@@ -29,7 +29,7 @@ This theme documents its own decision tree for this (`CUSTOMIZATION-GUIDE.md`, `
 ## Commands
 
 ```bash
-npm run watch          # node-sass sass/ -> root, watch mode, with source maps
+npm run watch          # Dart Sass (sass 1.91.0, same as mini) sass/style.scss -> style.css, watch mode, with source map
 npm run compile:css    # one-off compile + stylelint --fix
 npm run compile:rtl    # rtlcss style.css -> style-rtl.css
 npm run lint:scss      # wp-scripts lint-style sass/**/*.scss
@@ -39,7 +39,7 @@ composer run lint:php  # parallel-lint across the theme
 composer run make-pot  # wp i18n make-pot . languages/_s.pot
 ```
 
-CSS source of truth is `sass/` — compiled output (`style.css`, `style.css.map`, `style-rtl.css`) is checked in and must be regenerated via the above, not edited directly.
+CSS source of truth is `sass/` — compiled output (`style.css`, `style.css.map`, `style-rtl.css`) is checked in and must be regenerated via the above, not edited directly. Run `compile:rtl` after every `style.css` change too: `inc/enqueue.php` makes WordPress load `style-rtl.css` *instead of* `style.css` on right-to-left sites, and it stayed the original Underscores file until 2026-11-11. Dart Sass replaced node-sass on 2026-11-11; it gives the same CSS, indented with two spaces where node-sass used tabs. Saving either file is live on every install (see the topology above).
 
 ## Structure
 
