@@ -331,47 +331,35 @@ function header_styling_box_html( $post, $meta ){
     $header_styling_top_style = ( $header_styling_top_style === '' ) ? 'top-wh' : $header_styling_top_style;  // Default to white background
     $header_styling_scroll_style = ( $header_styling_scroll_style === '' ) ? 'scroll-wh' : $header_styling_scroll_style;  // Default to white background
 
-    $header_styling_state_top_standard = null;
-    if ( $header_styling_top_style == '') { $header_styling_state_top_standard = ' selected'; }
-    $header_styling_state_top_white = null;
-    if ( $header_styling_top_style == 'top-wh') { $header_styling_state_top_white = ' selected'; }
-    $header_styling_state_top_black = null;
-    if ( $header_styling_top_style == 'top-bk') { $header_styling_state_top_black = ' selected'; }
-    $header_styling_state_top_color = null;
-    if ( $header_styling_top_style == 'top-col') { $header_styling_state_top_color = ' selected'; }
-    $header_styling_state_top_negative = null;
-    if ( $header_styling_top_style == 'top-inv') { $header_styling_state_top_negative = ' selected'; }
-
-    $header_styling_state_scroll_standard = null;
-    if ( $header_styling_scroll_style == '') { $header_styling_state_scroll_standard = ' selected'; }
-    $header_styling_state_scroll_white = null;
-    if ( $header_styling_scroll_style == 'scroll-wh') { $header_styling_state_scroll_white = ' selected'; }
-    $header_styling_state_scroll_black = null;
-    if ( $header_styling_scroll_style == 'scroll-bk') { $header_styling_state_scroll_black = ' selected'; }
-    $header_styling_state_scroll_color = null;
-    if ( $header_styling_scroll_style == 'scroll-col') { $header_styling_state_scroll_color = ' selected'; }
-    $header_styling_state_scroll_negative = null;
-    if ( $header_styling_scroll_style == 'scroll-inv') { $header_styling_state_scroll_negative = ' selected'; }
-
     // Form fields for entering data
+    $top_options = array(
+        ''        => __( 'Default', 'mini' ),
+        'top-wh'  => __( 'Top white background', 'mini' ),
+        'top-bk'  => __( 'Top black background', 'mini' ),
+        'top-col' => __( 'Top main color background', 'mini' ),
+        'top-inv' => __( 'Top inverted colors', 'mini' ),
+    );
+    $scroll_options = array(
+        ''           => __( 'Default', 'mini' ),
+        'scroll-wh'  => __( 'Scroll white background', 'mini' ),
+        'scroll-bk'  => __( 'Scroll black background', 'mini' ),
+        'scroll-col' => __( 'Scroll main color background', 'mini' ),
+        'scroll-inv' => __( 'Scroll inverted colors', 'mini' ),
+    );
     ?>
     <label for="header_styling_top" style="display: block; margin-bottom: 5px;"><?php esc_html_e( 'Header top styling', 'mini' ); ?></label>
-    <select name="header_styling_top">
-		<option value=""<?=$header_styling_state_top_standard?>><?php esc_html_e( 'Default', 'mini' ); ?></option>
-		<option value="top-wh"<?=$header_styling_state_top_white?>><?php esc_html_e( 'Top white background', 'mini' ); ?></option>
-		<option value="top-bk"<?=$header_styling_state_top_black?>><?php esc_html_e( 'Top black background', 'mini' ); ?></option>
-		<option value="top-col"<?=$header_styling_state_top_color?>><?php esc_html_e( 'Top main color background', 'mini' ); ?></option>
-		<option value="top-inv"<?=$header_styling_state_top_negative?>><?php esc_html_e( 'Top inverted colors', 'mini' ); ?></option>
-	</select>
+    <select name="header_styling_top" id="header_styling_top">
+        <?php foreach ( $top_options as $value => $label ) : ?>
+            <option value="<?php echo esc_attr( $value ); ?>"<?php selected( $header_styling_top_style, $value ); ?>><?php echo esc_html( $label ); ?></option>
+        <?php endforeach; ?>
+    </select>
     <br/>
     <label for="header_styling_scroll" style="display: block; margin-bottom: 5px;"><?php esc_html_e( 'Header scroll styling', 'mini' ); ?></label>
-    <select name="header_styling_scroll">
-		<option value=""<?=$header_styling_state_scroll_standard?>><?php esc_html_e( 'Default', 'mini' ); ?></option>
-		<option value="scroll-wh"<?=$header_styling_state_scroll_white?>><?php esc_html_e( 'Scroll white background', 'mini' ); ?></option>
-		<option value="scroll-bk"<?=$header_styling_state_scroll_black?>><?php esc_html_e( 'Scroll black background', 'mini' ); ?></option>
-		<option value="scroll-col"<?=$header_styling_state_scroll_color?>><?php esc_html_e( 'Scroll main color background', 'mini' ); ?></option>
-		<option value="scroll-inv"<?=$header_styling_state_scroll_negative?>><?php esc_html_e( 'Scroll inverted colors', 'mini' ); ?></option>
-	</select>
+    <select name="header_styling_scroll" id="header_styling_scroll">
+        <?php foreach ( $scroll_options as $value => $label ) : ?>
+            <option value="<?php echo esc_attr( $value ); ?>"<?php selected( $header_styling_scroll_style, $value ); ?>><?php echo esc_html( $label ); ?></option>
+        <?php endforeach; ?>
+    </select>
 <?php
 }
 

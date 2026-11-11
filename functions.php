@@ -75,20 +75,6 @@ function mini_setup() {
         )
     );
 
-    // Set up the WordPress core custom background feature.
-    /*
-    add_theme_support(
-        'custom-background',
-        apply_filters(
-            'mini_custom_background_args',
-            array(
-                'default-color' => 'ffffff',
-                'default-image' => '',
-            )
-        )
-    );
-    */
-
     // Add theme support for selective refresh for widgets.
     add_theme_support( 'customize-selective-refresh-widgets' );
 
@@ -649,13 +635,6 @@ function mini_colors_section_callback( $args ) {
     <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the colors section', 'mini' ); ?></p>
     <?php
 }
-/*
-function mini_size_section_callback( $args ) {
-    ?>
-    <p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'This is the sizes section', 'mini' ); ?></p>
-    <?php
-}
-*/
 function mini_font_section_callback( $args ) {
     $fonts = mini_get_google_fonts();
     $options = get_option('mini_font_options');
@@ -1032,16 +1011,6 @@ function mini_options_page() {
         'mini-fonts',
         'mini_font_options_page_html'
     );
-    /*
-    add_submenu_page(
-        'mini',
-        'Size options',
-        'Sizes',
-        'manage_options',
-        'mini-size',
-        'mini_size_options_page_html'
-    );
-    */
     add_submenu_page(
         'mini',
         'mini theme - Analytics',
@@ -1171,31 +1140,6 @@ function mini_cdn_options_page_html() {
     </div>
     <?php
 }
-
-// Sizes options page
-/*
-function mini_size_options_page_html() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
-    if ( isset( $_GET['settings-updated'] ) ) {
-        add_settings_error( 'mini_messages', 'mini_message', __( 'Settings Saved', 'mini' ), 'updated' );
-    }
-    settings_errors( 'mini_messages' );
-    ?>
-    <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <form action="options.php" method="post">
-            <?php
-            settings_fields( 'mini_size' );
-            do_settings_sections( 'mini-size' );
-            submit_button( 'Save Settings' );
-            ?>
-        </form>
-    </div>
-    <?php
-}
-*/
 
 // Fonts options page
 function mini_font_options_page_html() {
