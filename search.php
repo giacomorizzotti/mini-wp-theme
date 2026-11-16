@@ -16,7 +16,7 @@ get_header();
 <main id="primary" class="site-main" template="search">
 	<div class="container fw">
 		<div class="container">
-			<div class="boxes">
+			<div class="boxes space-top">
 				<div class="box my-0<?php if( $layout['container_width'] == 'fw' ): ?> p-0<?php else: ?> py-0<?php endif; ?> <?php echo esc_attr( $layout['content_size'] ); ?>">
 					<div class="boxes">
 
